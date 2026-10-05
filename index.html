@@ -720,7 +720,7 @@ const ICON = {
 /* ===== Data ===== */
 const GROUPS = {
   identity:{name:"Identity & documents",desc:"CNIC, B-Form, FRC, NICOP, passport and the SIMs on your CNIC.",art:"id",subs:[["id","ID card & family"],["passport","Passport"],["sim","SIM & phone"]]},
-  certificates:{name:"Certificates & records",desc:"Birth, marriage, domicile, police certificates and attestation.",art:"id",subs:[["civil","Birth, marriage & family"],["domicile","Domicile"],["police","Police certificates"],["attest","Attestation"]]},
+  certificates:{name:"Certificates & records",desc:"Birth, marriage, domicile, police certificates, attestation and arms licences.",art:"id",subs:[["civil","Birth, marriage & family"],["domicile","Domicile"],["police","Police certificates"],["attest","Attestation"],["arms","Arms licence"]]},
   money:{name:"Loans & banking",desc:"Government business and housing loans, and bank loans compared.",art:"loan",subs:[["business","Business loans"],["housing","Housing loans"],["bank","Bank loans"]]},
   bills:{name:"Bills & taxes",desc:"Utility bills, NTN, income tax and property tax.",art:"bill",subs:[["utility","Utility bills"],["incometax","Income tax & NTN"],["property","Property & land"]]},
   health:{name:"Health & water",desc:"Government health cards and free clean drinking water.",art:"health",subs:[["cards","Health cards"],["water","Clean water"]]},
@@ -1149,7 +1149,7 @@ const S = [
   elig:["Age 18+ for motorcycle and car, 21+ for LTV and commercial, 22+ for HTV (Punjab rules)","A valid CNIC; out-of-district applicants may need extra approval in KP"],
   docs:["CNIC and copy","Medical certificate (form signed by a doctor)","Photos","Learner permit when applying for the regular licence"],
   steps:["Apply for a learner permit online or at a licensing centre (see table).","Pay the fee and print or download the permit; it is valid for six months.","Practise with a licensed driver for at least six weeks.","Book the test at the licensing centre: road signs, written/computer test and driving test.","After passing, pay the licence fee; the card is issued or posted to you.","Renew before expiry online or at a licensing centre."],
-  table:{head:["Area","Learner permit & licence"],rows:[["Punjab","dlims.punjab.gov.pk, Police Khidmat Markaz, Dastak app"],["Sindh","dlsonline.sindhpolice.gov.pk (online learner)"],["Khyber Pakhtunkhwa","Licensing centres; learner permit fee Rs 125 or 250 paid at the bank"],["Islamabad","dlims.islamabadpolice.gov.pk"],["International licence","Punjab: PKM or Dastak (5 working days); other provinces at the licensing authority"]]},
+  table:{head:["Area","Learner permit & licence"],rows:[["Punjab","dlims.punjab.gov.pk, Police Khidmat Markaz, Dastak app"],["Sindh","dlsonline.sindhpolice.gov.pk (online learner)"],["Khyber Pakhtunkhwa","Licensing centres; learner permit fee Rs 125 or 250 paid at the bank"],["Islamabad","dlims.islamabadpolice.gov.pk"],["Balochistan, AJK, GB","District licensing authority / traffic police office"],["International licence","Punjab: PKM or Dastak (5 working days); other provinces at the licensing authority"]]},
   note:"Licence fees change by category and province; the portal shows the amount before payment.",
   links:[["Punjab DLIMS","https://dlims.punjab.gov.pk"],["Sindh DLS","https://dlsonline.sindhpolice.gov.pk"],["Islamabad ITP DLIMS","https://dlims.islamabadpolice.gov.pk"],["KP licensing (RTS)","https://www.kprts.gov.pk/services/learner-driver-permit/"]], help:"Punjab 1915 · KP RTS 091-9216375" },
 
@@ -1159,7 +1159,7 @@ const S = [
   elig:["Owners of registered vehicles; buyers and sellers for transfers"],
   docs:["Registration book or smart card","Owner's CNIC (buyer and seller for transfers)","For transfers: sale letter / transfer form and biometric verification"],
   steps:["Find your province in the table and open its tax portal or app.","Enter the registration number to see the tax due; filers pay less withholding tax than non-filers.","Generate the PSID and pay it in a bank app, ATM, JazzCash, Easypaisa or at a bank.","Before buying a used vehicle, verify the number on the provincial verification service.","For a transfer, both parties complete biometric verification at Excise (or through the doorstep or app service where offered) and pay the transfer fee."],
-  table:{head:["Area","Pay tax / verify"],rows:[["Punjab","excise.punjab.gov.pk · MTMIS verification · ePay Punjab · Dastak for transfers"],["Sindh","taxportal.excise.gos.pk (Quick Pay → PSID)"],["Khyber Pakhtunkhwa","KP Excise & Taxation online services"],["Islamabad","Islamabad Citizen App or City Islamabad App (PSID); registration card in Pak-ID"]]},
+  table:{head:["Area","Pay tax / verify"],rows:[["Punjab","excise.punjab.gov.pk · MTMIS verification · ePay Punjab · Dastak for transfers"],["Sindh","taxportal.excise.gos.pk (Quick Pay → PSID)"],["Khyber Pakhtunkhwa","KP Excise & Taxation online services"],["Islamabad","Islamabad Citizen App or City Islamabad App (PSID); registration card in Pak-ID"],["Balochistan, AJK, GB","Excise & Taxation office of the registering district"]]},
   note:"Late token tax attracts penalties, and vehicles may be impounded. Payments usually show in the record within 10 working days.",
   links:[["Excise Punjab","https://excise.punjab.gov.pk"],["Punjab vehicle verification","https://mtmis.excise.punjab.gov.pk"],["Sindh tax portal","https://taxportal.excise.gos.pk"],["ePay Punjab","https://epay.punjab.gov.pk"]], help:"Punjab Excise 1035" },
 
@@ -1249,7 +1249,7 @@ const S = [
   elig:["Pakistani citizens meeting the post's age, education and domicile (quota) requirements"],
   docs:["CNIC","Domicile certificate","Educational documents (attested)","Photos and fee receipt"],
   steps:["Watch the commission's website and newspaper adverts for posts.","Create an account and fill in the online application before the closing date.","Pay the application fee.","Appear in the written test and interview.","Selected candidates go through medical and police verification."],
-  table:{head:["Commission","Website"],rows:[["Federal (CSS and federal posts)","fpsc.gov.pk"],["Punjab","ppsc.gop.pk"],["Sindh","spsc.gos.pk"],["Khyber Pakhtunkhwa","kppsc.gov.pk"],["Balochistan","bpsc.gob.pk"],["National Job Portal","njp.gov.pk"]]},
+  table:{head:["Commission","Website"],rows:[["Federal (CSS and federal posts)","fpsc.gov.pk"],["Punjab","ppsc.gop.pk"],["Sindh","spsc.gos.pk"],["Khyber Pakhtunkhwa","kppsc.gov.pk"],["Balochistan","bpsc.gob.pk"],["Azad Jammu & Kashmir","ajkpsc.gov.pk"],["Gilgit-Baltistan","GB Public Service Commission (gilgitbaltistan.gov.pk)"],["National Job Portal","njp.gov.pk"]]},
   note:"Commissions never ask for money beyond the published application fee. Report anyone offering a job for payment.",
   links:[["FPSC","https://www.fpsc.gov.pk"],["PPSC","https://www.ppsc.gop.pk"],["SPSC","https://spsc.gos.pk"],["KPPSC","https://www.kppsc.gov.pk"],["National Job Portal","https://www.njp.gov.pk"]], help:"Commission helplines on their websites" },
 
@@ -1361,7 +1361,78 @@ const S = [
   steps:["In an emergency call 15.","For an FIR, go to the police station of the area where the crime happened; you are entitled to a copy of the FIR.","For a loss report or tenant/employee registration, visit a Police Khidmat Markaz (Punjab) or service centre, or use Dastak.","Keep the printed report; NADRA, banks and Excise ask for it to issue duplicates.","If police refuse to register your complaint, call 8787 (Punjab IG complaint centre) or use the Citizen Portal."],
   table:{head:["Service (Punjab PKM)","Time"],rows:[["Character certificate / police verification","3 working days"],["Learner licence","~15 minutes"],["Vehicle verification","~40 minutes"],["Loss report","5–10 minutes"],["Crime report","15–20 minutes"],["Tenant / employee registration","15–20 minutes"]]},
   note:"Sindh, KP and Balochistan police run similar services at their service centres.",
-  links:[["Punjab Police","https://punjabpolice.gov.pk"],["Islamabad Police","https://islamabadpolice.gov.pk"]], help:"15 · 8787" }
+  links:[["Punjab Police","https://punjabpolice.gov.pk"],["Islamabad Police","https://islamabadpolice.gov.pk"]], help:"15 · 8787" },
+
+/* ===== Added 6 Oct 2026 (second sweep) ===== */
+{ id:"hajj", grp:"transport", sub:"abroad", region:["national"], art:"globe", name:"Hajj 2027 registration", ur:"حج ۲۰۲۷", by:"Ministry of Religious Affairs", status:"open",
+  summary:"Registration for Hajj 2027 opened on 23 June 2026 and is free. Everyone, whether going on the government or a private scheme, must first register on the Pak Hajj app or web portal. Places are filled first come, first served.",
+  facts:[["Registration","Free"],["Opened","23 Jun 2026"],["Apply via","Pak Hajj app"],["Passport valid to","26 Nov 2027"]],
+  elig:["Pakistani citizens, in Pakistan or abroad","Families can register together","A passport valid until at least 26 November 2027 is preferred; you can register first and add it later"],
+  docs:["CNIC or NICOP","Passport (valid to 26 Nov 2027)","Mobile number and email"],
+  steps:["Install the Pak Hajj app or open the Ministry's Hajj portal.","Register yourself and family members with CNIC details; registration costs nothing.","Choose the government scheme or a registered private tour operator.","Deposit Hajj dues only through the banks the Ministry names when packages are announced.","Follow the app for vaccination, training and flight schedules."],
+  table:{head:["Route","Detail"],rows:[["Government scheme","Package and instalments announced by the Ministry; pay only at designated banks"],["Private scheme","Only Ministry-registered tour operators"],["Labour quota","Employers sponsor low-income workers; apply via the Hajj portal by 10 Oct 2026"],["Khuddam-ul-Hujjaj","Volunteer helpers; applications invited in August 2026"]]},
+  note:"Never pay an agent for registration. Dues are deposited in the bank, never in cash to a person.",
+  links:[["Ministry of Religious Affairs (Hajj)","https://hajjinfo.org"]], help:"Ministry of Religious Affairs" },
+
+{ id:"arms-licence", grp:"certificates", sub:"arms", region:["national"], art:"id", name:"Arms licence", ur:"اسلحہ لائسنس", by:"Provincial Home Departments · Ministry of Interior", status:"check",
+  summary:"Arms licences are issued by each province's Home Department, and all-Pakistan licences need extra approval. Rules differ widely: KP takes new applications online through Dastak, Sindh suspended new licences on 16 September 2026, and Punjab handles modifications online.",
+  facts:[["Min. age","21"],["KP","Dastak (online)"],["Sindh new licences","Suspended"],["Needs","Police verification"]],
+  elig:["Pakistani citizens aged 21 or over with a clean police record","Subject to the province's current policy and quota"],
+  docs:["CNIC and photos","Stamp paper affidavit","Application form","Government employees: pay slip and departmental permission"],
+  steps:["Check your province's current policy in the table below.","Apply online (KP Dastak) or at the district arms licence branch with documents.","Give biometrics through NADRA.","Police verify your record; the district or Home Department approves within the quota.","Pay the fee by PSID, buy the weapon from a licensed dealer, and get the weapon number entered on the licence."],
+  table:{head:["Area","Status (Oct 2026)"],rows:[["Khyber Pakhtunkhwa","New, renewal and conversion through dastak.kp.gov.pk; 2026 fees about Rs 10,000 (KP) and Rs 15,000 (all-Pakistan)"],["Sindh","New computerised licences suspended from 16 Sep 2026; renewals and duplicates at the Arms Branch, Sindh Secretariat"],["Punjab","Modifications (bore, category, validity) online through the NADRA module; digital licence for the Pak-ID wallet approved Sep 2026, not yet released"],["Balochistan, ICT, AJK, GB","Home Department / district administration"]]},
+  note:"Carrying a licensed weapon in public is restricted under Section 144 orders in many districts. Fees and bans change often; confirm with the Home Department before applying.",
+  links:[["KP Dastak","https://dastak.kp.gov.pk"],["KP arms licence (RTS)","https://www.kprts.gov.pk/services/issuance-of-arms-license/"]], help:"Provincial Home Department" },
+
+{ id:"property-tax-other", grp:"bills", sub:"property", region:["sindh","kp","ict"], art:"tax", name:"Property tax in Sindh, KP & Islamabad", ur:"پراپرٹی ٹیکس", by:"Excise & Taxation Sindh · Excise KP · CDA / MCI", status:"open",
+  summary:"Urban property tax is collected by each province's Excise department and, in Islamabad, by the CDA and Metropolitan Corporation. Khyber Pakhtunkhwa is offering 30% off arrears if you pay the full amount by 31 December 2026.",
+  facts:[["Sindh rate","25% of annual value"],["Sindh pay","excise.gos.pk · ePay Sindh"],["KP rebate","30% off arrears"],["KP deadline","31 Dec 2026"]],
+  elig:["Owners of urban property in rating areas","KP: self-occupied homes up to 5 marla are exempt"],
+  docs:["Property number or old challan","Owner's CNIC"],
+  steps:["Sindh: find your property on the Excise website or ePay Sindh app by property number or CNIC, check the challan, and pay through 1Link, Sindh Bank or a wallet.","KP: visit the District Excise & Taxation office, get a challan (with the arrears rebate applied if you pay in full), pay at the bank or treasury, and keep the stamped receipt.","Islamabad: pay property tax to CDA / Metropolitan Corporation Islamabad; a clearance NOC is needed before any property transfer.","If your property doesn't appear, fix the record at the tax office before paying."],
+  table:null,
+  note:"Sindh tax is based on a valuation table (locality, plot size, covered area), not the actual rent. For Punjab, see the property tax & land records guide.",
+  links:[["Excise Sindh tax portal","https://taxportal.excise.gos.pk"],["Capital Development Authority","https://www.cda.gov.pk"]], help:"District Excise office" },
+
+{ id:"cda-services", grp:"bills", sub:"property", region:["ict"], art:"house", name:"CDA property transfer & building plans (Islamabad)", ur:"سی ڈی اے خدمات", by:"Capital Development Authority", status:"open",
+  summary:"In Islamabad's CDA sectors, property transfers go through CDA's One Window at the Facilitation Centre in G-7/4, and building plans are submitted and tracked online.",
+  facts:[["One Window","Facilitation Centre G-7/4"],["Estate (residential)","051-9252428"],["CVT","2% (500+ sq yd)"],["Building plans","Online"]],
+  elig:["Owners, buyers and sellers of CDA-allotted property","Owners building or altering a house or commercial building"],
+  docs:["Signed transfer application by both parties","Original allotment letter","CNICs and specimen signatures","Affidavit on stamp paper","Property tax clearance and Building Control NOC (built property)","Transfer fee pay order"],
+  steps:["Clear property tax arrears and get the revenue NOC.","For built property, get the Building Control NOC.","Pay the Capital Value Tax if it applies, and FBR's advance taxes separately.","Both parties attend the One Window with originals and copies.","Collect the transfer letter.","For construction, register your architect and submit the building plan on CDA's online system, then track approval."],
+  table:null,
+  note:"CDA does not publish the sale transfer fee online; confirm it at the counter. Overseas buyers need an embassy-attested power of attorney.",
+  links:[["Capital Development Authority","https://www.cda.gov.pk"]], help:"CDA 051-9252428" },
+
+{ id:"women-help", grp:"complaints", sub:"safety", region:["national"], art:"home", name:"Help for women: harassment, violence & property rights", ur:"خواتین کے لیے مدد", by:"FOSPAH · Punjab Commission on the Status of Women · police", status:"open",
+  summary:"Women facing workplace harassment, domestic violence or denial of property can get free help. In an emergency call 15. Punjab runs an all-female helpline (1043) and, since May 2026, a virtual women police station.",
+  facts:[["Emergency","15"],["Punjab helpline","1043"],["Workplace harassment","FOSPAH"],["Cost","Free"]],
+  elig:["Any woman, or someone helping her"],
+  docs:["CNIC if available","Any evidence: messages, photos, medical report, witnesses"],
+  steps:["In immediate danger, call 15.","Punjab: call 1043 (Mon–Sat, 8am–4pm) for advice, legal help and referral; or report to the virtual women police station through 15, the Punjab safety app's live chat, the Safe City web portal or a video call.","Workplace harassment anywhere in Pakistan: file free with the Federal Ombudsperson (FOSPAH) online, by phone or at a regional office.","Women denied inheritance or property in Islamabad can also complain to FOSPAH under the 2020 property rights law.","Keep copies of everything you submit and the complaint number."],
+  table:{head:["Service","How to reach"],rows:[["Police emergency","15"],["Punjab Women Helpline (PCSW)","1043 · all-female staff"],["Punjab virtual women police station","15 · safety app chat · Safe City portal"],["FOSPAH (workplace harassment)","complaints.fospah.gov.pk · 051-9218845 · offices in Islamabad, Karachi, Lahore, Peshawar, Quetta, Multan"]]},
+  note:"Mobile calls to 1043 are charged at your network's rate; landline calls are free. Your information is kept confidential.",
+  links:[["FOSPAH complaints","https://complaints.fospah.gov.pk"],["Punjab Commission on the Status of Women","https://pcsw.punjab.gov.pk"]], help:"15 · 1043 · FOSPAH 051-9218845" },
+
+{ id:"balochistan-health-card", grp:"health", sub:"cards", region:["balochistan"], art:"health", name:"Balochistan Health Card", ur:"بلوچستان ہیلتھ کارڈ", by:"Government of Balochistan", status:"open",
+  summary:"Since April 2026 the CNIC itself works as the Balochistan Health Card. Residents get free inpatient treatment, including heart procedures and deliveries, at empanelled hospitals in Balochistan and elsewhere in Pakistan.",
+  facts:[["Card","Your CNIC"],["Since","Apr 2026"],["Covers","Inpatient care"],["Cost to you","Free"]],
+  elig:["Residents of Balochistan registered with NADRA"],
+  docs:["CNIC of the patient or head of family; B-Form for children"],
+  steps:["Go to an empanelled hospital and ask for the health card counter.","Show your CNIC; the counter checks eligibility.","Get admitted and treated without paying.","Keep the discharge papers."],
+  table:null,
+  note:"Ask the hospital or the Balochistan Health Department for the current panel list and per-family limit.",
+  links:[["Government of Balochistan","https://balochistan.gov.pk"]], help:"Balochistan Health Department" },
+
+{ id:"ramzan-relief", grp:"welfare", sub:"cash", region:["national"], art:"card", name:"Ramzan relief packages", ur:"رمضان ریلیف پیکج", by:"Federal and provincial governments", status:"closed",
+  summary:"Federal and provincial governments usually announce Ramzan relief, such as cash or ration support, a few weeks before Ramzan. The 2026 packages have ended; packages for Ramzan 2027 have not been announced yet.",
+  facts:[["Next Ramzan","~Feb 2027"],["2027 package","Not announced"],["BISP check","8171"],["Beware","Fake sites"]],
+  elig:["Usually low-income families in the BISP / NSER database or provincial social registries"],
+  docs:["CNIC of the head of family"],
+  steps:["Watch official announcements from the federal government, BISP or your provincial government in early 2027.","Check eligibility only through the official SMS code or website announced by the government.","Collect support only through the official channel (bank, wallet, or designated centre)."],
+  table:null,
+  note:"Dozens of unofficial websites copy government logos and promise Ramzan cash. They collect CNICs and phone numbers for fraud. Use only links from official government sites.",
+  links:[["BISP","https://bisp.gov.pk"]], help:"BISP 0800-26477" }
 ];
 const NEWS = [
   ["2 Oct 2026","6-month KIBOR at 12.35%: compare bank loan costs in the calculator","bank-loans"],
@@ -1452,7 +1523,11 @@ const DIR = [
   ["National Job Portal","Government job listings","https://www.njp.gov.pk","Free"],
   ["SECP LEAP","Register a company","https://leap.secp.gov.pk","Paid"],
   ["IPO Pakistan","Trademarks, copyright, patents","https://ipo.gov.pk","Paid"],
-  ["Benazir Hari Card","Sindh farmer registration","https://www.benazirharicard.gos.pk","Free"]]],
+  ["Benazir Hari Card","Sindh farmer registration","https://www.benazirharicard.gos.pk","Free"],
+  ["AJK Public Service Commission","Government jobs in AJK","https://www.ajkpsc.gov.pk","Paid"],
+  ["Government of AJK","AJK departments and services","https://ajk.gov.pk","Free"],
+  ["Government of Gilgit-Baltistan","GB departments and services","https://www.gilgitbaltistan.gov.pk","Free"],
+  ["Government of Balochistan","Balochistan departments and health card","https://balochistan.gov.pk","Free"]]],
  ["Health, education & water",[
   ["Punjab Health Initiative (PHIMC)","Health card · 0800-07542","https://phimc.punjab.gov.pk","Free"],
   ["Sehat Sahulat Programme","Federal health card (ICT, AJK, GB)","https://pmhealthprogram.gov.pk","Free"],
@@ -1472,7 +1547,11 @@ const DIR = [
   ["Punjab Police","Character certificate, FIR help, Khidmat Markaz","https://punjabpolice.gov.pk","Paid"],
   ["Wafaqi Mohtasib","Federal ombudsman · 1055","https://www.mohtasib.gov.pk","Free"],
   ["Sehat Card Plus (KP)","KP health card · 0800-89898","https://sehatcardplus.gov.pk","Free"],
-  ["National Highway Authority","M-Tag and motorways","https://nha.gov.pk","Paid"]]]
+  ["National Highway Authority","M-Tag and motorways","https://nha.gov.pk","Paid"],
+  ["FOSPAH","Workplace harassment complaints · 051-9218845","https://complaints.fospah.gov.pk","Free"],
+  ["Punjab Women Helpline","PCSW helpline 1043","https://pcsw.punjab.gov.pk","Free"],
+  ["KP Dastak","Arms licences and KP e-services","https://dastak.kp.gov.pk","Paid"],
+  ["Capital Development Authority","Islamabad property and building plans","https://www.cda.gov.pk","Paid"]]]
 ];
 
 /* ===== Helpers ===== */

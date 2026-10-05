@@ -12,6 +12,7 @@ Static website explaining Pakistani government services, schemes, loans, travel 
 | `trains/` | Train finder: timetables and estimated fares (generated from `content/trains.md`) |
 | `parcels/` | Parcel guide: courier prices and rules (generated from `content/parcels.md`) |
 | `fees/` | Pay school, college, university, board and test fees online: 1Bill/Kuickpay how-to, exact codes for major institutions, and 500+ institutions from 1Link's 1Bill biller list (data inline in the page) |
+| `account/` | My details: sign up / log in, save name, mobile, CNIC, address once; copy buttons; autofills site forms |
 | `admin-units/` | Directory of every division, district and tehsil in Pakistan, council tiers and official election-office numbers (data is inline in the page script, checked 6 Oct 2026) |
 
 ## Editing the train and parcel guides
@@ -33,6 +34,24 @@ Every page has a Search button (shortcuts: `/` or `Ctrl/Cmd+K`) that searches al
 ```sh
 node scripts/build_search_index.js
 ```
+
+## Accounts and saved details
+
+`account.js` (loaded on every page) adds a **Sign in / My details** button and fills any form field marked `data-profile="name"` (keys: `name father mobile email cnic dob city district province address`).
+
+- **Without setup** the site runs in *device-only* mode: details are saved in the visitor's own browser.
+- **CNIC never leaves the device**, even when signed in. `firestore.rules` also rejects any server write containing a `cnic` field.
+
+To switch on real accounts (email/password and Google), using Firebase's free plan:
+
+1. Go to console.firebase.google.com → **Add project**.
+2. **Build → Authentication → Get started**, then enable **Email/Password** and **Google**.
+3. In Authentication → **Settings → Authorized domains**, add your site's domain (e.g. `sahulatguide.pk`).
+4. **Build → Firestore Database → Create database** (production mode, a region near Pakistan such as `asia-south1`).
+5. In Firestore → **Rules**, paste the contents of `firestore.rules` and **Publish**.
+6. **Project settings → Your apps → Web (</>)**, register the app, copy the `firebaseConfig` values into `firebase-config.js` (`window.SG_FIREBASE_CONFIG = { ... }`).
+
+These config values are meant to be public; access is controlled by the rules.
 
 ## Settings
 

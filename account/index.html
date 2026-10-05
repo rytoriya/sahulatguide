@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Details | Sahulat Guide</title>
+<meta name="description" content="Sign in to Sahulat Guide and save your name, mobile number, CNIC and address once. Copy them with one tap when you fill government forms.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<style>
+/* Layout: personal file. Account strip on top, then a two-column sheet: the edit form and a "ready to copy" card */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --sunk:#eaefed; --line:#dde3e1;
+  --ink:#17232e; --muted:#5a6872; --brand:#0d6b52; --brand-ink:#ffffff; --brand-soft:#e2f1ec;
+  --stamp:#b4452f; --stamp-soft:#f8e7e2; --gold:#9a6a12; --gold-soft:#f6ecd6;
+  --display:"Sora", system-ui, sans-serif;
+  --body:"Noto Sans", "Segoe UI", system-ui, sans-serif;
+  --urdu:"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c;
+  --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
+  --stamp:#f08b72; --stamp-soft:#3d2119; --gold:#e8b45a; --gold-soft:#3a2d14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c;
+  --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
+  --stamp:#f08b72; --stamp-soft:#3d2119; --gold:#e8b45a; --gold-soft:#3a2d14; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:var(--brand)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+main.wrap{padding-block:24px 56px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:20px;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+.ur{font-family:var(--urdu);direction:rtl}
+
+header.site{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--brand)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .back:hover{border-color:var(--brand)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}}
+
+.intro{display:grid;gap:8px}
+.intro p{max-width:66ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;align-content:start;min-width:0}
+.strip{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:14px 18px;border-radius:var(--r);background:var(--brand-soft)}
+.strip b{font-weight:600}
+.strip .acts{display:flex;flex-wrap:wrap;gap:8px}
+
+.auth{max-width:460px}
+.tabs{display:flex;gap:4px;padding:4px;background:var(--sunk);border-radius:999px}
+.tab{flex:1;border:0;background:none;padding:9px 12px;border-radius:999px;cursor:pointer;font-weight:600;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+form{display:grid;gap:12px}
+label.f{display:grid;gap:5px;font-size:13.5px;font-weight:600;min-width:0}
+label.f .u{font-family:var(--urdu);font-weight:400;color:var(--muted);font-size:12.5px;margin-left:6px}
+label.f small{font-weight:400;color:var(--muted)}
+input,select,textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-size:15px}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 18%,transparent)}
+.err{color:var(--stamp);font-size:12.5px;font-weight:500}
+[aria-invalid="true"]{border-color:var(--stamp)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink);font-size:14.5px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{color:var(--stamp)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.msg{padding:10px 12px;border-radius:10px;font-size:14px}
+.msg.ok{background:var(--brand-soft)}
+.msg.bad{background:var(--stamp-soft)}
+.linkbtn{background:none;border:0;padding:0;color:var(--brand);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-size:13.5px;justify-self:start}
+
+.sheet{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:820px){.sheet{grid-template-columns:1fr}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}}
+.full{grid-column:1/-1}
+.lock{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:var(--gold);background:var(--gold-soft);padding:2px 8px;border-radius:999px;margin-left:6px}
+.copylist{display:grid;gap:2px}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.crow .k{font-size:12px;color:var(--muted);font-weight:600}
+.crow .v{font-weight:600;word-break:break-word;font-variant-numeric:tabular-nums}
+.crow .v.none{color:var(--muted);font-weight:400;font-style:italic}
+.copy{flex:none;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 11px;font-size:12.5px;font-weight:600;cursor:pointer}
+.copy:hover{border-color:var(--brand)}
+.copy[disabled]{opacity:.45;cursor:default}
+.where{display:grid;gap:8px;font-size:13.5px;padding:14px 16px;border-radius:var(--r);background:var(--gold-soft)}
+.where b{color:var(--gold)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+<main class="wrap">
+  <div class="intro">
+    <h1>My details</h1>
+    <p class="muted">Save your details once. Sahulat Guide fills them into its own forms, and you can copy any of them with one tap when you fill a government website or app.</p>
+  </div>
+
+  <div class="strip" id="strip" hidden></div>
+
+  <!-- Sign in / create account -->
+  <div class="card auth" id="authCard" hidden>
+    <div class="tabs" role="tablist" aria-label="Account">
+      <button class="tab" role="tab" id="tSignin" aria-selected="true" type="button">Sign in</button>
+      <button class="tab" role="tab" id="tSignup" aria-selected="false" type="button">Create account</button>
+    </div>
+    <button class="btn" id="google" type="button"><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 38.2 44 33 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Continue with Google</button>
+    <div class="or">or with email</div>
+    <form id="authForm" novalidate>
+      <label class="f" id="nameRow" hidden>Full name<input id="aName" type="text" autocomplete="name"></label>
+      <label class="f">Email<input id="aEmail" type="email" autocomplete="email" required></label>
+      <label class="f">Password<input id="aPass" type="password" autocomplete="current-password" required minlength="8"><small id="passHint" hidden>At least 8 characters.</small></label>
+      <button class="btn primary" id="authGo" type="submit">Sign in</button>
+      <button class="linkbtn" id="forgot" type="button">Forgot password?</button>
+    </form>
+    <div class="msg" id="authMsg" role="status" hidden></div>
+    <p class="muted" style="font-size:13px">You can also skip this and save your details on this device only.</p>
+  </div>
+
+  <!-- Details -->
+  <div class="sheet" id="sheet">
+    <div class="card">
+      <h2>Your details</h2>
+      <form id="pform" novalidate data-no-autofill>
+        <div class="grid2" id="fields"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <button class="btn primary" id="psave" type="submit">Save details</button>
+          <span class="msg" id="pmsg" role="status" hidden></span>
+        </div>
+      </form>
+    </div>
+    <div class="card">
+      <h2>Ready to copy</h2>
+      <p class="muted" style="font-size:13.5px">Tap Copy, then paste into NADRA, passport, BISP or any other form.</p>
+      <div class="copylist" id="copylist"></div>
+      <div class="where" id="where"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <button class="btn" id="forget" type="button">Remove my details from this device</button>
+        <button class="btn danger" id="delAcc" type="button" hidden>Delete my account</button>
+      </div>
+      <div class="msg bad" id="delConfirm" hidden>
+        <p style="margin-bottom:8px">Delete your account and the details saved in it? This can't be undone.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn danger" id="delYes" type="button">Yes, delete</button><button class="btn" id="delNo" type="button">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Sahulat Guide is an independent guide, not a government website. We never ask for passwords to government portals, and we never share your details.</footer>
+</main>
+
+<script>
+(function(){
+  const $=s=>document.querySelector(s);
+  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let mode="signin";
+  function msg(el,text,ok){el.textContent=text;el.className="msg "+(ok?"ok":"bad");el.hidden=!text;}
+
+  function waitApi(cb){ if(window.SahulatAccount) cb(window.SahulatAccount); else setTimeout(()=>waitApi(cb),40); }
+  waitApi(A=>{
+    /* build form */
+    $("#fields").innerHTML = A.FIELDS.map(f=>{
+      const full = (f.k==="address") ? " full" : "";
+      const lock = f.device ? '<span class="lock" title="Never leaves this device">🔒 This device only</span>' : "";
+      const attrs = `id="p_${f.k}" name="${f.k}"${f.auto?` autocomplete="${f.auto}"`:' autocomplete="off"'}${f.placeholder?` placeholder="${esc(f.placeholder)}"`:""}${f.inputmode?` inputmode="${f.inputmode}"`:""} aria-describedby="e_${f.k}"`;
+      let ctl;
+      if(f.type==="select") ctl=`<select ${attrs}>${f.options.map(o=>`<option value="${esc(o)}">${o?esc(o):"Choose…"}</option>`).join("")}</select>`;
+      else if(f.type==="textarea") ctl=`<textarea ${attrs}></textarea>`;
+      else ctl=`<input type="${f.type}" ${attrs}>`;
+      return `<label class="f${full}">${esc(f.label)}<span class="u" lang="ur">${f.ur}</span>${lock}${ctl}<span class="err" id="e_${f.k}"></span></label>`;
+    }).join("");
+    $("#p_cnic").addEventListener("input",e=>{const p=e.target.selectionStart===e.target.value.length;e.target.value=A.format.cnic(e.target.value);});
+
+    function fill(){
+      const p=A.get();
+      A.FIELDS.forEach(f=>{ const el=$("#p_"+f.k); if(document.activeElement!==el) el.value=p[f.k]||""; });
+      $("#copylist").innerHTML = A.FIELDS.map(f=>{
+        const v=p[f.k]||"";
+        const shown = f.k==="dob" && v ? new Date(v+"T00:00:00").toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}) : v;
+        return `<div class="crow"><div style="min-width:0"><div class="k">${esc(f.label)}</div><div class="v${v?"":" none"}">${v?esc(shown):"Not added"}</div></div><button class="copy" type="button" data-v="${esc(f.k==="dob"?shown:v)}" ${v?"":"disabled"} aria-label="Copy ${esc(f.label)}">Copy</button></div>`;
+      }).join("");
+    }
+    function paint(){
+      const s=A.status();
+      const cloud=s.mode==="cloud";
+      $("#authCard").hidden = !(cloud && !s.signedIn && s.ready);
+      $("#delAcc").hidden = !s.signedIn;
+      const strip=$("#strip");
+      if(s.signedIn){
+        strip.hidden=false;
+        strip.innerHTML=`<span>Signed in as <b>${esc(s.user.email||s.user.name)}</b>. Your details sync across your devices.</span><span class="acts"><button class="btn" id="out" type="button">Sign out</button></span>`;
+        $("#out").onclick=()=>A.signOut(false).then(()=>{ if(typeof setMode==="function") setMode("signin"); });
+      } else if(!cloud){
+        strip.hidden=false;
+        strip.innerHTML=`<span>${esc(s.error||"Accounts aren't switched on yet, so your details are saved in this browser on this device.")}</span>`;
+      } else strip.hidden=true;
+      $("#where").innerHTML = s.signedIn
+        ? `<b>Where your details are kept</b><span>Name, mobile, email, date of birth and address are saved in your Sahulat Guide account so they appear on any device you sign in on.</span><span>Your <b>CNIC is kept only on this device</b>. It is never sent to our servers, so add it again on a new phone or computer.</span>`
+        : `<b>Where your details are kept</b><span>Everything you save is kept in this browser on this device only.${cloud?" Sign in to see your name, mobile and address on your other devices too. Your CNIC always stays on the device.":""}</span><span>On a shared computer, use “Remove my details from this device” when you finish.</span>`;
+      fill();
+    }
+    window.addEventListener("sg-account",paint);
+    paint();
+
+    /* save details */
+    $("#pform").addEventListener("submit",e=>{
+      e.preventDefault();
+      const data={}; A.FIELDS.forEach(f=>data[f.k]=$("#p_"+f.k).value);
+      A.FIELDS.forEach(f=>{$("#e_"+f.k).textContent="";$("#p_"+f.k).removeAttribute("aria-invalid");});
+      const btn=$("#psave"); btn.disabled=true;
+      A.save(data).then(r=>{ msg($("#pmsg"), r.where==="account"?"Saved to your account.":"Saved on this device.", true); })
+        .catch(err=>{
+          if(err.fields){ Object.entries(err.fields).forEach(([k,t])=>{$("#e_"+k).textContent=t;$("#p_"+k).setAttribute("aria-invalid","true");}); $("#p_"+Object.keys(err.fields)[0]).focus(); msg($("#pmsg"),"Fix the highlighted fields.",false); }
+          else msg($("#pmsg"),err.message||"Couldn't save.",false);
+        }).finally(()=>{btn.disabled=false;});
+    });
+
+    /* copy */
+    $("#copylist").addEventListener("click",e=>{
+      const b=e.target.closest(".copy"); if(!b||b.disabled) return;
+      const v=b.dataset.v, done=t=>{b.textContent=t;setTimeout(()=>b.textContent="Copy",1500);};
+      const fallback=()=>{ const t=document.createElement("textarea"); t.value=v; document.body.appendChild(t); t.select(); try{document.execCommand("copy");done("Copied");}catch(_){done("Select & copy");} t.remove(); };
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(()=>done("Copied"),fallback); else fallback();
+    });
+
+    /* forget / delete */
+    $("#forget").onclick=()=>{ A.forgetDevice(); msg($("#pmsg"),"Removed from this device.",true); };
+    $("#delAcc").onclick=()=>{ $("#delConfirm").hidden=false; $("#delYes").focus(); };
+    $("#delNo").onclick=()=>{ $("#delConfirm").hidden=true; };
+    $("#delYes").onclick=()=>{ A.deleteAccount().then(()=>{ $("#delConfirm").hidden=true; msg($("#pmsg"),"Your account was deleted.",true); }).catch(e=>{ $("#delConfirm").hidden=true; msg($("#pmsg"),e.message,false); }); };
+
+    /* sign in / up */
+    function setMode(m){
+      mode=m;
+      $("#tSignin").setAttribute("aria-selected",m==="signin"); $("#tSignup").setAttribute("aria-selected",m==="signup");
+      $("#nameRow").hidden=m!=="signup"; $("#passHint").hidden=m!=="signup"; $("#forgot").hidden=m!=="signin";
+      $("#aPass").autocomplete = m==="signup"?"new-password":"current-password";
+      $("#authGo").textContent = m==="signup"?"Create account":"Sign in";
+      $("#authMsg").hidden=true;
+    }
+    $("#tSignin").onclick=()=>setMode("signin"); $("#tSignup").onclick=()=>setMode("signup");
+    $("#authForm").addEventListener("submit",e=>{
+      e.preventDefault();
+      const email=$("#aEmail").value.trim(), pass=$("#aPass").value, name=$("#aName").value.trim();
+      if(!email||!pass){ msg($("#authMsg"),"Enter your email and password.",false); return; }
+      if(mode==="signup"&&pass.length<8){ msg($("#authMsg"),"Use a password of at least 8 characters.",false); return; }
+      const btn=$("#authGo"); btn.disabled=true;
+      (mode==="signup"?A.signUp(email,pass,name):A.signIn(email,pass))
+        .then(()=>{ msg($("#authMsg"),"",true); $("#aPass").value=""; })
+        .catch(err=>msg($("#authMsg"),err.message,false))
+        .finally(()=>{btn.disabled=false;});
+    });
+    $("#google").onclick=()=>A.google().catch(err=>msg($("#authMsg"),err.message,false));
+    $("#forgot").onclick=()=>{ const email=$("#aEmail").value.trim(); if(!email){msg($("#authMsg"),"Enter your email above first.",false);return;} A.reset(email).then(()=>msg($("#authMsg"),"Check your email for a link to set a new password.",true)).catch(err=>msg($("#authMsg"),err.message,false)); };
+    setMode("signin");
+  });
+})();
+</script>
+<script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
+</body>
+</html>

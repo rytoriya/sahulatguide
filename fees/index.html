@@ -47,7 +47,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
 header.site .brand svg{width:34px;height:34px}
 header.site .brand > span > span{color:var(--brand)}
-header.site .back{font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
 header.site .back:hover{border-color:var(--brand)}
 header.site .hdr-r{display:flex;align-items:center;gap:8px}
 @media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}}
@@ -98,7 +98,7 @@ footer ul{margin:0;padding-left:18px}
 </style>
 </head>
 <body>
-<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
 <main class="wrap">
   <div class="hero">
     <span class="eyebrow">Schools · Colleges · Universities · Boards · Tests</span>
@@ -191,5 +191,6 @@ try{const q=new URLSearchParams(location.search).get("q"); if(q){fq.value=q; set
 chips(); render();
 </script>
 <script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
 </body>
 </html>

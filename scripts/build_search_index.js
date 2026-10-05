@@ -63,6 +63,7 @@ const TOOLS = [
   ["Train finder", "ٹرین", "Pakistan Railways timetables and estimated fares", "trains/", "train railway timetable fare ticket"],
   ["Parcel guide", "پارسل", "Courier prices and rules: TCS, Leopards, M&P, Pakistan Post", "parcels/", "parcel courier delivery tcs leopards post"],
   ["Pay school & university fees", "فیس آن لائن", "Pay fee vouchers with 1Bill or Kuickpay; 500+ institutions", "fees/", "fee fees voucher challan school college university 1bill kuickpay pay online"],
+  ["My details (sign in)", "میری معلومات", "Save your name, mobile, CNIC and address once; copy them into any form", "account/", "account sign in login sign up register profile my details cnic save"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);

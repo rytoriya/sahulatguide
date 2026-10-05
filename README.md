@@ -22,6 +22,17 @@ pip install markdown
 python3 scripts/build_guides.py
 ```
 
+## Site-wide search
+
+Every page has a Search button (shortcuts: `/` or `Ctrl/Cmd+K`) that searches all service guides, categories, tools, guide sections, and every division, district and tehsil. On the homepage, the header search box covers guides, and its "no results" message opens the full search.
+
+- `search.js` — the search button and pop-up. Add `<script src="search.js" defer></script>` (adjust the path) to a page, and put `<span data-sg-search></span>` where the button should go (`data-sg-search="on-dark compact"` for dark headers or icon-only on phones). Without a slot, a floating button appears.
+- `search-index.js` — generated data. After adding or changing guides, tools or the directory, rebuild it:
+
+```sh
+node scripts/build_search_index.js
+```
+
 ## Settings
 
 - WhatsApp contact number: set `WHATSAPP_NUMBER` near the top of the script in `index.html` (e.g. `"923001234567"`).

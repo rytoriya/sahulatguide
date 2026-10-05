@@ -153,12 +153,14 @@ header.site .brand svg{width:34px;height:34px}
 header.site .brand > span > span{color:var(--brand)}
 header.site .back{font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
 header.site .back:hover{border-color:var(--brand)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}}
 body{margin:0;-webkit-font-smoothing:antialiased}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
-<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><a class="back" href="../">&larr; All services</a></div></header>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
 <main class="wrap">
 
   <div class="hero">
@@ -680,7 +682,23 @@ res.addEventListener("click",e=>{
   if(h.teh){const t=document.getElementById(h.teh); if(t){t.style.borderColor="var(--stamp)";t.style.background="var(--stamp-soft)";}}
 });
 
-render();
+/* deep links from site search: ?p=province, ?d=district-id&t=tehsil-slug */
+(function(){
+  let qs; try{ qs=new URLSearchParams(location.search); }catch(e){ return; }
+  const p=qs.get("p"), d=qs.get("d"), t=qs.get("t");
+  if(!p && !d) return;
+  const dist = d && ALL.find(x=>x.id===d);
+  if(dist){ state.prov=dist.prov.id; state.hit=dist.id; state.open[dist.id]=true; state.all=false; }
+  else if(p && PROV.some(x=>x.id===p)){ state.prov=p; }
+  else return;
+  showTab("directory"); render();
+  setTimeout(()=>{
+    const row=document.getElementById(dist?"row-"+dist.id:"dir");
+    if(row) row.scrollIntoView({block:"center"});
+    if(dist && t){ const c=document.getElementById(`teh-${dist.id}-${t}`); if(c){c.style.borderColor="var(--stamp)";c.style.background="var(--stamp-soft)";} }
+  },60);
+})();
 </script>
+<script src="../search.js" defer></script>
 </body>
 </html>

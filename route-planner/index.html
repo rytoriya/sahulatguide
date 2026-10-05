@@ -208,6 +208,7 @@ details.fuel summary{cursor:pointer;font-weight:500}
         <div class="sugg" id="sugg" hidden></div>
       </form>
       <button class="fchip" id="openstatus" type="button"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/></svg>Road status <span class="cnt" id="cnt"></span></button>
+      <span data-sg-search></span>
     </div>
 
     <div class="zoom">
@@ -627,5 +628,6 @@ function refresh(refit){solve();renderPanel();renderDrawer();if(refit)fitRoute()
 syncSel();resize();solve();fitRoute();renderPanel();renderDrawer();draw();
 new ResizeObserver(()=>{resize();fitRoute();closePop();redraw()}).observe(wrap);
 </script>
+<script src="../search.js" defer></script>
 </body>
 </html>

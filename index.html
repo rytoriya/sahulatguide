@@ -1607,7 +1607,7 @@ function renderList(){
   $("#list").innerHTML = v.length ? v.map(s=>`<button class="svc" data-id="${s.id}" aria-current="${s.id===current}">
       <span class="ic">${ART[s.art]}</span><span class="name">${esc(s.name)}</span><span class="pill ${s.status}">${statusLabel[s.status]}</span>
       <span class="meta">${esc(regionTag(s))} · ${esc(GROUPS[s.grp].subs.find(x=>x[0]===s.sub)[1])}</span></button>`).join("")
-    : `<div class="empty">No services match. Try “All” in the filter above, choose “All of Pakistan”, or search for a shorter word such as “loan”.</div>`;
+    : `<div class="empty">No services match. Try “All” in the filter above, choose “All of Pakistan”, or search for a shorter word such as “loan”. <button type="button" class="btn ghost" style="margin-top:10px" onclick="window.SahulatSearch&&SahulatSearch.open(this,document.getElementById('q').value)">Search tools, districts and tehsils too</button></div>`;
 }
 function renderSheet(id){
   const s = S.find(x=>x.id===id) || S[0]; current = s.id;
@@ -1807,6 +1807,7 @@ $("#guideCount").textContent = S.length + " detailed guides";
 const h = location.hash.slice(1);
 const hs = S.find(s=>s.id===h);
 if(hs) go(hs.grp, hs.id); else go(TABS.some(t=>t[0]===h)?h:"home");
+addEventListener("hashchange",()=>{ const k=location.hash.slice(1); const g=S.find(s=>s.id===k); if(g){ go(g.grp,g.id); scrollTo({top:0}); } else if(TABS.some(t=>t[0]===k)){ go(k); scrollTo({top:0}); } });
 
 /* ===== Scroll reveal (IntersectionObserver; skipped under reduced motion) ===== */
 (function(){
@@ -1818,5 +1819,6 @@ if(hs) go(hs.grp, hs.id); else go(TABS.some(t=>t[0]===h)?h:"home");
 })();
 </script>
 
+<script src="search.js" data-no-button defer></script>
 </body>
 </html>

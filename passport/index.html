@@ -235,6 +235,7 @@
   <div class="topbar">
     <div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="26" height="26"><rect x="7" y="4" width="26" height="32" rx="4" fill="#01411c"/><circle cx="20" cy="17" r="6" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 28h12" stroke="#c9972b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span data-i="brand">Passport Help PK</span></div>
     <div class="row">
+      <span data-sg-search="on-dark compact"></span>
       <button type="button" class="iconbtn" id="pps-lang" aria-label="Switch language">اردو</button>
       <button type="button" class="iconbtn" id="pps-set" aria-expanded="false" aria-controls="pps-settings"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h10M4 17h6M18 7h2M14 17h6"/><circle cx="16" cy="7" r="2"/><circle cx="12" cy="17" r="2"/></svg><span data-i="display">Display</span></button>
     </div>
@@ -981,5 +982,6 @@ setInterval(function(){tick();render()},60000);
 var h=location.hash.slice(1);if(h&&$(h)&&$(h).getAttribute('role')==='tab')selectTab($(h));
 })();
 </script>
+<script src="../search.js" defer></script>
 </body>
 </html>

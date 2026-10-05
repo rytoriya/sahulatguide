@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Districts, Tehsils &amp; Union Councils of Pakistan | Sahulat Guide</title>
+<meta name="description" content="Every division, district and tehsil in Pakistan with population, the local council tier for each area, and official election office numbers to find your Union Council.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<style>
+/* Layout: civic ledger. Search bar on top, three tabs; the Directory tab is a province-by-division register of districts with expandable tehsil rows */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --sunk:#eaefed; --line:#dde3e1;
+  --ink:#17232e; --muted:#5a6872; --brand:#0d6b52; --brand-soft:#e2f1ec;
+  --stamp:#b4452f; --stamp-soft:#f8e7e2; --warn:#9a3a26;
+  --display:"Sora", system-ui, sans-serif;
+  --body:"Noto Sans", "Segoe UI", system-ui, sans-serif;
+  --urdu:"Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Urdu Typesetting", serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c;
+  --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-soft:#163a31;
+  --stamp:#f08b72; --stamp-soft:#3d2119; --warn:#f3a28d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c;
+  --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-soft:#163a31;
+  --stamp:#f08b72; --stamp-soft:#3d2119; --warn:#f3a28d; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:0 48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:24px;font-weight:700}
+h3{font-size:18px;font-weight:600}
+p{margin:0}
+.ur{font-family:var(--urdu);direction:rtl;line-height:2;font-size:.95em}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+a{color:var(--brand)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+
+.oldbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:17px}
+.seal{width:30px;height:30px;border-radius:50%;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-size:15px}
+.crumb{font-size:13px;color:var(--muted)}
+
+.hero{display:grid;gap:14px;padding-block:26px 18px}
+.hero p.lede{max-width:64ch;color:var(--muted);font-size:16px}
+.search{position:relative;max-width:640px}
+.search input{width:100%;padding:13px 14px 13px 42px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:16px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.results{margin-top:6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;max-width:640px}
+.results button{display:flex;width:100%;justify-content:space-between;gap:10px;align-items:center;padding:10px 14px;border:0;background:none;text-align:left;cursor:pointer;border-top:1px solid var(--line)}
+.results button:first-child{border-top:0}
+.results button:hover,.results button:focus-visible{background:var(--brand-soft)}
+.results .path{font-size:12.5px;color:var(--muted)}
+.results .kind{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--stamp);font-weight:600;white-space:nowrap}
+.results .none{padding:12px 14px;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{background:none;border:0;padding:12px 16px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brand)}
+.tabpanel{padding-block:24px}
+.sec-head{display:grid;gap:6px;margin-bottom:18px}
+.sec-head p{color:var(--muted);max-width:70ch}
+
+/* directory */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;cursor:pointer;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--bg)}
+.ghost{border:1px solid var(--line);background:none;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13.5px}
+.ghost:hover{background:var(--sunk)}
+.provcard{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:22px}
+@media (max-width:760px){.provcard{grid-template-columns:1fr}}
+.provcard .ttl{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.provcard .ur{font-size:20px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--muted);margin-top:6px}
+.stats b{color:var(--ink);font-family:var(--display);font-size:18px;font-weight:700;margin-right:4px}
+.tier{margin-top:10px;font-size:14px}
+.tier b{font-weight:600}
+.contacts{display:grid;gap:8px;align-content:start}
+.contact{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;background:var(--sunk)}
+.contact .lbl{font-size:13px;color:var(--muted);line-height:1.35}
+.phone{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.phone span{font-variant-numeric:tabular-nums;font-weight:600;user-select:all}
+.copy{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:2px 7px;font-size:11.5px;cursor:pointer;color:var(--muted)}
+.copy:hover{color:var(--ink)}
+.divhead{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin:22px 0 10px}
+.divhead .ur{font-size:15px;color:var(--muted)}
+.divhead .c{font-size:13px;color:var(--muted)}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
+thead th{border-top:0;background:var(--sunk);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+td.r,th.r{text-align:right}
+td .ur{display:block;font-size:13px;color:var(--muted);text-align:left;line-height:1.7}
+.dname{font-weight:600}
+.tog{background:none;border:0;padding:0;color:var(--brand);cursor:pointer;font-weight:600;white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
+.tehrow td{background:var(--sunk);padding-block:12px}
+.tehs{display:flex;flex-wrap:wrap;gap:6px}
+.teh{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 9px;font-size:13px}
+.teh .p{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:6px}
+.addr{font-size:12.5px;color:var(--muted);margin-top:8px}
+.tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:var(--stamp-soft);color:var(--warn);font-weight:600;letter-spacing:.03em;margin-left:4px;vertical-align:1px}
+.hit{box-shadow:inset 4px 0 0 var(--stamp)}
+.note{padding:12px 14px;border-radius:var(--r);background:var(--stamp-soft);color:var(--ink);font-size:13.5px;display:grid;gap:4px;margin-bottom:16px}
+.note b{color:var(--warn)}
+.summary tbody tr{cursor:pointer}
+.summary tbody tr:hover td{background:var(--brand-soft)}
+
+/* ladder */
+.ladder{display:grid;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.rung{display:grid;grid-template-columns:150px 1fr 1fr;border-top:1px solid var(--line)}
+.rung:first-child{border-top:0}
+.rung.head{background:var(--sunk);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.rung>div{padding:12px 14px;min-width:0}
+.rung .lvl{font-family:var(--display);font-weight:700;font-size:16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--line)}
+.rung .lvl .ur{font-weight:400;font-size:13px;color:var(--muted)}
+.rung .admin{border-right:1px solid var(--line)}
+.who{font-weight:600}
+.what{color:var(--muted);font-size:13.5px}
+.dash{color:var(--muted);font-style:italic;font-size:13.5px}
+@media (max-width:720px){
+  .rung{grid-template-columns:1fr}
+  .rung.head{display:none}
+  .rung .lvl,.rung .admin{border-right:0}
+  .rung .admin::before{content:"Administration"}
+  .rung .elected::before{content:"Elected local government"}
+  .rung .admin::before,.rung .elected::before{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:2px}
+  .rung .lvl{background:var(--sunk)}
+}
+.diffs{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.card{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:14px 16px;display:grid;gap:8px;align-content:start}
+.card p{font-size:14px}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.svc h3{font-size:16px}
+.svc ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.svc .where{font-size:12.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:22px;font-size:13px;color:var(--muted);display:grid;gap:10px}
+footer ul{margin:0;padding-left:18px;display:grid;gap:2px}
+
+header.site{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--brand)}
+header.site .back{font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .back:hover{border-color:var(--brand)}
+body{margin:0;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><a class="back" href="../">&larr; All services</a></div></header>
+<main class="wrap">
+
+  <div class="hero">
+    <span class="eyebrow">Province · Division · District · Tehsil · Union Council</span>
+    <h1>Every division, district and tehsil in Pakistan, and who to call</h1>
+    <p class="lede">Search any district or tehsil to see where it sits, which council tier covers it, and the official office that keeps your area's Union Council list.</p>
+    <div class="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Try Bannu, Daska, Kotri, Turbat or سوات" autocomplete="off" aria-label="Search districts and tehsils across Pakistan">
+    </div>
+    <div id="results" class="results" hidden></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-directory" aria-controls="directory" aria-selected="true">Pakistan directory</button>
+    <button class="tab" role="tab" id="tab-levels" aria-controls="levels" aria-selected="false">How the levels work</button>
+    <button class="tab" role="tab" id="tab-services" aria-controls="services" aria-selected="false">Where to go for what</button>
+  </div>
+
+  <div class="tabpanel" id="directory" role="tabpanel" aria-labelledby="tab-directory">
+    <div class="toolbar">
+      <div class="chips" id="provchips"></div>
+      <button class="ghost" id="expandAll" type="button">Show all tehsils</button>
+    </div>
+    <div id="dir"></div>
+  </div>
+
+  <div class="tabpanel" id="levels" role="tabpanel" aria-labelledby="tab-levels" hidden>
+    <div class="sec-head">
+      <h2>Two chains of offices run side by side</h2>
+      <p>The administration (Commissioner, Deputy Commissioner, Assistant Commissioner) handles revenue, land and law and order. Elected local government handles civic services and civil registration. Its lowest tier is the Union Council in most of Pakistan and the Village or Neighbourhood Council in Khyber Pakhtunkhwa.</p>
+    </div>
+    <div class="ladder" role="table" aria-label="Levels of government">
+      <div class="rung head" role="row"><div>Level</div><div>Administration</div><div>Elected local government</div></div>
+      <div class="rung" role="row"><div class="lvl">Province <span class="ur">صوبہ</span></div>
+        <div class="admin"><div class="who">Chief Secretary, departments, Board of Revenue</div><div class="what">Policy, budgets, appeals above division level</div></div>
+        <div class="elected"><div class="who">Provincial Assembly and Cabinet</div><div class="what">Passes the Local Government Act that creates the councils below</div></div></div>
+      <div class="rung" role="row"><div class="lvl">Division <span class="ur">ڈویژن</span></div>
+        <div class="admin"><div class="who">Commissioner</div><div class="what">Supervises districts, hears revenue appeals against the DC</div></div>
+        <div class="elected"><div class="dash">No elected tier</div></div></div>
+      <div class="rung" role="row"><div class="lvl">District <span class="ur">ضلع</span></div>
+        <div class="admin"><div class="who">Deputy Commissioner (DC)</div><div class="what">Domicile, price control, district coordination, emergencies</div></div>
+        <div class="elected"><div class="who">District council or municipal corporation, where the provincial law has one</div><div class="what">Karachi and Lahore have metropolitan corporations led by a mayor</div></div></div>
+      <div class="rung" role="row"><div class="lvl">Tehsil / Taluka <span class="ur">تحصیل / تعلقہ</span></div>
+        <div class="admin"><div class="who">Assistant Commissioner, Tehsildar, Patwari</div><div class="what">Land records (fard, intiqal), revenue, local magistracy</div></div>
+        <div class="elected"><div class="who">Tehsil or Town council / municipal administration</div><div class="what">Water, sanitation, building approvals, markets</div></div></div>
+      <div class="rung" role="row"><div class="lvl">Union Council <span class="ur">یونین کونسل</span></div>
+        <div class="admin"><div class="who">Secretary (government employee)</div><div class="what">Keeps the birth, death, marriage and divorce registers</div></div>
+        <div class="elected"><div class="who">Chairman and councillors</div><div class="what">Local schemes, dispute resolution, community needs</div></div></div>
+    </div>
+    <div class="diffs">
+      <div class="card"><span class="eyebrow">Khyber Pakhtunkhwa</span><p>Union Councils were replaced by 2,996 Village Councils (rural) and 505 Neighbourhood Councils (urban). Tehsil chairmen, and the Mayor in Peshawar, are directly elected.</p></div>
+      <div class="card"><span class="eyebrow">Punjab</span><p>A new Local Government Act took effect in 2025. Delimitation finished in August 2026: each Union Council covers roughly 22,000 to 31,000 people and has a 13-member house. Lahore alone has 433.</p></div>
+      <div class="card"><span class="eyebrow">Sindh</span><p>Districts are split into talukas. Rural areas have Union Councils; in Karachi the tier is called a Union Committee, with 246 across 25 towns under the city council.</p></div>
+      <div class="card"><span class="eyebrow">Balochistan, Islamabad, AJK, GB</span><p>Union Councils are the lowest tier. Islamabad has 125. Balochistan regrouped its map in July 2026 into 11 divisions, so some district assignments are still settling.</p></div>
+    </div>
+  </div>
+
+  <div class="tabpanel" id="services" role="tabpanel" aria-labelledby="tab-services" hidden>
+    <div class="sec-head">
+      <h2>What do I get done at each level?</h2>
+      <p>The usual first stop for common tasks. Procedures differ between provinces and districts, so check the full Sahulat guide for the task before you go.</p>
+    </div>
+    <div class="svc">
+      <div class="card"><span class="eyebrow">Union / Village / Neighbourhood Council</span><h3>Life events</h3>
+        <ul><li>Birth registration and certificate</li><li>Death registration and certificate</li><li>Marriage (nikah) registration</li><li>Divorce registration and reconciliation notice</li></ul>
+        <p class="where">Ask for the council Secretary. Certificates are computerised through NADRA's civil registration system.</p></div>
+      <div class="card"><span class="eyebrow">Tehsil / Taluka</span><h3>Land and municipal services</h3>
+        <ul><li>Fard and intiqal from the patwari or land record centre</li><li>Building plan approval and NOCs</li><li>Water, sanitation and streetlight complaints</li></ul>
+        <p class="where">Assistant Commissioner's office for revenue; the tehsil or town municipal office for civic services.</p></div>
+      <div class="card"><span class="eyebrow">District</span><h3>Certificates and complaints</h3>
+        <ul><li>Domicile certificate</li><li>Price control and overcharging complaints</li><li>District grievances and coordination with police, health and education</li></ul>
+        <p class="where">Deputy Commissioner's office at the district headquarters.</p></div>
+      <div class="card"><span class="eyebrow">District election office</span><h3>Which Union Council am I in?</h3>
+        <ul><li>Official Union Council list and boundaries (delimitation)</li><li>Voter list for your area</li></ul>
+        <p class="where">Phone numbers are in the directory where the Election Commission publishes them.</p></div>
+      <div class="card"><span class="eyebrow">Not by area</span><h3>Federal identity services</h3>
+        <ul><li>CNIC and B-Form</li><li>Family Registration Certificate (FRC)</li><li>Passport</li></ul>
+        <p class="where">Any NADRA or Passport office, not only in your own district.</p></div>
+    </div>
+  </div>
+
+  <footer>
+    <div><b>About this data.</b> Divisions, districts and tehsils for all four provinces, Islamabad, Azad Jammu &amp; Kashmir and Gilgit-Baltistan, checked on 6 October 2026. Population is Census 2023 (AJK 2017). New tehsils carved out after the census show a dash; their people are still counted in the parent tehsil. Where sources disagree, the district figure is the total of its tehsils. Balochistan follows the July 2026 notification and its tehsil assignments are provisional.</div>
+    <div><b>About phone numbers.</b> Only numbers published by the Election Commission of Pakistan or NADRA are shown. Individual Union Councils do not publish phone numbers, so none are listed; your district election office or the council Secretary at the council office can confirm your UC. The Punjab district list comes from an ECP directory made before the newest districts were created, so those districts point to the parent office. Call ahead, as numbers change.</div>
+    <div>Sources:
+      <ul>
+        <li><a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Punjab,_Pakistan" target="_blank" rel="noopener">Tehsils of Punjab</a>, <a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Sindh" target="_blank" rel="noopener">Sindh</a>, <a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Khyber_Pakhtunkhwa" target="_blank" rel="noopener">Khyber Pakhtunkhwa</a>, <a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Balochistan" target="_blank" rel="noopener">Balochistan</a>, <a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Azad_Kashmir" target="_blank" rel="noopener">AJK</a>, <a href="https://en.wikipedia.org/wiki/List_of_tehsils_of_Gilgit-Baltistan" target="_blank" rel="noopener">Gilgit-Baltistan</a> (Census figures from Pakistan Bureau of Statistics)</li>
+        <li><a href="https://propakistani.pk/2026/07/12/balochistan-govt-notifies-new-divisions-and-districts/" target="_blank" rel="noopener">Balochistan notifies new divisions and districts (July 2026)</a></li>
+        <li><a href="https://ecp.gov.pk/contact-us" target="_blank" rel="noopener">Election Commission of Pakistan, contact page</a> and <a href="https://ecp.gov.pk/storage/files/1/Punjab%20Office%20address.PDF" target="_blank" rel="noopener">Punjab field office directory</a></li>
+        <li><a href="https://poa.nadra.gov.pk/contact-us/" target="_blank" rel="noopener">NADRA contact</a></li>
+        <li><a href="https://pakobserver.net/lahore-gets-433-union-councils-as-punjab-moves-closer-to-lg-polls/" target="_blank" rel="noopener">Lahore gets 433 Union Councils</a>, <a href="https://www.dawn.com/news/1732019" target="_blank" rel="noopener">Karachi's three-tier set-up</a>, <a href="https://en.wikipedia.org/wiki/Next_Islamabad_local_government_elections" target="_blank" rel="noopener">Islamabad's 125 UCs</a>, <a href="https://en.wikipedia.org/wiki/Village_Council_(Khyber_Pakhtunkhwa)" target="_blank" rel="noopener">KP Village Councils</a></li>
+      </ul>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* ---------- DATA ----------
+   District line: "Name|اردو|HQ|Tehsil:pop|Tehsil|..."   options object (4th array item): {pop, uc, isNew, dec}
+*/
+const PROV = [
+ {id:"kp", name:"Khyber Pakhtunkhwa", ur:"خیبر پختونخوا", tier:"Village Councils (rural) and Neighbourhood Councils (urban)",
+  ucNote:"2,996 Village Councils and 505 Neighbourhood Councils", tehsilWord:"tehsil",
+  contacts:[["Provincial Election Commissioner, Peshawar","091-9211036"]],
+  divs:[
+   ["Peshawar","پشاور",[
+    ["Peshawar|پشاور|Peshawar|Badhber:439912|Chamkani:624354|Hassan Khel:72557|Mathra:495059|Peshawar City:2113596|Peshtakhara:480436|Shah Alam:532848"],
+    ["Charsadda|چارسدہ|Charsadda|Charsadda:909438|Shabqadar:440524|Tangi:485542"],
+    ["Nowshera|نوشہرہ|Nowshera|Jehangira:434984|Nowshera:796226|Pabbi:509495"],
+    ["Khyber|خیبر|Landi Kotal|Bagh Maidan|Bara:548084|Bazar Zakha Khel|Fort Salop|Jamrud:243290|Landi Kotal:312313|Mula Gori:42580|Painda Cheena",{pop:1146267}],
+    ["Mohmand|مہمند|Ghalanai|Ambar Utman Khel:79455|Halim Zai:89149|Pindiali:112247|Pran Ghar:36046|Safi:109620|Upper Mohmand:63659|Yake Ghund:63757"]]],
+   ["Mardan","مردان",[
+    ["Mardan|مردان|Mardan|Garhi Kapura:319465|Katlang:377535|Mardan:1040893|Rustam:279527|Takht Bhai:727478"],
+    ["Swabi|صوابی|Swabi|Lahor:354383|Razar:682303|Swabi:475352|Topi:382562"]]],
+   ["Malakand","ملاکنڈ",[
+    ["Swat|سوات|Saidu Sharif|Babuzai:696697|Barikot:220148|Charbagh:159358|Kabal:480827"],
+    ["Upper Swat|اپر سوات|Matta|Behrain:270623|Khwaza Khela:307300|Matta:552431",{isNew:"Oct 2025"}],
+    ["Lower Dir|لوئر دیر|Timergara|Adenzai:378915|Balambat|Khal|Lal Qilla:247381|Munda|Samar Bagh:427714|Timergara:596173",{pop:1650183}],
+    ["Upper Dir|اپر دیر|Dir|Barawal|Dir:384667|Kalkot|Sharingal:210356",{pop:1083566}],
+    ["Central Dir|سنٹرل دیر|Wari|Akhagram Karo|Lar Jam:119396|Nehag Dara|Sahib Abad|Wari:369147",{pop:595227}],
+    ["Bajaur|باجوڑ|Khar|Bar Chamarkand:3574|Barang:90082|Khar Bajaur:301778|Mamund:358190|Nawagai:93850|Salarzai:316767|Utman Khel:123719"],
+    ["Buner|بونیر|Daggar|Chagharzai:125949|Daggar:192776|Gadezai:197466|Gagra:179087|Khudu Khel:136560|Mandanr:185031"],
+    ["Malakand|ملاکنڈ|Batkhela|Sam Ranizai:353291|Swat Ranizai:472959|Thana Baizai|Utman Khel",{pop:826250}],
+    ["Shangla|شانگلہ|Alpuri|Alpuri:366772|Bisham:121279|Chakesar:128238|Makhuzai|Martung:103205|Puran:171758|Shahpur",{pop:891252}],
+    ["Lower Chitral|لوئر چترال|Chitral|Chitral:211374|Drosh:109033"],
+    ["Upper Chitral|اپر چترال|Booni|Buni|Mastuj|Mulkoh|Torkoh",{pop:195528}]]],
+   ["Hazara","ہزارہ",[
+    ["Abbottabad|ایبٹ آباد|Abbottabad|Abbottabad:1003339|Havelian:256754|Lora:98717|Lower Tanawal:60262"],
+    ["Haripur|ہری پور|Haripur|Ghazi:151839|Haripur:836058|Khanpur:186886"],
+    ["Mansehra|مانسہرہ|Mansehra|Baffa Pakhal:460090|Balakot:310339|Darband:51702|Mansehra:723325|Oghi:251721|Tanawal",{pop:1797177}],
+    ["Battagram|بٹگرام|Battagram|Battagram:335984"],
+    ["Allai|الائی|Allai|Allai:218149"],
+    ["Torghar|تورغر|Judba|Daur Maira:50503|Judba:63083|Khander Hassanzai:86859"],
+    ["Upper Kohistan|اپر کوہستان|Dassu|Dassu:148914|Harban Basha|Kandia:165232|Seo:59557",{pop:422947}],
+    ["Lower Kohistan|لوئر کوہستان|Pattan|Bankad:205851|Pattan:134166"],
+    ["Kolai-Palas|کولئی پالس|Kolai|Bataira / Kolai:142660|Palas:137502"]]],
+   ["Kohat","کوہاٹ",[
+    ["Kohat|کوہاٹ|Kohat|Dara Adam Khel:139839|Gumbat:124530|Kohat:817610|Lachi:152682"],
+    ["Hangu|ہنگو|Hangu|Doaba|Hangu:280883|Tall:248019",{pop:528902}],
+    ["Karak|کرک|Karak|Banda Daud Shah|Karak:339983|Takht-e-Nasrati:298151",{pop:815878}],
+    ["Kurram|کرم|Parachinar|Central Kurram:358670|Lower Kurram:150945|Upper Kurram:275819"],
+    ["Orakzai|اورکزئی|Kalaya|Central Orakzai:92819|Ismail Zai:39328|Lower Orakzai:125944|Upper Orakzai:129470"]]],
+   ["Bannu","بنوں",[
+    ["Bannu|بنوں|Bannu|Baka Khel:192797|Bannu:644909|Domel:224428|Kakki:92021|Miryan:166473|Wazir:37262"],
+    ["Lakki Marwat|لکی مروت|Lakki Marwat|Bettani:35571|Ghazni Khel:329775|Lakki Marwat:341693|Sari Naurang:333817"],
+    ["North Waziristan|شمالی وزیرستان|Miranshah|Datta Khel:92196|Dossali:50524|Gharyum:18931|Ghulam Khan:31015|Mir Ali:229647|Miran Shah:123317|Razmak:49367|Shewa:44126|Spinwam:54209"]]],
+   ["Dera Ismail Khan","ڈیرہ اسماعیل خان",[
+    ["Dera Ismail Khan|ڈیرہ اسماعیل خان|Dera Ismail Khan|Daraban:149447|Drazanda:82386|Dera Ismail Khan:767979|Kulachi:102595|Paniala|Paroa:320937"],
+    ["Paharpur|پہاڑپور|Paharpur|Paharpur:406467",{isNew:"Oct 2025"}],
+    ["Tank|ٹانک|Tank|Jandola:44794|Tank:425499"],
+    ["Upper South Waziristan|اپر جنوبی وزیرستان|Spinkai|Ladha:108344|Makin:66042|Sararogha:145118|Sarwakai:58804|Shaktoi:44332|Shawal|Tiarza:65798",{pop:367364}],
+    ["Lower South Waziristan|لوئر جنوبی وزیرستان|Wana|Birmil:112757|Shakai|Toi Khulla:102835|Wana:184645",{pop:307851}]]]
+  ]},
+ {id:"pb", name:"Punjab", ur:"پنجاب", tier:"Union Councils", tehsilWord:"tehsil",
+  ucNote:"Delimitation under the 2025 Local Government Act finished in August 2026; each UC covers about 22,000–31,000 people",
+  contacts:[["Provincial Election Commissioner, Lahore","042-99214684"]],
+  divs:[
+   ["Bahawalpur","بہاولپور",[
+    ["Bahawalpur|بہاولپور|Bahawalpur|Ahmadpur East:1307578|Bahawalpur City:903795|Bahawalpur Saddar:675950|Hasilpur:508415|Khairpur Tamewali:290582|Yazman:687237",{dec:["062-9255225","4/A Adil Town, Noor Mahal Road, Bahawalpur"]}],
+    ["Bahawalnagar|بہاولنگر|Bahawalnagar|Bahawalnagar:976049|Chishtian:845439|Fort Abbas:510253|Haroonabad:615476|Minchinabad:603125",{dec:["063-9240042-3","Building 3A, Y-Block Model Town, Haroonabad Road, Bahawalnagar"]}],
+    ["Rahim Yar Khan|رحیم یار خان|Rahim Yar Khan|Khanpur:1169138|Liaquatpur:1235264|Rahim Yar Khan:1778542|Sadiqabad:1381759",{dec:["068-5901012","Rehmat Colony, Khanpur Road, Rahim Yar Khan"]}]]],
+   ["Dera Ghazi Khan","ڈیرہ غازی خان",[
+    ["Dera Ghazi Khan|ڈیرہ غازی خان|Dera Ghazi Khan|Dera Ghazi Khan:1443409|Kot Chutta:904836",{dec:["064-9260487-8","Shah Sikandar Road, near Circuit House, D.G. Khan"]}],
+    ["Jampur|جام پور|Jampur|Dajal|Jampur:1012039|Jampur Tribal Area|Muhammadpur",{isNew:"New",parent:"Rajanpur"}],
+    ["Kot Addu|کوٹ ادو|Kot Addu|Chowk Sarwar Shaheed:414578|Kot Addu:1072180",{isNew:"New",parent:"Muzaffargarh"}],
+    ["Layyah|لیہ|Layyah|Chaubara:299082|Karor Lal Esan:684729|Layyah:1118575",{dec:["0606-414086","Mandi Town, Layyah"]}],
+    ["Muzaffargarh|مظفرگڑھ|Muzaffargarh|Alipur:760526|Jatoi:862046|Muzaffargarh:1905995",{dec:["066-9200219","Near Sui Gas office, opposite Adda Shah Jamal, Muzaffargarh"]}],
+    ["Rajanpur|راجن پور|Rajanpur|De-Excluded Area Rajanpur:41741|Rajanpur:853192|Rojhan:474077",{dec:["0604-688939","Muhammad Hussain Colony, near Zakariya Masjid, Rajanpur"]}],
+    ["Taunsa|تونسہ|Taunsa|Koh-e-Suleman:248683|Taunsa:796777|Wahova",{isNew:"New",parent:"Dera Ghazi Khan"}]]],
+   ["Faisalabad","فیصل آباد",[
+    ["Faisalabad|فیصل آباد|Faisalabad|Chak Jhumra:385169|Faisalabad City:3691999|Faisalabad Saddar:1742958|Jaranwala:1731148|Samundri:729672|Tandlianwala:794873",{dec:["041-9330512-14","68-A Peoples Colony No. 1, Social Security Morr, Faisalabad"]}],
+    ["Chiniot|چنیوٹ|Chiniot|Bhowana:428617|Chiniot:633621|Lalian:500786",{dec:["047-6330553","Street 8, Block W, Satellite Town, Chiniot"]}],
+    ["Jhang|جھنگ|Jhang|Ahmadpur Sial:487905|Athara Hazari:332295|Jhang:1640676|Mandi Shah Jeewna|Shorkot:604763",{dec:["047-9200156","Canal Road, opposite Passport Office, Jhang"]}],
+    ["Toba Tek Singh|ٹوبہ ٹیک سنگھ|Toba Tek Singh|Gojra:755579|Kamalia:422477|Pirmahal:496636|Toba Tek Singh:849352",{dec:["046-2515204","Mohallah Mehmoodabad, Jhang Road, Toba Tek Singh"]}]]],
+   ["Gujrat","گجرات",[
+    ["Gujrat|گجرات|Gujrat|Gujrat:1746173|Jalalpur Jattan|Kharian:1174935|Kunjah|Sarai Alamgir:298267",{dec:["053-3707117","44-A Model Town, Bhimber Road, Gujrat"]}],
+    ["Hafizabad|حافظ آباد|Hafizabad|Hafizabad:761156|Pindi Bhattian:558753",{dec:["054-7524065","Allama Iqbal Town, Gujranwala Road, Hafizabad"]}],
+    ["Mandi Bahauddin|منڈی بہاؤالدین|Mandi Bahauddin|Malakwal:429303|Mandi Bahauddin:764532|Phalia:635651",{dec:["054-6506454","Gulberg Town, Phalia Road, Mandi Bahauddin"]}],
+    ["Wazirabad|وزیر آباد|Wazirabad|Alipur Chatha|Wazirabad:993412",{isNew:"New",parent:"Gujranwala"}]]],
+   ["Gujranwala","گوجرانوالہ",[
+    ["Gujranwala|گوجرانوالہ|Gujranwala|Gujranwala City:2511118|Gujranwala Saddar:1133101|Kamoke:681339|Nowshera Virkan:640780",{dec:["055-9330533","Regional Election Complex, Small Industrial Estate No. 1, Model Town, Gujranwala"]}],
+    ["Narowal|نارووال|Narowal|Narowal:680402|Shakargarh:769339|Zafarwal:501213",{dec:["0542-470068-9","Al-Rahim Garden Phase II, New Lahore Road, Narowal"]}],
+    ["Sialkot|سیالکوٹ|Sialkot|Daska:980547|Pasrur:970366|Sambrial:460280|Sialkot:2088201",{dec:["052-3553063","Sadi Street, Muradia Road, Model Town, Sialkot"]}]]],
+   ["Lahore","لاہور",[
+    ["Lahore|لاہور|Lahore|Lahore Cantonment:1885098|Lahore City:4123354|Model Town:3244906|Raiwind:1080637|Shalimar:2670140",{uc:"433 UCs",dec:["042-99210621","68 Rewaz Garden, near MAO College, Lahore"]}],
+    ["Kasur|قصور|Kasur|Chunian:979746|Kasur:1603658|Kot Radha Kishan:424875|Pattoki:1076007",{dec:["049-2760092","Ali Ahmed Shah Colony, Kasur"]}],
+    ["Nankana Sahib|ننکانہ صاحب|Nankana Sahib|Nankana Sahib:1065063|Sangla Hill:269993|Shah Kot:299815",{dec:["056-2877137","Z-Block, Main Housing Colony Road, Nankana Sahib"]}],
+    ["Sheikhupura|شیخوپورہ|Sheikhupura|Ferozewala:997246|Muridke:721192|Safdarabad:320851|Sharaqpur:229292|Sheikhupura:1780837",{dec:["056-9200125","Malik Anwar Ali Road, near Income Tax office, Sheikhupura"]}]]],
+   ["Multan","ملتان",[
+    ["Multan|ملتان|Multan|Jalalpur Pirwala:608488|Multan City:2555486|Multan Saddar:1516004|Shujabad:682327",{dec:["061-9330403-4","Obhaya Market, Lodhi Colony Mor, Multan"]}],
+    ["Khanewal|خانیوال|Khanewal|Jahanian:384822|Kabirwala:1119229|Khanewal:987445|Mian Channu:872581",{dec:["065-2551361","Shaheen Town Phase II, Garha Mor Road, Khanewal"]}],
+    ["Lodhran|لودھراں|Lodhran|Dunyapur:571333|Kahror Pacca:547761|Lodhran:809205",{dec:["0608-362039","Multan–Bahawalpur Road, Lodhran"]}],
+    ["Vehari|وہاڑی|Vehari|Burewala:1204255|Jallah Jeem|Mailsi:1120407|Vehari:1105759",{dec:["067-3365919","Tariq Bin Ziad Colony, Luddan Road, Vehari"]}]]],
+   ["Rawalpindi","راولپنڈی",[
+    ["Rawalpindi|راولپنڈی|Rawalpindi|Daultala|Gujar Khan:781578|Kahuta:237843|Kallar Syedan:242709|Rawalpindi:3744590|Taxila:739244",{dec:["051-9290172-74","63/7 C Satellite Town, Iran Road, Rawalpindi"]}],
+    ["Attock|اٹک|Attock|Attock:516277|Fateh Jang:374726|Hassan Abdal:253670|Hazro:386544|Jand:330328|Pindi Gheb:308878",{dec:["057-9316140","Mohallah Karbala, Link Fateh Jang Road, Attock City"]}],
+    ["Chakwal|چکوال|Chakwal|Chakwal:768622|Choa Saidan Shah:167537|Kallar Kahar:196449",{dec:["0543-550881","Odherwal Chowk, opposite UC office, Chakwal"]}],
+    ["Jhelum|جہلم|Jhelum|Dina:277182|Jhelum:507788|Pind Dadan Khan:371971|Sohawa:225367",{dec:["0544-9270073","Waqas Plaza, Islamia High School Road, Muhammadi Chowk, Jhelum"]}],
+    ["Murree|مری|Murree|Kotli Sattian:120421|Murree:252526",{isNew:"New",parent:"Rawalpindi",uc:"14 UCs"}],
+    ["Talagang|تلہ گنگ|Talagang|Lawa:144611|Multan Khurd|Talagang:457635",{isNew:"New",parent:"Chakwal"}]]],
+   ["Sahiwal","ساہیوال",[
+    ["Sahiwal|ساہیوال|Sahiwal|Chichawatni:1155978|Sahiwal:1725833",{dec:["040-4500925","Asad Colony, Arifwala Road, Sahiwal"]}],
+    ["Okara|اوکاڑہ|Okara|Depalpur:1592201|Okara:1393746|Renala Khurd:529543",{dec:["044-9200177","35-Y Govt. Colony, Okara"]}],
+    ["Pakpattan|پاکپتن|Pakpattan|Arifwala:999278|Pakpattan:1136892",{dec:["0457-383047","23-N Green Town, Pakpattan"]}]]],
+   ["Sargodha","سرگودھا",[
+    ["Sargodha|سرگودھا|Sargodha|Bhalwal:387262|Bhera:384403|Kot Momin:544208|Sahiwal:407487|Sargodha:1800455|Shahpur:424746|Sillanwali:385887",{dec:["048-3765401","142 Murad Abad Colony, Sargodha"]}],
+    ["Bhakkar|بھکر|Bhakkar|Bhakkar:809789|Darya Khan:421309|Kaloorkot:415708|Mankera:310664",{dec:["0453-9200130","Block 12-13, near ZTBL, Mandi Town, Bhakkar"]}],
+    ["Khushab|خوشاب|Jauharabad|Khushab:816682|Naushera:144851|Noorpur Thal:264597|Quaidabad:274959",{dec:["0454-920192","46-A Civil Line, Jauharabad"]}],
+    ["Mianwali|میانوالی|Mianwali|Isakhel:414100|Mianwali:908405|Piplan:475763",{dec:["0459-920358","Mohallah Khanki Khel, Mianwali"]}]]]
+  ]},
+ {id:"sd", name:"Sindh", ur:"سندھ", tier:"Union Councils (rural) and Union Committees (Karachi)", tehsilWord:"taluka",
+  ucNote:"Karachi has 246 Union Committees in 25 towns",
+  contacts:[["Provincial Election Commissioner, Karachi","021-99203385"]],
+  divs:[
+   ["Karachi","کراچی",[
+    ["Karachi Central|کراچی وسطی|Karachi|Gulberg:613724|Liaquatabad:547706|Nazimabad:572740|New Karachi:1165742|North Nazimabad:922413",{uc:"45 UCs"}],
+    ["Karachi East|کراچی شرقی|Karachi|Ferozabad:1167692|Gulshan-e-Iqbal:979502|Gulzar-e-Hijri:1118534|Jamshed Town:656014"],
+    ["Karachi South|کراچی جنوبی|Karachi|Aram Bagh:237224|Civil Lines:480480|Garden:502819|Lyari:949878|Saddar:159363"],
+    ["Karachi West|کراچی غربی|Karachi|Manghopir:1081753|Mominabad:1000708|Orangi:596919"],
+    ["Korangi|کورنگی|Karachi|Korangi:1363992|Landhi:681294|Model Colony:441791|Shah Faisal:641894",{uc:"37 UCs"}],
+    ["Malir|ملیر|Karachi|Airport:254370|Bin Qasim:322915|Gadap:100351|Ibrahim Hyderi:1341638|Murad Memon Goth:376987|Shah Mureed:35987"],
+    ["Keamari|کیماڑی|Karachi|Baldia:948597|Keamari:451801|Maripur:218933|SITE:449120"]]],
+   ["Hyderabad","حیدرآباد",[
+    ["Hyderabad|حیدرآباد|Hyderabad|Hyderabad:511265|Hyderabad City:778132|Latifabad:800983|Qasimabad:342160"],
+    ["Badin|بدین|Badin|Badin:490386|Matli:471100|Shaheed Fazil Rahu:374854|Talhar:184206|Tando Bago:426535"],
+    ["Dadu|دادو|Dadu|Dadu:508607|Johi:333179|Khairpur Nathan Shah:379975|Mehar:520559"],
+    ["Jamshoro|جامشورو|Jamshoro|Kotri:472003|Manjhand:161794|Sehwan:322011|Thana Bula Khan:161500"],
+    ["Matiari|مٹیاری|Matiari|Hala:286155|Matiari:377945|Saeedabad:185283"],
+    ["Sujawal|سجاول|Sujawal|Jati:214710|Kharo Chan:11403|Mirpur Bathoro:231735|Shah Bandar:168911|Sujawal:212533"],
+    ["Tando Allahyar|ٹنڈو الہ یار|Tando Allahyar|Chamber:233424|Jhando Mari:266665|Tando Allahyar:421923"],
+    ["Tando Muhammad Khan|ٹنڈو محمد خان|Tando Muhammad Khan|Bulri Shah Karim:247027|Tando Ghulam Hyder:206665|Tando Muhammad Khan:272427"],
+    ["Thatta|ٹھٹہ|Thatta|Ghorabari:198920|Keti Bunder:63217|Mirpur Sakro:376078|Thatta:444976"]]],
+   ["Larkana","لاڑکانہ",[
+    ["Larkana|لاڑکانہ|Larkana|Bakrani:275268|Dokri:257394|Larkana:873868|Ratodero:377923"],
+    ["Jacobabad|جیکب آباد|Jacobabad|Garhi Khairo:193297|Jacobabad:447647|Thul:533153"],
+    ["Kashmore|کشمور|Kandhkot|Kandhkot:407592|Kashmore:487601|Tangwani:338764"],
+    ["Qambar Shahdadkot|قمبر شہدادکوٹ|Qambar|Mirokhan:182461|Nasirabad:174708|Qambar:448990|Qubo Saeed Khan:99308|Shahdadkot:225086|Sijawal Junejo:130635|Warah:253681"],
+    ["Shikarpur|شکارپور|Shikarpur|Garhi Yasin:333289|Khanpur:331219|Lakhi:300490|Shikarpur:421332"]]],
+   ["Sukkur","سکھر",[
+    ["Sukkur|سکھر|Sukkur|New Sukkur:356473|Pano Akil:457078|Rohri:421500|Salehpat:137738|Sukkur:267108"],
+    ["Ghotki|گھوٹکی|Mirpur Mathelo|Daharki:335145|Ghotki:540939|Khangarh:162318|Mirpur Mathelo:350647|Ubauro:383560"],
+    ["Khairpur|خیرپور|Khairpur|Faiz Ganj:243254|Gambat:286129|Khairpur:465233|Kingri:370304|Kot Diji:385872|Nara:173968|Sobho Dero:293160|Thari Mirwah:379615"]]],
+   ["Shaheed Benazirabad","شہید بینظیر آباد",[
+    ["Shaheed Benazirabad|شہید بینظیر آباد|Nawabshah|Daur:532621|Nawabshah:481978|Qazi Ahmed:402834|Sakrand:427669"],
+    ["Naushahro Feroze|نوشہرو فیروز|Naushahro Feroze|Bhiria:330308|Kandiaro:356506|Mehrabpur:273764|Moro:408148|Naushahro Feroze:408356"],
+    ["Sanghar|سانگھڑ|Sanghar|Jam Nawaz Ali:171598|Khipro:366748|Sanghar:482560|Shahdadpur:525164|Sinjhoro:354709|Tando Adam:407686"]]],
+   ["Mirpur Khas","میرپور خاص",[
+    ["Mirpur Khas|میرپور خاص|Mirpur Khas|Digri:234578|Hussain Bux Mari:172143|Jhuddo:230285|Kot Ghulam Muhammad:310142|Mirpur Khas:287802|Shujabad:185654|Sindhri:260782"],
+    ["Tharparkar|تھرپارکر|Mithi|Chachro:371769|Dahli:326034|Diplo:163119|Islamkot:265643|Kaloi:129677|Mithi:239091|Nagarparkar:283074"],
+    ["Umerkot|عمرکوٹ|Umerkot|Kunri:237063|Pithoro:130383|Samaro:184051|Umerkot:608334"]]]
+  ]},
+ {id:"bl", name:"Balochistan", ur:"بلوچستان", tier:"Union Councils", tehsilWord:"tehsil", provisional:true,
+  ucNote:"Map regrouped into 11 divisions by the July 2026 notification",
+  contacts:[["Provincial Election Commissioner, Quetta","081-9202334"]],
+  divs:[
+   ["Quetta","کوئٹہ",[
+    ["Quetta East|کوئٹہ ایسٹ|Quetta|City|Sadar:330421|Sariab:572854",{isNew:"Jul 2026",pop:null,note:"Quetta district had 2,595,492 people (Census 2023) before the split"}],
+    ["Quetta West|کوئٹہ ویسٹ|Quetta|Baruri|Kuchlak:310246|Panjpai:21371",{isNew:"Jul 2026",pop:null}],
+    ["Mastung|مستونگ|Mastung|Dasht:67935|Kardigap:36701|Khad Koocha:46316|Mastung:162319"]]],
+   ["Pishin","پشین",[
+    ["Pishin|پشین|Pishin|Bostan:49721|Hurramzai:147844|Karezat:59756|Khanozai|Pishin:325641|Saranan:65157",{pop:835482}],
+    ["Killa Abdullah|قلعہ عبداللہ|Jungle Pir Alizai|Dobandi:69759|Gulistan:126474|Qilla Abdullah:165738"],
+    ["Chaman|چمن|Chaman|Chaman:130139|Chaman Saddar:336079"],
+    ["Barshore|برشور|Barshore|Barshore:141994"]]],
+   ["Zhob","ژوب",[
+    ["Zhob|ژوب|Zhob|Ashwat:25094|Kashatu:5810|Qamar Din Karez|Sambaza:25150|Zhob:284620",{pop:355692}],
+    ["Killa Saifullah|قلعہ سیف اللہ|Killa Saifullah|Badini:20640|Kan Mehtarzai:34298|Killa Saifullah:152516|Loiband:29693|Muslim Bagh:83795|Shinki:59258"],
+    ["Sherani|شیرانی|Sherani|Sherani:191687"]]],
+   ["Loralai","لورالائی",[
+    ["Loralai|لورالائی|Loralai|Bori:225642|Mekhtar:46790"],
+    ["Duki|دکی|Duki|Duki:137294|Luni:13615|Talao:21930|Thal Chutyali:32205"],
+    ["Ziarat|زیارت|Ziarat|Sinjawi:110623|Ziarat:78912"],
+    ["Musakhel|موسیٰ خیل|Musakhel|Darug:21792|Kingri:33618|Musakhel:49809|Tiyar Essot|Toisar:56818|Zimri Plaseen:9670",{pop:182275}]]],
+   ["Khuzdar","خضدار",[
+    ["Khuzdar|خضدار|Khuzdar|Aranji:50533|Baghbana|Gresha:69665|Karkh:145806|Khuzdar:359358|Moola:32689|Nal:103631|Zehri:150928",{pop:null}],
+    ["Wadh|وڈھ|Wadh|Wadh:116229",{isNew:"2026"}],
+    ["Kalat|قلات|Kalat|Gazg:8286|Johan:15731|Kalat:167405|Mangocher:80138"],
+    ["Surab|سوراب|Surab|Dasht-e-Goran:27503|Gidder:89631|Shaheed Mehrabad Zehri:66435|Surab:95469"]]],
+   ["Lasbela","لسبیلہ",[
+    ["Lasbela|لسبیلہ|Uthal|Bela:129264|Kanraj:15996|Lakhra:46744|Liari:17155|Ornach:41811|Uthal:88933"],
+    ["Hub|حب|Hub|Gadani:29215|Hub:233443|Sakran|Sonmiani:67991",{pop:382885}],
+    ["Awaran|آواران|Awaran|Awaran:45774|Gishkaur:31462|Jhal Jhao:28132|Korak Jhao:27652|Mashkay:45938"]]],
+   ["Sibi","سبی",[
+    ["Sibi|سبی|Sibi|Kutmandai:9748|Lehri:53999|Sangan:5431|Sibi:154970"],
+    ["Kachhi|کچھی|Dhadar|Balanari:60158|Bhag:83687|Dhadar:49836|Khattan:22900|Machh:75272|Sani:150821"],
+    ["Harnai|ہرنائی|Harnai|Harnai:82001|Khost:16565|Shahrig:29005"],
+    ["Dera Bugti|ڈیرہ بگٹی|Dera Bugti|Dera Bugti:50943|Phelawagh|Sui:126725",{pop:190191}]]],
+   ["Koh-e-Sulaiman","کوہِ سلیمان",[
+    ["Kohlu|کوہلو|Kohlu|Grisani:15246|Kahan:107840|Kohlu:48050|Maiwand:51635|Shaheed Jahangir Abad|Tamboo:37449",{pop:260220}],
+    ["Upper Dera Bugti|اپر ڈیرہ بگٹی|Baiker|Baiker:33410",{isNew:"2026",pop:165083}],
+    ["Barkhan|بارکھان|Barkhan|Barkhan:210249"]]],
+   ["Nasirabad","نصیر آباد",[
+    ["Nasirabad|نصیر آباد|Dera Murad Jamali|Baba Kot:53661|Chattar:32276|Dera Murad Jamali:265822|Landhi:8638|Meer Hassan:53400|Tamboo:149518"],
+    ["Jaffarabad|جعفر آباد|Dera Allah Yar|Jhatpat:302498"],
+    ["Jhal Magsi|جھل مگسی|Gandava|Gandava:71230|Jhal Magsi:116528|Mirpur:15610"],
+    ["Sohbatpur|صحبت پور|Sohbatpur|Faridabad:68948|Hayrvi:16891|Manjipur:23624|Panhwar:47624|Saeed Muhammad Kanrani:18175|Sohbatpur:64844"],
+    ["Usta Muhammad|اوستہ محمد|Usta Muhammad|Gandakha:81190|Usta Muhammad:210870"]]],
+   ["Makran","مکران",[
+    ["Kech|کیچ|Turbat|Balnigor:50404|Buleda:107847|Dasht:90080|Gayab|Hoshab:66566|Solband|Turbat:470605|Zamuran:71616"],
+    ["Tump|تمپ|Tump|Mand:56772|Tump:147041",{isNew:"2026"}],
+    ["Gwadar|گوادر|Gwadar|Gwadar:147673|Jiwani:35004|Ormara:27832|Pasni:74128|Suntsar:20523"],
+    ["Panjgur|پنجگور|Panjgur|Gichk:33578|Gowargo:31718|Kallag:21095|Panjgur:392277|Paroom:31113"]]],
+   ["Rakhshan","رخشان",[
+    ["Chagai|چاغی|Dalbandin|Amuri|Chagai:73482|Chilgazi|Dalbandin:122918|Yakmach:22908"],
+    ["Taftan|تفتان|Taftan|Nok Kundi:30625|Taftan:19259",{isNew:"2026"}],
+    ["Kharan|خاران|Kharan|Kharan:104035|Patkain:20499|Sar-Kharan:86015|Tohumulk:49803"],
+    ["Nushki|نوشکی|Nushki|Dak:16929|Nushki:190905"],
+    ["Washuk|واشک|Washuk|Besima:63368|Mashkel:67142|Nag:57467|Shahgori:59061|Washuk:55585"]]]
+  ]},
+ {id:"ict", name:"Islamabad", ur:"اسلام آباد", tier:"Union Councils", tehsilWord:"tehsil",
+  ucNote:"125 Union Councils plus the Metropolitan Corporation",
+  contacts:[["Election Commission Secretariat, Islamabad","051-9205611"]],
+  divs:[["Islamabad Capital Territory","اسلام آباد",[
+    ["Islamabad|اسلام آباد|Islamabad",{uc:"125 UCs",dec:["051-9261003","Block 14, GM Al-Markaz, F-8, Islamabad"],noTeh:"Single district run by the Chief Commissioner; urban sectors and rural areas are divided directly into Union Councils."}]]]]},
+ {id:"ajk", name:"Azad Jammu & Kashmir", ur:"آزاد جموں و کشمیر", tier:"Union Councils", tehsilWord:"tehsil", popYear:"2017",
+  ucNote:"Union Councils under AJK's own local-government law",
+  contacts:[],
+  divs:[
+   ["Mirpur","میرپور",[
+    ["Mirpur|میرپور|Mirpur|Dadyal|Islamgarh|Mirpur",{pop:456200}],
+    ["Bhimber|بھمبر|Bhimber|Barnala|Bhimber|Samahni",{pop:420624}],
+    ["Kotli|کوٹلی|Kotli|Charhoi|Duliah Jattan|Fatehpur Thakiala|Khuiratta|Kotli|Sehnsa",{pop:774194}]]],
+   ["Muzaffarabad","مظفرآباد",[
+    ["Muzaffarabad|مظفرآباد|Muzaffarabad|Muzaffarabad|Nasirabad",{pop:650370}],
+    ["Hattian Bala|ہٹیاں بالا|Hattian Bala|Chikkar|Hattian Bala|Leepa",{pop:230529}],
+    ["Neelum|نیلم|Athmuqam|Athmuqam|Sharda",{pop:191251}]]],
+   ["Poonch","پونچھ",[
+    ["Poonch|پونچھ|Rawalakot|Abbaspur|Hajira|Rawalakot|Thorar",{pop:500571}],
+    ["Bagh|باغ|Bagh|Bagh|Birpani|Dhirkot|Hari Ghel|Rera",{pop:371919}],
+    ["Haveli|حویلی|Forward Kahuta|Haveli|Khurshidabad|Mumtazabad",{pop:152124}],
+    ["Sudhnoti|سدھنوتی|Pallandri|Balouch|Mang|Pallandri|Tarar Khel",{pop:297584}]]]
+  ]},
+ {id:"gb", name:"Gilgit-Baltistan", ur:"گلگت بلتستان", tier:"Union Councils", tehsilWord:"tehsil",
+  ucNote:"Four more districts (Darel, Tangir, Gupis-Yasin, Roundu) were announced in 2019 but are not yet set up",
+  contacts:[],
+  divs:[
+   ["Gilgit","گلگت",[
+    ["Gilgit|گلگت|Gilgit|Danyor|Gilgit|Jaglot",{pop:324552}],
+    ["Ghizer|غذر|Gahkuch|Gupis|Ishkoman|Phander|Punial|Yasin",{pop:200069}],
+    ["Hunza|ہنزہ|Aliabad|Aliabad|Gojal|Shinaki",{pop:65497}],
+    ["Nagar|نگر|Nagar|Chalt|Nagar-I|Sikandarabad Nagar-II",{pop:87410}]]],
+   ["Baltistan","بلتستان",[
+    ["Skardu|سکردو|Skardu|Gamba|Gultari|Roundu|Skardu",{pop:278885}],
+    ["Ghanche|گانچھے|Khaplu|Chorbat|Daghoni|Haldi|Keris|Khaplu|Mashabrum",{pop:157822}],
+    ["Shigar|شگر|Shigar|Gulabpur|Shigar",{pop:84608}],
+    ["Kharmang|کھرمنگ|Kharmang|Kharmang",{pop:61304}]]],
+   ["Diamer","دیامر",[
+    ["Diamer|دیامر|Chilas|Babusar|Chilas|Darel|Goharabad|Tangir",{pop:337329}],
+    ["Astore|استور|Eidgah|Astore|Shounter",{pop:111573}]]]
+  ]}
+];
+const NATIONAL = [["NADRA helpline","051-111-786-100"],["Rescue (emergency)","1122"],["Police","15"]];
+
+/* ---------- BUILD ---------- */
+const fmt = n => n==null ? "–" : n.toLocaleString("en-PK");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,"-");
+const ALL = [];
+PROV.forEach(p=>{
+  p.dObjs=[]; p.pop=0; p.tc=0;
+  p.divs = p.divs.map(([dn,dur,list])=>{
+    const dv={name:dn,ur:dur,districts:[],pop:0,prov:p};
+    list.forEach(([line,opt])=>{
+      opt=opt||{};
+      const parts=line.split("|"); const [name,ur,hq]=parts;
+      const teh=parts.slice(3).map(t=>{const [n,v]=t.split(":");return [n, v?+v:null];});
+      const complete = teh.length && teh.every(t=>t[1]!=null);
+      const sum = teh.reduce((a,t)=>a+(t[1]||0),0);
+      let pop = complete ? sum : ("pop" in opt ? opt.pop : (sum||null));
+      const d={id:p.id+"-"+slug(name),name,ur,hq,teh,pop,opt,div:dv,prov:p};
+      dv.districts.push(d); p.dObjs.push(d); ALL.push(d);
+      dv.pop+=pop||0; p.tc+=teh.length;
+    });
+    p.pop+=dv.pop; if(!dv.pop) dv.pop=null; return dv;
+  });
+  if(!p.pop || (p.provisional && p.dObjs.some(d=>d.pop==null))) p.pop=null;
+});
+const totals = {div:PROV.reduce((a,p)=>a+p.divs.length,0), dist:ALL.length, teh:PROV.reduce((a,p)=>a+p.tc,0)};
+document.getElementById("meta").innerHTML =
+  `<span><b>${PROV.length}</b> provinces and territories</span><span><b>${totals.div}</b> divisions</span><span><b>${totals.dist}</b> districts</span><span><b class="num">${totals.teh}</b> tehsils and talukas</span><span>Checked <b>6 Oct 2026</b></span>`;
+
+/* ---------- STATE ---------- */
+let state={prov:"all", open:{}, all:false, hit:null};
+try{const s=JSON.parse(localStorage.getItem("sahulat-dir")||"null"); if(s&&s.prov) state.prov=s.prov;}catch(e){}
+const save=()=>{try{localStorage.setItem("sahulat-dir",JSON.stringify({prov:state.prov}))}catch(e){}};
+
+const phoneHTML = n => `<span class="phone"><span>${esc(n)}</span><button class="copy" type="button" data-copy="${esc(n)}">Copy</button></span>`;
+
+function decCell(d){
+  if(d.opt.dec) return phoneHTML(d.opt.dec[0]);
+  if(d.opt.parent){const par=d.prov.dObjs.find(x=>x.name===d.opt.parent);
+    if(par&&par.opt.dec) return `${phoneHTML(par.opt.dec[0])}<div class="muted" style="font-size:12px">${esc(d.opt.parent)} office (parent district)</div>`;}
+  return `<span class="muted" style="font-size:13px">Provincial office above</span>`;
+}
+
+function districtRows(d){
+  const open = state.all || state.open[d.id];
+  const tier = d.opt.uc ? `<b>${esc(d.opt.uc)}</b>` : `<span class="muted">${esc(d.prov.tier.split(" (")[0])}</span>`;
+  const tagNew = d.opt.isNew ? `<span class="tag">New${/\d/.test(d.opt.isNew)?" "+esc(d.opt.isNew):""}</span>`:"";
+  const tcount = d.teh.length ? `<button class="tog" type="button" data-tog="${d.id}" aria-expanded="${!!open}">${d.teh.length} ${d.prov.tehsilWord}${d.teh.length>1?"s":""} ${open?"▾":"▸"}</button>` : `<span class="muted">–</span>`;
+  let html = `<tr id="row-${d.id}" class="${state.hit===d.id?"hit":""}">
+    <td><span class="dname">${esc(d.name)}</span>${tagNew}<span class="ur">${d.ur}</span></td>
+    <td>${esc(d.hq)}</td>
+    <td class="r num">${fmt(d.pop)}</td>
+    <td>${tcount}</td>
+    <td>${tier}</td>
+    <td>${decCell(d)}</td></tr>`;
+  if(open || d.opt.noTeh){
+    const chips = d.teh.map(t=>`<span class="teh" id="teh-${d.id}-${slug(t[0])}">${esc(t[0])}<span class="p">${t[1]!=null?fmt(t[1]):""}</span></span>`).join("");
+    html += `<tr class="tehrow"><td colspan="6">
+      ${d.teh.length?`<div class="tehs">${chips}</div>`:`<div class="muted">${esc(d.opt.noTeh||"")}</div>`}
+      ${d.opt.dec?`<div class="addr">District election office: ${esc(d.opt.dec[1])}</div>`:""}
+      ${d.opt.note?`<div class="addr">${esc(d.opt.note)}</div>`:""}
+    </td></tr>`;
+  }
+  return html;
+}
+
+function renderChips(){
+  const box=document.getElementById("provchips");
+  const items=[["all","All Pakistan"]].concat(PROV.map(p=>[p.id,p.name]));
+  box.innerHTML=items.map(([id,l])=>`<button class="chip" type="button" aria-pressed="${state.prov===id}" data-prov="${id}">${esc(l)}</button>`).join("");
+  document.getElementById("expandAll").hidden = state.prov==="all";
+  document.getElementById("expandAll").textContent = state.all?"Hide tehsils":"Show all tehsils";
+}
+
+function render(){
+  renderChips();
+  const host=document.getElementById("dir");
+  if(state.prov==="all"){
+    host.innerHTML = `
+      <div class="provcard" style="grid-template-columns:1fr">
+        <div><div class="ttl"><h2>Pakistan</h2><span class="ur">پاکستان</span></div>
+        <div class="stats"><span><b>${totals.div}</b>divisions</span><span><b>${totals.dist}</b>districts</span><span><b class="num">${totals.teh}</b>tehsils / talukas</span></div></div>
+        <div class="contacts" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">${NATIONAL.map(c=>`<div class="contact"><span class="lbl">${esc(c[0])}</span>${phoneHTML(c[1])}</div>`).join("")}</div>
+      </div>
+      <div class="tbl-wrap"><table class="summary"><thead><tr><th>Province / territory</th><th class="r">Divisions</th><th class="r">Districts</th><th class="r">Tehsils</th><th class="r">Population</th><th>Lowest council tier</th><th>Election office</th></tr></thead><tbody>
+      ${PROV.map(p=>`<tr data-prov="${p.id}" tabindex="0"><td><span class="dname">${esc(p.name)}</span>${p.provisional?'<span class="tag">Provisional</span>':""}<span class="ur">${p.ur}</span></td>
+        <td class="r num">${p.divs.length}</td><td class="r num">${p.dObjs.length}</td><td class="r num">${p.tc}</td><td class="r num">${fmt(p.pop)}${p.popYear?` <span class="muted">(${p.popYear})</span>`:""}</td>
+        <td>${esc(p.tier)}</td><td>${p.contacts.length?phoneHTML(p.contacts[0][1]):'<span class="muted" style="font-size:13px">Not published by ECP</span>'}</td></tr>`).join("")}
+      </tbody></table></div>`;
+    return;
+  }
+  const p=PROV.find(x=>x.id===state.prov)||PROV[0];
+  const contacts = p.contacts.concat(NATIONAL.slice(0,1));
+  host.innerHTML = `
+    ${p.provisional?`<div class="note"><b>Map recently changed</b><span>Balochistan was regrouped into 11 divisions in July 2026. District placements follow that notification; tehsil assignments for new districts are provisional and may change as the government settles them.</span></div>`:""}
+    <div class="provcard">
+      <div>
+        <div class="ttl"><h2>${esc(p.name)}</h2><span class="ur">${p.ur}</span></div>
+        <div class="stats"><span><b>${p.divs.length}</b>divisions</span><span><b>${p.dObjs.length}</b>districts</span><span><b class="num">${p.tc}</b>${p.tehsilWord}s</span><span><b class="num">${fmt(p.pop)}</b>people${p.popYear?` (${p.popYear})`:""}</span></div>
+        <p class="tier">Lowest tier: <b>${esc(p.tier)}</b>. ${esc(p.ucNote)}.</p>
+      </div>
+      <div class="contacts">
+        <span class="eyebrow">Ask which Union Council you are in</span>
+        ${contacts.map(c=>`<div class="contact"><span class="lbl">${esc(c[0])}</span>${phoneHTML(c[1])}</div>`).join("")}
+        ${p.contacts.length?"":`<p class="muted" style="font-size:13px">The Election Commission does not publish a field office number for ${esc(p.name)}. Contact the Deputy Commissioner's office in your district.</p>`}
+      </div>
+    </div>
+    ${p.divs.map(dv=>`
+      <div class="divhead"><h3>${esc(dv.name)}${dv.name.includes("Territory")?"":" Division"}</h3><span class="ur">${dv.ur}</span><span class="c num">${dv.districts.length} district${dv.districts.length>1?"s":""} · ${fmt(dv.pop)} people</span></div>
+      <div class="tbl-wrap"><table><thead><tr><th>District</th><th>Headquarters</th><th class="r">Population</th><th>${p.tehsilWord==="taluka"?"Talukas":"Tehsils"}</th><th>Union Councils</th><th>District election office</th></tr></thead>
+      <tbody>${dv.districts.map(districtRows).join("")}</tbody></table></div>`).join("")}`;
+}
+
+/* ---------- EVENTS ---------- */
+document.addEventListener("click",e=>{
+  const c=e.target.closest("[data-copy]");
+  if(c){const t=c.dataset.copy;
+    const done=()=>{c.textContent="Copied";setTimeout(()=>c.textContent="Copy",1400);};
+    try{navigator.clipboard.writeText(t).then(done,()=>selectText(c));}catch(err){selectText(c);}
+    return;}
+  const pr=e.target.closest("[data-prov]");
+  if(pr){state.prov=pr.dataset.prov;state.hit=null;state.all=false;save();render();return;}
+  const tg=e.target.closest("[data-tog]");
+  if(tg){const id=tg.dataset.tog;state.open[id]=!state.open[id];render();return;}
+});
+document.addEventListener("keydown",e=>{
+  const pr=e.target.closest&&e.target.closest("tr[data-prov]");
+  if(pr&&(e.key==="Enter"||e.key===" ")){e.preventDefault();state.prov=pr.dataset.prov;save();render();}
+});
+function selectText(btn){const s=btn.previousElementSibling;const r=document.createRange();r.selectNodeContents(s);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);btn.textContent="Press Ctrl+C";}
+document.getElementById("expandAll").onclick=()=>{state.all=!state.all;render();};
+
+const tabs=[...document.querySelectorAll(".tab")];
+function showTab(id){tabs.forEach(t=>{const on=t.getAttribute("aria-controls")===id;t.setAttribute("aria-selected",on);document.getElementById(t.getAttribute("aria-controls")).hidden=!on;});}
+tabs.forEach(t=>t.onclick=()=>showTab(t.getAttribute("aria-controls")));
+if(["levels","services","directory"].includes(location.hash.slice(1))) showTab(location.hash.slice(1));
+
+/* ---------- SEARCH ---------- */
+const index=[];
+PROV.forEach(p=>{
+  p.divs.forEach(dv=>index.push({kind:"Division",name:dv.name+(dv.name.includes("Territory")?"":" Division"),ur:dv.ur,path:p.name,prov:p.id}));
+  p.dObjs.forEach(d=>{
+    index.push({kind:"District",name:d.name,ur:d.ur,path:`${d.div.name} · ${p.name}`,prov:p.id,dist:d.id});
+    d.teh.forEach(t=>index.push({kind:p.tehsilWord==="taluka"?"Taluka":"Tehsil",name:t[0],ur:"",path:`${d.name} District · ${p.name}`,prov:p.id,dist:d.id,teh:`teh-${d.id}-${slug(t[0])}`}));
+  });
+});
+const q=document.getElementById("q"), res=document.getElementById("results");
+q.addEventListener("input",()=>{
+  const raw=q.value.trim(), v=raw.toLowerCase();
+  if(!v){res.hidden=true;return;}
+  const hits=index.filter(i=>i.name.toLowerCase().includes(v)||(i.ur&&i.ur.includes(raw)))
+    .sort((a,b)=>(a.name.toLowerCase().startsWith(v)?0:1)-(b.name.toLowerCase().startsWith(v)?0:1)||["Division","District"].indexOf(b.kind)-["Division","District"].indexOf(a.kind)).slice(0,10);
+  res.hidden=false;
+  res.innerHTML=hits.length?hits.map(h=>`<button type="button" data-i="${index.indexOf(h)}"><span><span>${esc(h.name)}</span> ${h.ur?`<span class="ur">${h.ur}</span>`:""}<br><span class="path">${esc(h.path)}</span></span><span class="kind">${h.kind}</span></button>`).join("")
+    :`<div class="none">Nothing called “${esc(raw)}” yet. Try the district or tehsil name; villages and individual councils are not listed.</div>`;
+});
+res.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-i]"); if(!b) return;
+  const h=index[+b.dataset.i];
+  showTab("directory"); state.prov=h.prov; state.hit=h.dist||null; state.all=false;
+  if(h.dist) state.open[h.dist]=true;
+  save(); render(); res.hidden=true; q.value="";
+  const target=document.getElementById(h.dist?"row-"+h.dist:"dir");
+  if(target) target.scrollIntoView({behavior:"smooth",block:"center"});
+  if(h.teh){const t=document.getElementById(h.teh); if(t){t.style.borderColor="var(--stamp)";t.style.background="var(--stamp-soft)";}}
+});
+
+render();
+</script>
+</body>
+</html>

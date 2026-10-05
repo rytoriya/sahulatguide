@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sahulat Guide Pakistan: government services, schemes, loans, passports, trains and parcels explained step by step.">
+<title>Sahulat Guide Pakistan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: citizen help-desk — logo bar, sticky tab strip, news ticker; tabs switch between Home, service sheets (list + procedure sheet), Tools, Portals and Contact */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#17232e; --muted:#5a6872; --line:#dde3e1;
+  --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
+  --amber:#8a5a00; --amber-soft:#fbf0d9; --sun:#e9a83a; --sky:#dcebf3; --earth:#c98d5a;
+  --wa:#1f9e57;
+  --f-display:"Sora",system-ui,sans-serif; --f-body:"Noto Sans",system-ui,sans-serif;
+  --f-urdu:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sun:#d99a35; --sky:#1b2d38; --earth:#a8754a; --wa:#3cc47a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sun:#d99a35; --sky:#1b2d38; --earth:#a8754a; --wa:#3cc47a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+/* svg art fills */
+.f-a{fill:var(--accent)} .f-s{fill:var(--accent-soft)} .f-sur{fill:var(--surface)} .f-ink{fill:var(--ink)} .f-sun{fill:var(--sun)}
+.f-sky{fill:var(--sky)} .f-e{fill:var(--earth)} .f-l{fill:var(--line)} .f-m{fill:var(--muted)} .f-st{fill:var(--stamp)}
+.s-ink{stroke:var(--ink)} .s-a{stroke:var(--accent)} .s-m{stroke:var(--muted)}
+
+.notice{background:var(--amber-soft);font-size:13px;padding:6px 20px;text-align:center}
+.notice b{color:var(--amber)}
+.brandbar{padding-block:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.brand svg{width:48px;height:48px;flex:none}
+.brand .t{display:grid;line-height:1.15}
+.brand .n{font:700 clamp(19px,3vw,24px) var(--f-display);letter-spacing:-.01em}
+.brand .n span{color:var(--accent)}
+.brand .ur{font-family:var(--f-urdu);font-size:15px;color:var(--muted);line-height:1.9}
+.search{flex:1 1 280px;max-width:440px;display:flex}
+.search input{width:100%;min-width:0;font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
+
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-block:1px solid var(--line)}
+.tabs .scroll{overflow-x:auto;scrollbar-width:none}
+.tabs .scroll::-webkit-scrollbar{display:none}
+.tabs nav{display:flex;gap:2px;max-width:1180px;margin:0 auto;padding-inline:12px;width:max-content;min-width:100%}
+.tab{font:600 14px var(--f-body);color:var(--muted);background:none;border:0;padding:13px 12px 11px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.tab svg{width:16px;height:16px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+
+.ticker{background:var(--ink);color:var(--bg);display:flex;align-items:stretch;overflow:hidden;font-size:14px}
+.ticker .lbl{flex:none;background:var(--stamp);color:#fff;font:700 12px var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;display:flex;align-items:center;gap:8px}
+.ticker .lbl i{width:8px;height:8px;border-radius:50%;background:#fff;display:block}
+.ticker .track{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center}
+.ticker .belt{display:flex;width:max-content;animation:run 70s linear infinite}
+.ticker:hover .belt,.ticker:focus-within .belt{animation-play-state:paused}
+.ticker .item{padding:0 28px;white-space:nowrap;border-right:1px solid color-mix(in srgb,var(--bg) 25%,transparent)}
+.ticker .item b{color:var(--sun);font-family:var(--f-mono);font-weight:500;font-size:12px;margin-right:8px}
+.ticker a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker .belt{animation:none}.ticker .track{overflow-x:auto}}
+@media (prefers-reduced-motion:no-preference){.ticker .lbl i{animation:blink 1.4s steps(2) infinite}@keyframes blink{50%{opacity:.2}}}
+
+main{padding-block:24px 64px}
+.view[hidden]{display:none!important}
+
+/* Home */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px}
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(26px,4.2vw,40px);letter-spacing:-.015em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);max-width:56ch}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hero svg{width:100%;height:auto;max-width:460px;justify-self:center}
+.btn{font:600 14px var(--f-body);padding:10px 16px;border-radius:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn svg{width:18px;height:18px}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:36px 0 14px;flex-wrap:wrap}
+.h2row h2{font-size:21px}
+.h2row p{margin:0;color:var(--muted);font-size:14px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:14px}
+.cat{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left;font:inherit;color:inherit;padding:0;display:grid}
+.cat:hover{border-color:var(--accent)}
+.cat svg{width:100%;height:auto;display:block;background:var(--sky)}
+.cat .c{padding:12px 14px}
+.cat .c b{font-family:var(--f-display);display:block}
+.cat .c span{font-size:13px;color:var(--muted)}
+.updates{display:grid;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.upd{display:grid;grid-template-columns:110px 1fr auto;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);align-items:center}
+.upd:last-child{border-bottom:0}
+.upd time{font:12px var(--f-mono);color:var(--muted)}
+.upd button{font:600 13px var(--f-body);background:none;border:0;color:var(--accent);cursor:pointer;padding:0;white-space:nowrap}
+@media (max-width:560px){.upd{grid-template-columns:1fr}}
+
+/* Services */
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;min-width:0}
+.chip{font:600 13px var(--f-body);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip span{font:500 11px var(--f-mono);color:var(--muted);margin-left:2px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] span{color:inherit;opacity:.8}
+.regsel{min-width:200px}
+.sheet .by{font-size:13px;color:var(--muted);margin-top:2px}
+.layout{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+.vhead{margin-bottom:16px}
+.vhead h1{font-size:clamp(22px,3vw,28px)}
+.vhead p{color:var(--muted);margin:4px 0 0}
+.list{display:grid;gap:8px}
+.svc{display:grid;grid-template-columns:44px 1fr auto;gap:2px 12px;text-align:left;width:100%;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;cursor:pointer;align-items:center}
+.svc:hover{border-color:var(--accent)}
+.svc[aria-current="true"]{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.svc .ic{grid-row:span 2;width:44px;height:44px;border-radius:8px;background:var(--sky);overflow:hidden}
+.svc .ic svg{width:100%;height:100%}
+.svc .name{font-weight:600;font-family:var(--f-display);font-size:14.5px}
+.svc .meta{grid-column:2/-1;color:var(--muted);font-size:12.5px}
+.empty{color:var(--muted);padding:16px;border:1px dashed var(--line);border-radius:var(--r)}
+.pill{font:600 11px var(--f-body);letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;justify-self:start}
+.pill.open{background:var(--accent-soft);color:var(--accent)}
+.pill.closed{background:var(--stamp-soft);color:var(--stamp)}
+.pill.check{background:var(--amber-soft);color:var(--amber)}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}
+.sheet .art{background:var(--sky);display:block}
+.sheet .art svg{display:block;width:100%;height:auto;max-height:220px}
+.sheet .body{padding:22px 24px 24px}
+.eyebrow{font:600 12px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sheet-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.sheet h2{font-size:clamp(21px,3vw,27px);margin-top:4px}
+.sheet .ur{font-family:var(--f-urdu);font-size:17px;color:var(--muted);line-height:2.1;direction:rtl}
+.sheet p.summary{max-width:68ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:16px 0}
+.fact{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.fact .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.fact .v{font-family:var(--f-display);font-weight:600;font-size:16px;font-variant-numeric:tabular-nums}
+.sec{margin-top:22px}
+.sec h3{font-size:16px;margin-bottom:8px}
+.sec ul{margin:0;padding-left:20px;display:grid;gap:5px;max-width:70ch}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:8px;max-width:72ch}
+.steps li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;gap:10px}
+.steps li::before{content:counter(s);font:600 13px var(--f-mono);width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+code,.mono{font-family:var(--f-mono);font-size:13px;background:var(--bg);padding:2px 6px;border-radius:5px}
+.note{font-size:14px;margin-top:14px;max-width:72ch}
+.official{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:22px;padding:14px;border-radius:var(--r);background:var(--accent-soft)}
+.warn{margin-top:16px;padding:12px 14px;border-radius:var(--r);background:var(--stamp-soft);font-size:14px}
+.warn b{color:var(--stamp)}
+.checked{font-size:12px;color:var(--muted);margin-top:14px}
+
+/* Tools, portals, contact */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:19px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.form .wide{grid-column:1/-1}
+label{font-size:12px;color:var(--muted);display:grid;gap:4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=number],input[type=text],input[type=tel],input[type=email],textarea{font:15px var(--f-body);padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;text-transform:none;letter-spacing:0}
+textarea{min-height:120px;resize:vertical}
+input:user-invalid,textarea:user-invalid{border-color:var(--stamp)}
+.result{margin-top:14px;display:grid;gap:8px}
+.match{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.match button{font:600 13px var(--f-body);background:none;border:0;color:var(--accent);cursor:pointer;padding:0}
+.emi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+@media (max-width:420px){.emi{grid-template-columns:1fr}}
+.emi div{border:1px solid var(--line);border-radius:var(--r);padding:10px}
+.emi .k{font-size:12px;color:var(--muted)}
+.emi .v{font:600 18px var(--f-display);font-variant-numeric:tabular-nums}
+.dirgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.dirgrid a{display:grid;gap:2px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);text-decoration:none;color:var(--ink)}
+.dirgrid a:hover{border-color:var(--accent)}
+.dirgrid .d{font-size:13px;color:var(--muted)}
+.dirgrid .u{font:12px var(--f-mono);color:var(--accent);overflow-wrap:anywhere}
+.status{margin-top:12px;padding:10px 12px;border-radius:8px;font-size:14px}
+.status.ok{background:var(--accent-soft)}
+.status.bad{background:var(--stamp-soft)}
+.contact-side{display:grid;gap:14px;align-content:start}
+.contact-side .row{display:flex;gap:12px;align-items:flex-start}
+.contact-side .row svg{width:36px;height:36px;flex:none}
+.inbox{display:grid;gap:10px;margin-top:10px}
+.msg{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;font-size:14px}
+.msg .h{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.msg p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+
+.sos{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;padding:10px 14px;border-radius:12px;background:var(--stamp-soft)}
+.sos b{color:var(--stamp);font-family:var(--f-display)}
+.sos .n{font:600 15px var(--f-mono);background:var(--surface);padding:3px 10px;border-radius:999px;color:var(--ink);text-decoration:none}
+.sos button{margin-left:auto;font:600 13px var(--f-body);background:none;border:0;color:var(--stamp);cursor:pointer}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px}
+.ecard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.ecard.top{border-color:var(--stamp);background:var(--stamp-soft)}
+.ecard .num{font:700 30px/1.1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--stamp);text-decoration:none;overflow-wrap:anywhere}
+.ecard .lab{font-weight:600;font-family:var(--f-display)}
+.ecard .d{font-size:13px;color:var(--muted)}
+.ecard .row{display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.ecard .row a,.ecard .row button{font:600 13px var(--f-body);color:var(--accent);background:none;border:0;padding:0;cursor:pointer}
+.egroup{margin:28px 0 12px;font-size:18px}
+.tab[data-go="emergency"]{color:var(--stamp)}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--wa);color:#fff;border-radius:999px;display:flex;align-items:center;gap:8px;padding:12px 16px 12px 12px;text-decoration:none;font:600 14px var(--f-body);box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.fab svg{width:26px;height:26px}
+@media (max-width:520px){.fab span{display:none}.fab{padding:12px}}
+footer{border-top:1px solid var(--line);padding-block:20px 90px;color:var(--muted);font-size:13px}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+footer p{max-width:75ch;margin:0}
+footer .brand svg{width:32px;height:32px}
+/* standalone tool pages */
+.toolgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.toolgrid a{display:flex;flex-direction:column;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-decoration:none;color:var(--ink)}
+.toolgrid a:hover{border-color:var(--accent)}
+.toolgrid b{font-family:var(--f-display);font-size:16px}
+.toolgrid .ic{font-size:26px;line-height:1}
+.toolgrid .d{font-size:13px;color:var(--muted)}
+.toolgrid .go{font:600 13px var(--f-body);color:var(--accent);margin-top:auto;padding-top:6px}
+</style>
+</head>
+<body>
+
+<div class="notice"><b>Independent guide.</b> Not an official government website. Always apply on the official portal, and never pay an agent.</div>
+
+<div class="wrap brandbar">
+  <a class="brand" href="#home" data-go="home" aria-label="Sahulat Guide home">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect width="64" height="64" rx="16" class="f-a"/>
+      <path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+      <path d="M24 36l6 6 11-12" fill="none" class="s-ink" style="stroke:var(--sun)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="47" cy="15" r="4" class="f-sun"/>
+    </svg>
+    <span class="t"><span class="n">Sahulat <span>Guide</span></span><span class="ur" lang="ur">سہولت گائیڈ · پاکستان</span></span>
+  </a>
+  <div class="search"><input id="q" type="search" placeholder="Search: passport, bill, car loan, bus, cargo…" aria-label="Search services"></div>
+</div>
+
+<div class="tabs"><div class="scroll"><nav id="tabs" role="tablist" aria-label="Sections"></nav></div></div>
+
+<div class="ticker" aria-label="Latest updates">
+  <div class="lbl"><i></i>Updates</div>
+  <div class="track" tabindex="0"><div class="belt" id="belt"></div></div>
+</div>
+
+<main class="wrap">
+  <!-- HOME -->
+  <section class="view" id="v-home">
+    <div class="sos"><b>Emergency</b><a class="n" href="tel:15">Police 15</a><a class="n" href="tel:1122">Rescue 1122</a><a class="n" href="tel:16">Fire 16</a><a class="n" href="tel:130">Motorway 130</a><button data-go="emergency">All helplines →</button></div>
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Government services, explained</div>
+        <h1>Every government service, <em>explained step by step</em></h1>
+        <p>ID cards and passports, loans, bills and taxes, health cards, scholarships, city buses, trains and cargo, across Pakistan. Each guide lists who qualifies, which documents to prepare, what it costs, and the official place to apply.</p>
+        <div class="cta">
+          <button class="btn" data-go="all">Browse all services</button>
+          <button class="btn ghost" data-go="tools">Find a scheme for me</button>
+        </div>
+      </div>
+      <div id="heroArt"></div>
+    </div>
+
+    <div class="h2row"><h2>Browse by need</h2><p id="guideCount"></p></div>
+    <div class="cats" id="cats"></div>
+
+    <div class="h2row"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
+    <div class="updates" id="updates"></div>
+
+    <div class="h2row"><h2>Travel &amp; delivery tools</h2><p>Free planners and price guides</p></div>
+    <div class="toolgrid">
+      <a href="passport/"><span class="ic" aria-hidden="true">🛂</span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
+      <a href="route-planner/"><span class="ic" aria-hidden="true">🗺️</span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
+      <a href="trains/"><span class="ic" aria-hidden="true">🚆</span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
+      <a href="parcels/"><span class="ic" aria-hidden="true">📦</span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
+    </div>
+  </section>
+
+  <!-- SERVICES (category tabs) -->
+  <section class="view" id="v-services" hidden>
+    <div class="vhead"><h1 id="vTitle">Services</h1><p id="vSub"></p></div>
+    <div class="filters"><div class="chips" id="subchips" role="group" aria-label="Filter by topic"></div>
+      <label class="regsel">Your region<select id="region"></select></label></div>
+    <div class="layout">
+      <nav class="list" id="list" aria-label="Services"></nav>
+      <article class="sheet" id="sheet" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- EMERGENCY -->
+  <section class="view" id="v-emergency" hidden>
+    <div class="vhead"><h1>Emergency & government helplines</h1><p>Free government numbers. In a life-threatening emergency call 15 (police) or 1122 (rescue & ambulance) first.</p></div>
+    <div id="emerg"></div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="view" id="v-tools" hidden>
+    <div class="vhead"><h1>Tools</h1><p>Check which schemes fit you and estimate your monthly instalment.</p></div>
+    <div class="toolgrid" style="margin-bottom:20px">
+      <a href="passport/"><span class="ic" aria-hidden="true">🛂</span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
+      <a href="route-planner/"><span class="ic" aria-hidden="true">🗺️</span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
+      <a href="trains/"><span class="ic" aria-hidden="true">🚆</span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
+      <a href="parcels/"><span class="ic" aria-hidden="true">📦</span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h2>Which scheme fits me?</h2>
+        <p class="sub">Answer three questions to see the schemes you may be eligible for.</p>
+        <div class="form">
+          <label>Age<input id="fAge" type="number" min="16" max="80" value="28"></label>
+          <label>Province<select id="fProv"><option value="punjab">Punjab</option><option value="other">Other province / ICT</option></select></label>
+          <label class="wide">I need help with<select id="fNeed">
+            <option value="business">Start or grow a business</option>
+            <option value="farm">Farming / livestock</option>
+            <option value="house">Building a house</option>
+            <option value="id">ID card, passport or SIMs</option>
+            <option value="health">Hospital treatment</option>
+            <option value="study">Studies / school fees</option>
+            <option value="water">Clean drinking water</option>
+            <option value="tax">Tax, NTN or property</option>
+            <option value="bills">Paying utility bills</option>
+            <option value="loan">A personal, car or home bank loan</option>
+            <option value="cargo">Sending parcels or cargo</option>
+            <option value="travel">Travel, transport or going abroad</option>
+          </select></label>
+        </div>
+        <div class="result" id="finder"></div>
+      </div>
+      <div class="panel">
+        <h2>Instalment estimator</h2>
+        <p class="sub">Rough monthly payment for a term loan. Pick a scheme or enter your own terms.</p>
+        <div class="form">
+          <label class="wide">Preset<select id="ePreset">
+            <option value="custom">Custom</option>
+            <option value="t1" selected>PM Youth Tier 1 (0%, 3 yrs)</option>
+            <option value="t2">PM Youth Tier 2 (5%, 8 yrs)</option>
+            <option value="t3">PM Youth Tier 3 (7%, 8 yrs)</option>
+            <option value="akf">Asaan Karobar Finance (0%, 5 yrs)</option>
+            <option value="acag">Apni Chhat Apna Ghar (0%, 7 yrs)</option>
+            <option value="mgma1">Mera Ghar Mera Ashiana T1 (5%, 20 yrs)</option>
+            <option value="mgma2">Mera Ghar Mera Ashiana T2 (8%, 20 yrs)</option>
+          </select></label>
+          <label>Amount (Rs)<input id="eAmt" type="number" min="0" step="10000" value="500000"></label>
+          <label>Markup % / yr<input id="eRate" type="number" min="0" max="30" step="0.5" value="0"></label>
+          <label>Years<input id="eYrs" type="number" min="1" max="20" value="3"></label>
+        </div>
+        <div class="emi">
+          <div><div class="k">Monthly</div><div class="v" id="oM">–</div></div>
+          <div><div class="k">Total markup</div><div class="v" id="oI">–</div></div>
+          <div><div class="k">Total repaid</div><div class="v" id="oT">–</div></div>
+        </div>
+        <p class="sub" style="margin-top:10px">Estimate only. Grace periods, equity contribution and bank fees change the real figure. Your bank's sanction letter is final.</p>
+      </div>
+      <div class="panel" style="grid-column:1/-1">
+        <h2>Bank loan calculator</h2>
+        <p class="sub">Bank loans are priced as KIBOR + the bank's spread. KIBOR below is the State Bank's published rate on <b>2 Oct 2026</b>. Enter the spread each bank quotes you to compare them side by side.</p>
+        <div class="form">
+          <label>Loan type<select id="bType"><option value="personal">Personal loan</option><option value="car" selected>Car loan</option><option value="home">Home loan</option><option value="business">Business loan</option></select></label>
+          <label>Amount (Rs)<input id="bAmt" type="number" min="0" step="50000" value="3000000"></label>
+          <label>Years<input id="bYrs" type="number" min="1" max="25" value="5"></label>
+          <label>Benchmark<select id="bKib"><option value="11.95">3-month KIBOR · 11.95%</option><option value="12.35" selected>6-month KIBOR · 12.35%</option><option value="12.64">12-month KIBOR · 12.64%</option></select></label>
+        </div>
+        <div class="tbl" style="margin-top:14px"><table><thead><tr><th>Bank</th><th>Spread you were quoted (%)</th><th>Rate</th><th>Monthly</th><th>Total cost of borrowing</th><th>Products</th></tr></thead><tbody id="bRows"></tbody></table></div>
+        <p class="sub" style="margin-top:10px">Spreads are pre-filled as examples only, not the banks' offers. Replace them with the figure from each bank's key fact statement. Rates float with KIBOR on most loans, so later instalments can change.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTALS -->
+  <section class="view" id="v-portals" hidden>
+    <div class="vhead"><h1>More government services</h1><p>Official websites for other free and paid government services. Each opens in a new tab.</p></div>
+    <div id="dir"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="view" id="v-contact" hidden>
+    <div class="vhead"><h1>Contact us</h1><p>Questions about a scheme or this guide? Send a message and we'll reply on your phone or email.</p></div>
+    <div class="grid2">
+      <form class="panel" id="cform" novalidate>
+        <h2>Send a message</h2>
+        <p class="sub">We help you understand procedures. We never ask for fees, passwords or OTP codes.</p>
+        <div class="form">
+          <label>Full name<input id="cName" type="text" required autocomplete="name"></label>
+          <label>Mobile number<input id="cPhone" type="tel" required placeholder="03xx-xxxxxxx" pattern="^(\+92|0)?3[0-9]{2}[- ]?[0-9]{7}$" autocomplete="tel"></label>
+          <label>Email (optional)<input id="cEmail" type="email" autocomplete="email"></label>
+          <label>City<input id="cCity" type="text" autocomplete="address-level2"></label>
+          <label class="wide">Topic<select id="cTopic"></select></label>
+          <label class="wide">Your message<textarea id="cMsg" required maxlength="2000"></textarea></label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn" type="submit" id="cSend">Send message</button>
+          <a class="btn wa" id="cWa" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div id="cStatus" class="status" hidden></div>
+      </form>
+      <div class="contact-side">
+        <div class="panel">
+          <h2>Chat on WhatsApp</h2>
+          <p class="sub">Quickest for short questions. Tap the green button any time, on any page.</p>
+          <a class="btn wa" id="waBig" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="panel">
+          <h2>Official helplines</h2>
+          <div class="contact-side" style="gap:10px;margin-top:8px">
+            <div>NADRA: <span class="mono">051-111-786-100</span></div>
+            <div>Apni Chhat Apna Ghar: <span class="mono">0800-09100</span></div>
+            <div>Kissan Card registration: SMS <span class="mono">PKC CNIC</span> to <span class="mono">8070</span></div>
+            <div>BISP eligibility: SMS CNIC to <span class="mono">8171</span></div>
+            <div>Punjab Health Card: <span class="mono">0800-07542</span></div>
+            <div>Clean water plants: <span class="mono">1336</span></div>
+          </div>
+        </div>
+        <div class="panel" id="inboxPanel" hidden>
+          <h2>Inbox</h2>
+          <p class="sub">Only you, the site owner, can see this list.</p>
+          <div class="inbox" id="inbox"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#home" data-go="home"><span id="footLogo"></span><span class="t"><span class="n" style="font-size:16px">Sahulat <span>Guide</span></span></span></a>
+    <p>Information checked against official notices and news reports in early October 2026. Scheme terms, fees and deadlines change often. Confirm every figure on the official portal or helpline before you pay or submit anything. This site is not affiliated with NADRA, the Government of Pakistan or the Government of Punjab. Illustrations are for decoration only.</p>
+  </div>
+</footer>
+
+<a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"></a>
+
+<script>
+/* ===== Site settings ===== */
+const WHATSAPP_NUMBER = "";            // e.g. "923001234567" (country code, no + or spaces)
+const CHECKED = "5 Oct 2026";
+
+/* ===== Illustrations (original, drawn in SVG) ===== */
+const sky = `<rect width="200" height="120" class="f-sky"/>`;
+const ground = `<rect y="98" width="200" height="22" class="f-s"/>`;
+const ART = {
+ id:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="168" cy="24" r="10" class="f-sun"/>
+   <g transform="rotate(-6 100 64)"><rect x="40" y="30" width="120" height="74" rx="9" class="f-sur s-m" stroke-width="1.5"/>
+   <rect x="40" y="30" width="120" height="16" rx="9" class="f-a"/><rect x="40" y="40" width="120" height="6" class="f-a"/>
+   <rect x="52" y="54" width="30" height="36" rx="4" class="f-l"/><circle cx="67" cy="66" r="7" class="f-m"/><path d="M55 90a12 10 0 0 1 24 0z" class="f-m"/>
+   <rect x="92" y="56" width="52" height="5" rx="2.5" class="f-l"/><rect x="92" y="66" width="40" height="5" rx="2.5" class="f-l"/><rect x="92" y="76" width="46" height="5" rx="2.5" class="f-l"/>
+   <rect x="126" y="84" width="20" height="14" rx="3" class="f-sun"/></g></svg>`,
+ loan:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="34" y="70" width="18" height="28" class="f-a" opacity=".45"/><rect x="58" y="58" width="18" height="40" class="f-a" opacity=".65"/><rect x="82" y="44" width="18" height="54" class="f-a" opacity=".85"/><rect x="106" y="30" width="18" height="68" class="f-a"/>
+   <path d="M30 66 L64 52 L90 40 L130 20" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/><path d="M118 18 L132 19 L128 32" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+   <g><ellipse cx="160" cy="94" rx="20" ry="6" class="f-sun"/><rect x="140" y="80" width="40" height="14" class="f-sun"/><ellipse cx="160" cy="80" rx="20" ry="6" class="f-e"/>
+   <ellipse cx="160" cy="74" rx="20" ry="6" class="f-sun"/><rect x="140" y="62" width="40" height="12" class="f-sun"/><ellipse cx="160" cy="62" rx="20" ry="6" class="f-e"/>
+   <text x="160" y="66" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`,
+ card:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="22" y="40" width="86" height="58" class="f-sur"/><path d="M16 40h98l-6-16H22z" class="f-st"/><path d="M30 40l4-16M50 40l2-16M70 40v-16M90 40l-2-16" class="s-ink" stroke-width="0" />
+   <path d="M16 40q8 8 16 0q8 8 16 0q8 8 16 0q8 8 16 0q8 8 16 0q9 8 18 0" class="f-st"/>
+   <rect x="34" y="58" width="26" height="40" class="f-a"/><rect x="68" y="56" width="30" height="20" class="f-l"/>
+   <g transform="rotate(12 150 70)"><rect x="112" y="46" width="74" height="46" rx="7" class="f-a"/><rect x="112" y="56" width="74" height="8" class="f-ink" opacity=".55"/><rect x="122" y="72" width="16" height="11" rx="2" class="f-sun"/><rect x="148" y="76" width="28" height="4" rx="2" class="f-sur" opacity=".8"/></g></svg>`,
+ house:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}<circle cx="34" cy="26" r="11" class="f-sun"/>
+   <rect x="64" y="56" width="76" height="42" class="f-sur"/><path d="M56 58 L102 24 L148 58z" class="f-st"/>
+   <rect x="94" y="72" width="16" height="26" class="f-a"/><rect x="72" y="66" width="14" height="12" class="f-sky"/><rect x="118" y="66" width="14" height="12" class="f-sky"/>
+   <rect x="150" y="80" width="5" height="18" class="f-e"/><circle cx="152" cy="74" r="12" class="f-a" opacity=".8"/>
+   <path d="M166 98v-34h16v34" fill="none" class="s-m" stroke-width="2"/><path d="M166 72h16M166 82h16M166 92h16" class="s-m" stroke-width="2"/></svg>`,
+ wheat:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<rect y="88" width="200" height="32" class="f-sun" opacity=".55"/><circle cx="160" cy="28" r="12" class="f-sun"/>
+   ${[30,48,66,84].map((x,i)=>`<path d="M${x} 112 Q${x+2} 70 ${x+6} 40" fill="none" class="s-a" stroke-width="2.5"/>${[0,1,2,3,4].map(j=>`<ellipse cx="${x+3+j*0.7}" cy="${46+j*8}" rx="3.2" ry="6" transform="rotate(-25 ${x+3+j*.7} ${46+j*8})" class="f-sun"/><ellipse cx="${x+8+j*0.7}" cy="${48+j*8}" rx="3.2" ry="6" transform="rotate(25 ${x+8+j*.7} ${48+j*8})" class="f-e"/>`).join("")}`).join("")}
+   <g transform="rotate(-8 150 76)"><rect x="112" y="56" width="74" height="46" rx="7" class="f-a"/><rect x="122" y="66" width="16" height="11" rx="2" class="f-sun"/><rect x="122" y="86" width="40" height="5" rx="2.5" class="f-sur" opacity=".8"/></g></svg>`,
+ tractor:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<rect y="96" width="200" height="24" class="f-e" opacity=".45"/>
+   <path d="M0 100 Q50 92 100 100 T200 100" fill="none" class="s-a" stroke-width="2" opacity=".5"/>
+   <rect x="58" y="56" width="74" height="24" rx="4" class="f-a"/><rect x="100" y="28" width="30" height="30" rx="3" fill="none" class="s-ink" stroke-width="3"/><rect x="98" y="26" width="36" height="5" rx="2" class="f-a"/>
+   <rect x="66" y="42" width="5" height="16" class="f-ink"/>
+   <circle cx="122" cy="84" r="20" class="f-ink"/><circle cx="122" cy="84" r="9" class="f-sun"/>
+   <circle cx="70" cy="90" r="11" class="f-ink"/><circle cx="70" cy="90" r="5" class="f-sun"/>
+   <circle cx="174" cy="22" r="10" class="f-sun"/></svg>`,
+ cow:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}<circle cx="30" cy="24" r="10" class="f-sun"/>
+   <rect x="64" y="52" width="78" height="38" rx="18" class="f-sur s-m" stroke-width="1.5"/>
+   <path d="M86 58c8 4 10 14 4 20-6-2-10-12-4-20z M118 54c10 0 14 10 10 18-8 0-14-8-10-18z" class="f-ink"/>
+   <rect x="72" y="84" width="8" height="16" rx="3" class="f-ink"/><rect x="88" y="84" width="8" height="16" rx="3" class="f-ink"/><rect x="118" y="84" width="8" height="16" rx="3" class="f-ink"/><rect x="132" y="84" width="8" height="16" rx="3" class="f-ink"/>
+   <ellipse cx="150" cy="56" rx="15" ry="13" class="f-sur s-m" stroke-width="1.5"/><ellipse cx="158" cy="64" rx="9" ry="6" class="f-e"/>
+   <path d="M140 46q-4-8 2-10M158 44q6-6 2-10" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/><circle cx="148" cy="53" r="2" class="f-ink"/>
+   <path d="M64 62q-10 8-6 22" fill="none" class="s-ink" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+ health:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="46" y="38" width="96" height="60" class="f-sur s-m" stroke-width="1.5"/><rect x="40" y="30" width="108" height="10" rx="2" class="f-a"/>
+   <rect x="84" y="46" width="20" height="20" rx="3" class="f-st"/><rect x="91" y="49" width="6" height="14" fill="#fff"/><rect x="87" y="53" width="14" height="6" fill="#fff"/>
+   <rect x="86" y="76" width="16" height="22" class="f-a"/>${[54,66,112,124].map(x=>`<rect x="${x}" y="72" width="9" height="9" class="f-sky"/>`).join("")}
+   <g transform="rotate(10 165 84)"><rect x="140" y="66" width="52" height="34" rx="5" class="f-a"/><circle cx="153" cy="79" r="6" class="f-sur"/><rect x="164" y="74" width="20" height="4" rx="2" class="f-sur" opacity=".8"/><rect x="164" y="82" width="14" height="4" rx="2" class="f-sur" opacity=".8"/></g></svg>`,
+ grad:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}<circle cx="170" cy="24" r="10" class="f-sun"/>
+   <rect x="36" y="78" width="80" height="10" rx="2" class="f-a"/><rect x="40" y="68" width="72" height="10" rx="2" class="f-st"/><rect x="34" y="88" width="84" height="10" rx="2" class="f-e"/>
+   <path d="M100 26 L156 44 L100 62 L44 44z" class="f-ink"/><path d="M72 52v14q28 14 56 0V52L100 62z" class="f-ink" opacity=".85"/>
+   <path d="M148 46v24" class="s-ink" stroke-width="2.5"/><circle cx="148" cy="72" r="4" class="f-sun"/></svg>`,
+ school:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="40" y="52" width="120" height="46" class="f-sur s-m" stroke-width="1.5"/><path d="M32 54 L100 22 L168 54z" class="f-a"/>
+   <circle cx="100" cy="42" r="7" class="f-sur"/><path d="M100 38v4l3 2" fill="none" class="s-ink" stroke-width="1.5"/>
+   <rect x="90" y="72" width="20" height="26" class="f-st"/>${[50,68,124,142].map(x=>`<rect x="${x}" y="62" width="10" height="12" class="f-sky"/>`).join("")}
+   <rect x="98" y="8" width="2" height="16" class="f-ink"/><path d="M100 8h14l-3 4 3 4h-14z" class="f-sun"/>
+   <circle cx="20" cy="88" r="5" class="f-e"/><rect x="16" y="94" width="8" height="10" rx="2" class="f-a"/><circle cx="180" cy="86" r="5" class="f-e"/><rect x="176" y="92" width="8" height="12" rx="2" class="f-st"/></svg>`,
+ water:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="30" y="34" width="80" height="64" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="30" y="34" width="80" height="14" rx="4" class="f-a"/>
+   <text x="70" y="44.5" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="8" fill="#fff">FILTER PLANT</text>
+   <rect x="42" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/><rect x="60" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/><rect x="78" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/>
+   <path d="M110 64h26v8" fill="none" class="s-ink" stroke-width="5" stroke-linecap="round"/><rect x="118" y="58" width="8" height="5" rx="1" class="f-st"/>
+   <path d="M136 78q-5 8 0 10q5-2 0-10z" class="f-a"/>
+   <path d="M126 90h22l-3 10h-16z" class="f-a" opacity=".85"/>
+   <path d="M168 30q-12 18 0 22q12-4 0-22z" class="f-a"/><circle cx="165" cy="44" r="2.5" fill="#fff" opacity=".8"/></svg>`,
+ tax:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="40" y="18" width="72" height="88" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="50" y="30" width="40" height="6" rx="3" class="f-a"/>
+   ${[44,54,64,74].map(y=>`<rect x="50" y="${y}" width="52" height="4" rx="2" class="f-l"/>`).join("")}
+   <text x="76" y="98" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="11" class="f-st">FORM 114</text>
+   <rect x="120" y="42" width="48" height="62" rx="6" class="f-ink"/><rect x="126" y="48" width="36" height="14" rx="2" class="f-s"/>
+   <text x="158" y="58.5" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="8" class="f-a">Rs 0</text>
+   ${[0,1,2].map(r=>[0,1,2].map(c=>`<rect x="${127+c*12}" y="${68+r*11}" width="9" height="8" rx="1.5" class="${r==2&&c==2?'f-sun':'f-m'}"/>`).join("")).join("")}</svg>`,
+ train:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="168" cy="24" r="10" class="f-sun"/>
+   <rect y="100" width="200" height="20" class="f-e" opacity=".45"/><path d="M0 104h200M0 110h200" class="s-ink" stroke-width="2"/>
+   ${[8,30,52,74,96,118,140,162,184].map(x=>`<rect x="${x}" y="102" width="6" height="10" class="f-e"/>`).join("")}
+   <rect x="20" y="52" width="74" height="44" rx="6" class="f-a"/><rect x="98" y="52" width="74" height="44" rx="6" class="f-a"/>
+   <path d="M172 52h8q10 0 12 14v24q0 6-6 6h-14z" class="f-a"/><rect x="176" y="60" width="10" height="12" rx="2" class="f-sky"/>
+   ${[28,48,68,106,126,146].map(x=>`<rect x="${x}" y="60" width="14" height="12" rx="2" class="f-sky"/>`).join("")}
+   <rect x="20" y="78" width="172" height="4" class="f-sun"/>
+   ${[34,80,112,158,182].map(x=>`<circle cx="${x}" cy="98" r="5" class="f-ink"/>`).join("")}</svg>`,
+ plane:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="40" cy="30" r="12" class="f-sun"/>
+   <ellipse cx="150" cy="96" rx="40" ry="10" class="f-sur" opacity=".8"/><ellipse cx="40" cy="104" rx="34" ry="8" class="f-sur" opacity=".8"/>
+   <g transform="rotate(-14 100 60)"><path d="M40 62q0-8 10-8h100q16 0 22 8q-6 8-22 8H50q-10 0-10-8z" class="f-sur s-m" stroke-width="1.5"/>
+   <path d="M88 60l-14 34h12l26-34z" class="f-a"/><path d="M92 56l-12-24h10l22 24z" class="f-a" opacity=".85"/>
+   <path d="M46 56l-6-18h8l12 16z" class="f-st"/>${[110,120,130,140].map(x=>`<circle cx="${x}" cy="60" r="2.5" class="f-sky s-m" stroke-width=".8"/>`).join("")}
+   <path d="M160 56q8 1 12 6h-12z" class="f-ink" opacity=".7"/></g></svg>`,
+ bank:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <path d="M30 44 L84 20 L138 44z" class="f-a"/><rect x="34" y="44" width="100" height="6" class="f-a"/>
+   ${[42,62,82,102,122].map(x=>`<rect x="${x-4}" y="52" width="8" height="38" class="f-sur s-m" stroke-width="1"/>`).join("")}
+   <rect x="30" y="90" width="108" height="8" class="f-ink" opacity=".8"/>
+   <text x="84" y="40" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" fill="#fff">BANK</text>
+   <rect x="150" y="70" width="40" height="28" class="f-sur"/><path d="M146 72 L170 52 L194 72z" class="f-st"/><rect x="164" y="82" width="10" height="16" class="f-a"/>
+   <path d="M138 80 h10" class="s-ink" stroke-width="2" stroke-dasharray="3 2"/></svg>`,
+ passport:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}<circle cx="170" cy="24" r="10" class="f-sun"/>
+   <g transform="rotate(-8 80 62)"><rect x="50" y="18" width="62" height="84" rx="6" class="f-a"/><circle cx="81" cy="52" r="15" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>
+   <path d="M66 52h30M81 37v30M71 42q10 10 0 20M91 42q-10 10 0 20" fill="none" stroke="#fff" stroke-width="1.5" opacity=".85"/>
+   <rect x="62" y="78" width="38" height="5" rx="2.5" fill="#fff" opacity=".8"/><text x="81" y="94" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="7" fill="#fff">PASSPORT</text></g>
+   <rect x="118" y="44" width="56" height="40" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="124" y="50" width="16" height="20" rx="2" class="f-l"/><circle cx="132" cy="58" r="4" class="f-m"/>
+   <rect x="146" y="52" width="22" height="4" rx="2" class="f-l"/><rect x="146" y="60" width="18" height="4" rx="2" class="f-l"/><circle cx="160" cy="76" r="7" class="f-st" opacity=".8"/></svg>`,
+ sim:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="66" y="12" width="54" height="96" rx="10" class="f-ink"/><rect x="71" y="22" width="44" height="74" rx="4" class="f-sur"/>
+   ${[0,1,2].map(i=>`<rect x="76" y="${30+i*20}" width="34" height="14" rx="3" class="f-s"/><rect x="80" y="${34+i*20}" width="8" height="6" rx="1" class="${i==2?'f-st':'f-sun'}"/><rect x="92" y="${35+i*20}" width="14" height="4" rx="2" class="f-a"/>`).join("")}
+   <path d="M134 40h30l8 8v40h-38z" class="f-a"/><rect x="142" y="56" width="22" height="20" rx="3" class="f-sun"/><path d="M149 56v20M157 56v20M142 66h22" class="s-ink" stroke-width="1" opacity=".5"/>
+   <circle cx="40" cy="60" r="16" class="f-sur s-a" stroke-width="3"/><path d="M52 72l12 12" class="s-a" stroke-width="5" stroke-linecap="round"/></svg>`,
+ land:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="34" cy="24" r="10" class="f-sun"/>
+   <path d="M0 70 L200 58 V120 H0z" class="f-s"/><path d="M0 70 L70 66 L90 120 H0z" class="f-a" opacity=".35"/><path d="M70 66 L140 62 L170 120 H90z" class="f-sun" opacity=".45"/><path d="M140 62 L200 58 V120 H170z" class="f-a" opacity=".55"/>
+   <path d="M70 66 L90 120 M140 62 L170 120" class="s-ink" stroke-width="1.5" stroke-dasharray="4 3"/>
+   <rect x="96" y="14" width="56" height="40" rx="3" class="f-sur s-m" stroke-width="1.5"/><text x="124" y="27" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="8" class="f-st">FARD</text>
+   <rect x="104" y="32" width="40" height="3" rx="1.5" class="f-l"/><rect x="104" y="39" width="32" height="3" rx="1.5" class="f-l"/><circle cx="140" cy="46" r="5" class="f-st" opacity=".8"/>
+   <path d="M44 84v-14l6-6 6 6v14z" class="f-st"/></svg>`,
+ bus:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<rect y="96" width="200" height="24" class="f-l"/><path d="M0 106h200" class="s-m" stroke-width="2" stroke-dasharray="10 8"/>
+   <rect x="18" y="44" width="150" height="46" rx="8" class="f-st"/><rect x="18" y="74" width="150" height="6" class="f-sun"/>
+   ${[28,52,76,100,124].map(x=>`<rect x="${x}" y="52" width="18" height="16" rx="2" class="f-sky"/>`).join("")}<rect x="148" y="52" width="16" height="30" rx="2" class="f-sky"/>
+   <circle cx="48" cy="92" r="9" class="f-ink"/><circle cx="140" cy="92" r="9" class="f-ink"/><circle cx="48" cy="92" r="3.5" class="f-l"/><circle cx="140" cy="92" r="3.5" class="f-l"/>
+   <g transform="rotate(-10 182 40)"><rect x="166" y="26" width="30" height="20" rx="3" class="f-a"/><circle cx="174" cy="36" r="4" class="f-sun"/></g></svg>`,
+ globe:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <circle cx="78" cy="58" r="34" class="f-a"/><path d="M60 38q14 6 10 18t8 16q8 6 2 16M88 28q-6 10 4 16t16 2" fill="none" class="s-ink" stroke-width="0"/>
+   <path d="M58 40q10-6 20 0t6 14q-8 4-14 0t-12-14zM84 66q10-2 14 6t-6 16q-8-4-8-12z" class="f-s"/>
+   <ellipse cx="78" cy="58" rx="34" ry="12" fill="none" stroke="#fff" stroke-width="1.2" opacity=".5"/><path d="M78 24v68" stroke="#fff" stroke-width="1.2" opacity=".5"/>
+   <g transform="rotate(8 150 60)"><rect x="124" y="40" width="56" height="38" rx="5" class="f-a"/><rect x="124" y="40" width="56" height="10" rx="5" class="f-ink" opacity=".5"/>
+   <rect x="130" y="56" width="14" height="16" rx="2" class="f-sur"/><rect x="150" y="58" width="24" height="4" rx="2" class="f-sur" opacity=".85"/><rect x="150" y="66" width="18" height="4" rx="2" class="f-sur" opacity=".85"/></g></svg>`,
+ bill:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <rect x="34" y="16" width="64" height="88" rx="4" class="f-sur s-m" stroke-width="1.5"/><path d="M34 96l8 6 8-6 8 6 8-6 8 6 8-6 8 6 8-6v8H34z" class="f-sky"/>
+   <rect x="42" y="26" width="30" height="6" rx="3" class="f-a"/>${[40,48,56,64].map(y=>`<rect x="42" y="${y}" width="${y==64?24:48}" height="4" rx="2" class="f-l"/>`).join("")}
+   <text x="88" y="86" text-anchor="end" font-family="Sora,sans-serif" font-weight="700" font-size="10" class="f-st">Rs 4,250</text>
+   <path d="M128 22l-14 30h12l-8 26 26-36h-13l9-20z" class="f-sun"/>
+   <path d="M152 70q-12 16 0 20q12-4 0-20z" class="f-a"/><path d="M170 50c-6 6-6 12 0 16c6-4 6-10 0-16z" class="f-e"/><path d="M168 66v10" class="s-ink" stroke-width="2"/></svg>`,
+ parcel:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
+   <path d="M40 48l40-14 40 14v44l-40 14-40-14z" class="f-e"/><path d="M40 48l40 14 40-14M80 62v44" fill="none" class="s-ink" stroke-width="1.5" opacity=".5"/>
+   <path d="M58 41l40 14v10l-8 3V58L50 44z" class="f-sun"/><rect x="88" y="72" width="22" height="14" rx="2" class="f-sur" transform="skewY(-19) translate(0 31)"/>
+   <rect x="130" y="40" width="44" height="34" rx="4" class="f-st"/><path d="M130 44l22 16 22-16" fill="none" stroke="#fff" stroke-width="2"/>
+   <rect x="140" y="76" width="24" height="22" class="f-a"/><circle cx="152" cy="68" r="0"/></svg>`,
+ ship:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<rect y="84" width="200" height="36" class="f-a" opacity=".55"/>
+   <path d="M0 90q10-4 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0 20 0" fill="none" stroke="#fff" stroke-width="1.5" opacity=".6"/>
+   <path d="M24 70h132l-14 22H36z" class="f-ink"/>
+   ${[0,1,2,3,4].map(i=>`<rect x="${34+i*22}" y="56" width="20" height="14" class="${['f-st','f-sun','f-a','f-e','f-st'][i]}"/>`).join("")}
+   ${[0,1,2].map(i=>`<rect x="${45+i*22}" y="42" width="20" height="14" class="${['f-sun','f-st','f-e'][i]}"/>`).join("")}
+   <rect x="140" y="44" width="12" height="26" class="f-sur"/>
+   <path d="M168 84V22M168 26h-22M160 26v24" fill="none" class="s-ink" stroke-width="3"/><rect x="155" y="50" width="10" height="7" class="f-sun"/>
+   <circle cx="34" cy="22" r="9" class="f-sun"/></svg>`,
+ hero:`<svg viewBox="0 0 440 300" aria-hidden="true"><rect width="440" height="300" rx="20" class="f-sky"/><circle cx="380" cy="60" r="26" class="f-sun"/>
+   <path d="M0 230 Q110 205 220 230 T440 225 V300 H0z" class="f-s"/>
+   <g transform="rotate(-8 140 160)"><rect x="80" y="80" width="130" height="160" rx="10" class="f-sur s-m" stroke-width="1.5"/><rect x="80" y="80" width="130" height="28" rx="10" class="f-st"/><rect x="80" y="98" width="130" height="10" class="f-st"/>
+   ${[0,1,2,3].map(i=>`<rect x="96" y="${124+i*26}" width="14" height="14" rx="3" class="f-s"/><path d="M99 ${131+i*26}l3 4 6-7" fill="none" class="s-a" stroke-width="2.5" stroke-linecap="round"/><rect x="118" y="${127+i*26}" width="${70-i*8}" height="7" rx="3.5" class="f-l"/>`).join("")}</g>
+   <rect x="220" y="60" width="120" height="210" rx="18" class="f-ink"/><rect x="228" y="74" width="104" height="182" rx="10" class="f-sur"/>
+   <rect x="238" y="86" width="84" height="40" rx="6" class="f-a"/><text x="250" y="111" font-family="Sora,sans-serif" font-weight="700" font-size="12" class="f-sur">Apply</text>
+   <rect x="238" y="136" width="84" height="8" rx="4" class="f-l"/><rect x="238" y="152" width="64" height="8" rx="4" class="f-l"/>
+   <rect x="238" y="172" width="84" height="26" rx="6" class="f-s"/><rect x="246" y="182" width="40" height="6" rx="3" class="f-a"/>
+   <rect x="238" y="208" width="84" height="26" rx="6" class="f-s"/><rect x="246" y="218" width="52" height="6" rx="3" class="f-a"/>
+   <circle cx="350" cy="214" r="30" class="f-a"/><path d="M336 214l10 10 18-20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+   <g transform="translate(40 228)"><ellipse cx="20" cy="22" rx="20" ry="6" class="f-sun"/><rect x="0" y="8" width="40" height="14" class="f-sun"/><ellipse cx="20" cy="8" rx="20" ry="6" class="f-e"/><text x="20" y="12" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`
+};
+const ICON = {
+ home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>`,
+ wa:`<svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.7 5.8 5.1 2.2.9 3 1 4.1.8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5 0-.2-.3-.3-.6-.4z"/></svg>`
+};
+
+/* ===== Data ===== */
+const GROUPS = {
+  identity:{name:"Identity & documents",desc:"CNIC, passport and the SIMs on your CNIC.",art:"id",subs:[["id","ID card"],["passport","Passport"],["sim","SIM & phone"]]},
+  money:{name:"Loans & banking",desc:"Government business and housing loans, and bank loans compared.",art:"loan",subs:[["business","Business loans"],["housing","Housing loans"],["bank","Bank loans"]]},
+  bills:{name:"Bills & taxes",desc:"Utility bills, NTN, income tax and property tax.",art:"bill",subs:[["utility","Utility bills"],["incometax","Income tax & NTN"],["property","Property & land"]]},
+  health:{name:"Health & water",desc:"Government health cards and free clean drinking water.",art:"health",subs:[["cards","Health cards"],["water","Clean water"]]},
+  education:{name:"Education",desc:"University scholarships, school stipends and free schooling.",art:"grad",subs:[["university","University"],["school","School"]]},
+  farmers:{name:"Farmers",desc:"Interest-free credit for crops and livestock.",art:"wheat",subs:[["crops","Crops"],["livestock","Livestock"]]},
+  transport:{name:"Transport & travel",desc:"City buses, trains, flights and going abroad.",art:"bus",subs:[["bus","City buses"],["train","Trains"],["air","Flights"],["abroad","Going abroad"]]},
+  cargo:{name:"Cargo & shipping",desc:"Parcels, rail freight, sea ports and dry ports.",art:"ship",subs:[["post","Parcels & post"],["rail","Rail freight"],["ports","Ports & customs"]]}
+};
+const REGIONS = [["all","All of Pakistan"],["punjab","Punjab"],["sindh","Sindh"],["kp","Khyber Pakhtunkhwa"],["balochistan","Balochistan"],["ict","Islamabad"],["ajkgb","AJK & Gilgit-Baltistan"]];
+const REGION_LABEL = {national:"Nationwide",punjab:"Punjab",sindh:"Sindh",kp:"KP",balochistan:"Balochistan",ict:"Islamabad",ajkgb:"AJK & GB"};
+const TABS = [["home","Home"],["emergency","Emergency"],...Object.entries(GROUPS).map(([k,g])=>[k,g.name]),["all","All services"],["tools","Calculators"],["portals","More services"],["contact","Contact"]];
+const S = [
+{ id:"cnic-renewal", grp:"identity", sub:"id", region:["national"], art:"id", name:"CNIC renewal (online)", ur:"شناختی کارڈ کی تجدید", by:"NADRA", status:"open",
+  summary:"Renew an expired or expiring Computerised National Identity Card from your phone with the Pak-ID app or the Pak-Identity website. You can also renew at any NADRA Registration Centre.",
+  facts:[["Normal fee","Rs 400"],["Smart NIC (normal)","Rs 750"],["Normal time","~15 days"],["Apply via","Pak-ID app"]],
+  elig:["Pakistani citizen holding a CNIC that has expired or will expire soon","Smartphone with camera and a mobile number in your own name","Applicants abroad use NICOP; fees are charged in USD"],
+  docs:["Your existing CNIC (or its number)","Live photo, taken in the app against a plain background","Fingerprints captured in the app; if they fail, you finish biometrics at a NADRA centre","A family member's CNIC for verification, if the app asks","Debit/credit card or mobile wallet for the fee"],
+  steps:["Install Pak-ID from the Play Store / App Store, or open id.nadra.gov.pk.","Register with your CNIC number, email and mobile number, then verify with the OTP.","Choose Apply → ID Card → Renewal.","Pick Standard CNIC or Smart NIC and the processing speed (Normal, Urgent or Executive).","Take your photo and capture fingerprints as the app guides you.","Check your details, then submit.","Pay the fee online. The fee is non-refundable.","Track progress under Applications in the app. The card is couriered to your address."],
+  table:{head:["Card","Normal","Urgent","Executive"],rows:[["CNIC renewal","Rs 400 · 15 days","Rs 1,150 · 12 days","Rs 2,150 · 6 days"],["Smart NIC renewal","Rs 750","Rs 1,500","Rs 2,500"]]},
+  note:"Fees are revised periodically and a delivery charge may be added. Confirm on NADRA's fee page before paying.",
+  links:[["Pak-Identity portal","https://id.nadra.gov.pk"],["NADRA fee structure","https://www.nadra.gov.pk/feeStructure"]], help:"NADRA UAN 051-111-786-100" },
+{ id:"pm-youth-loan", grp:"money", sub:"business", region:["national"], art:"loan", name:"PM Youth Business & Agriculture Loan", ur:"وزیراعظم یوتھ بزنس و زراعت قرض", by:"Govt. of Pakistan + SBP", status:"open",
+  summary:"Federal loan scheme (formerly Kamyab Jawan) for new and existing businesses and farming. Loans go up to Rs 7.5 million in three tiers through partner banks; the government pays most of the markup.",
+  facts:[["Max loan","Rs 7.5 M"],["Markup","0% / 5% / 7%"],["Age","21–45"],["Women quota","25%"]],
+  elig:["Pakistani citizen with a valid CNIC, aged 21 to 45","For IT / e-commerce businesses the minimum age is 18, with at least Matric","New startups and existing businesses can both apply","Government employees are not eligible","Clean credit history; no outstanding default"],
+  docs:["CNIC (front and back)","Mobile number registered in your name","Business plan / feasibility (the portal guides you)","Two references with CNIC numbers","For existing businesses: proof of business, e.g. bank statement, tax or utility documents","For Tier 3: security documents as the bank requires"],
+  steps:["Open the official PM Youth Programme portal and choose the Business & Agriculture Loan.","Create an account with your CNIC and mobile number and verify the OTP.","Select your tier based on the amount you need.","Fill in personal, education and business details, and choose a preferred bank and branch.","Upload documents and submit. Note your tracking ID.","The bank reviews your plan and may call you for an interview and site visit.","If sanctioned, sign the documents, provide security (Tier 3) and equity if required.","Funds are disbursed by the bank. Repay in monthly instalments after any grace period."],
+  table:{head:["Tier","Amount","Markup","Max tenure","Security"],rows:[["T1","Up to Rs 0.5 M","0%","3 years","Personal guarantee"],["T2","Rs 0.5 M – 1.5 M","5%","8 years","Personal guarantee"],["T3","Rs 1.5 M – 7.5 M","7%","8 years","As per bank policy"]]},
+  note:"Tier 2 and 3 offer a grace period of up to one year on principal. New businesses may need an equity contribution in the higher tiers.",
+  links:[["PM Youth Programme portal","https://pmyp.gov.pk"]], help:"Helpline listed on pmyp.gov.pk" },
+{ id:"asaan-karobar-finance", grp:"money", sub:"business", region:["punjab"], art:"loan", name:"CM Punjab Asaan Karobar Finance", ur:"آسان کاروبار فنانس", by:"Govt. of Punjab + Bank of Punjab", status:"open",
+  summary:"Interest-free business loans from Rs 1 million to Rs 30 million for small and medium businesses and startups in Punjab, processed by the Bank of Punjab.",
+  facts:[["Range","Rs 1 M – 30 M"],["Markup","0%"],["Tenure","Up to 5 years"],["Age","25–55"]],
+  elig:["Resident of Punjab with a valid CNIC, aged 25 to 55","Active FBR tax filer with an NTN","Business located in Punjab (owned or rented premises)","Clean credit history","One facility per business"],
+  docs:["CNIC and mobile number registered in your name","NTN / active taxpayer status","Business plan or feasibility","Proof of business premises (ownership or rent agreement)","Bank statements for existing businesses","For Tier 2: property or other acceptable security"],
+  steps:["Open akf.punjab.gov.pk and register with your CNIC-linked mobile number.","Fill in personal and business information and choose Tier 1 or Tier 2.","Enter the amount and purpose (startup, expansion, machinery, etc.).","Upload documents.","Pay the non-refundable processing fee online.","Bank of Punjab checks your feasibility, credit history and security.","If approved, funds are released, often in tranches. Repay in equal monthly instalments after the grace period."],
+  table:{head:["Tier","Amount","Security","Processing fee","Grace period"],rows:[["T1","Rs 1 M – 5 M","Personal guarantee","Rs 5,000","Startups ≤ 6 months"],["T2","Rs 6 M – 30 M","Secured","Rs 10,000","Existing ≤ 3 months"]]},
+  note:"The scheme is in its second phase. Check the portal for the current window before paying the fee.",
+  links:[["Asaan Karobar Finance portal","https://akf.punjab.gov.pk"]], help:"Bank of Punjab / PITB helpline on the portal" },
+{ id:"apni-chhat-apna-ghar", grp:"money", sub:"housing", region:["punjab"], art:"house", name:"Apni Chhat Apna Ghar", ur:"اپنی چھت اپنا گھر", by:"Govt. of Punjab (PHATA)", status:"open",
+  summary:"Interest-free loan of up to Rs 1.5 million to build a house on a small plot you already own. A companion window, Mehfooz Chhat, funds roof repair, an extra room or an extra floor.",
+  facts:[["Max loan","Rs 1.5 M"],["Markup","0%"],["Repay over","7 years"],["Registration","Free"]],
+  elig:["Resident of Punjab with a valid CNIC","Own a small residential plot in Punjab in your name","Do not already own another house","No loan defaults","Low or middle income household (verified by the programme)"],
+  docs:["CNIC and mobile number in your name","Plot ownership documents (registry / fard / transfer letter)","Income details","Family details as asked on the portal"],
+  steps:["Open acag.punjab.gov.pk and register with your CNIC and mobile number; verify the OTP.","Choose “Construction of New House”, or the addition option for Mehfooz Chhat.","Enter family, income and plot details, and upload documents.","Submit. Field teams verify your plot and eligibility.","On approval, the loan is released in instalments as construction progresses.","Repay in monthly instalments, roughly Rs 14,000 a month on the full Rs 1.5 million."],
+  table:{head:["Window","Amount","Use"],rows:[["Apni Chhat Apna Ghar","Up to Rs 1.5 M","Build a new house on your plot"],["Mehfooz Chhat","Up to Rs 0.5 M","Roof repair or an extra room"],["Mehfooz Chhat","Up to Rs 1 M","Add a floor"]]},
+  note:"You can also get help at Deputy Commissioner, Assistant Commissioner or PHATA offices. Landless families can look at the related Apni Zameen Apna Ghar free-plot programme on the same portal.",
+  links:[["Apni Chhat Apna Ghar portal","https://acag.punjab.gov.pk"]], help:"0800-09100 (toll-free)" },
+{ id:"kissan-card", grp:"farmers", sub:"crops", region:["punjab"], art:"wheat", name:"CM Punjab Kissan Card", ur:"کسان کارڈ", by:"Punjab Agriculture Dept. + Bank of Punjab", status:"open",
+  summary:"Interest-free seasonal credit on a card for small farmers to buy seed, fertiliser, pesticide and other inputs from registered dealers. Apply by SMS.",
+  facts:[["Rate","Rs 30,000 / acre"],["Max / season","Rs 150,000"],["Land","Up to 12.5 acres"],["Apply","SMS 8070"]],
+  elig:["Resident of Punjab with a valid CNIC","Up to 12.5 acres of land recorded in your name with the Punjab Land Records Authority (PLRA)","SIM registered on your own CNIC","Not a loan defaulter"],
+  docs:["CNIC","Mobile SIM in your name","Land record in PLRA (checked automatically)"],
+  steps:["From your own SIM, send an SMS: <code>PKC</code> space <code>your CNIC number</code> to <code>8070</code>.","Wait for the confirmation SMS. Your land record is verified with PLRA.","Once approved, collect the card from Bank of Punjab as instructed by SMS.","Activate the card and use it at registered input dealers.","Repay after harvest, within the season (about six months plus a short grace period)."],
+  table:null,
+  note:"The benefit is capped at five acres' worth (Rs 150,000) even on a larger holding. Limits are revised by season; check the official site.",
+  links:[["Punjab Agriculture Department","https://agripunjab.gov.pk"]], help:"SMS 8070 · helpline on agripunjab.gov.pk" },
+{ id:"livestock-card", grp:"farmers", sub:"livestock", region:["punjab"], art:"cow", name:"CM Punjab Livestock Card", ur:"لائیو اسٹاک کارڈ", by:"Livestock & Dairy Development Dept., Punjab", status:"check",
+  summary:"Interest-free credit for small livestock farmers to buy feed, medicine and other inputs. The third phase opened for registration on 15 July 2026.",
+  facts:[["Markup","0%"],["Phase","3"],["Opened","15 Jul 2026"],["Help desks","Vet hospitals"]],
+  elig:["Resident of Punjab with a valid CNIC","Owns livestock within the herd size set for the current phase","Mobile number registered in your name","Not a loan defaulter"],
+  docs:["CNIC","Mobile number in your name","Livestock details (animal count and type)"],
+  steps:["Open the official Livestock Card portal, or visit the CM Facilitation Desk at your nearest veterinary hospital.","Register with CNIC and mobile number.","Enter your animals and personal details.","Submit and wait for field verification.","Approved farmers receive the card through Bank of Punjab."],
+  table:null,
+  note:"Herd-size limits and credit amounts differ by phase. Confirm current terms on the portal before applying.",
+  links:[["Livestock Card portal","https://plc.punjab.gov.pk"]], help:"CM Facilitation Desks at veterinary hospitals" },
+
+{ id:"punjab-health-card", grp:"health", sub:"cards", region:["punjab"], art:"health", name:"Punjab Health Card (Sehat Card)", ur:"پنجاب صحت کارڈ", by:"Govt. of Punjab (PHIMC)", status:"check",
+  summary:"Free admitted (indoor) treatment at empanelled public and private hospitals for families permanently resident in Punjab. Your CNIC is your card. The programme was restructured in 2025–26, so check what is covered before you go.",
+  facts:[["Secondary care","Rs 60,000 / family / yr"],["Priority care","Rs 400,000 / family / yr"],["Card","Your CNIC"],["Helpline","0800-07542"]],
+  elig:["Permanent resident of Punjab (as per CNIC address)","Covers you, your spouse, unmarried children and newborns registered with NADRA","Family members must be linked in NADRA's family record","OPD (outdoor) visits are not covered; treatment is for admitted patients"],
+  docs:["Original CNIC of the patient or head of family","Form-B for children; for a newborn born elsewhere, bring the Form-B to the hospital's health card desk","Doctor's referral or admission advice"],
+  steps:["Make sure your family is correctly registered with NADRA. If not, update it at a NADRA centre (ask for a Family Registration Certificate).","Call 0800-07542 to confirm the treatment is covered and to get the nearest empanelled hospital.","Go to the hospital's Health Card counter with your original CNIC.","Staff verify your eligibility and remaining balance.","You are admitted and treated without paying the covered amount.","Keep your discharge papers. Follow-up medicines or transport support, where offered, are given at discharge."],
+  table:{head:["What","Status (Oct 2026)"],rows:[["General surgery, ICU, trauma, deliveries","Through empanelled hospitals"],["Cancer treatment","Moved to the CM Cancer Programme at designated government centres (Jul 2026)"],["Heart procedures","Moved to the CM Cardiac Surgery Programme (Jul 2026)"],["Transplants, dialysis, cochlear implants","Separate condition-specific cards"]]},
+  note:"In July 2026 Punjab moved cancer and cardiac treatment out of the Health Card into dedicated CM programmes; treatment stays free at designated government centres. Coverage limits may change; confirm on the helpline.",
+  links:[["PHIMC (Punjab Health Initiative)","https://phimc.punjab.gov.pk"]], help:"0800-07542 (24/7)" },
+
+{ id:"federal-sehat-card", grp:"health", sub:"cards", region:["ict", "ajkgb"], art:"health", name:"Sehat Sahulat Card (ICT, AJK, GB)", ur:"صحت سہولت کارڈ", by:"Govt. of Pakistan (Ministry of Health)", status:"open",
+  summary:"The federal Sehat Card was relaunched in January 2026 for residents of Islamabad Capital Territory, Azad Jammu & Kashmir and Gilgit-Baltistan. It pays for admitted treatment at empanelled hospitals. KP residents use the separate Sehat Card Plus.",
+  facts:[["Areas","ICT · AJK · GB"],["Relaunched","Jan 2026"],["Card","Your CNIC"],["Residents covered","~10 million"]],
+  elig:["CNIC address in Islamabad, AJK or Gilgit-Baltistan","Family registered with NADRA","Khyber Pakhtunkhwa residents: use Sehat Card Plus instead"],
+  docs:["Original CNIC","Form-B for children","Doctor's admission advice"],
+  steps:["Check your eligibility on the programme website or helpline using your CNIC.","Find an empanelled hospital (the programme is adding 70 hospitals across the three regions).","Go to the Sehat Card counter with your original CNIC.","Get admitted and treated; the covered cost is paid by the programme.","Keep discharge papers for follow-up."],
+  table:null,
+  note:"Annual coverage per family under the earlier version was Rs 720,000; confirm the current limit on the official site.",
+  links:[["Sehat Sahulat Programme","https://pmhealthprogram.gov.pk"],["KP Sehat Card Plus","https://sehatcardplus.gov.pk"]], help:"Helpline on the programme website" },
+
+{ id:"benazir-undergrad", grp:"education", sub:"university", region:["national"], art:"grad", name:"Benazir Undergraduate Scholarship (HEC)", ur:"بینظیر انڈرگریجویٹ اسکالرشپ", by:"HEC + BISP", status:"check",
+  summary:"Need-based scholarship for students from low-income families studying at public sector universities. Covers full tuition plus a monthly stipend. The online portal usually opens around September each year.",
+  facts:[["Tuition","Full fee"],["Stipend","Rs 4,000 / month"],["Family income","Up to Rs 45,000"],["Girls' share","50%"]],
+  elig:["Undergraduate student on open merit at a public sector university (not self-finance)","Family income up to about Rs 45,000 a month","Not receiving any other scholarship","Regular students only; distance learning is excluded","2% of awards reserved for students with disabilities"],
+  docs:["Student and parents' CNIC / Form-B","Income proof: salary slip or income certificate","Recent utility bills","University admission letter and fee voucher","Matric and Intermediate certificates"],
+  steps:["Watch the HEC portal and your university's Financial Aid Office for the opening date.","Register on the HEC Ehsaas/Benazir portal with your CNIC.","Fill in family, income and education details.","Upload the documents and submit before your university's deadline.","Attend the interview your university schedules.","Successful students receive tuition through the university and the stipend directly."],
+  table:null,
+  note:"Some sources reported the portal had not opened for 2026-27 at the time of checking. Your university's Financial Aid Office gives the exact dates.",
+  links:[["HEC scholarship portal","https://ehsaas.hec.gov.pk"],["HEC scholarships","https://www.hec.gov.pk"]], help:"Your university's Financial Aid Office" },
+
+{ id:"hec-need-based", grp:"education", sub:"university", region:["national"], art:"grad", name:"HEC Need-Based Scholarship", ur:"ایچ ای سی نیڈ بیسڈ اسکالرشپ", by:"Higher Education Commission", status:"open",
+  summary:"Covers full tuition and a Rs 6,000 monthly stipend for undergraduate students at HEC-funded public universities. There is no online portal: you apply on paper through your university.",
+  facts:[["Tuition","Full fee"],["Stipend","Rs 6,000 / month"],["Programmes","4–5 year degrees"],["Apply at","Your university"]],
+  elig:["Undergraduate student on open merit in a 4- or 5-year programme (MBBS and Pharm-D included)","Enrolled at a public university that receives HEC grants; affiliated colleges are not covered","First-year and continuing students can apply","Not holding another scholarship","Family income limit is set by each university (for example Rs 45,000 a month at one university in 2025-26)"],
+  docs:["Parents' or guardian's CNIC copies","Salary certificate of each earning family member","Six months of electricity, gas, phone and water bills","Fee receipts of siblings in education","Rent agreement, medical bills (if applicable)","Statement of purpose"],
+  steps:["Ask your university's Financial Aid Office when the window opens; HEC does not announce national dates.","Collect the form from the Financial Aid Office or HEC's website.","Fill in all sections: personal, family, assets, financial arrangements and education.","Attach the documents in the checklist order.","Submit to the Financial Aid Office before its deadline; HEC does not accept forms directly.","Attend the interview. Awards are announced by the university."],
+  table:null, note:"Universities set their own deadlines. In past years these ranged from November to April.",
+  links:[["HEC scholarships","https://www.hec.gov.pk"]], help:"University Financial Aid Office" },
+
+
+{ id:"taleemi-wazaif", grp:"education", sub:"school", region:["national"], art:"school", name:"Benazir Taleemi Wazaif (school stipend)", ur:"بینظیر تعلیمی وظائف", by:"BISP", status:"open",
+  summary:"Quarterly cash stipends for school-going children of families already enrolled in BISP Kafaalat, to keep children in school. Girls get a higher amount and a bonus for finishing primary school.",
+  facts:[["For","BISP Kafaalat families"],["Attendance","~70% per quarter"],["Girls' bonus","Rs 3,000"],["Helpline","0800-26477"]],
+  elig:["Mother or family is an active BISP Kafaalat beneficiary","Child is enrolled in school at primary, secondary or higher secondary level","Child attends about 70% of school days each quarter"],
+  docs:["Mother's CNIC","Child's Form-B (NADRA)","School admission / enrolment proof"],
+  steps:["Check your BISP status by sending your CNIC number by SMS to 8171.","Get the child's Form-B from NADRA if you don't have it.","Enrol the child at the BISP tehsil office (bring the documents above).","Keep the child in school; attendance is reported each quarter.","Collect the stipend with your Kafaalat payment."],
+  table:{head:["Level","Boys / quarter","Girls / quarter"],rows:[["Primary","Rs 1,500","Rs 2,000"],["Secondary","Rs 2,500","Rs 3,000"],["Higher secondary","Rs 3,500","Rs 4,000"]]},
+  note:"A quarter in which the attendance condition is not met is not paid.",
+  links:[["BISP","https://bisp.gov.pk"]], help:"0800-26477 · SMS 8171" },
+
+{ id:"free-education-punjab", grp:"education", sub:"school", region:["punjab"], art:"school", name:"Free schooling in Punjab", ur:"مفت تعلیم پنجاب", by:"School Education Dept. + PEF", status:"open",
+  summary:"Every child aged 5 to 16 has a constitutional right to free education. In Punjab, government schools charge no tuition and give free textbooks, and the Punjab Education Foundation pays for children's schooling at partner private schools in underserved areas.",
+  facts:[["Ages","5–16"],["Govt schools","No tuition fee"],["Textbooks","Free"],["PEF schools","Fee paid by PEF"]],
+  elig:["Any child aged 5–16 can join the nearest government school","PEF voucher schools are for children of low-income families in areas where seats are available","Admission campaigns usually run in spring, but government schools admit children year-round"],
+  docs:["Child's Form-B (or birth certificate)","Parent's CNIC","Previous school leaving certificate, if moving schools"],
+  steps:["Visit the nearest government school with the child and documents.","Ask the head teacher for admission; there is no tuition fee.","Collect free textbooks at the start of the session.","For a PEF partner school, ask the school or the PEF district office whether voucher seats are open.","Keep the child's attendance regular; stipend schemes such as Taleemi Wazaif depend on it."],
+  table:null,
+  note:"Article 25-A of the Constitution makes free and compulsory education a right for children aged 5–16.",
+  links:[["Punjab Education Foundation","https://www.pef.edu.pk"],["School Education Dept.","https://schools.punjab.gov.pk"]], help:"Your district education office" },
+
+{ id:"clean-water", grp:"health", sub:"water", region:["punjab"], art:"water", name:"Free clean drinking water plants", ur:"صاف پانی فلٹریشن پلانٹس", by:"Punjab Saaf Pani Authority", status:"open",
+  summary:"Community water filtration plants across Punjab supply clean drinking water to the public. They are run by the Punjab Saaf Pani Authority under the CM Punjab Clean Water Programme. Report a broken or dirty plant on the 24/7 helpline.",
+  facts:[["Helpline","1336 (24/7)"],["WhatsApp","0322-2391336"],["New plants","700 in Rawalpindi Div."],["Target","30 Nov 2026"]],
+  elig:["Open to everyone in the area served by the plant","No registration needed to fill water"],
+  docs:["None to fill water","To report a fault: the plant code shown on the plant"],
+  steps:["Find your nearest plant; ask your union council or local residents, or watch for the plant board.","Note the plant code, operator number and helpline painted on the plant.","Fill water free during operating hours. Use clean, covered containers.","If the plant is closed, leaking, or water tastes or smells wrong, call 1336 or WhatsApp 0322-2391336 with the plant code.","You can also register a complaint online on the Saaf Pani website.","To request a plant for your area, register a request on the same complaint system or raise it with your Assistant Commissioner."],
+  table:{head:["District (Phase I)","New plants"],rows:[["Attock","207"],["Rawalpindi","175"],["Jhelum","142"],["Talagang","75"],["Chakwal","73"],["Murree","28"]]},
+  note:"From September 2026 every plant gets a unique digital code for monitoring, and a motorbike squad inspects plants across Punjab.",
+  links:[["Register a complaint","https://saafpani.com.pk/register-complaint"],["Punjab Saaf Pani Authority","https://saafpani.com.pk"]], help:"1336 · WhatsApp 0322-2391336" }
+,
+{ id:"ntn-registration", grp:"bills", sub:"incometax", region:["national"], art:"tax", name:"NTN registration (FBR)", ur:"این ٹی این رجسٹریشن", by:"Federal Board of Revenue", status:"open",
+  summary:"Register as a taxpayer with the FBR online, free of charge. For individuals your CNIC number becomes your NTN. You need an NTN to file returns, get on the Active Taxpayers List and apply for many government loans.",
+  facts:[["Fee","Free"],["Portal","IRIS"],["Your NTN","Your CNIC no."],["Time","~30 minutes"]],
+  elig:["Any Pakistani individual with a CNIC, salaried or self-employed","Businesses (AOPs, companies) register with partner or company documents","Mobile SIM and email in your own name"],
+  docs:["CNIC","Mobile number registered on your CNIC","Personal email address","Bank account details (IBAN)","Address of residence and business, if any","Employer details or business name"],
+  steps:["Open iris.fbr.gov.pk and choose “Registration for unregistered person”.","Enter your CNIC, mobile number and email; enter the two codes FBR sends you.","Log in with the password FBR sends and open the registration form (Form 181).","Fill in personal details, address, bank account and source of income (salary, business, property, etc.).","Submit. Your NTN is issued online; for individuals it is your CNIC number.","Download your NTN certificate from IRIS. You can also do all this in FBR's Tax Asaan mobile app."],
+  table:null,
+  note:"Registering is not the same as being a filer. To get on the Active Taxpayers List you must also file your income tax return each year.",
+  links:[["FBR IRIS portal","https://iris.fbr.gov.pk"],["FBR website","https://www.fbr.gov.pk"]], help:"FBR helpline 051-111-772-772" },
+
+{ id:"tax-return", grp:"bills", sub:"incometax", region:["national"], art:"tax", name:"Income tax return & filer status", ur:"انکم ٹیکس ریٹرن", by:"Federal Board of Revenue", status:"open",
+  summary:"File your yearly income tax return on IRIS to become an active filer. Filers pay much lower withholding tax on bank profit, property, vehicles and cash withdrawals. The Tax Year 2026 deadline has been extended to 15 October 2026.",
+  facts:[["TY2026 deadline","15 Oct 2026"],["Check status","SMS CNIC to 9966"],["Portal","IRIS / Tax Asaan"],["Filing fee","Free"]],
+  elig:["Anyone with taxable income above the exemption limit must file","Anyone who owns property or a car, or has large bank transactions, benefits from filing","You need an NTN first (see NTN registration)"],
+  docs:["Salary certificate / income details for the tax year (1 July – 30 June)","Bank account statements and withholding tax certificates","Property, vehicle and asset details for the wealth statement","Utility bills, phone bills (tax deducted on them is adjustable)","Zakat and donation receipts, if any"],
+  steps:["Log in to iris.fbr.gov.pk (or the Tax Asaan app).","Choose Declaration → Income Tax Return (Form 114) for the current tax year.","Enter income, deductions and taxes already deducted (shown from withholding data).","Fill in the wealth statement: assets, liabilities and how they changed during the year.","Pay any tax due through a PSID on IRIS, payable in banking apps.","Submit the return and wealth statement. Keep the acknowledgement.","Check your status by sending your 13-digit CNIC to 9966. The Active Taxpayers List is updated regularly."],
+  table:{head:["Transaction","Filer","Non-filer"],rows:[["Tax on bank profit","15%","30%"],["Buying property (advance tax)","1.5%","3%"],["Selling property (CGT)","5%","10%"],["1,000–2,000 cc car registration","Rs 50,000","Rs 200,000"]]},
+  note:"Late filers can still file, but may pay a surcharge to get on the Active Taxpayers List. Rates in the table are examples; confirm current rates with FBR.",
+  links:[["FBR IRIS portal","https://iris.fbr.gov.pk"],["FBR website","https://www.fbr.gov.pk"]], help:"FBR helpline 051-111-772-772" },
+
+{ id:"railway-tickets", grp:"transport", sub:"train", region:["national"], art:"train", name:"Pakistan Railways tickets", ur:"ریلوے ٹکٹ", by:"Pakistan Railways", status:"open",
+  summary:"Book train seats and berths online on Pakistan Railways' official Rabta app or website, pay digitally and travel with the e-ticket on your phone. Tickets are also sold at station booking offices.",
+  facts:[["Official app","Rabta"],["Website","pakrail.gov.pk"],["Helpline","117"],["ID needed","CNIC"]],
+  elig:["Anyone with a CNIC (children travel on the parent's booking)","Concessions are available for some groups, such as senior citizens and students; ask at the booking office"],
+  docs:["CNIC of the passenger booking","Mobile number for the e-ticket","Debit/credit card, bank app or mobile wallet for payment"],
+  steps:["Install Rabta from the Play Store / App Store, or open pakrail.gov.pk.","Sign up with your CNIC and mobile number and verify the OTP.","Choose the departure and arrival stations and the date.","Pick the train and class (Economy, AC Standard, AC Business, AC Sleeper), then select seats or berths.","Enter passenger details and pay.","The e-ticket arrives in the app and by SMS. Carry your CNIC on the journey.","To cancel, use the app or a booking office before departure; the refund depends on timing (table below)."],
+  table:{head:["Cancel","Refund"],rows:[["48+ hours before departure","Up to 90%"],["24–48 hours before","80%"],["Within 24 hours","70%"],["Within 2 hours","50%"],["Train delayed 6+ hours","Full refund"],["After departure","No refund"]]},
+  note:"Book only through the official Rabta app, pakrail.gov.pk or station counters. Avoid ticket agents who charge extra.",
+  links:[["Pakistan Railways","https://www.pakrail.gov.pk"]], help:"117" },
+
+{ id:"airline-tickets", grp:"transport", sub:"air", region:["national"], art:"plane", name:"Airline tickets", ur:"ہوائی ٹکٹ", by:"PIA and other airlines", status:"open",
+  summary:"Buy domestic and international air tickets directly on the airline's website or app, or at its sales office. PIA was privatised in 2026 and is now run by the Arif Habib consortium, so air tickets are bought from airlines, not from a government office.",
+  facts:[["Domestic ID","CNIC / Form-B"],["International","Passport + visa"],["Workers abroad","Protector stamp"],["Buy from","Airline site/app"]],
+  elig:["Domestic flights: CNIC (Form-B or birth certificate for children)","International flights: valid passport and visa for the destination","Workers going abroad on an employment visa need protector registration from the Bureau of Emigration (a government service)"],
+  docs:["CNIC or passport","Visa (international)","Protector stamp / emigration clearance for overseas employment","Card, bank transfer or mobile wallet for payment"],
+  steps:["Compare fares on the airline's official website or app (PIA, Airblue, AirSial, Fly Jinnah, or foreign airlines).","Enter your name exactly as on your CNIC or passport.","Choose fare type: check the baggage allowance and change/refund rules before paying.","Pay online and download the e-ticket; check the email for the PNR / booking reference.","Check in online 24–48 hours before the flight where offered.","Reach the airport early (about 2 hours domestic, 3–4 hours international) with your CNIC or passport."],
+  table:null,
+  note:"If buying from a travel agent, use an IATA-accredited agent and check the PNR on the airline's own website before paying in full.",
+  links:[["PIA","https://www.piac.com.pk"],["Bureau of Emigration","https://beoe.gov.pk"]], help:"Airline's own call centre" },
+
+{ id:"mera-ghar-mera-ashiana", grp:"money", sub:"housing", region:["national"], art:"bank", name:"Mera Ghar Mera Ashiana (bank home loan)", ur:"میرا گھر میرا آشیانہ", by:"Govt. of Pakistan + SBP, through banks", status:"open",
+  summary:"Government-subsidised home loans through banks for first-time owners buying or building a small house or flat. Markup is fixed at 5% or 8% for the first ten years, and the loan can run for up to 20 years.",
+  facts:[["Max loan","Rs 3.5 M"],["Markup (yr 1–10)","5% / 8% fixed"],["Tenure","Up to 20 years"],["House size","Up to 5 marla"]],
+  elig:["Pakistani citizen with a valid CNIC","First-time home owner (no house in your name)","House up to 5 marla, or flat up to 1,360 sq ft","Repayment capacity as assessed by the bank"],
+  docs:["CNIC","Income proof: salary slips or business income and bank statements","Property papers (sale agreement, title documents, approved map for construction)","Tax return / NTN if you have one","Two recent photos and references as asked by the bank"],
+  steps:["Visit any participating bank, Islamic bank, microfinance bank or HBFCL branch and ask for Mera Ghar Mera Ashiana.","Choose the tier based on the amount you need.","Submit the application with documents; the bank checks your income and credit history.","The bank evaluates the property (legal and technical check).","On approval, sign the loan papers; the property is mortgaged to the bank.","Pay a monthly instalment. The subsidised markup applies for the first ten years."],
+  table:{head:["Tier","Loan amount","Markup (first 10 years)"],rows:[["Tier 1","Up to Rs 2 M","5% fixed"],["Tier 2","Rs 2 M – 3.5 M","8% fixed"]]},
+  note:"Markup after year ten follows the bank's terms; ask the bank for the full repayment schedule before signing.",
+  links:[["State Bank of Pakistan","https://www.sbp.org.pk"]], help:"Your bank branch / SBP" },
+{ id:"passport", grp:"identity", sub:"passport", region:["national"], art:"passport", name:"Passport: new and renewal", ur:"پاسپورٹ", by:"Directorate General of Immigration & Passports", status:"open",
+  summary:"Apply for a new passport or renew an old one at any Regional Passport Office (fast track at major offices). Pakistanis living abroad can renew online. Choose normal, urgent or fast-track processing.",
+  facts:[["Normal","Rs 4,500 · 21 days"],["Urgent","Rs 7,500 · 5 days"],["Fast track","Rs 12,500 · 2 days"],["Helpline","051-111-344-777"]],
+  elig:["Pakistani citizen with a valid CNIC or NICOP","Children: CRC (B-Form) or Juvenile Card, with both parents' CNICs","Government employees need an NOC from their department","Overseas Pakistanis can renew online"],
+  docs:["Original CNIC / NICOP and a photocopy","Previous passport, if any","Lost passport: police report","Minors: CRC/FRC and both parents' original CNICs or passports; custody or guardianship papers if relevant","Dual nationals: the foreign passport","Fee paid at the bank (or online, for online renewal)"],
+  steps:["Pay the fee at a designated bank branch (or online for overseas renewal). Keep the receipt.","Visit a Regional Passport Office with your original CNIC; there is no prior appointment for most offices.","Get a token; your photo, fingerprints and signature are taken live.","Check the printed data form carefully and sign it.","Collect your passport on the given date, or track it on the DGIP website.","Living abroad? Use the official online renewal portal; the passport is couriered to your mission or address."],
+  table:{head:["Processing","Time","36 pages · 5 years"],rows:[["Normal","21 working days","Rs 4,500"],["Urgent","5 working days","Rs 7,500"],["Fast track","2 working days","Rs 12,500"],["e-Passport","Varies","Rs 9,000 – 24,750"]]},
+  note:"Fees shown are for a 36-page, 5-year passport. 10-year and 72/100-page passports cost more; children under 15 get 5-year passports only. Confirm the current fee on dgip.gov.pk.",
+  links:[["DGIP website","https://dgip.gov.pk"],["Online renewal (abroad)","https://onlinemrp.dgip.gov.pk"]], help:"051-111-344-777" },
+
+{ id:"sim-check", grp:"identity", sub:"sim", region:["national"], art:"sim", name:"Check SIMs on your CNIC", ur:"شناختی کارڈ پر سمیں چیک کریں", by:"PTA", status:"open",
+  summary:"Find every mobile SIM registered on your CNIC, then block any you don't recognise. A SIM in your name that someone else uses can be misused for fraud, so check once in a while.",
+  facts:[["SMS","CNIC to 668"],["Website","cnic.sims.pk"],["Limit","5 SIMs per CNIC"],["Website cost","Free"]],
+  elig:["Any CNIC holder"],
+  docs:["Your 13-digit CNIC number","Original CNIC and fingerprints to block a SIM at a franchise"],
+  steps:["Send your 13-digit CNIC number (no dashes) by SMS to 668, or open cnic.sims.pk and enter it.","You get a list of how many SIMs are on your CNIC, by network.","If a SIM isn't yours, visit that network's customer service centre with your original CNIC.","Ask to block the SIM; your fingerprints are verified.","Check again after a few days to confirm the SIM is gone."],
+  table:null,
+  note:"The SMS costs about Rs 2 plus tax; the website is free. To check whether a mobile phone (IMEI) is PTA-approved, use dirbs.pta.gov.pk or SMS the IMEI to 8484.",
+  links:[["PTA SIM check","https://cnic.sims.pk"],["PTA device check (DIRBS)","https://dirbs.pta.gov.pk"]], help:"PTA complaint portal on pta.gov.pk" },
+
+{ id:"property-tax", grp:"bills", sub:"property", region:["punjab"], art:"land", name:"Property tax & land records (Punjab)", ur:"پراپرٹی ٹیکس اور فرد", by:"Excise & Taxation Dept. · Punjab Land Records Authority", status:"open",
+  summary:"Pay urban property tax online through ePay Punjab, and get your land record (fard) from the Punjab Land Records Authority. Paying the full year's property tax by 30 September earns a 5% rebate; after that a surcharge is added.",
+  facts:[["Rebate","5% by 30 Sep"],["Pay via","ePay Punjab (PSID)"],["Tax helpline","1035"],["Land record","Fard (PLRA)"]],
+  elig:["Owners of houses, plots, shops and other urban property in Punjab","Land owners who need a fard, mutation (intiqal) or record check"],
+  docs:["Property ID / the 28-digit code on your old property tax bill","CNIC","For a fard: khewat/khatoni details or your CNIC as the land owner"],
+  steps:["Property tax: open the Excise & Taxation website and find your property using the code on your old bill (new properties are added through self-assessment).","Download the tax bill with its payment reference.","Open the ePay Punjab app or website and generate a 17-digit PSID for the bill.","Pay the PSID in any bank app, internet banking, ATM, JazzCash, Easypaisa or at a bank counter. Keep the receipt.","Fard: visit an Arazi Record Centre or NADRA e-Sahulat outlet with your CNIC, or start on the PLRA website, and pay the fee to get a computerised fard.","For land transfer (registry and mutation), use Punjab's e-Registration through the PLRA / Arazi Record Centre."],
+  table:{head:["Pay by","Rebate / surcharge"],rows:[["30 Sep 2026","5% rebate (full-year payment)"],["1 Oct – 31 Dec 2026","+1%"],["1 Jan – 31 Mar 2027","+2%"],["1 Apr – 30 Jun 2027","+3%"],["From 1 Jul 2027","+4%"]]},
+  note:"The rebate window for 2026 has closed; tax paid now carries a 1% surcharge until 31 December 2026.",
+  links:[["Excise & Taxation Punjab","https://excise.punjab.gov.pk"],["ePay Punjab","https://epay.punjab.gov.pk"],["PLRA land records","https://www.punjab-zameen.gov.pk"]], help:"Property tax 1035" },
+
+
+{ id:"us-green-card", grp:"transport", sub:"abroad", region:["national"], art:"globe", name:"US Green Card (DV lottery)", ur:"امریکی گرین کارڈ", by:"US Department of State (not a Pakistani government service)", status:"check",
+  summary:"The US Diversity Visa lottery gives a chance at a US Green Card. People born in Pakistan are currently not eligible, because Pakistan sends too many immigrants to the US. You may still enter if your spouse was born in an eligible country.",
+  facts:[["Pakistan-born","Not eligible"],["Entry fee","Free"],["Official site","dvprogram.state.gov"],["DV-2028 dates","Not announced"]],
+  elig:["Born in an eligible country; Pakistan is not eligible for DV-2027","Exception: you can claim your spouse's country of birth if it is eligible, and you enter together","High-school education or two years of qualifying work experience"],
+  docs:["Valid passport (required for entry)","Recent photo meeting US specifications","Spouse's details and photo if married"],
+  steps:["Check the current instructions on travel.state.gov to see whether you are eligible and when the entry period opens.","Enter only on dvprogram.state.gov during the official window. Entry is free.","Save your confirmation number; you need it to check results.","Check results only on dvprogram.state.gov. The US government never emails or calls winners.","If selected, follow the official instructions for visa processing; fees apply only at that stage."],
+  table:{head:["Status (Oct 2026)","Detail"],rows:[["DV-2027 entry","Delayed; process changes announced Nov 2025"],["DV-2028 entry","Dates not announced"],["Visa issuance","Paused since 31 Aug 2026"]]},
+  note:"Beware of agents and websites charging fees to “apply for the green card lottery”. Entry is free and only on the official US site. Most other Green Card routes (family, employment) go through US immigration lawyers or USCIS.",
+  links:[["DV instructions (travel.state.gov)","https://travel.state.gov"],["Official entry site","https://dvprogram.state.gov"]], help:"US Embassy Islamabad website" },
+{ id:"utility-bills", grp:"bills", sub:"utility", region:["national"], art:"bill", name:"Pay utility bills (all Pakistan)", ur:"یوٹیلیٹی بلز کی ادائیگی", by:"Electricity, gas, water and phone companies", status:"open",
+  summary:"Pay electricity, gas, water and PTCL bills from home through your bank app, JazzCash, Easypaisa or 1Bill, or at a bank, post office or NADRA e-Sahulat outlet. Download a duplicate bill online if yours is lost.",
+  facts:[["Electricity complaints","118"],["Gas complaints","1199"],["PTCL","1218"],["Pay via","Bank app · wallet"]],
+  elig:["Any consumer with a reference number / consumer ID printed on the bill"],
+  docs:["Bill reference number (electricity), consumer number (gas), or account ID (PTCL / water)","A bank app, JazzCash or Easypaisa account, or cash at a counter"],
+  steps:["Find the reference or consumer number on your bill, or get a duplicate bill from the company's website.","Open your bank app, JazzCash or Easypaisa and choose Bill Payment / Utility Bills.","Pick the bill type and your company (e.g. LESCO, SNGPL, PTCL).","Enter the reference number. The app shows the amount and due date; check them.","Pay and save the receipt or transaction ID.","Paying in cash? Use any bank branch, post office or NADRA e-Sahulat outlet before the due date to avoid a late payment surcharge."],
+  table:{head:["Bill","Company & area","Duplicate bill / info"],rows:[
+   ["Electricity","LESCO, GEPCO, FESCO, IESCO, MEPCO, PESCO, HESCO, SEPCO, QESCO, TESCO","bill.pitc.com.pk"],
+   ["Electricity","K-Electric (Karachi)","ke.com.pk"],
+   ["Gas","SNGPL (Punjab, KP, Islamabad)","sngpl.com.pk"],
+   ["Gas","SSGC (Sindh, Balochistan)","ssgc.com.pk"],
+   ["Landline / internet","PTCL","ptcl.com.pk"],
+   ["Water","Your city's WASA or water corporation","Check your bill / city WASA office"]]},
+  note:"Bill payments are free in most bank apps and wallets. If a payment doesn't show on your next bill, keep the transaction ID and complain to the company's helpline.",
+  links:[["Electricity duplicate bill (PITC)","https://bill.pitc.com.pk"],["K-Electric","https://www.ke.com.pk"],["SNGPL","https://www.sngpl.com.pk"],["SSGC","https://www.ssgc.com.pk"]], help:"Electricity 118 · Gas 1199 · PTCL 1218" },
+
+{ id:"bank-loans", grp:"money", sub:"bank", region:["national"], art:"bank", name:"Bank loans: compare & calculate", ur:"بینک قرضے", by:"Commercial & Islamic banks (regulated by SBP)", status:"open",
+  summary:"Personal, car, home and business loans from Pakistani banks are priced as KIBOR plus the bank's own margin (spread). Islamic banks use a similar benchmark for their profit rate. Use the calculator with today's KIBOR and the spread your bank quotes you.",
+  facts:[["6-month KIBOR","12.35%"],["12-month KIBOR","12.64%"],["KIBOR date","2 Oct 2026"],["Regulator","SBP"]],
+  elig:["Usually aged 21–60 (to 65 at loan maturity for some products)","Salaried: confirmed job and salary in a bank account; self-employed: business proof","Clean credit history (checked with the SBP credit bureau, eCIB)","Income meets the bank's minimum for the product"],
+  docs:["CNIC and recent photos","Salary slips (3–6 months) or business documents","Bank statements (6–12 months)","Tax return / NTN (needed for larger loans)","For car or home loans: quotation or property documents"],
+  steps:["Decide the loan type: personal, car, home or business.","Use the calculator (Tools tab) with today's KIBOR and a few banks' quoted spreads to compare monthly payments.","Ask each bank for its key fact statement (KFS): rate, fees, insurance and prepayment charges.","Apply at the branch or in the bank's app with your documents.","The bank checks your credit report and income, and may visit your home or business.","Read the offer letter carefully before signing; check total cost, not just the monthly instalment.","For cheaper subsidised options, compare with Mera Ghar Mera Ashiana, PM Youth Loan or Asaan Karobar Finance first."],
+  table:{head:["Bank","Type","Loan products & calculators"],rows:[
+   ["HBL","Conventional","hbl.com"],["MCB","Conventional","mcb.com.pk"],["UBL","Conventional","ubldigital.com"],["National Bank (NBP)","Government-owned","nbp.com.pk"],
+   ["Bank of Punjab","Punjab Govt-owned","bop.com.pk"],["Bank Alfalah","Conventional & Islamic","bankalfalah.com"],["Meezan Bank","Islamic","meezanbank.com"]]},
+  note:"KIBOR changes daily and banks revise their spreads, so any calculator shows an estimate. The bank's key fact statement is the binding figure. Pay the bank directly; never pay an agent to “arrange” a loan.",
+  links:[["KIBOR rates (SBP)","https://www.sbp.org.pk/ecodata/kibor_index.asp"],["SBP consumer protection","https://www.sbp.org.pk"]], help:"Your bank's helpline · SBP complaints on sbp.org.pk" },
+
+{ id:"city-buses", grp:"transport", sub:"bus", region:["punjab", "sindh", "kp", "ict"], art:"bus", name:"City bus services", ur:"شہری بس سروس", by:"PMA · CDA · Sindh Mass Transit · TransPeshawar", status:"open",
+  summary:"Government-run metro and city buses operate in Lahore, Rawalpindi–Islamabad, Multan, Karachi, Peshawar and a growing list of Punjab cities. Most use a tap card you top up; some take cash. The table lists fares and how to pay in each city.",
+  facts:[["Punjab metro","Rs 25–30"],["Punjab e-buses","Rs 20"],["Islamabad e-bus","Rs 100"],["Karachi Green Line","Rs 15–55"]],
+  elig:["Open to everyone","Student cards: Punjab metro gives school students two free trips a day","Islamabad offers discounted cards for students, women and senior citizens"],
+  docs:["Tap card for the city (T-Cash, Zu card, Metrobus card) or exact cash where accepted","CNIC or student ID for concession cards"],
+  steps:["Find your city in the table below.","Buy the city's card at a station counter, or in the city's app where offered (eTransit in Punjab, Breeze in Karachi).","Top up the card at stations, bank apps or wallets.","Tap in when boarding or at the station gate; tap out where required.","Check routes on the operator's map: Punjab on pma.punjab.gov.pk, Sindh routes on smta.gos.pk/route-map.","Complaints: Punjab 1762, Sindh 0800-07682."],
+  table:{head:["City / service","Fare","Pay with"],rows:[
+   ["Lahore Metro, Orange Line, Speedo","Rs 30 (metro)","T-Cash card (Rs 275)"],
+   ["Rawalpindi–Islamabad Metro","Rs 30","T-Cash card"],
+   ["Multan Metro","Rs 25","T-Cash card"],
+   ["Punjab e-buses (Sialkot, Okara, Chiniot, Layyah, Murree and more)","Rs 20","Card or QR ticket"],
+   ["Islamabad CDA electric buses (17 routes)","Rs 100","Card; concession cards available"],
+   ["Karachi Green Line BRT","Rs 15–55","Metrobus card (Rs 100) · Breeze app"],
+   ["Karachi People's Bus (17 routes) · Pink Bus for women","Rs 80–120 · Pink Rs 50","Cash to conductor"],
+   ["Peshawar BRT (Zu)","Rs 30–70 by distance","Zu card (Rs 300)"]]},
+  note:"Punjab is extending electric buses to all 91 tehsils from January 2027. People's Bus also runs in seven other Sindh cities. Fares change from time to time; check at the station.",
+  links:[["Punjab Masstransit Authority","https://pma.punjab.gov.pk"],["Sindh Mass Transit (routes)","https://smta.gos.pk/route-map"],["TransPeshawar","https://transpeshawar.pk"]], help:"Punjab 1762 · Sindh 0800-07682" },
+
+{ id:"pak-post", grp:"cargo", sub:"post", region:["national"], art:"parcel", name:"Pakistan Post parcels & courier", ur:"پاکستان پوسٹ", by:"Pakistan Post (Govt. of Pakistan)", status:"open",
+  summary:"Send letters, parcels, cash-on-delivery (VPP/VPL) and express courier (UMS) to every town in Pakistan, and international mail and parcels, from any post office. Track shipments online.",
+  facts:[["Express","UMS"],["Cash on delivery","VPP / VPL"],["Complaints","051-111-111-117"],["Tracking","ep.gov.pk"]],
+  elig:["Anyone; businesses can open a bulk customer account for regular shipments"],
+  docs:["Sender's CNIC","Receiver's full address and phone number","For international parcels: customs declaration form (CN22/CN23)"],
+  steps:["Pack the item securely; leave it open if the counter needs to inspect it.","Take it to any post office and choose the service: ordinary parcel, registered, UMS (express) or VPL (cash on delivery).","Fill in the address label and, for international mail, the customs form.","Pay the postage by weight and destination; keep the receipt with the tracking number.","Track the item on Pakistan Post's tracking website.","For lost or delayed items, call the complaint line with your tracking number."],
+  table:null,
+  note:"Items banned for courier, such as liquids, batteries, cash and dangerous goods, are refused at the counter. Check the post office for the current list.",
+  links:[["Pakistan Post","https://www.pakpost.gov.pk"],["Track a shipment","https://ep.gov.pk"]], help:"111-111-117 (landline) · 051-111-111-117 (mobile)" },
+
+{ id:"rail-freight", grp:"cargo", sub:"rail", region:["national"], art:"train", name:"Pakistan Railways freight & parcels", ur:"ریلوے کارگو", by:"Pakistan Railways", status:"open",
+  summary:"Send motorcycles, cars, household goods and parcels between cities by train. Book at the goods office of the railway station or on Pakistan Railways' online freight system.",
+  facts:[["Freight helpline","021-99201665"],["Motorcycle","Rs 500–1,750"],["Car","Rs 20,000–40,000"],["Tariff change","+20% Mar 2026"]],
+  elig:["Anyone; bulk freight customers can register on the online freight system"],
+  docs:["CNIC of sender","Vehicle registration book (for motorcycles and cars)","Receiver's name, CNIC and phone","Packing list for household goods"],
+  steps:["Call the freight helpline or visit the goods/parcel office at your station for a quote.","Pack items securely; drain fuel from motorcycles as instructed.","Book the consignment and pay the freight charge (plus handling and a refundable deposit for cars).","Keep the railway receipt (RR); the receiver needs it and a CNIC to collect.","Track the train's location and collect from the destination station's goods office."],
+  table:{head:["Item","Approximate charge"],rows:[["Motorcycle, up to 100 km","~Rs 500"],["Motorcycle, long distance","Rs 1,250 – 1,750"],["Car","Rs 20,000 – 40,000 + ~Rs 5,000 handling"],["Car security deposit","~Rs 10,000 (refundable)"]]},
+  note:"Explosives and inflammable goods cannot be sent. Charges are approximate and vary by distance and weight.",
+  links:[["Pakistan Railways","https://www.pakrail.gov.pk"]], help:"021-99201665" },
+
+{ id:"ports-cargo", grp:"cargo", sub:"ports", region:["national"], art:"ship", name:"Ports, dry ports & customs clearance", ur:"بندرگاہیں اور ڈرائی پورٹس", by:"KPT · Port Qasim · NLC · Pakistan Customs", status:"open",
+  summary:"Contacts and steps for importing and exporting through Pakistan's sea ports and inland dry ports. Goods declarations are filed online through Pakistan Single Window (PSW), usually by a licensed customs agent.",
+  facts:[["Port Qasim","021-99272111"],["NLC UAN","051-111-652-000"],["NLC WhatsApp","0311-5556668"],["Customs filing","PSW"]],
+  elig:["Importers and exporters need an NTN and registration on Pakistan Single Window","Most traders appoint a licensed customs agent (clearing agent)"],
+  docs:["NTN and PSW registration","Commercial invoice, packing list and bill of lading / airway bill","Certificate of origin and any permits for regulated goods","Proof of duty and tax payment"],
+  steps:["Register your business on Pakistan Single Window (psw.gov.pk) with your NTN.","Appoint a licensed customs agent, or file yourself if registered.","File the Goods Declaration (GD) on PSW with the shipping documents.","Pay duties and taxes through the PSID generated on PSW.","Customs assesses the GD; goods may be examined at the terminal.","After release, pay the terminal's charges and collect the cargo, or move it in bond to a dry port near you."],
+  table:{head:["Terminal","City","Contact"],rows:[
+   ["Port Qasim Authority","Karachi","021-99272111-30 · Cargo ops 021-99272166"],
+   ["Pakistan Customs, Port Qasim","Karachi","021-99272374"],
+   ["Karachi Port Trust (KPT)","Karachi","kpt.gov.pk"],
+   ["NLC dry ports: Thokar Niaz Baig & Jia Bagga","Lahore","051-111-652-000"],
+   ["NLC dry ports: Karachi, Hyderabad, Quetta, Sost","Various","051-111-652-000 · WhatsApp 0311-5556668"]]},
+  note:"Air cargo is handled at major airports' cargo terminals by airlines and ground handlers; customs filing still goes through PSW.",
+  links:[["Pakistan Single Window","https://www.psw.gov.pk"],["Port Qasim Authority","https://www.pqa.gov.pk"],["Karachi Port Trust","https://kpt.gov.pk"],["NLC dry ports","https://www.nlc.com.pk/dry-ports/"]], help:"NLC 051-111-652-000" }
+
+
+
+];
+const NEWS = [
+  ["2 Oct 2026","6-month KIBOR at 12.35%: compare bank loan costs in the calculator","bank-loans"],
+  ["Jan 2027","Punjab electric buses to start in all 91 tehsils","city-buses"],
+  ["Mar 2026","Pakistan Railways freight tariffs up 20%","rail-freight"],
+  ["Now","Punjab property tax paid after 30 Sep carries a 1% surcharge until 31 Dec 2026","property-tax"],
+  ["31 Aug 2026","US paused Diversity Visa issuance; Pakistan-born applicants remain ineligible for the DV lottery","us-green-card"],
+  ["Always","Check SIMs on your CNIC: SMS your CNIC to 668 or visit cnic.sims.pk","sim-check"],
+  ["15 Oct 2026","Last date to file your Tax Year 2026 income tax return (extended by FBR)","tax-return"],
+  ["15 Sep 2026","Every water filtration plant in Punjab gets a digital code; report faults on 1336","clean-water"],
+  ["30 Nov 2026","Deadline to complete 700 new filtration plants in Rawalpindi Division","clean-water"],
+  ["Jul 2026","Punjab moves cancer and heart treatment from the Health Card to free CM programmes","punjab-health-card"],
+  ["Jan 2026","Federal Sehat Card relaunched for Islamabad, AJK and Gilgit-Baltistan","federal-sehat-card"],
+  ["Sep 2026","HEC Benazir Undergraduate Scholarship portal usually opens around September","benazir-undergrad"],
+  ["5 Oct 2026","Asaan Karobar Finance (Rs 1–30 M, 0% markup) is taking applications in its second phase","asaan-karobar-finance"],
+  ["Ongoing","Book train tickets on the official Rabta app; helpline 117","railway-tickets"],
+  ["15 Jul 2026","Livestock Card phase 3 registration opened across Punjab","livestock-card"],
+  ["Ongoing","Kissan Card: register free by SMS — PKC and your CNIC to 8070","kissan-card"],
+  ["Ongoing","Apni Chhat Apna Ghar: interest-free loan up to Rs 1.5 M, free registration, helpline 0800-09100","apni-chhat-apna-ghar"],
+  ["Ongoing","Mera Ghar Mera Ashiana: bank home loans at 5–8% fixed markup for first-time owners","mera-ghar-mera-ashiana"],
+  ["Emergency","Police 15 · Rescue & ambulance 1122 · Fire 16 · Motorway police 130 · Cyber crime 1799",null],
+  ["2026","CNIC renewal from Rs 400 — renew from home on the Pak-ID app","cnic-renewal"],
+  ["Always","Government schemes never ask you to pay an agent. Apply only on official portals",null]
+];
+const EMERG = [
+ ["Emergencies",[
+  ["15","Police","Crime, threats, accidents. Nationwide.",1],
+  ["1122","Rescue & ambulance","Medical emergencies, accidents, fire, floods, drowning. Punjab, KP, Sindh, Balochistan, ICT, AJK, GB.",1],
+  ["16","Fire brigade","Fires in cities served by municipal fire services.",1],
+  ["130","Motorway & highway police","Breakdowns, accidents and help on motorways and national highways.",1]]],
+ ["Protection & crime",[
+  ["1799","Cyber crime (NCCIA)","Online fraud, hacking, blackmail, harassment. Complaints also at complaint.nccia.gov.pk."],
+  ["1043","Women's helpline (Punjab)","Harassment, domestic violence, legal advice for women."],
+  ["1121","Child protection (Punjab)","Missing, abused or begging children; Child Protection & Welfare Bureau."]]],
+ ["Utilities",[
+  ["118","Electricity complaints","Power outages and faults; your electricity company (LESCO, IESCO, FESCO, etc.)."],
+  ["1199","Gas emergency (SNGPL / SSGC)","Gas leaks and supply faults. Leave the area and don't switch lights on or off."],
+  ["1336","Clean water plants (Punjab)","Broken or dirty filtration plants. WhatsApp 0322-2391336."]]],
+ ["Government services",[
+  ["051-111-786-100","NADRA","CNIC, NICOP, B-Form and family registration."],
+  ["051-111-772-772","FBR","NTN, tax returns, IRIS help."],
+  ["051-111-344-777","Passport office (DGIP)","New passports, renewal and tracking."],
+  ["1035","Property tax (Punjab Excise)","Property tax assessment and payment."],
+  ["1762","Metro bus (PMA)","Metro, Orange Line, Speedo, T-Cash cards."],
+  ["117","Pakistan Railways","Train timings, tickets and complaints."],
+  ["0800-07542","Punjab Health Card","Health insurance eligibility and hospitals (24/7)."],
+  ["0800-26477","BISP","Kafaalat and Taleemi Wazaif. Eligibility by SMS: CNIC to 8171."],
+  ["0800-09100","Apni Chhat Apna Ghar","Punjab interest-free housing loan."]]]
+];
+const DIR = [
+ ["Identity & documents",[
+  ["Pak-Identity (NADRA)","CNIC, NICOP, B-Form, family certificates","https://id.nadra.gov.pk","Paid"],
+  ["NADRA e-Sahulat","Fard, utility bills and other services at NADRA outlets","https://e-sahulat.nadra.gov.pk","Paid"],
+  ["Passport (DGIP)","New passport, renewal, tracking","https://dgip.gov.pk","Paid"],
+  ["Online passport renewal","For Pakistanis living abroad","https://onlinemrp.dgip.gov.pk","Paid"],
+  ["PTA SIM check","SIMs registered on your CNIC","https://cnic.sims.pk","Free"],
+  ["PTA device check (DIRBS)","Check if a phone is PTA approved","https://dirbs.pta.gov.pk","Free"]]],
+ ["Tax, land & vehicles",[
+  ["FBR IRIS","NTN registration, tax returns","https://iris.fbr.gov.pk","Free"],
+  ["Excise & Taxation Punjab","Property tax, vehicle registration, token tax","https://excise.punjab.gov.pk","Paid"],
+  ["Vehicle verification (MTMIS)","Check a Punjab vehicle's registration record","https://mtmis.excise.punjab.gov.pk","Free"],
+  ["ePay Punjab","Pay Punjab taxes, fines and fees with a PSID","https://epay.punjab.gov.pk","Paid"],
+  ["Punjab Land Records (PLRA)","Fard, mutation, land record","https://www.punjab-zameen.gov.pk","Paid"],
+  ["Punjab driving licence (DLIMS)","Learner permit, licence status, renewal","https://dlims.punjab.gov.pk","Paid"]]],
+ ["Money, loans & welfare",[
+  ["BISP","Kafaalat, Taleemi Wazaif · SMS 8171","https://bisp.gov.pk","Free"],
+  ["PM Youth Programme","Youth business and agriculture loans","https://pmyp.gov.pk","Free"],
+  ["Asaan Karobar Finance","Punjab interest-free business loans","https://akf.punjab.gov.pk","Paid"],
+  ["Apni Chhat Apna Ghar","Punjab interest-free housing loan","https://acag.punjab.gov.pk","Free"],
+  ["State Bank of Pakistan","Mera Ghar Mera Ashiana and bank schemes","https://www.sbp.org.pk","Free"],
+  ["Overseas Pakistanis Foundation","Services for overseas Pakistanis and families","https://opf.org.pk","Free"]]],
+ ["Health, education & water",[
+  ["Punjab Health Initiative (PHIMC)","Health card · 0800-07542","https://phimc.punjab.gov.pk","Free"],
+  ["Sehat Sahulat Programme","Federal health card (ICT, AJK, GB)","https://pmhealthprogram.gov.pk","Free"],
+  ["HEC scholarships","Higher Education Commission","https://www.hec.gov.pk","Free"],
+  ["Punjab Education Foundation","Free schooling vouchers","https://www.pef.edu.pk","Free"],
+  ["Punjab Saaf Pani Authority","Water plants · helpline 1336","https://saafpani.com.pk","Free"]]],
+ ["Travel & transport",[
+  ["Pakistan Railways","Train tickets · helpline 117","https://www.pakrail.gov.pk","Paid"],
+  ["Punjab Masstransit Authority","Metro bus, Orange Line · 1762","https://pma.punjab.gov.pk","Paid"],
+  ["Bureau of Emigration","Protector for overseas workers","https://beoe.gov.pk","Paid"],
+  ["Hajj (Ministry of Religious Affairs)","Government Hajj scheme","https://hajjinfo.org","Paid"]]],
+ ["Bills, complaints & safety",[
+  ["Electricity bill (PITC)","Duplicate bill for all electricity companies","https://bill.pitc.com.pk","Free"],
+  ["SNGPL gas","Gas bills and complaints · 1199","https://www.sngpl.com.pk","Free"],
+  ["Pakistan Citizen Portal","Complaints to any government department","https://citizenportal.gov.pk","Free"],
+  ["NCCIA cyber crime","Online complaints · helpline 1799","https://complaint.nccia.gov.pk","Free"],
+  ["Punjab Police","Character certificate, FIR help, Khidmat Markaz","https://punjabpolice.gov.pk","Paid"]]]
+];
+
+/* ===== Helpers ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const statusLabel = {open:"Open",closed:"Closed",check:"Check portal"};
+const waLink = text => "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+let view = "home", sub = "all", region = "all", current = S[0].id;
+
+/* ===== Navigation ===== */
+function renderTabs(){
+  $("#tabs").innerHTML = TABS.map(([k,l])=>`<button class="tab" role="tab" data-go="${k}" aria-selected="${k===view}">${k==="home"?ICON.home:""}${l}</button>`).join("");
+}
+const isGroup = k => k==="all" || !!GROUPS[k];
+function go(k, svcId){
+  if(view!==k) sub="all";
+  view = k;
+  document.querySelectorAll(".view").forEach(v=>v.hidden=true);
+  if(isGroup(k)){
+    $("#v-services").hidden=false;
+    const g = GROUPS[k];
+    $("#vTitle").textContent = g ? g.name : "All services";
+    $("#vSub").textContent = g ? g.desc : "Every guide on this site, filtered by your region.";
+    if(svcId){ const s=S.find(x=>x.id===svcId); if(s && g && sub!=="all" && s.sub!==sub) sub="all"; }
+    renderFilters();
+    const vis = visible();
+    renderSheet(svcId && S.some(s=>s.id===svcId) ? svcId : (vis.some(s=>s.id===current) ? current : (vis[0]||S[0]).id));
+  } else {
+    $("#v-"+k).hidden=false;
+  }
+  renderTabs();
+  const a = document.querySelector(`.tab[data-go="${k}"]`); a && a.scrollIntoView({block:"nearest",inline:"nearest"});
+  try{history.replaceState(null,"","#"+(svcId||k))}catch(_){}
+}
+function renderFilters(){
+  const g = GROUPS[view];
+  const subs = g ? [["all","All"],...g.subs] : [["all","All"],...Object.entries(GROUPS).map(([k,x])=>[k,x.name])];
+  $("#subchips").innerHTML = subs.map(([k,l])=>{
+    const n = S.filter(s=>(g? s.grp===view && (k==="all"||s.sub===k) : (k==="all"||s.grp===k)) && inRegion(s)).length;
+    return `<button class="chip" data-sub="${k}" aria-pressed="${k===sub}">${esc(l)} <span>${n}</span></button>`;}).join("");
+  $("#region").value = region;
+}
+const inRegion = s => region==="all" || s.region.includes("national") || s.region.includes(region);
+function visible(){
+  const q = $("#q").value.trim().toLowerCase();
+  const g = GROUPS[view];
+  return S.filter(s => (!g || s.grp===view) && (sub==="all" || (g ? s.sub===sub : s.grp===sub)) && inRegion(s) &&
+    (!q || (s.name+" "+s.summary+" "+s.by+" "+s.id+" "+s.ur).toLowerCase().includes(q)));
+}
+const regionTag = s => s.region.includes("national") ? "Nationwide" : s.region.map(r=>REGION_LABEL[r]).join(" · ");
+function renderList(){
+  const v = visible();
+  $("#list").innerHTML = v.length ? v.map(s=>`<button class="svc" data-id="${s.id}" aria-current="${s.id===current}">
+      <span class="ic">${ART[s.art]}</span><span class="name">${esc(s.name)}</span><span class="pill ${s.status}">${statusLabel[s.status]}</span>
+      <span class="meta">${esc(regionTag(s))} · ${esc(GROUPS[s.grp].subs.find(x=>x[0]===s.sub)[1])}</span></button>`).join("")
+    : `<div class="empty">No services match. Try “All” in the filter above, choose “All of Pakistan”, or search for a shorter word such as “loan”.</div>`;
+}
+function renderSheet(id){
+  const s = S.find(x=>x.id===id) || S[0]; current = s.id;
+  const t = s.table ? `<div class="sec"><h3>Fees and terms</h3><div class="tbl"><table><thead><tr>${s.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>` : "";
+  $("#sheet").innerHTML = `<div class="art">${ART[s.art]}</div><div class="body">
+    <div class="sheet-head"><div><div class="eyebrow">${esc(GROUPS[s.grp].name)} · ${esc(regionTag(s))}</div><div class="by">${esc(s.by)}</div><h2>${esc(s.name)}</h2><div class="ur" lang="ur">${s.ur}</div></div>
+    <span class="pill ${s.status}">${statusLabel[s.status]}</span></div>
+    <p class="summary">${esc(s.summary)}</p>
+    <div class="facts">${s.facts.map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("")}</div>
+    <div class="sec"><h3>Who can apply</h3><ul>${s.elig.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
+    <div class="sec"><h3>Documents to prepare</h3><ul>${s.docs.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
+    <div class="sec"><h3>How to apply</h3><ol class="steps">${s.steps.map(e=>`<li><span>${e}</span></li>`).join("")}</ol></div>
+    ${t}
+    ${s.note?`<p class="note">${esc(s.note)}</p>`:""}
+    <div class="official">${s.links.map(([l,u],i)=>`<a class="btn ${i?"ghost":""}" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("")}
+      <span>Helpline: <span class="mono">${esc(s.help)}</span></span></div>
+    <div class="official" style="background:var(--bg)"><span>Need help with this scheme?</span>
+      <a class="btn wa" href="${waLink("Assalam-o-Alaikum, I need help with: "+s.name)}" target="_blank" rel="noopener">${ICON.wa}Ask on WhatsApp</a>
+      <button class="btn ghost" data-ask="${s.id}">Send a message</button></div>
+    <div class="warn"><b>Stay safe:</b> apply only on the official portal above. Government schemes never ask you to pay an agent, and approval is never guaranteed for a fee.</div>
+    <div class="checked">Last checked ${CHECKED}. Confirm current terms on the official portal.</div></div>`;
+  renderList();
+}
+
+/* ===== Home ===== */
+function renderHome(){
+  $("#heroArt").innerHTML = ART.hero;
+  $("#cats").innerHTML = Object.entries(GROUPS).map(([k,g])=>{
+    const n = S.filter(s=>s.grp===k).length;
+    return `<button class="cat" data-go="${k}">${ART[g.art]}<span class="c"><b>${g.name}</b><span>${n} guide${n>1?"s":""} · ${g.subs.map(x=>x[1]).join(", ")}</span></span></button>`;}).join("");
+  $("#updates").innerHTML = NEWS.map(([d,t,id])=>`<div class="upd"><time>${d}</time><span>${esc(t)}</span>${id?`<button data-svc="${id}">Read guide →</button>`:"<span></span>"}</div>`).join("");
+  const items = NEWS.map(([d,t,id])=>`<span class="item"><b>${d}</b>${id?`<a href="#${id}" data-svc="${id}">${esc(t)}</a>`:esc(t)}</span>`).join("");
+  $("#belt").innerHTML = items + `<span aria-hidden="true" style="display:contents">${items.replace(/href="[^"]*"/g,'tabindex="-1"')}</span>`;
+}
+
+/* ===== Events ===== */
+document.addEventListener("click", e=>{
+  const g = e.target.closest("[data-go]"); if(g){e.preventDefault(); go(g.dataset.go); scrollTo({top:0,behavior:"smooth"}); return;}
+  const sv = e.target.closest("[data-svc]"); if(sv){e.preventDefault(); const s=S.find(x=>x.id===sv.dataset.svc); go(s.grp, s.id); $("#v-services").scrollIntoView({behavior:"smooth"}); return;}
+  const b = e.target.closest("[data-id]"); if(b){renderSheet(b.dataset.id);
+    try{history.replaceState(null,"","#"+b.dataset.id)}catch(_){}
+    if(innerWidth<=860) $("#sheet").scrollIntoView({behavior:"smooth",block:"start"}); return;}
+  const sb = e.target.closest("[data-sub]"); if(sb){ sub=sb.dataset.sub; renderFilters(); const v=visible(); if(v.length && !v.some(x=>x.id===current)) renderSheet(v[0].id); else renderList(); return; }
+  const ask = e.target.closest("[data-ask]"); if(ask){ $("#cTopic").value = ask.dataset.ask; go("contact"); $("#cName").focus(); }
+});
+$("#q").addEventListener("input", ()=>{ if(!isGroup(view)) go("all"); else { renderFilters(); renderList(); } });
+$("#region").innerHTML = REGIONS.map(([k,l])=>`<option value="${k}">${l}</option>`).join("");
+$("#region").addEventListener("input", e=>{ region=e.target.value; try{localStorage.setItem("sg-region",region)}catch(_){} renderFilters(); const v=visible(); if(v.length && !v.some(x=>x.id===current)) renderSheet(v[0].id); else renderList(); });
+try{ const r=localStorage.getItem("sg-region"); if(r && REGIONS.some(x=>x[0]===r)) region=r; }catch(_){}
+
+/* ===== Finder ===== */
+function finder(){
+  const age=+$("#fAge").value, pj=$("#fProv").value==="punjab", need=$("#fNeed").value;
+  const rules = {
+    "cnic-renewal": ()=> need==="id" && age>=18,
+    "pm-youth-loan": ()=> (need==="business"||need==="farm") && age>=18 && age<=45,
+    "asaan-karobar-finance": ()=> need==="business" && pj && age>=25 && age<=55,
+    "apni-chhat-apna-ghar": ()=> need==="house" && pj && age>=18,
+    "kissan-card": ()=> need==="farm" && pj,
+    "livestock-card": ()=> need==="farm" && pj,
+    "punjab-health-card": ()=> need==="health" && pj,
+    "federal-sehat-card": ()=> need==="health" && !pj,
+    "benazir-undergrad": ()=> need==="study" && age>=16,
+    "hec-need-based": ()=> need==="study" && age>=16,
+    "taleemi-wazaif": ()=> need==="study" && age<=22,
+    "free-education-punjab": ()=> need==="study" && pj && age<=16,
+    "clean-water": ()=> need==="water" && pj,
+    "ntn-registration": ()=> need==="tax",
+    "tax-return": ()=> need==="tax",
+    "railway-tickets": ()=> need==="travel",
+    "airline-tickets": ()=> need==="travel",
+    "mera-ghar-mera-ashiana": ()=> need==="house" && age>=18,
+    "passport": ()=> need==="id",
+    "sim-check": ()=> need==="id",
+    "property-tax": ()=> need==="tax" && pj,
+    "city-buses": ()=> need==="travel",
+    "utility-bills": ()=> need==="bills",
+    "bank-loans": ()=> need==="business"||need==="house"||need==="loan",
+    "pak-post": ()=> need==="cargo",
+    "rail-freight": ()=> need==="cargo",
+    "ports-cargo": ()=> need==="cargo",
+    "us-green-card": ()=> need==="travel" && age>=18
+  };
+  const m = S.filter(s=>rules[s.id]&&rules[s.id]());
+  $("#finder").innerHTML = m.length ? m.map(s=>`<div class="match"><span><b>${esc(s.name)}</b> <span class="pill ${s.status}">${statusLabel[s.status]}</span></span><button data-svc="${s.id}">View steps →</button></div>`).join("")
+    + (need==="business" && age>=18 && age<21 ? `<p class="sub">Under 21: the PM Youth Loan accepts applicants from 18 only for IT and e-commerce businesses.</p>`:"")
+    : `<div class="empty">No scheme in this guide matches. ${!pj&&need!=="id"&&need!=="business"?"Most farming and housing schemes listed here are for Punjab residents.":"Check the age limits on each scheme."}</div>`;
+}
+["#fAge","#fProv","#fNeed"].forEach(s=>$(s).addEventListener("input",finder));
+
+/* ===== EMI ===== */
+const P = {t1:[500000,0,3],t2:[1500000,5,8],t3:[7500000,7,8],akf:[5000000,0,5],acag:[1500000,0,7],mgma1:[2000000,5,20],mgma2:[3500000,8,20]};
+const rs = n => "Rs " + Math.round(n).toLocaleString("en-PK");
+function emi(){
+  const A=+$("#eAmt").value||0, r=(+$("#eRate").value||0)/1200, n=Math.max(1,Math.round((+$("#eYrs").value||1)*12));
+  const m = r ? A*r/(1-Math.pow(1+r,-n)) : A/n;
+  $("#oM").textContent=rs(m); $("#oI").textContent=rs(m*n-A); $("#oT").textContent=rs(m*n);
+}
+$("#ePreset").addEventListener("input",e=>{const p=P[e.target.value]; if(p){[$("#eAmt").value,$("#eRate").value,$("#eYrs").value]=p;} emi();});
+["#eAmt","#eRate","#eYrs"].forEach(s=>$(s).addEventListener("input",()=>{$("#ePreset").value="custom";emi();}));
+
+/* ===== Bank loan calculator ===== */
+const BANKS = [["HBL","https://www.hbl.com"],["MCB","https://www.mcb.com.pk"],["UBL","https://www.ubldigital.com"],["National Bank (NBP)","https://www.nbp.com.pk"],["Bank of Punjab","https://www.bop.com.pk"],["Bank Alfalah","https://www.bankalfalah.com"],["Meezan Bank (Islamic)","https://www.meezanbank.com"]];
+const SPREAD_EX = {personal:[5,5.5,5,4.5,5,5.5,5],car:[3,3.5,3,2.5,3,3.5,3],home:[2.5,3,2.5,2,2.5,3,2.5],business:[3,3.5,3,2.5,3,3.5,3]};
+function bankRows(){
+  const t=$("#bType").value;
+  $("#bRows").innerHTML = BANKS.map(([n,u],i)=>`<tr><td>${n}</td><td><input type="number" id="bs${i}" min="0" max="20" step="0.25" value="${SPREAD_EX[t][i]}" aria-label="${n} spread" style="max-width:90px"></td><td id="br${i}"></td><td id="bm${i}"></td><td id="bt${i}"></td><td><a href="${u}" target="_blank" rel="noopener">${u.replace("https://www.","")} ↗</a></td></tr>`).join("");
+  BANKS.forEach((_,i)=>$("#bs"+i).addEventListener("input",bankCalc)); bankCalc();
+}
+function bankCalc(){
+  const A=+$("#bAmt").value||0, n=Math.max(1,Math.round((+$("#bYrs").value||1)*12)), k=+$("#bKib").value;
+  let best=Infinity; const out=BANKS.map((_,i)=>{const rate=k+(+$("#bs"+i).value||0), r=rate/1200, m=r?A*r/(1-Math.pow(1+r,-n)):A/n; best=Math.min(best,m); return {rate,m,c:m*n-A};});
+  out.forEach((o,i)=>{$("#br"+i).textContent=o.rate.toFixed(2)+"%"; $("#bm"+i).innerHTML=rs(o.m)+(Math.abs(o.m-best)<1?' <span class="pill open">Lowest</span>':""); $("#bt"+i).textContent=rs(o.c);});
+}
+$("#bType").addEventListener("input",bankRows);
+["#bAmt","#bYrs","#bKib"].forEach(x=>$(x).addEventListener("input",bankCalc));
+bankRows();
+
+/* ===== Contact ===== */
+$("#cTopic").innerHTML = `<option value="general">General question</option>` + S.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+$("#fab").innerHTML = ICON.wa + "<span>WhatsApp</span>";
+$("#fab").href = waLink("Assalam-o-Alaikum, I have a question about a government scheme.");
+$("#waBig").innerHTML = ICON.wa + "Start WhatsApp chat";
+$("#waBig").href = $("#fab").href;
+$("#cWa").innerHTML = ICON.wa + "Send on WhatsApp instead";
+function formText(){
+  const topic = $("#cTopic").selectedOptions[0].textContent;
+  return `Name: ${$("#cName").value}\nPhone: ${$("#cPhone").value}\nCity: ${$("#cCity").value}\nTopic: ${topic}\n\n${$("#cMsg").value}`;
+}
+["#cName","#cPhone","#cCity","#cTopic","#cMsg"].forEach(s=>$(s).addEventListener("input",()=>$("#cWa").href=waLink(formText())));
+$("#cWa").href = waLink("Assalam-o-Alaikum");
+function showStatus(ok,msg){const el=$("#cStatus"); el.hidden=false; el.className="status "+(ok?"ok":"bad"); el.textContent=msg;}
+
+let db=null, user=null;
+async function sendMessage(){
+  const msg = { name:$("#cName").value.trim(), phone:$("#cPhone").value.trim(), email:$("#cEmail").value.trim(),
+    city:$("#cCity").value.trim(), topic:$("#cTopic").value, text:$("#cMsg").value.trim(), at:new Date().toISOString() };
+  if(!db){ showStatus(false,"Messages can't be saved from this view. Use “Send on WhatsApp instead” and your message will be filled in for you."); return; }
+  const btn=$("#cSend"); btn.disabled=true; btn.textContent="Sending…";
+  try{
+    const uid = await user?.id?.();
+    if(!uid) throw {code:"no_user"};
+    const ref = db.doc("messages/"+uid);
+    const snap = await ref.get();
+    const list = (snap.exists && Array.isArray(snap.data().items)) ? snap.data().items : [];
+    list.push(msg);
+    await ref.set({items:list.slice(-50), updated:msg.at});
+    showStatus(true,"Message sent. We'll reply on "+msg.phone+(msg.email?" or "+msg.email:"")+".");
+    $("#cMsg").value="";
+    loadInbox();
+  }catch(e){
+    showStatus(false,"Your message couldn't be sent from here. Use “Send on WhatsApp instead”; your message is already filled in.");
+  }finally{ btn.disabled=false; btn.textContent="Send message"; }
+}
+$("#cform").addEventListener("submit", e=>{
+  e.preventDefault();
+  const f=e.target; if(!f.checkValidity()){ f.reportValidity(); showStatus(false,"Please fill in your name, a valid mobile number (03xx-xxxxxxx) and your message."); return; }
+  sendMessage();
+});
+async function loadInbox(){
+  if(!db || !(await user?.isOwner?.())) return;
+  $("#inboxPanel").hidden=false;
+  try{
+    const qs = await db.collection("messages").get();
+    const all = qs.docs.flatMap(d=>(d.data()?.items||[])).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
+    const topicName = id => (S.find(s=>s.id===id)||{name:"General question"}).name;
+    $("#inbox").innerHTML = all.length ? all.map(m=>`<div class="msg"><div class="h"><b style="color:var(--ink)">${esc(m.name)} · ${esc(m.phone)}</b><span>${esc(new Date(m.at).toLocaleString("en-PK"))}</span></div>
+      <div class="h"><span>${esc(topicName(m.topic))}${m.city?" · "+esc(m.city):""}${m.email?" · "+esc(m.email):""}</span></div><p>${esc(m.text)}</p></div>`).join("")
+      : `<div class="empty">No messages yet. Messages people send from the contact form appear here.</div>`;
+  }catch(_){ $("#inbox").innerHTML = `<div class="empty">The inbox couldn't load. Reopen the page to try again.</div>`; }
+}
+(async()=>{
+  try{ [db,user] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]); }catch(_){}
+  loadInbox();
+})();
+
+/* ===== Emergency ===== */
+$("#emerg").innerHTML = EMERG.map(([g,list])=>`<h2 class="egroup">${g}</h2><div class="egrid">${list.map(([n,l,d,top])=>`<div class="ecard${top?" top":""}">
+  <span class="num">${n}</span><span class="lab">${esc(l)}</span><span class="d">${esc(d)}</span>
+  <span class="row"><a href="tel:${n.replace(/-/g,"")}">Call</a><button data-copy="${n}">Copy number</button></span></div>`).join("")}</div>`).join("");
+document.addEventListener("click", async e=>{
+  const c=e.target.closest("[data-copy]"); if(!c) return;
+  try{ await navigator.clipboard.writeText(c.dataset.copy); c.textContent="Copied"; }
+  catch(_){ const r=document.createRange(); r.selectNodeContents(c.parentElement.previousElementSibling.previousElementSibling.previousElementSibling); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); c.textContent="Selected — press copy"; }
+  setTimeout(()=>c.textContent="Copy number",2000);
+});
+
+/* ===== Boot ===== */
+$("#footLogo").innerHTML = document.querySelector(".brandbar .brand svg").outerHTML;
+$("#dir").innerHTML = DIR.map(([g,list])=>`<h2 class="egroup">${g}</h2><div class="dirgrid">${list.map(([n,d,u,f])=>`<a href="${u}" target="_blank" rel="noopener"><span style="display:flex;justify-content:space-between;gap:8px"><b>${n}</b><span class="pill ${f==="Free"?"open":"check"}">${f}</span></span><span class="d">${d}</span><span class="u">${u.replace("https://","")}</span></a>`).join("")}</div>`).join("");
+renderHome(); finder(); emi();
+$("#guideCount").textContent = S.length + " detailed guides";
+const h = location.hash.slice(1);
+const hs = S.find(s=>s.id===h);
+if(hs) go(hs.grp, hs.id); else go(TABS.some(t=>t[0]===h)?h:"home");
+</script>
+
+</body>
+</html>

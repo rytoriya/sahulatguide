@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pakistan Road Route Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<style>
+/* Layout: full-bleed pan/zoom map; directions panel docked left (bottom sheet on phones); floating search, status drawer, zoom controls. Google Maps look per user request. */
+:root{
+  --land:#f6f4ef; --land-out:#e8e8e3; --water:#aadaff; --border:#9aa0a6;
+  --mw:#fdd36a; --mw-case:#e0a320; --nat:#ffffff; --nat-case:#c4c4c0;
+  --route:#1a73e8; --route-case:#1557b0; --alt:#a8bfe4; --alt-case:#7d97c2;
+  --closed:#d93025; --warn:#f29900; --good:#188038;
+  --panel:#ffffff; --ink:#202124; --muted:#5f6368; --line:#dadce0; --hover:#f1f3f4; --chip:#e8f0fe; --chip-ink:#1967d2;
+  --shadow:0 1px 2px rgba(60,64,67,.3),0 2px 6px 2px rgba(60,64,67,.15);
+  --shield:#0b7a46; --pin:#ea4335; --pin-in:#a50e0e;
+  --warn-bg:#fef7e0; --closed-bg:#fce8e6; --open-bg:#e6f4ea;
+  --f:"Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --land:#242f3e; --land-out:#1b2330; --water:#17263c; --border:#5b7186;
+  --mw:#a88a45; --mw-case:#2b2414; --nat:#5f6a78; --nat-case:#283039;
+  --route:#669df6; --route-case:#1d4e9e; --alt:#4f6585; --alt-case:#2c3b52;
+  --closed:#f28b82; --warn:#fdd663; --good:#81c995;
+  --panel:#202124; --ink:#e8eaed; --muted:#9aa0a6; --line:#3c4043; --hover:#2d2e31; --chip:#394457; --chip-ink:#8ab4f8;
+  --shadow:0 1px 3px rgba(0,0,0,.5),0 4px 8px 3px rgba(0,0,0,.25);
+  --shield:#1e8e5a; --pin:#ea4335; --pin-in:#7a0a0a;
+  --warn-bg:#3c3218; --closed-bg:#3c1f1d; --open-bg:#1c3326; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --land:#242f3e; --land-out:#1b2330; --water:#17263c; --border:#5b7186;
+  --mw:#a88a45; --mw-case:#2b2414; --nat:#5f6a78; --nat-case:#283039;
+  --route:#669df6; --route-case:#1d4e9e; --alt:#4f6585; --alt-case:#2c3b52;
+  --closed:#f28b82; --warn:#fdd663; --good:#81c995;
+  --panel:#202124; --ink:#e8eaed; --muted:#9aa0a6; --line:#3c4043; --hover:#2d2e31; --chip:#394457; --chip-ink:#8ab4f8;
+  --shadow:0 1px 3px rgba(0,0,0,.5),0 4px 8px 3px rgba(0,0,0,.25);
+  --shield:#1e8e5a; --pin:#ea4335; --pin-in:#7a0a0a;
+  --warn-bg:#3c3218; --closed-bg:#3c1f1d; --open-bg:#1c3326; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--land);color:var(--ink);font-family:var(--f);font-size:14px;line-height:1.45;margin:0;overflow:hidden}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--route);outline-offset:2px}
+svg.i{width:20px;height:20px;fill:currentColor;flex:none}
+
+.app{position:relative;height:100%}
+#mapwrap{position:absolute;inset:0;overflow:hidden;touch-action:none;background:var(--land-out)}
+#map{display:block;width:100%;height:100%;cursor:grab;user-select:none;-webkit-user-select:none}
+#map.drag{cursor:grabbing}
+#map text{font-family:var(--f)}
+.clabel{font-size:12px;fill:var(--ink);paint-order:stroke;stroke:var(--land);stroke-width:3.5px;stroke-linejoin:round}
+.clabel.big{font-size:13.5px;font-weight:500}
+.clabel.end{font-weight:700;font-size:14px}
+.country{font-size:12px;letter-spacing:.35em;fill:var(--muted);opacity:.75}
+.seaname{font-size:13px;letter-spacing:.3em;fill:var(--route);opacity:.55;font-style:italic}
+.shield text{font-size:10px;font-weight:700}
+
+/* panel */
+.panel{position:absolute;top:0;left:0;bottom:0;width:408px;background:var(--panel);box-shadow:var(--shadow);display:flex;flex-direction:column;z-index:3}
+.phead{padding:12px 16px 10px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.modes{display:flex;align-items:center;gap:8px}
+.mode{display:inline-flex;align-items:center;gap:6px;background:var(--chip);color:var(--chip-ink);border-radius:16px;padding:5px 12px;font-weight:500;font-size:13px}
+.brand{margin-left:auto;font-size:12px;color:var(--muted);font-weight:500}
+.inputs{display:grid;grid-template-columns:22px 1fr 36px;gap:6px 8px;align-items:center}
+.dot{width:12px;height:12px;border-radius:50%;border:2.5px solid var(--muted);justify-self:center}
+.dots{grid-column:1;justify-self:center;width:2px;height:10px;background:repeating-linear-gradient(var(--muted) 0 2px,transparent 2px 5px)}
+.pinic{color:var(--pin);justify-self:center}
+.sel{appearance:none;-webkit-appearance:none;width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--panel);cursor:pointer}
+.sel:hover{border-color:var(--muted)}
+.swap{grid-column:3;grid-row:1 / span 3;width:36px;height:36px;border-radius:50%;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.swap:hover{background:var(--hover)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chipb{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ink)}
+.chipb:hover{background:var(--hover)}
+.chipb[aria-pressed="true"]{background:var(--chip);color:var(--chip-ink);border-color:transparent}
+.pbody{overflow-y:auto;flex:1;min-height:0}
+.notice{display:flex;gap:10px;align-items:flex-start;padding:10px 16px;background:var(--warn-bg);font-size:12.5px;border-bottom:1px solid var(--line)}
+.notice button{background:none;border:0;color:var(--chip-ink);font-weight:500;cursor:pointer;padding:0;white-space:nowrap}
+.card{display:grid;grid-template-columns:28px 1fr auto;gap:2px 10px;padding:14px 16px 14px 12px;border-bottom:1px solid var(--line);border-left:4px solid transparent;cursor:pointer;background:none;width:100%;text-align:left;border-top:0;border-right:0}
+.card:hover{background:var(--hover)}
+.card[aria-pressed="true"]{border-left-color:var(--route)}
+.card .ci{color:var(--muted);padding-top:2px}
+.card .via{font-weight:500;font-size:15px}
+.card .time{font-size:17px;font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.card .time.best{color:var(--good)}
+.card .sub{color:var(--muted);font-size:13px;grid-column:2}
+.card .km{color:var(--muted);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.card .warnl{grid-column:2 / 4;color:var(--warn);font-size:12.5px;font-weight:500}
+.gmrow{display:flex;gap:8px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
+.gbtn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line);border-radius:18px;padding:7px 14px;font-weight:500;font-size:13px;color:var(--chip-ink);background:var(--panel)}
+.gbtn:hover{background:var(--hover)}
+.gbtn.primary{background:var(--route);color:var(--panel);border-color:var(--route)}
+.sect{padding:14px 16px 4px;font-weight:500;font-size:15px}
+.steps{list-style:none;margin:0;padding:0 0 8px}
+.steps li{display:grid;grid-template-columns:52px 1fr auto;gap:2px 10px;padding:10px 16px;align-items:start}
+.steps li+li{border-top:1px solid var(--line)}
+.steps .nm{font-weight:500}
+.steps .nt{color:var(--muted);font-size:12.5px;grid-column:2 / 4}
+.steps .mt{color:var(--muted);font-size:12.5px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.code{display:inline-block;align-self:start;justify-self:start;font-weight:700;font-size:11px;border-radius:3px;padding:2px 5px;white-space:nowrap;text-align:center}
+.code.M{background:var(--shield);color:#fff}
+.code.N{background:var(--panel);color:var(--ink);border:1.5px solid var(--ink)}
+.st{display:inline-block;font-size:11px;font-weight:500;border-radius:10px;padding:1px 8px;white-space:nowrap}
+.st.open{background:var(--open-bg);color:var(--good)}
+.st.restricted{background:var(--warn-bg);color:var(--warn)}
+.st.closed{background:var(--closed-bg);color:var(--closed)}
+.msg{padding:16px;display:grid;gap:8px}
+.msg b{font-size:15px}
+details.fuel{padding:12px 16px;border-top:1px solid var(--line)}
+details.fuel summary{cursor:pointer;font-weight:500}
+.fuelgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.fuelgrid label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.fuelgrid input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--panel);width:100%}
+.fuelout{margin-top:8px;font-weight:500}
+.pfoot{padding:12px 16px 20px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);display:grid;gap:4px}
+.pfoot a{color:var(--chip-ink)}
+
+/* floating map controls */
+.topbar{position:absolute;top:12px;left:424px;right:12px;display:flex;gap:8px;align-items:flex-start;z-index:2;pointer-events:none;flex-wrap:wrap}
+.topbar>*{pointer-events:auto}
+.search{position:relative;width:min(380px,100%)}
+.sbox{display:flex;align-items:center;background:var(--panel);border-radius:24px;box-shadow:var(--shadow);height:46px;padding:0 6px 0 16px}
+.sbox input{flex:1;border:0;background:none;outline:none;min-width:0;font-size:15px}
+.sbox a{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:var(--muted)}
+.sbox a:hover{background:var(--hover)}
+.sbox:focus-within{outline:2px solid var(--route)}
+.sugg{position:absolute;top:52px;left:0;right:0;background:var(--panel);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;padding:6px 0}
+.sugg button,.sugg a{display:flex;gap:12px;align-items:center;width:100%;padding:9px 16px;border:0;background:none;text-align:left;cursor:pointer;text-decoration:none;color:var(--ink);font-size:14px}
+.sugg button:hover,.sugg a:hover,.sugg .on{background:var(--hover)}
+.sugg small{color:var(--muted);display:block;font-size:12px}
+.fchip{display:inline-flex;align-items:center;gap:6px;background:var(--panel);box-shadow:var(--shadow);border-radius:18px;padding:0 14px;height:34px;border:0;cursor:pointer;font-weight:500;font-size:13px;margin-top:6px}
+.fchip:hover{background:var(--hover)}
+.fchip .cnt{color:var(--closed)}
+.zoom{position:absolute;right:12px;bottom:28px;display:grid;gap:10px;z-index:2}
+.zoom .grp{background:var(--panel);box-shadow:var(--shadow);border-radius:8px;overflow:hidden;display:grid}
+.zoom button{width:40px;height:40px;border:0;background:var(--panel);display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.zoom button:hover{color:var(--ink);background:var(--hover)}
+.zoom .grp button+button{border-top:1px solid var(--line)}
+.attrib{position:absolute;right:64px;bottom:6px;font-size:11px;color:var(--muted);background:color-mix(in srgb,var(--panel) 75%,transparent);padding:1px 6px;border-radius:3px;z-index:2}
+.scale{position:absolute;right:64px;bottom:24px;font-size:11px;color:var(--ink);z-index:2;display:grid;justify-items:end}
+.scale i{display:block;height:6px;border:1.5px solid var(--ink);border-top:0;margin-top:1px}
+
+/* popup */
+.pop{position:absolute;z-index:4;background:var(--panel);border-radius:10px;box-shadow:var(--shadow);width:270px;padding:14px;display:grid;gap:8px;transform:translate(-50%,calc(-100% - 14px))}
+.pop::after{content:"";position:absolute;left:50%;bottom:-7px;width:14px;height:14px;background:var(--panel);transform:translateX(-50%) rotate(45deg)}
+.pop h3{margin:0;font-size:15px;font-weight:500;padding-right:20px}
+.pop .x{position:absolute;top:6px;right:6px;border:0;background:none;width:28px;height:28px;border-radius:50%;cursor:pointer;color:var(--muted);display:grid;place-items:center}
+.pop .x:hover{background:var(--hover)}
+.pop .m{color:var(--muted);font-size:12.5px}
+.pop .acts{display:flex;flex-wrap:wrap;gap:6px}
+.seg3{display:flex;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.seg3 button{flex:1;border:0;background:var(--panel);padding:5px 6px;cursor:pointer;font-size:12px;font-weight:500;color:var(--muted)}
+.seg3 button+button{border-left:1px solid var(--line)}
+.seg3 button[aria-pressed="true"].open{background:var(--open-bg);color:var(--good)}
+.seg3 button[aria-pressed="true"].restricted{background:var(--warn-bg);color:var(--warn)}
+.seg3 button[aria-pressed="true"].closed{background:var(--closed-bg);color:var(--closed)}
+
+/* status drawer */
+.drawer{position:absolute;top:12px;right:12px;bottom:12px;width:380px;max-width:calc(100% - 24px);background:var(--panel);border-radius:12px;box-shadow:var(--shadow);z-index:5;display:flex;flex-direction:column}
+.dhead{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.dtop{display:flex;align-items:center;gap:8px}
+.dtop h2{font-size:18px;font-weight:500;margin:0;flex:1}
+.dtop button{border:0;background:none;width:34px;height:34px;border-radius:50%;cursor:pointer;color:var(--muted);display:grid;place-items:center}
+.dtop button:hover{background:var(--hover)}
+.counts{font-size:12.5px;color:var(--muted)}
+.dlist{overflow-y:auto;flex:1;min-height:0}
+.drow{display:grid;grid-template-columns:56px 1fr;gap:4px 10px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.drow .nm{font-weight:500;font-size:13.5px}
+.drow .m{color:var(--muted);font-size:12px}
+.drow .seg3{grid-column:2}
+.dfoot{padding:10px 16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.linkb{border:0;background:none;color:var(--chip-ink);font-weight:500;cursor:pointer;padding:4px 0}
+
+/* phone: map on top, panel as sheet */
+@media (max-width:760px){
+  body{overflow:auto}
+  .app{height:auto}
+  #mapwrap{position:relative;height:60vh;height:60svh}
+  .panel{position:relative;width:auto;border-radius:16px 16px 0 0;margin-top:-16px;box-shadow:0 -2px 8px rgba(0,0,0,.12)}
+  .panel::before{content:"";display:block;width:36px;height:4px;border-radius:2px;background:var(--line);margin:8px auto 0}
+  .pbody{overflow:visible}
+  .topbar{left:12px}
+  .search{width:100%}
+  .drawer{position:fixed;inset:0;width:auto;max-width:none;border-radius:0}
+  .zoom{bottom:30px}
+  .attrib{left:8px;right:auto;max-width:calc(100% - 70px)}
+  .scale{bottom:30px;right:62px}
+  .pop{width:240px}
+}
+@media (prefers-reduced-motion:no-preference){.card,.chipb,.gbtn{transition:background-color .15s}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div id="mapwrap">
+    <svg id="map" role="img" aria-label="Map of Pakistan's main roads. Drag to move, scroll or pinch to zoom."></svg>
+
+    <div class="topbar">
+      <form class="search" id="sform" role="search" autocomplete="off">
+        <div class="sbox">
+          <input id="q" type="search" placeholder="Search Google Maps" aria-label="Search places" aria-autocomplete="list">
+          <a id="qgo" href="https://www.google.com/maps/search/?api=1&amp;query=Pakistan" target="_blank" rel="noopener" aria-label="Search on Google Maps"><svg class="i" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></a>
+        </div>
+        <div class="sugg" id="sugg" hidden></div>
+      </form>
+      <button class="fchip" id="openstatus" type="button"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z"/></svg>Road status <span class="cnt" id="cnt"></span></button>
+    </div>
+
+    <div class="zoom">
+      <div class="grp"><button id="fitb" title="Fit route" aria-label="Fit route on screen"><svg class="i" viewBox="0 0 24 24"><path d="M5 15H3v4c0 1.1.9 2 2 2h4v-2H5v-4zM5 5h4V3H5c-1.1 0-2 .9-2 2v4h2V5zm14-2h-4v2h4v4h2V5c0-1.1-.9-2-2-2zm0 16h-4v2h4c1.1 0 2-.9 2-2v-4h-2v4zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></button></div>
+      <div class="grp">
+        <button id="zin" aria-label="Zoom in"><svg class="i" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></button>
+        <button id="zout" aria-label="Zoom out"><svg class="i" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg></button>
+      </div>
+    </div>
+    <div class="scale" id="scale"><span id="scalet">100 km</span><i id="scalei" style="width:60px"></i></div>
+    <div class="attrib">Simplified map · borders approximate · statuses are examples</div>
+    <div class="pop" id="pop" hidden></div>
+
+    <aside class="drawer" id="drawer" hidden aria-label="Road status">
+      <div class="dhead">
+        <div class="dtop"><h2>Road status</h2><button id="closestatus" aria-label="Close road status"><svg class="i" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button></div>
+        <div class="counts" id="counts"></div>
+        <div class="chips" role="group" aria-label="Filter roads">
+          <button class="chipb" data-f="all" aria-pressed="true">All</button>
+          <button class="chipb" data-f="open" aria-pressed="false">Open</button>
+          <button class="chipb" data-f="restricted" aria-pressed="false">Restricted</button>
+          <button class="chipb" data-f="closed" aria-pressed="false">Closed</button>
+        </div>
+      </div>
+      <div class="dlist" id="dlist"></div>
+      <div class="dfoot"><span>Update from NHMP · helpline 130</span><button class="linkb" id="reset">Reset to examples</button></div>
+    </aside>
+  </div>
+
+  <section class="panel" aria-label="Directions">
+    <div class="phead">
+      <div class="modes">
+        <span class="mode"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg><span id="modet">Car</span></span>
+        <span class="brand">Pakistan Road Route Planner</span>
+      </div>
+      <div class="inputs">
+        <span class="dot" aria-hidden="true"></span>
+        <select class="sel" id="from" aria-label="Starting point"></select>
+        <button class="swap" id="swap" aria-label="Swap start and destination" title="Swap"><svg class="i" viewBox="0 0 24 24" style="transform:rotate(90deg)"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/></svg></button>
+        <span class="dots" aria-hidden="true"></span><span></span>
+        <svg class="i pinic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+        <select class="sel" id="to" aria-label="Destination"></select>
+      </div>
+      <div class="chips" role="group" aria-label="Route options">
+        <button class="chipb" data-m="fast" aria-pressed="true">Fastest</button>
+        <button class="chipb" data-m="short" aria-pressed="false">Shortest</button>
+        <button class="chipb" data-m="mw" aria-pressed="false">Prefer motorways</button>
+        <button class="chipb" id="avoid" aria-pressed="false">Avoid restricted</button>
+      </div>
+    </div>
+    <div class="pbody">
+      <div class="notice"><span>Road statuses are examples, not live. Set them from NHMP updates before you travel.</span><button id="openstatus2">Edit</button></div>
+      <div id="routes"></div>
+      <div id="details"></div>
+      <details class="fuel">
+        <summary>Fuel estimate</summary>
+        <div class="fuelgrid">
+          <label for="kmpl">Car mileage (km/L)<input id="kmpl" type="number" min="3" max="40" step="0.5" value="12"></label>
+          <label for="price">Petrol price (Rs/L)<input id="price" type="number" min="0" step="1" placeholder="today's price"></label>
+        </div>
+        <div class="fuelout" id="fuelout"></div>
+      </details>
+      <div class="pfoot">
+        <span>Distances and times are approximate for a car in normal traffic. Restricted roads count at 1.5× the usual time.</span>
+        <span><a href="https://nhmp.gov.pk" target="_blank" rel="noopener">NHMP</a> · <a href="https://nha.gov.pk" target="_blank" rel="noopener">NHA</a> · Helpline 130</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const C={
+  KHI:["Karachi",24.86,67.01,1],HYD:["Hyderabad",25.40,68.37,1],NWS:["Nawabshah",26.24,68.41,2],SKR:["Sukkur",27.70,68.86,1],
+  LRK:["Larkana",27.56,68.21,2],JCB:["Jacobabad",28.28,68.44,2],QTA:["Quetta",30.18,66.98,1],SBI:["Sibi",29.54,67.88,2],
+  GWD:["Gwadar",25.13,62.32,1],TBT:["Turbat",26.00,63.04,2],PJG:["Panjgur",26.96,64.09,2],KZD:["Khuzdar",27.81,66.61,2],
+  RYK:["Rahim Yar Khan",28.42,70.30,2],BWP:["Bahawalpur",29.40,71.68,2],MUX:["Multan",30.20,71.47,1],DGK:["Dera Ghazi Khan",30.05,70.64,2],
+  DIK:["Dera Ismail Khan",31.83,70.90,2],ZHB:["Zhob",31.34,69.45,2],BNU:["Bannu",32.99,70.60,2],KHT:["Kohat",33.58,71.44,2],
+  PEW:["Peshawar",34.01,71.58,1],MRD:["Mardan",34.20,72.04,2],SWT:["Swat (Mingora)",34.77,72.36,2],CTL:["Chitral",35.85,71.79,2],
+  ISB:["Islamabad / Rawalpindi",33.65,73.05,1],ABT:["Abbottabad",34.15,73.21,2],MSH:["Mansehra",34.33,73.20,2],MZD:["Muzaffarabad",34.37,73.47,2],
+  NRN:["Naran",34.91,73.65,2],CHL:["Chilas",35.42,74.10,2],GLT:["Gilgit",35.92,74.31,1],HNZ:["Hunza (Karimabad)",36.32,74.67,2],
+  SST:["Sost",36.69,74.85,2],SKD:["Skardu",35.30,75.63,2],LHE:["Lahore",31.55,74.34,1],GRW:["Gujranwala",32.16,74.19,2],
+  SKT:["Sialkot",32.49,74.53,2],FSD:["Faisalabad",31.42,73.08,1],SGD:["Sargodha",32.08,72.67,2],SWL:["Sahiwal",30.66,73.11,2],
+  MWI:["Mianwali",32.58,71.54,2]
+};
+const R=[
+  ["m1","M-1","ISB","PEW",155,105,"M","open",""],
+  ["m2","M-2","ISB","LHE",375,105,"M","open",""],
+  ["m3","M-3","LHE","MUX",340,105,"M","open","Lahore–Abdul Hakeem–Multan"],
+  ["m4","M-4","FSD","MUX",240,105,"M","open",""],
+  ["m3b","M-3","FSD","LHE",190,100,"M","open","Via Pindi Bhattian"],
+  ["m5","M-5","MUX","SKR",392,105,"M","open",""],
+  ["m6","M-6","SKR","HYD",306,105,"M","closed","Under construction"],
+  ["m9","M-9","HYD","KHI",136,100,"M","open",""],
+  ["m11","M-11","LHE","SKT",91,100,"M","open",""],
+  ["m14","M-14","ISB","DIK",285,100,"M","open",""],
+  ["e35","E-35","ISB","ABT",115,85,"M","open","Hazara Motorway"],
+  ["m16","M-16","MRD","SWT",110,85,"M","open","Swat Expressway"],
+  ["m8","M-8","GWD","TBT",180,75,"M","open",""],
+  ["n5a","N-5","KHI","HYD",165,70,"N","open","Via Thatta"],
+  ["n5b","N-5","HYD","NWS",115,70,"N","open",""],
+  ["n5c","N-5","NWS","SKR",180,70,"N","open",""],
+  ["n5d","N-5","SKR","RYK",170,75,"N","open",""],
+  ["n5e","N-5","RYK","BWP",190,75,"N","open",""],
+  ["n5f","N-5","BWP","MUX",95,70,"N","open",""],
+  ["n5g","N-5","MUX","SWL",175,70,"N","open",""],
+  ["n5h","N-5","SWL","LHE",170,70,"N","open",""],
+  ["n5i","N-5","LHE","GRW",70,60,"N","open","GT Road"],
+  ["n5j","N-5","GRW","ISB",220,60,"N","open","GT Road"],
+  ["n5k","N-5","ISB","PEW",170,60,"N","open","GT Road"],
+  ["n55a","N-55","HYD","LRK",260,65,"N","open","Indus Highway via Sehwan"],
+  ["n55b","N-55","LRK","SKR",85,60,"N","open",""],
+  ["n55c","N-55","SKR","DGK",400,65,"N","restricted","Kashmore–Rajanpur stretch: travel in daylight"],
+  ["n55d","N-55","DGK","DIK",220,65,"N","open",""],
+  ["n55e","N-55","DIK","BNU",140,60,"N","open",""],
+  ["n55f","N-55","BNU","KHT",125,55,"N","open",""],
+  ["n55g","N-55","KHT","PEW",65,50,"N","open","Kohat Tunnel"],
+  ["kis","N-80","KHT","ISB",190,55,"N","open","Via Khushalgarh"],
+  ["n25a","N-25","KHI","KZD",370,65,"N","open","Via Hub, Bela"],
+  ["n25b","N-25","KZD","QTA",300,65,"N","open","Via Kalat"],
+  ["n65a","N-65","SKR","JCB",45,60,"N","open",""],
+  ["n65b","N-65","JCB","SBI",170,60,"N","open",""],
+  ["n65c","N-65","SBI","QTA",160,50,"N","restricted","Bolan Pass: slow, convoy timings may apply"],
+  ["n70a","N-70","MUX","DGK",95,60,"N","open",""],
+  ["n70b","N-70","DGK","QTA",440,50,"N","open","Fort Munro, Loralai"],
+  ["n50a","N-50","DIK","ZHB",200,55,"N","open",""],
+  ["n50b","N-50","ZHB","QTA",330,60,"N","open",""],
+  ["n10","N-10","KHI","GWD",640,75,"N","open","Makran Coastal Highway"],
+  ["n85a","N-85","TBT","PJG",210,60,"N","open",""],
+  ["n85b","N-85","PJG","KZD",330,60,"N","open","Via Surab"],
+  ["m8b","M-8","LRK","KZD",300,55,"N","open","Ratodero–Khuzdar"],
+  ["n35a","N-35","MSH","CHL",300,40,"N","restricted","KKH Dasu–Chilas: landslide clearance, expect stops"],
+  ["n35b","N-35","CHL","GLT",130,45,"N","open","Karakoram Highway"],
+  ["n35c","N-35","GLT","HNZ",100,45,"N","open","Karakoram Highway"],
+  ["n35d","N-35","HNZ","SST",85,45,"N","open","Karakoram Highway"],
+  ["n35e","N-35","ABT","MSH",25,40,"N","open",""],
+  ["n15a","N-15","MSH","NRN",120,40,"N","open","Kaghan Valley"],
+  ["n15b","N-15","NRN","CHL",115,30,"N","restricted","Babusar Pass: seasonal, usually shut from late autumn to early summer"],
+  ["s1","S-1","GLT","SKD",210,40,"N","open","Jaglot–Skardu Road"],
+  ["n45a","N-45","PEW","MRD",65,60,"N","open",""],
+  ["n45b","N-45","SWT","CTL",230,35,"N","open","Lowari Tunnel"],
+  ["mzd1","N-75","ISB","MZD",140,40,"N","open","Via Murree, Kohala"],
+  ["mzd2","N-15","MSH","MZD",70,40,"N","open","Via Garhi Habibullah"],
+  ["skt","N-5","SKT","GRW",55,55,"N","open",""],
+  ["fsd1","N-60","FSD","SGD",95,60,"N","open",""],
+  ["sgd1","N-60","SGD","ISB",240,65,"N","open","Via M-2 Kot Momin"],
+  ["mwi1","N-60","SGD","MWI",130,60,"N","open",""],
+  ["mwi2","N-55","MWI","BNU",130,55,"N","open",""]
+];
+const RB={};R.forEach(r=>RB[r[0]]=r);
+// approximate outline (lon,lat)
+const PK=[[61.6,25.15],[61.85,26.2],[62.5,26.45],[63.2,26.65],[63.25,27.2],[62.8,27.3],[62.75,28.25],[61.9,28.6],[61.4,29.3],[60.87,29.86],[62.5,29.4],[64.1,29.45],[65,29.6],[66.3,29.9],[66.4,30.9],[67,31.3],[67.8,31.6],[68.6,31.8],[69.3,31.95],[69.5,32.8],[69.9,33.3],[70,33.9],[70.9,33.98],[71.1,34.4],[71.5,34.95],[71.25,35.6],[71.6,36.3],[72.4,36.8],[73.6,36.9],[74.5,37],[75.2,37.05],[75.6,36.75],[76,36.4],[76.6,35.85],[77.6,35.5],[77,35],[76,34.8],[75.2,34.6],[74.3,34.25],[73.9,33.7],[73.95,33.2],[74.4,32.85],[74.7,32.5],[74.65,31.9],[74.6,31.1],[74,30.6],[73.4,29.95],[72.9,29],[71.9,28],[70.8,27.7],[70.2,27.1],[69.6,26.6],[70.15,26.4],[70.1,25.7],[70.6,25.4],[71.1,24.6],[70,24.2],[68.8,23.9],[68.2,23.7],[67.4,23.95],[67,24.8],[66.6,25.4],[65.5,25.35],[64.6,25.2],[63.5,25.2],[62.3,25.05]];
+const SEA=[[50,25.6],[57,25.6],[60.6,25.3],[61.6,25.15],[62.3,25.05],[63.5,25.2],[64.6,25.2],[65.5,25.35],[66.6,25.4],[67,24.8],[67.4,23.95],[68.2,23.7],[68.8,23.9],[69.6,22.9],[70.4,22.6],[72.6,21.2],[73,19],[85,10],[50,10]];
+
+const STATES=["open","restricted","closed"],LABEL={open:"Open",restricted:"Restricted",closed:"Closed"};
+const KEY="pkroutes.status.v1";
+let status={};
+function resetStatus(){status={};R.forEach(r=>status[r[0]]=r[7])}
+resetStatus();
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s)R.forEach(r=>{if(STATES.includes(s[r[0]]))status[r[0]]=s[r[0]]})}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(status))}catch(e){}}
+
+const $=s=>document.querySelector(s);
+let mode="fast",avoid=false,from="PEW",to="KHI",sel=0,routes=[],filter="all";
+
+// ---------- routing ----------
+const hrs=r=>{const t=r[4]/r[5];return status[r[0]]==="restricted"?t*1.5:t};
+const cost=r=>mode==="short"?r[4]:mode==="mw"?hrs(r)*(r[6]==="M"?0.8:1.25):hrs(r);
+function dijkstra(s,t,ban){
+  const dist={},prev={},done={};for(const k in C)dist[k]=Infinity;dist[s]=0;
+  for(;;){
+    let u=null,b=Infinity;for(const k in dist)if(!done[k]&&dist[k]<b){b=dist[k];u=k}
+    if(u===null||u===t)break;done[u]=1;
+    for(const r of R){
+      if(ban&&ban.has(r[0]))continue;
+      const st=status[r[0]];if(st==="closed"||(avoid&&st==="restricted"))continue;
+      const v=r[2]===u?r[3]:r[3]===u?r[2]:null;if(!v)continue;
+      const d=dist[u]+cost(r);if(d<dist[v]){dist[v]=d;prev[v]={n:u,r}}
+    }
+  }
+  if(dist[t]===Infinity)return null;
+  const path=[];let c=t;while(c!==s){const p=prev[c];path.unshift({a:p.n,b:c,r:p.r});c=p.n}
+  return{path,score:dist[t],km:path.reduce((a,x)=>a+x.r[4],0),h:path.reduce((a,x)=>a+hrs(x.r),0),sig:path.map(x=>x.r[0]).join()};
+}
+function solve(){
+  routes=[];if(from===to)return;
+  const best=dijkstra(from,to);if(!best)return;routes.push(best);
+  const seen=new Set([best.sig]),cands=[];
+  for(const seg of best.path){const c=dijkstra(from,to,new Set([seg.r[0]]));if(c&&!seen.has(c.sig)){seen.add(c.sig);cands.push(c)}}
+  cands.sort((a,b)=>a.score-b.score);routes.push(...cands.slice(0,2));
+  if(sel>=routes.length)sel=0;
+}
+const fmtH=h=>{const m=Math.round(h*60),H=Math.floor(m/60),M=m%60;return H?`${H} hr${H>1?"s":""} ${M?M+" min":""}`.trim():`${M} min`};
+const fmtKm=k=>k.toLocaleString("en-PK")+" km";
+function via(rt){const t={};rt.path.forEach(x=>t[x.r[1]]=(t[x.r[1]]||0)+x.r[4]);const top=Object.entries(t).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]);return "via "+top.join(" and ")}
+
+// ---------- google links ----------
+const GNAME={ISB:"Islamabad",SWT:"Mingora, Swat",HNZ:"Karimabad, Hunza",NRN:"Naran, Kaghan"};
+const gq=k=>(GNAME[k]||C[k][0])+", Pakistan";
+function gDir(o,d,w){return "https://www.google.com/maps/dir/?api=1&travelmode=driving&origin="+encodeURIComponent(o)+"&destination="+encodeURIComponent(d)+(w&&w.length?"&waypoints="+encodeURIComponent(w.join("|")):"")}
+const gSearch=q=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+function routeLink(rt){let m=rt.path.slice(0,-1).map(x=>x.b);if(m.length>8){const st=m.length/8;m=Array.from({length:8},(_,i)=>m[Math.floor(i*st)])}return gDir(gq(from),gq(to),m.map(gq))}
+
+// ---------- panel ----------
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shield=r=>`<span class="code ${r[6]}">${r[1]}</span>`;
+function renderPanel(){
+  const el=$("#routes"),dt=$("#details");
+  if(from===to){el.innerHTML=`<div class="msg"><b>Choose a different destination</b><span>Start and destination are the same city.</span></div>`;dt.innerHTML="";$("#modet").textContent="Car";fuel();return}
+  if(!routes.length){el.innerHTML=`<div class="msg"><b>No open route to ${esc(C[to][0])}</b><span>Every road connecting ${esc(C[from][0])} and ${esc(C[to][0])} is marked closed${avoid?" or restricted. Turn off “Avoid restricted” to allow slower roads":""}. Reopen a road in Road status if it has cleared, or check Google Maps.</span><a class="gbtn" href="${gDir(gq(from),gq(to))}" target="_blank" rel="noopener">Check on Google Maps</a></div>`;dt.innerHTML="";$("#modet").textContent="Car";fuel();return}
+  $("#modet").textContent=fmtH(routes[0].h);
+  el.innerHTML=routes.map((rt,i)=>{const rs=rt.path.filter(x=>status[x.r[0]]==="restricted");return `<button class="card" data-i="${i}" aria-pressed="${i===sel}">
+    <svg class="i ci" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+    <span class="via">${esc(via(rt))}</span><span class="time${i===0?" best":""}">${fmtH(rt.h)}</span>
+    <span class="sub">${i===0?(mode==="short"?"Shortest route":mode==="mw"?"Most motorway":"Fastest route")+", avoids closed roads":fmtH(rt.h-routes[0].h)+" slower"}</span><span class="km">${fmtKm(rt.km)}</span>
+    ${rs.length?`<span class="warnl">⚠ ${rs.length} restricted section${rs.length>1?"s":""} on this route</span>`:""}</button>`}).join("");
+  const rt=routes[sel];
+  dt.innerHTML=`<div class="gmrow"><a class="gbtn primary" href="${routeLink(rt)}" target="_blank" rel="noopener">Open this route in Google Maps</a><a class="gbtn" href="${gDir(gq(from),gq(to))}" target="_blank" rel="noopener">Live traffic on Google</a></div>
+  <div class="sect">${esc(C[from][0])} to ${esc(C[to][0])}</div>
+  <ol class="steps">${rt.path.map(x=>{const st=status[x.r[0]];return `<li>${shield(x.r)}<span class="nm">${esc(C[x.a][0])} → ${esc(C[x.b][0])}</span><span class="mt">${fmtH(hrs(x.r))}<br>${x.r[4]} km</span>${x.r[8]||st!=="open"?`<span class="nt">${st!=="open"?`<span class="st ${st}">${LABEL[st]}</span> `:""}${esc(x.r[8])}</span>`:""}</li>`}).join("")}</ol>`;
+  fuel();
+}
+function fuel(){
+  const rt=routes[sel],o=$("#fuelout");if(!rt){o.textContent="";return}
+  const k=parseFloat($("#kmpl").value),p=parseFloat($("#price").value);
+  if(!(k>0)){o.textContent="Enter your car's mileage.";return}
+  const L=rt.km/k;o.textContent=`About ${Math.round(L)} litres`+(p>0?` ≈ Rs ${Math.round(L*p).toLocaleString("en-PK")}`:"")+` for ${fmtKm(rt.km)}.`;
+}
+
+// ---------- map ----------
+const svg=$("#map"),wrap=$("#mapwrap");
+const bx=lon=>(lon-60)*86.6,by=lat=>(38-lat)*100;
+let cw=800,ch=600,V={k:1,tx:0,ty:0},kFit=1,raf=0;
+const isPhone=()=>matchMedia("(max-width:760px)").matches;
+function fitTo(b){
+  const L=isPhone()?24:408+40,Rr=isPhone()?24:70,T=isPhone()?112:84,B=isPhone()?40:40;
+  const aw=Math.max(80,cw-L-Rr),ah=Math.max(80,ch-T-B),w=b[2]-b[0]||1,h=b[3]-b[1]||1;
+  const k=Math.min(aw/w,ah/h);V={k,tx:L+(aw-w*k)/2-b[0]*k,ty:T+(ah-h*k)/2-b[1]*k};
+}
+const PKB=(()=>{const xs=PK.map(p=>bx(p[0])),ys=PK.map(p=>by(p[1]));return[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)]})();
+function setFitScale(){const v={...V};fitTo(PKB);kFit=V.k;V=v}
+function fitRoute(){
+  const rt=routes[sel];
+  if(!rt){fitTo(PKB);return}
+  const ks=[rt.path[0].a,...rt.path.map(x=>x.b)];
+  const xs=ks.map(k=>bx(C[k][2])),ys=ks.map(k=>by(C[k][1]));
+  let b=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];
+  const pad=Math.max(40,(b[2]-b[0])*.08,(b[3]-b[1])*.08);b=[b[0]-pad,b[1]-pad,b[2]+pad,b[3]+pad];
+  fitTo(b);if(V.k>kFit*7){const cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2,sx=cx*V.k+V.tx,sy=cy*V.k+V.ty;V.k=kFit*7;V.tx=sx-cx*V.k;V.ty=sy-cy*V.k}
+}
+const S=(lon,lat)=>[bx(lon)*V.k+V.tx,by(lat)*V.k+V.ty];
+const P=k=>S(C[k][2],C[k][1]);
+const f1=n=>n.toFixed(1);
+const poly=pts=>pts.map((p,i)=>{const[x,y]=S(p[0],p[1]);return(i?"L":"M")+f1(x)+","+f1(y)}).join("")+"Z";
+const LEFT=new Set(["GWD","TBT","PJG","KZD","QTA","SBI","JCB","LRK","ZHB","BNU","DIK","MWI","CTL","SGD","CHL","PEW","KHT","MSH","DGK","HYD"]);
+function draw(){
+  raf=0;
+  const z=V.k/kFit,nw=Math.min(7,1.6+1.1*z),mw=nw+1.6,rw=Math.max(6,nw+3);
+  const routeSet=new Map();routes.forEach((rt,i)=>rt.path.forEach(x=>{if(!routeSet.has(x.r[0])||i===sel)routeSet.set(x.r[0],i)}));
+  const onSel=new Set(routes[sel]?routes[sel].path.map(x=>x.r[0]):[]);
+  const routeCities=new Set();if(routes[sel])routes[sel].path.forEach(x=>{routeCities.add(x.a);routeCities.add(x.b)});
+  let s=`<rect width="${cw}" height="${ch}" fill="var(--land-out)"/><path d="${poly(SEA)}" fill="var(--water)"/><path d="${poly(PK)}" fill="var(--land)" stroke="var(--border)" stroke-width="1.2" stroke-dasharray="6 3 1.5 3"/>`;
+  const lab=(t,lon,lat,c)=>{const[x,y]=S(lon,lat);return `<text class="${c}" x="${f1(x)}" y="${f1(y)}" text-anchor="middle">${t}</text>`};
+  s+=lab("IRAN",60.9,28.2,"country")+lab("AFGHANISTAN",65.6,32.3,"country")+lab("INDIA",75.8,28.6,"country")+lab("CHINA",77.4,37.4,"country")+lab("TAJIKISTAN",72.8,37.6,"country")+lab("Arabian Sea",64.2,23.6,"seaname");
+  const line=(r,col,w,extra="")=>{const[x1,y1]=P(r[2]),[x2,y2]=P(r[3]);return `<line x1="${f1(x1)}" y1="${f1(y1)}" x2="${f1(x2)}" y2="${f1(y2)}" stroke="${col}" stroke-width="${f1(w)}" stroke-linecap="round" ${extra}/>`};
+  const roadCol=r=>{const st=status[r[0]];return st==="closed"?"var(--closed)":st==="restricted"?"var(--warn)":r[6]==="M"?"var(--mw)":"var(--nat)"};
+  for(const T of["N","M"]){
+    const rs=R.filter(r=>r[6]===T);const w=T==="M"?mw:nw;
+    rs.forEach(r=>{if(status[r[0]]!=="closed")s+=line(r,T==="M"?"var(--mw-case)":"var(--nat-case)",w+2)});
+    rs.forEach(r=>{const st=status[r[0]];s+=line(r,roadCol(r),st==="closed"?Math.max(2,w-1):w,st==="closed"?'stroke-dasharray="7 6" stroke-linecap="butt"':"")});
+  }
+  // alternates then selected
+  routes.forEach((rt,i)=>{if(i===sel)return;rt.path.forEach(x=>{if(!onSel.has(x.r[0]))s+=line(x.r,"var(--alt-case)",rw+2)});rt.path.forEach(x=>{if(!onSel.has(x.r[0]))s+=line(x.r,"var(--alt)",rw)})});
+  if(routes[sel]){const p=routes[sel].path;p.forEach(x=>s+=line(x.r,"var(--route-case)",rw+2.5));p.forEach(x=>s+=line(x.r,"var(--route)",rw));p.forEach(x=>{if(status[x.r[0]]==="restricted")s+=line(x.r,"var(--warn)",rw*.45,'stroke-dasharray="2 9"')})}
+  // hit targets
+  routes.forEach((rt,i)=>{if(i!==sel)rt.path.forEach(x=>{if(!onSel.has(x.r[0]))s+=line(x.r,"transparent",18,`data-route="${i}" style="cursor:pointer"`)})});
+  R.forEach(r=>{if(!routeSet.has(r[0])||onSel.has(r[0]))s+=line(r,"transparent",16,`data-road="${r[0]}" style="cursor:pointer"`)});
+  // shields
+  const placed=[];
+  const shieldAt=(r,x,y)=>{const w=r[1].length*6.2+8;return `<g class="shield" data-road="${r[0]}" style="cursor:pointer"><rect x="${f1(x-w/2)}" y="${f1(y-8)}" width="${f1(w)}" height="16" rx="3" fill="${r[6]==="M"?"var(--shield)":"var(--panel)"}" stroke="${r[6]==="M"?"var(--panel)":"var(--ink)"}" stroke-width="1.2"/><text x="${f1(x)}" y="${f1(y+3.6)}" text-anchor="middle" fill="${r[6]==="M"?"#fff":"var(--ink)"}">${r[1]}</text></g>`};
+  const order=[...R].sort((a,b)=>(onSel.has(b[0])-onSel.has(a[0]))||(a[6]==="M"?-1:1));
+  for(const r of order){
+    const show=onSel.has(r[0])||(r[6]==="M"&&z>=1.15)||z>=2.2;if(!show)continue;
+    const[x1,y1]=P(r[2]),[x2,y2]=P(r[3]);const x=(x1+x2)/2,y=(y1+y2)/2;
+    if(Math.hypot(x2-x1,y2-y1)<46)continue;
+    if(x<-20||y<-20||x>cw+20||y>ch+20)continue;
+    if(placed.some(p=>Math.abs(p[0]-x)<46&&Math.abs(p[1]-y)<20))continue;
+    if(placed.some(p=>p[2]===r[1]&&Math.hypot(p[0]-x,p[1]-y)<140))continue;
+    placed.push([x,y,r[1]]);s+=shieldAt(r,x,y);
+  }
+  // cities
+  const lbls=[];
+  const ck=Object.keys(C).sort((a,b)=>((b===from||b===to)-(a===from||a===to))||(C[a][3]-C[b][3]));
+  let dots="",texts="";
+  for(const k of ck){
+    const[x,y]=P(k);if(x<-60||y<-30||x>cw+60||y>ch+30)continue;
+    const end=k===from||k===to;
+    if(k===to){dots+=`<g data-city="${k}" style="cursor:pointer" transform="translate(${f1(x)},${f1(y)})"><path d="M0,0C-2,-7-9,-10-9,-17A9,9 0 1 1 9,-17C9,-10 2,-7 0,0Z" fill="var(--pin)" stroke="var(--pin-in)" stroke-width="1"/><circle cy="-17" r="3.4" fill="var(--pin-in)"/></g>`}
+    else if(k===from){dots+=`<g data-city="${k}" style="cursor:pointer"><circle cx="${f1(x)}" cy="${f1(y)}" r="7" fill="var(--panel)" stroke="var(--ink)" stroke-width="3.5"/></g>`}
+    else dots+=`<g data-city="${k}" style="cursor:pointer"><circle cx="${f1(x)}" cy="${f1(y)}" r="9" fill="transparent"/><circle cx="${f1(x)}" cy="${f1(y)}" r="${C[k][3]===1?4.2:3.4}" fill="var(--panel)" stroke="var(--muted)" stroke-width="1.6"/></g>`;
+    const showL=end||C[k][3]===1||z>=1.9||(routeCities.has(k)&&z>=1.2);
+    if(!showL)continue;
+    const left=LEFT.has(k),nm=C[k][0],tw=nm.length*(end?7.6:6.6);
+    const tx=left?x-10:x+10,ty=(k===to?y-14:y)+4.5;
+    const box=[left?tx-tw:tx,ty-12,left?tx:tx+tw,ty+3];
+    if(!end&&lbls.some(b=>!(box[2]<b[0]||box[0]>b[2]||box[3]<b[1]||box[1]>b[3])))continue;
+    lbls.push(box);
+    texts+=`<text class="clabel${end?" end":C[k][3]===1?" big":""}" data-city="${k}" style="cursor:pointer" x="${f1(tx)}" y="${f1(ty)}" text-anchor="${left?"end":"start"}">${esc(nm)}</text>`;
+  }
+  s+=dots+texts;
+  svg.innerHTML=s;
+  // scale bar: 1 deg lat = 111 km = 100 base units
+  const pxPerKm=V.k*100/111;const tgt=90/pxPerKm;const nice=[5,10,20,25,50,100,200,250,500,1000].find(n=>n>=tgt)||1000;
+  $("#scalet").textContent=nice+" km";$("#scalei").style.width=f1(nice*pxPerKm)+"px";
+}
+const redraw=()=>{if(!raf)raf=requestAnimationFrame(draw)};
+function resize(){const r=wrap.getBoundingClientRect();cw=Math.max(200,r.width);ch=Math.max(200,r.height);svg.setAttribute("viewBox",`0 0 ${cw} ${ch}`);setFitScale()}
+
+// pan / zoom
+function zoomAt(f,sx,sy){const k=Math.min(kFit*14,Math.max(kFit*.6,V.k*f));const r=k/V.k;V.tx=sx-(sx-V.tx)*r;V.ty=sy-(sy-V.ty)*r;V.k=k;closePop();redraw()}
+const pts=new Map();let drag=null,moved=false,pinch=null;
+const local=e=>{const r=svg.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+svg.addEventListener("pointerdown",e=>{svg.setPointerCapture(e.pointerId);pts.set(e.pointerId,local(e));moved=false;
+  if(pts.size===1){drag={p:local(e),tx:V.tx,ty:V.ty}}
+  if(pts.size===2){const[a,b]=[...pts.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),k:V.k};drag=null}});
+svg.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,local(e));
+  if(pinch&&pts.size===2){const[a,b]=[...pts.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]);moved=true;zoomAt((pinch.k*d/pinch.d)/V.k,(a[0]+b[0])/2,(a[1]+b[1])/2);return}
+  if(drag){const p=local(e),dx=p[0]-drag.p[0],dy=p[1]-drag.p[1];if(!moved&&Math.hypot(dx,dy)<5)return;moved=true;svg.classList.add("drag");V.tx=drag.tx+dx;V.ty=drag.ty+dy;closePop();redraw()}});
+function up(e){
+  const wasTap=!moved&&pts.size===1&&drag;const p=local(e);pts.delete(e.pointerId);if(pts.size<2)pinch=null;if(!pts.size){drag=null;svg.classList.remove("drag")}
+  if(wasTap){
+    const t=document.elementFromPoint(e.clientX,e.clientY);
+    const rt=t&&t.closest("[data-route]"),rd=t&&t.closest("[data-road]"),ct=t&&t.closest("[data-city]");
+    if(ct)cityPop(ct.dataset.city,p);else if(rt){sel=+rt.dataset.route;closePop();refresh(true)}else if(rd)roadPop(rd.dataset.road,p);else closePop();
+  }
+}
+svg.addEventListener("pointerup",up);svg.addEventListener("pointercancel",e=>{pts.delete(e.pointerId);drag=null;pinch=null;svg.classList.remove("drag")});
+svg.addEventListener("wheel",e=>{e.preventDefault();const[x,y]=local(e);zoomAt(Math.exp(-e.deltaY*(e.ctrlKey?0.01:0.0018)),x,y)},{passive:false});
+svg.addEventListener("dblclick",e=>{const[x,y]=local(e);zoomAt(2,x,y)});
+$("#zin").onclick=()=>zoomAt(1.6,cw/2+(isPhone()?0:204),ch/2);
+$("#zout").onclick=()=>zoomAt(1/1.6,cw/2+(isPhone()?0:204),ch/2);
+$("#fitb").onclick=()=>{closePop();fitRoute();redraw()};
+
+// popups
+const pop=$("#pop");
+function place(p){pop.hidden=false;const w=pop.offsetWidth,h=pop.offsetHeight;let x=Math.min(Math.max(p[0],w/2+8),cw-w/2-8);let y=p[1];if(y-h-20<8){y=y+h+40}pop.style.left=x+"px";pop.style.top=y+"px"}
+function closePop(){pop.hidden=true}
+function cityPop(k,p){
+  const n=C[k][0];
+  const links=R.filter(r=>r[2]===k||r[3]===k);
+  pop.innerHTML=`<button class="x" aria-label="Close"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  <h3>${esc(n)}</h3><span class="m">${links.length} road${links.length>1?"s":""}: ${[...new Set(links.map(r=>r[1]))].join(", ")}</span>
+  <div class="acts"><button class="gbtn" data-a="from">Directions from here</button><button class="gbtn" data-a="to">Directions to here</button><a class="gbtn" href="${gSearch(gq(k))}" target="_blank" rel="noopener">View on Google Maps</a></div>`;
+  pop.querySelector(".x").onclick=closePop;
+  pop.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{if(b.dataset.a==="from"){if(k===to)to=from;from=k}else{if(k===from)from=to;to=k}sel=0;syncSel();closePop();refresh(true)});
+  place(p);
+}
+function roadPop(id,p){
+  const r=RB[id],st=status[id];
+  pop.innerHTML=`<button class="x" aria-label="Close"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+  <h3>${shield(r)} ${esc(C[r[2]][0])} – ${esc(C[r[3]][0])}</h3>
+  <span class="m">${r[4]} km · about ${fmtH(r[4]/r[5])}${r[8]?" · "+esc(r[8]):""}</span>
+  <div class="seg3" role="group" aria-label="Road status">${STATES.map(s=>`<button class="${s}" data-s="${s}" aria-pressed="${st===s}">${LABEL[s]}</button>`).join("")}</div>
+  <div class="acts"><a class="gbtn" href="${gDir(gq(r[2]),gq(r[3]))}" target="_blank" rel="noopener">Check on Google Maps</a></div>`;
+  pop.querySelector(".x").onclick=closePop;
+  pop.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{status[id]=b.dataset.s;save();refresh(false);roadPop(id,p)});
+  place(p);
+}
+
+// status drawer
+function renderDrawer(){
+  const c={open:0,restricted:0,closed:0};R.forEach(r=>c[status[r[0]]]++);
+  $("#counts").textContent=`${c.open} open · ${c.restricted} restricted · ${c.closed} closed`;
+  $("#cnt").textContent=c.closed?`· ${c.closed} closed`:"";
+  $("#dlist").innerHTML=R.filter(r=>filter==="all"||status[r[0]]===filter).map(r=>`<div class="drow">${shield(r)}<div><div class="nm">${esc(C[r[2]][0])} – ${esc(C[r[3]][0])}</div><div class="m">${r[4]} km · ${fmtH(r[4]/r[5])}${r[8]?" · "+esc(r[8]):""}</div></div>
+   <div class="seg3" role="group" aria-label="Status">${STATES.map(s=>`<button class="${s}" data-id="${r[0]}" data-s="${s}" aria-pressed="${status[r[0]]===s}">${LABEL[s]}</button>`).join("")}</div></div>`).join("")||`<div class="msg"><span>No roads are marked ${LABEL[filter].toLowerCase()}.</span></div>`;
+}
+$("#dlist").addEventListener("click",e=>{const b=e.target.closest("[data-s]");if(!b)return;status[b.dataset.id]=b.dataset.s;save();refresh(false)});
+document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",x===b));renderDrawer()});
+const openDrawer=()=>{$("#drawer").hidden=false;closePop();$("#closestatus").focus()};
+$("#openstatus").onclick=openDrawer;$("#openstatus2").onclick=openDrawer;
+$("#closestatus").onclick=()=>{$("#drawer").hidden=true;$("#openstatus").focus()};
+$("#reset").onclick=()=>{resetStatus();save();refresh(false)};
+
+// search
+const q=$("#q"),sugg=$("#sugg");let sIdx=-1;
+function renderSugg(){
+  const v=q.value.trim();$("#qgo").href=gSearch(v?(/pakistan/i.test(v)?v:v+", Pakistan"):"Pakistan");
+  if(!v){sugg.hidden=true;return}
+  const m=Object.keys(C).filter(k=>C[k][0].toLowerCase().includes(v.toLowerCase())).slice(0,4);
+  const pinI=`<svg class="i" viewBox="0 0 24 24" style="color:var(--muted)"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>`;
+  sugg.innerHTML=m.map(k=>`<button type="button" data-c="${k}">${pinI}<span>${esc(C[k][0])}<small>Get directions here from ${esc(C[from===k?to:from][0])}</small></span></button>`).join("")+
+   `<a href="${gSearch(/pakistan/i.test(v)?v:v+", Pakistan")}" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" style="color:var(--muted)"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg><span>Search “${esc(v)}” on Google Maps<small>Opens in a new tab</small></span></a>
+   <a href="${gDir(gq(from),/pakistan/i.test(v)?v:v+", Pakistan")}" target="_blank" rel="noopener"><svg class="i" viewBox="0 0 24 24" style="color:var(--muted)"><path d="M21.71 11.29l-9-9a.996.996 0 0 0-1.41 0l-9 9a.996.996 0 0 0 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9a.996.996 0 0 0 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"/></svg><span>Directions from ${esc(C[from][0])} on Google Maps<small>Any place, shop or address</small></span></a>`;
+  sugg.hidden=false;sIdx=-1;
+}
+q.addEventListener("input",renderSugg);q.addEventListener("focus",renderSugg);
+q.addEventListener("keydown",e=>{const it=[...sugg.querySelectorAll("button,a")];if(!it.length)return;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();sIdx=(sIdx+(e.key==="ArrowDown"?1:-1)+it.length)%it.length;it.forEach((x,i)=>x.classList.toggle("on",i===sIdx))}
+  if(e.key==="Escape"){sugg.hidden=true}});
+$("#sform").addEventListener("submit",e=>{e.preventDefault();const it=[...sugg.querySelectorAll("button,a")];const t=it[sIdx>=0?sIdx:0];if(t)t.click()});
+sugg.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b){const k=b.dataset.c;if(k===from)from=to;to=k;sel=0;syncSel();q.value="";sugg.hidden=true;refresh(true)}else if(e.target.closest("a")){sugg.hidden=true}});
+document.addEventListener("pointerdown",e=>{if(!e.target.closest(".search"))sugg.hidden=true});
+
+// controls
+function syncSel(){$("#from").value=from;$("#to").value=to}
+const names=Object.keys(C).sort((a,b)=>C[a][0].localeCompare(C[b][0]));
+["#from","#to"].forEach(id=>$(id).innerHTML=names.map(k=>`<option value="${k}">${esc(C[k][0])}</option>`).join(""));
+$("#from").onchange=e=>{from=e.target.value;sel=0;refresh(true)};
+$("#to").onchange=e=>{to=e.target.value;sel=0;refresh(true)};
+$("#swap").onclick=()=>{[from,to]=[to,from];sel=0;syncSel();refresh(true)};
+document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;sel=0;document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b));refresh(true)});
+$("#avoid").onclick=()=>{avoid=!avoid;$("#avoid").setAttribute("aria-pressed",avoid);sel=0;refresh(true)};
+$("#routes").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;sel=+c.dataset.i;refresh(true)});
+["#kmpl","#price"].forEach(id=>$(id).addEventListener("input",fuel));
+
+function refresh(refit){solve();renderPanel();renderDrawer();if(refit)fitRoute();redraw()}
+syncSel();resize();solve();fitRoute();renderPanel();renderDrawer();draw();
+new ResizeObserver(()=>{resize();fitRoute();closePop();redraw()}).observe(wrap);
+</script>
+</body>
+</html>

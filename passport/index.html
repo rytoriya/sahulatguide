@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pakistan Passport Services Guide</title>
+<meta name="description" content="Find the nearest Pakistan passport office, calculate passport fees, check timings, follow step-by-step guidance, renew online, and visa help for foreigners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Everything is scoped to #pps so it will not clash with your website's CSS */
+#pps{
+  --bg:#f4f1ea; --card:#fffdf8; --ink:#14251b; --muted:#5b6b60; --line:#e3ddd0;
+  --g900:#01411c; --g700:#0b6b35; --g500:#1f9a55; --g100:#e3f1e7; --gold:#c9972b; --gold100:#fbf1dc;
+  --ok:#0f7a3b; --bad:#b3261e; --focus:#2563eb; --shadow:0 1px 2px rgba(20,37,27,.06),0 8px 24px rgba(20,37,27,.08);
+  --r:18px; --fs:16px;
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:var(--fs);line-height:1.55;color:var(--ink);background:var(--bg);
+  max-width:1180px;margin:0 auto;padding:0 0 90px;position:relative;
+}
+#pps *,#pps *::before,#pps *::after{box-sizing:border-box}
+#pps.dark{--bg:#0d1511;--card:#15201a;--ink:#e9f1ec;--muted:#a2b4a8;--line:#26352c;--g100:#1a2c21;--g700:#5fd08e;--g500:#5fd08e;--gold100:#2d2614;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+#pps.contrast{--bg:#000;--card:#000;--ink:#fff;--muted:#fff;--line:#fff;--g100:#1a1a1a;--g700:#ffef00;--g500:#ffef00;--gold:#ffef00;--gold100:#1a1a1a;--ok:#7CFF7C;--bad:#ff8a8a}
+#pps.readable{letter-spacing:.03em;word-spacing:.12em;line-height:1.9}
+#pps[dir=rtl]{font-family:"Noto Nastaliq Urdu","Plus Jakarta Sans",system-ui,sans-serif;line-height:2.05}
+#pps[dir=rtl] p,#pps[dir=rtl] li,#pps[dir=rtl] td,#pps[dir=rtl] .tag,#pps[dir=rtl] .note,#pps[dir=rtl] h4{unicode-bidi:plaintext}
+@media (prefers-reduced-motion:reduce){#pps *{transition:none!important;animation:none!important}}
+#pps a{color:var(--g700)}
+#pps :focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:8px}
+#pps .skip{position:absolute;left:-9999px}#pps .skip:focus{left:12px;top:12px;z-index:50;background:var(--card);padding:8px 12px}
+#pps svg.i{width:1.15em;height:1.15em;vertical-align:-.2em;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#pps button{font:inherit;color:inherit}
+
+/* ---------- HERO ---------- */
+#pps .hero{position:relative;min-height:420px;border-radius:0 0 28px 28px;overflow:hidden;color:#fff;display:flex;align-items:flex-end;
+  background:linear-gradient(135deg,#01411c 0%,#0b6b35 60%,#1f9a55 100%)}
+#pps .hero img.bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+#pps .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(1,40,18,.35) 0%,rgba(1,40,18,.55) 45%,rgba(1,30,14,.92) 100%)}
+#pps .hero .in{position:relative;z-index:2;width:100%;padding:96px 28px 54px}
+#pps .topbar{position:absolute;z-index:3;top:16px;inset-inline:20px;display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;gap:10px}
+#pps .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+#pps .brand .logo{width:38px;height:38px;border-radius:11px;background:#fff;display:grid;place-items:center}
+#pps .iconbtn{background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;min-height:42px;font-weight:600;font-size:.9em}
+#pps .hero h1{font-size:clamp(1.7em,4.4vw,2.8em);line-height:1.12;margin:0 0 8px;font-weight:800;max-width:15ch}
+#pps .hero p.lead{margin:0 0 20px;opacity:.92;max-width:52ch;font-size:1.05em}
+#pps .heroSearch{display:flex;gap:8px;background:#fff;border-radius:16px;padding:6px;max-width:640px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#pps .heroSearch input{flex:1;border:0;outline:0;font:inherit;padding:10px 12px;color:#14251b;background:transparent;min-width:0}
+#pps .heroSearch .btn{white-space:nowrap}
+#pps .credit{position:absolute;z-index:3;bottom:8px;inset-inline-end:14px;font-size:.68em;opacity:.75}
+#pps .credit a{color:#fff}
+
+/* ---------- QUICK TILES ---------- */
+#pps .wrap{padding:0 18px}
+#pps .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:-28px 0 0;position:relative;z-index:4}
+#pps .tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 14px;text-align:start;cursor:pointer;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;min-height:118px;transition:transform .15s,box-shadow .15s}
+#pps .tile:hover{transform:translateY(-3px)}
+#pps .tile .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--g100);color:var(--g700);font-size:1.15em}
+#pps .tile b{font-size:.98em;line-height:1.25}
+#pps .tile span{font-size:.8em;color:var(--muted);line-height:1.3}
+#pps .tile.gold .ic{background:var(--gold100);color:var(--gold)}
+
+#pps .facts{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:center;margin:22px 0 6px;color:var(--muted);font-size:.9em}
+#pps .facts b{color:var(--ink);font-size:1.15em}
+
+/* ---------- TABS ---------- */
+#pps nav.tabs{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:12px 18px;margin:8px 0 6px;scrollbar-width:none;border-bottom:1px solid var(--line)}
+#pps nav.tabs::-webkit-scrollbar{display:none}
+#pps nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);padding:10px 16px;border-radius:999px;cursor:pointer;min-height:44px;display:inline-flex;gap:8px;align-items:center;font-weight:600;font-size:.93em}
+#pps nav.tabs button[aria-selected=true]{background:var(--g900);color:#fff;border-color:var(--g900)}
+#pps.dark nav.tabs button[aria-selected=true]{background:var(--g500);color:#06210f;border-color:var(--g500)}
+#pps.contrast nav.tabs button[aria-selected=true]{background:#ffef00;color:#000}
+@media (max-width:700px){
+  #pps nav.tabs{position:fixed;bottom:0;top:auto;left:0;right:0;margin:0;padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around;border-top:1px solid var(--line);border-bottom:0;box-shadow:0 -6px 20px rgba(0,0,0,.08);z-index:40}
+  #pps nav.tabs button{flex:1;flex-direction:column;gap:2px;border:0;background:transparent;padding:6px 2px;font-size:.68em;border-radius:12px;min-height:54px}
+  #pps nav.tabs button svg.i{width:1.6em;height:1.6em}
+  #pps nav.tabs button[aria-selected=true]{background:var(--g100);color:var(--g900)}
+  #pps.dark nav.tabs button[aria-selected=true]{background:var(--g100);color:var(--g500)}
+}
+
+/* ---------- PANELS / CARDS ---------- */
+#pps section.panel{display:none;animation:ppsIn .25s ease}#pps section.panel.on{display:block}
+@keyframes ppsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#pps .banner{position:relative;border-radius:var(--r);overflow:hidden;min-height:150px;display:flex;align-items:flex-end;color:#fff;margin:14px 0;background:linear-gradient(135deg,#01411c,#1f9a55)}
+#pps .banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#pps .banner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(1,35,16,.9) 0%,rgba(1,35,16,.55) 55%,rgba(1,35,16,.15) 100%)}
+#pps[dir=rtl] .banner::after{background:linear-gradient(270deg,rgba(1,35,16,.9) 0%,rgba(1,35,16,.55) 55%,rgba(1,35,16,.15) 100%)}
+#pps .banner .in{position:relative;z-index:2;padding:20px 22px}
+#pps .banner h2{margin:0 0 4px;font-size:1.45em;color:#fff}
+#pps .banner p{margin:0;opacity:.92;max-width:56ch;font-size:.95em}
+#pps .banner .credit{bottom:6px}
+#pps .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+#pps h2{font-size:1.25em;margin:0 0 10px}
+#pps h3{font-size:1.02em;margin:18px 0 10px;display:flex;gap:8px;align-items:center}
+#pps .muted{color:var(--muted);font-size:.9em}
+#pps .grid2{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media (max-width:820px){#pps .grid2{grid-template-columns:1fr}}
+
+/* inputs */
+#pps input[type=search],#pps input[type=text],#pps select{font:inherit;font-size:.95em;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);min-height:46px;width:100%}
+#pps .field{position:relative}
+#pps .field svg.i{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);color:var(--muted)}
+#pps .field input{padding-inline-start:40px}
+#pps .btn{border:0;background:var(--g900);color:#fff;padding:11px 18px;border-radius:12px;cursor:pointer;min-height:46px;font-weight:700;display:inline-flex;gap:8px;align-items:center;justify-content:center;text-decoration:none}
+#pps.dark .btn{background:var(--g500);color:#06210f}
+#pps.contrast .btn{background:#ffef00;color:#000}
+#pps .btn.gold{background:var(--gold);color:#1d1404}
+#pps .btn.ghost{background:transparent;color:var(--g700);border:1.5px solid var(--line)}
+#pps .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* chips (radio/checkbox styled) */
+#pps .chips{display:flex;flex-wrap:wrap;gap:8px}
+#pps .chip{position:relative}
+#pps .chip input{position:absolute;opacity:0;pointer-events:none}
+#pps .chip>span{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;font-size:.9em;font-weight:600;min-height:42px;transition:all .12s}
+#pps .chip input:checked+span{background:var(--g900);border-color:var(--g900);color:#fff}
+#pps.dark .chip input:checked+span{background:var(--g500);border-color:var(--g500);color:#06210f}
+#pps.contrast .chip input:checked+span{background:#ffef00;color:#000}
+#pps .chip input:focus-visible+span{outline:3px solid var(--focus);outline-offset:2px}
+#pps .chip input:disabled+span{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+#pps .lbl{font-size:.8em;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:16px 0 8px}
+
+/* ---------- OFFICES ---------- */
+#pps .locbox{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--g100);border-radius:14px;padding:12px}
+#pps .locbox select{flex:1;min-width:200px;background:var(--card)}
+#pps .status{font-size:.88em;color:var(--muted);margin:8px 2px 0}
+#pps .resbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:16px 0 10px}
+#pps .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:3px}
+#pps .seg button{border:0;background:transparent;padding:8px 14px;border-radius:9px;cursor:pointer;font-weight:600;display:inline-flex;gap:6px;align-items:center;min-height:38px}
+#pps .seg button[aria-pressed=true]{background:var(--g900);color:#fff}
+#pps.dark .seg button[aria-pressed=true]{background:var(--g500);color:#06210f}
+#pps .tag{display:inline-flex;align-items:center;gap:5px;font-size:.76em;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--g100);color:var(--g700);white-space:nowrap}
+#pps .tag.open{background:#dcf3e3;color:var(--ok)}#pps .tag.closed{background:#fbe4e1;color:var(--bad)}
+#pps.dark .tag.open{background:#173a24}#pps.dark .tag.closed{background:#3a1d1b}
+#pps.contrast .tag{background:#000;border:1px solid currentColor}
+#pps .tag.gold{background:var(--gold100);color:#8a5a00}#pps.dark .tag.gold{color:var(--gold)}
+#pps .olist{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+@media (max-width:420px){#pps .olist{grid-template-columns:1fr}}
+#pps .office{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);border-inline-start:5px solid var(--bad);display:flex;flex-direction:column;gap:8px}
+#pps .office.isopen{border-inline-start-color:var(--ok)}
+#pps .office.first{outline:2px solid var(--gold);outline-offset:-1px}
+#pps .office h4{margin:0;font-size:1.02em;line-height:1.3}
+#pps .office .tags{display:flex;flex-wrap:wrap;gap:6px}
+#pps .office .addr{font-size:.88em;color:var(--muted);margin:0;display:flex;gap:6px}
+#pps .office .dist{display:flex;gap:14px;flex-wrap:wrap;font-size:.88em;background:var(--g100);border-radius:10px;padding:8px 10px}
+#pps .office .dist b{color:var(--g700);font-size:1.15em}
+#pps .office .acts{display:flex;gap:8px;margin-top:auto;padding-top:4px}
+#pps .office .acts a{flex:1;justify-content:center;font-size:.86em;padding:9px 8px;min-height:42px}
+#pps #pps-map{height:520px;border-radius:16px;border:1px solid var(--line);z-index:1}
+#pps .leaflet-popup-content{font-family:inherit;font-size:13px;line-height:1.45}
+#pps .more{text-align:center;margin:16px 0}
+#pps details.hours{margin-top:16px}
+#pps details.hours summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:8px;align-items:center;padding:4px 0}
+#pps details.hours summary::-webkit-details-marker{display:none}
+#pps .empty{text-align:center;padding:30px;color:var(--muted)}
+
+/* ---------- FEES ---------- */
+#pps .feeCard{background:linear-gradient(145deg,#01411c,#0b6b35);color:#fff;border-radius:22px;padding:22px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+#pps.contrast .feeCard{background:#000;border:2px solid #fff}
+#pps .feeCard svg.pp{position:absolute;inset-inline-end:-18px;top:-10px;width:150px;opacity:.22;transform:rotate(12deg)}
+#pps .feeCard .k{font-size:.8em;text-transform:uppercase;letter-spacing:.08em;opacity:.8}
+#pps .feeCard .amt{font-size:2.6em;font-weight:800;line-height:1.05;margin:4px 0 10px}
+#pps .feeCard .meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+#pps .feeCard .meta div{background:rgba(255,255,255,.12);border-radius:12px;padding:10px}
+#pps .feeCard .meta small{display:block;opacity:.8;font-size:.75em}
+#pps .feeCard .meta b{font-size:1.05em}
+#pps .note{border-radius:12px;padding:11px 13px;font-size:.88em;margin:10px 0;background:var(--gold100);border:1px solid rgba(201,151,43,.35);display:flex;gap:9px}
+#pps .note.bad{background:#fbe8e6;border-color:#f0b7b2;color:#7d1f19}#pps.dark .note.bad{background:#3a1d1b;color:#ffcfc9}
+#pps .note.ok{background:var(--g100);border-color:rgba(15,122,59,.25)}
+#pps .note svg.i{margin-top:2px}
+#pps table{width:100%;border-collapse:separate;border-spacing:0;font-size:.9em}
+#pps th,#pps td{padding:10px 8px;text-align:start;border-bottom:1px solid var(--line)}
+#pps th{font-size:.78em;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+#pps tr.hl td{background:var(--gold100);font-weight:700}
+#pps .tw{overflow-x:auto}
+
+/* ---------- GUIDE ---------- */
+#pps .scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+#pps .scen button{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:14px 12px;cursor:pointer;text-align:start;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.9em;min-height:84px}
+#pps .scen button .em{font-size:1.5em;line-height:1}
+#pps .scen button[aria-pressed=true]{border-color:var(--g700);background:var(--g100);box-shadow:inset 0 0 0 1px var(--g700)}
+#pps .progress{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+#pps .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--g500),var(--gold));width:0;transition:width .3s}
+#pps ul.docs{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+#pps ul.docs label{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:var(--card)}
+#pps ul.docs input{width:20px;height:20px;margin-top:2px;accent-color:#0b6b35;flex:0 0 auto}
+#pps ul.docs label:has(input:checked){background:var(--g100);border-color:var(--g500)}
+#pps ul.docs label:has(input:checked) span{text-decoration:line-through;opacity:.7}
+#pps ol.tl{list-style:none;padding:0;margin:0;position:relative}
+#pps ol.tl li{position:relative;padding:0 0 18px 52px;counter-increment:s}
+#pps[dir=rtl] ol.tl li{padding:0 52px 18px 0}
+#pps ol.tl{counter-reset:s}
+#pps ol.tl li::before{content:counter(s);position:absolute;inset-inline-start:0;top:-2px;width:36px;height:36px;border-radius:50%;background:var(--g900);color:#fff;display:grid;place-items:center;font-weight:800;z-index:1}
+#pps.dark ol.tl li::before{background:var(--g500);color:#06210f}
+#pps ol.tl li::after{content:"";position:absolute;inset-inline-start:17px;top:34px;bottom:0;width:2px;background:var(--line)}
+#pps ol.tl li:last-child::after{display:none}
+
+/* ---------- LINKS ---------- */
+#pps .links{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+#pps .links a{display:flex;gap:12px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--card);box-shadow:var(--shadow);transition:transform .15s}
+#pps .links a:hover{transform:translateY(-2px)}
+#pps .links .ic{width:44px;height:44px;border-radius:12px;background:var(--g100);color:var(--g700);display:grid;place-items:center;flex:0 0 auto;font-size:1.2em}
+#pps .links b{display:block;margin-bottom:2px}
+#pps .links span{font-size:.85em;color:var(--muted)}
+#pps .news{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+#pps .news li{display:flex;gap:12px;padding:12px;border-radius:12px;background:var(--bg)}
+#pps .news .d{flex:0 0 auto;font-size:.72em;font-weight:800;color:var(--gold);text-transform:uppercase;width:58px;padding-top:2px}
+
+/* ---------- SETTINGS POPOVER ---------- */
+#pps .settings{position:absolute;z-index:60;top:64px;inset-inline-end:20px;width:290px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.25);display:none}
+#pps .settings.on{display:block}
+#pps .settings h4{margin:0 0 10px}
+#pps .srow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);gap:10px}
+#pps .srow:last-child{border:0}
+#pps .sw{width:48px;height:28px;border-radius:99px;background:var(--line);border:0;position:relative;cursor:pointer;flex:0 0 auto}
+#pps .sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+#pps .sw[aria-checked=true]{background:var(--g500)}
+#pps .sw[aria-checked=true]::after{inset-inline-start:23px}
+#pps .sz{display:flex;gap:4px}
+#pps .sz button{width:40px;height:36px;border:1px solid var(--line);border-radius:9px;background:var(--bg);cursor:pointer;font-weight:700}
+
+#pps footer{margin:20px 18px 0;padding:18px;border-top:1px solid var(--line);font-size:.8em;color:var(--muted);text-align:center}
+#pps .totop{position:fixed;inset-inline-end:16px;bottom:20px;z-index:30;width:46px;height:46px;border-radius:50%;border:0;background:var(--g900);color:#fff;box-shadow:var(--shadow);cursor:pointer;display:none}
+@media (max-width:700px){#pps .totop{bottom:86px}#pps .hero{min-height:0;border-radius:0 0 22px 22px}#pps .hero .in{padding:78px 16px 46px}#pps .topbar{top:12px;inset-inline:12px}#pps .brand span:last-child{font-size:.9em}#pps .iconbtn{padding:7px 11px}#pps .topbar .row{flex-wrap:nowrap}#pps .tiles{grid-template-columns:repeat(3,1fr);gap:8px}#pps .tile{min-height:0;padding:12px 10px;align-items:center;text-align:center}#pps .tile span:not(.ic){display:none}#pps .tile b{font-size:.82em}#pps .wrap{padding:0 12px}#pps .heroSearch{flex-direction:column}#pps .card{padding:16px}#pps .feeCard .amt{font-size:2.1em}}
+@media print{#pps nav.tabs,#pps .hero,#pps .tiles,#pps .no-print,#pps .totop{display:none}#pps section.panel{display:block}}
+</style>
+</head>
+<body style="margin:0">
+<div id="pps" lang="en">
+<a class="skip" href="#pps-main">Skip to content</a>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <img class="bgimg" data-photo="hero" alt="" loading="eager">
+  <div class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="26" height="26"><rect x="7" y="4" width="26" height="32" rx="4" fill="#01411c"/><circle cx="20" cy="17" r="6" fill="none" stroke="#fff" stroke-width="2"/><path d="M14 28h12" stroke="#c9972b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span data-i="brand">Passport Help PK</span></div>
+    <div class="row">
+      <button type="button" class="iconbtn" id="pps-lang" aria-label="Switch language">اردو</button>
+      <button type="button" class="iconbtn" id="pps-set" aria-expanded="false" aria-controls="pps-settings"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h10M4 17h6M18 7h2M14 17h6"/><circle cx="16" cy="7" r="2"/><circle cx="12" cy="17" r="2"/></svg><span data-i="display">Display</span></button>
+    </div>
+  </div>
+  <div class="in">
+    <h1 data-i="hero_h">Your passport, made simple.</h1>
+    <p class="lead" data-i="hero_p">Find the nearest of 221 offices, know the exact fee and waiting time, and follow clear steps — for Pakistanis at home, overseas, and visitors.</p>
+    <form class="heroSearch" id="pps-heroform" role="search">
+      <label class="skip" for="pps-heroq">Search city or office</label>
+      <input id="pps-heroq" type="search" placeholder="Type your city, e.g. Bannu, Lahore, Karachi…" autocomplete="off" list="pps-citylist">
+      <button type="submit" class="btn gold"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span data-i="search_btn">Find offices</span></button>
+      <button type="button" class="btn" id="pps-heroGeo"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg><span data-i="near_me">Near me</span></button>
+    </form>
+    <datalist id="pps-citylist"></datalist>
+  </div>
+  <span class="credit" data-credit="hero"></span>
+</header>
+
+<div class="settings" id="pps-settings" role="dialog" aria-label="Display settings">
+  <h4 data-i="display">Display</h4>
+  <div class="srow"><span data-i="textsize">Text size</span><div class="sz"><button type="button" id="pps-fminus" aria-label="Smaller text">A−</button><button type="button" id="pps-fplus" aria-label="Larger text">A+</button></div></div>
+  <div class="srow"><span data-i="dark">Dark mode</span><button type="button" class="sw" role="switch" aria-checked="false" id="pps-dark" aria-label="Dark mode"></button></div>
+  <div class="srow"><span data-i="contrast">High contrast</span><button type="button" class="sw" role="switch" aria-checked="false" id="pps-hc" aria-label="High contrast"></button></div>
+  <div class="srow"><span data-i="readable">Easy-read spacing</span><button type="button" class="sw" role="switch" aria-checked="false" id="pps-read" aria-label="Easy-read spacing"></button></div>
+</div>
+
+<div class="wrap">
+  <!-- ===== QUICK TILES ===== -->
+  <div class="tiles" role="list">
+    <button class="tile" role="listitem" data-go="find" data-geo="1"><span class="ic">📍</span><b data-i="q1">Nearest office</b><span data-i="q1s">Distance, hours & directions</span></button>
+    <button class="tile gold" role="listitem" data-go="fee"><span class="ic">💰</span><b data-i="q2">Fee & time</b><span data-i="q2s">Exact cost in 3 taps</span></button>
+    <button class="tile" role="listitem" data-go="guide" data-scen="online"><span class="ic">💻</span><b data-i="q3">Renew online</b><span data-i="q3s">No office visit needed</span></button>
+    <button class="tile" role="listitem" data-go="online"><span class="ic">🔎</span><b data-i="q4">Track passport</b><span data-i="q4s">By token or SMS 9988</span></button>
+    <button class="tile" role="listitem" data-go="guide" data-scen="lost"><span class="ic">🆘</span><b data-i="q5">Lost passport</b><span data-i="q5s">What to do now</span></button>
+    <button class="tile gold" role="listitem" data-go="foreign"><span class="ic">✈️</span><b data-i="q6">Visiting Pakistan</b><span data-i="q6s">Visa by country</span></button>
+  </div>
+  <div class="facts" aria-label="Quick facts">
+    <span><b>221</b> <span data-i="f1">offices</span></span><span><b>6</b> <span data-i="f2">open 24/7</span></span><span><b>Rs. 4,500</b> <span data-i="f3">lowest fee</span></span><span><b>2 days</b> <span data-i="f4">fastest delivery</span></span>
+  </div>
+</div>
+
+<!-- ===== TABS ===== -->
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" aria-selected="true" aria-controls="p-find" id="t-find"><svg class="i" viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-12a7 7 0 0 1 14 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-i="t_find">Offices</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-fee" id="t-fee"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span data-i="t_fee">Fees</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-guide" id="t-guide"><svg class="i" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></svg><span data-i="t_guide">Guide</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-online" id="t-online"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span data-i="t_online">Online</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-foreign" id="t-foreign"><svg class="i" viewBox="0 0 24 24"><path d="M2 16l20-8-4 10-6-3-3 4v-5l9-6"/></svg><span data-i="t_foreign">Visitors</span></button>
+</nav>
+
+<main id="pps-main" class="wrap">
+
+<!-- ===================== OFFICES ===================== -->
+<section class="panel on" id="p-find" role="tabpanel" aria-labelledby="t-find">
+  <div class="banner"><img data-photo="find" alt="" loading="lazy"><div class="in"><h2 data-i="h_find">Find a passport office</h2><p data-i="find_intro">You can apply at any passport office in Pakistan — the address on your CNIC doesn't matter.</p></div><span class="credit" data-credit="find"></span></div>
+
+  <div class="card">
+    <div class="locbox">
+      <button type="button" class="btn" id="pps-geo"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg><span data-i="use_loc">Use my location</span></button>
+      <span class="muted" data-i="or">or</span>
+      <label class="skip" for="pps-from">Pick your city</label>
+      <select id="pps-from"><option value="" data-i="pick_city">Pick your city / town…</option></select>
+    </div>
+    <p id="pps-geo-status" class="status" aria-live="polite"></p>
+
+    <div class="lbl" data-i="search">Search</div>
+    <div class="field"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="pps-q" placeholder="Office name, city or area — e.g. Garden Town"></div>
+
+    <div class="lbl" data-i="region">Region</div>
+    <div class="chips" id="pps-provchips"></div>
+
+    <div class="lbl" data-i="show_only">Show only</div>
+    <div class="chips">
+      <label class="chip"><input type="checkbox" id="pps-open"><span>🟢 <span data-i="open_now">Open now</span></span></label>
+      <label class="chip"><input type="checkbox" id="pps-late"><span>🌙 <span data-i="late">Evening / 24-hour</span></span></label>
+      <label class="chip"><input type="checkbox" id="pps-weekend"><span>📅 <span data-i="weekend">Open weekends</span></span></label>
+      <label class="chip"><input type="checkbox" id="pps-rpo"><span>🏛️ <span data-i="rpo_only">Main passport offices</span></span></label>
+      <label class="chip"><input type="checkbox" id="pps-epo"><span>⭐ <span data-i="epo_only">Executive offices</span></span></label>
+      <label class="chip"><input type="checkbox" id="pps-phone"><span>📞 <span data-i="hasphone">Has phone</span></span></label>
+    </div>
+
+    <details class="hours">
+      <summary><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i="h_hours">Office hours explained</span> <span class="tag" id="pps-clock"></span></summary>
+      <div class="tw"><table>
+        <thead><tr><th>Offices</th><th>Days</th><th>Hours (PKT)</th></tr></thead>
+        <tbody>
+          <tr><td>Most regional, executive and NADRA-counter offices</td><td>Mon – Fri</td><td>08:00 – 16:00<br><span class="muted">Break 13:00 – 13:30</span></td></tr>
+          <tr><td><b>24/7:</b> G-10/4 Islamabad · Garden Town Lahore · NADRA Mega Center Egerton Rd Lahore · Awami Markaz Karachi · NADRA Mega Centers North Nazimabad & Siemens Chowrangi Karachi</td><td>Every day</td><td>Round the clock</td></tr>
+          <tr><td><b>Morning + evening:</b> Rawalpindi · Faisalabad · Gujranwala · Multan · Bahawalpur · Peshawar · Hyderabad · Quetta</td><td>Every day</td><td>08:00 – 24:00</td></tr>
+          <tr><td>NADRA Mega Centers PECO Rd & Sanda Rd, Lahore</td><td>Every day</td><td>08:00 – 22:30</td></tr>
+          <tr><td>Collection counters (temporary, from 4 Sept 2026 for two months)</td><td>Saturday</td><td>08:00 – 16:00</td></tr>
+        </tbody></table></div>
+      <p class="muted">Closed on public holidays. Arrive early — token issuance can stop before closing time.</p>
+    </details>
+  </div>
+
+  <div class="resbar">
+    <div class="row" id="pps-stats" aria-live="polite"></div>
+    <div class="seg" role="group" aria-label="View">
+      <button type="button" aria-pressed="true" id="pps-vlist"><svg class="i" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg><span data-i="list">List</span></button>
+      <button type="button" aria-pressed="false" id="pps-vmap"><svg class="i" viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg><span data-i="map">Map</span></button>
+    </div>
+  </div>
+  <div id="pps-mapwrap" hidden><div id="pps-map" role="region" aria-label="Map of passport offices"></div></div>
+  <ul class="olist" id="pps-list"></ul>
+  <div class="more"><button type="button" class="btn ghost" id="pps-more" data-i="show_more">Show more offices</button></div>
+</section>
+
+<!-- ===================== FEES ===================== -->
+<section class="panel" id="p-fee" role="tabpanel" aria-labelledby="t-fee">
+  <div class="banner"><img data-photo="fee" alt="" loading="lazy"><div class="in"><h2 data-i="h_fee">What will it cost & how long?</h2><p data-i="fee_intro">Tap your choices — the price and expected date update instantly. Official DGI&amp;P fees.</p></div><span class="credit" data-credit="fee"></span></div>
+  <div class="grid2">
+    <div class="card">
+      <div class="lbl" style="margin-top:0" data-i="ptype">1 · Passport type</div>
+      <div class="chips" id="c-type">
+        <label class="chip"><input type="radio" name="ft" value="EPP" checked><span>🔐 e-Passport (chip)</span></label>
+        <label class="chip"><input type="radio" name="ft" value="MRP"><span>📘 Machine-readable</span></label>
+      </div>
+      <div class="lbl" data-i="speed">2 · How fast?</div>
+      <div class="chips" id="c-speed">
+        <label class="chip"><input type="radio" name="fs" value="0" checked><span>🐢 Normal · 21 days</span></label>
+        <label class="chip"><input type="radio" name="fs" value="1"><span>⚡ Urgent · 5 days</span></label>
+        <label class="chip"><input type="radio" name="fs" value="2"><span>🚀 Fast Track · 2 days</span></label>
+      </div>
+      <div class="lbl" data-i="pages">3 · Pages & validity</div>
+      <div class="chips" id="c-pages">
+        <label class="chip"><input type="radio" name="fp" value="36" checked><span>36 pages</span></label>
+        <label class="chip"><input type="radio" name="fp" value="72"><span>72 pages</span></label>
+        <label class="chip"><input type="radio" name="fp" value="100"><span>100 pages</span></label>
+      </div>
+      <div class="chips" id="c-val" style="margin-top:8px">
+        <label class="chip"><input type="radio" name="fv" value="5" checked><span>5 years</span></label>
+        <label class="chip"><input type="radio" name="fv" value="10"><span>10 years</span></label>
+      </div>
+      <div class="lbl" data-i="reason">4 · Your situation</div>
+      <div class="chips" id="c-reason">
+        <label class="chip"><input type="radio" name="fr" value="1" checked><span>New / renewal</span></label>
+        <label class="chip"><input type="radio" name="fr" value="2"><span>Lost (1st time)</span></label>
+        <label class="chip"><input type="radio" name="fr" value="4"><span>Lost (2nd time)</span></label>
+        <label class="chip"><input type="checkbox" id="fee-minor"><span>👶 Under 15</span></label>
+      </div>
+      <div class="lbl" data-i="where_apply">5 · Where will you apply?</div>
+      <div class="chips" id="c-where">
+        <label class="chip"><input type="radio" name="fw" value="rpo" checked><span>Passport office</span></label>
+        <label class="chip"><input type="radio" name="fw" value="epo"><span>Executive / NADRA</span></label>
+        <label class="chip"><input type="radio" name="fw" value="oin"><span>Online (in Pakistan)</span></label>
+        <label class="chip"><input type="radio" name="fw" value="oout"><span>Online (abroad)</span></label>
+      </div>
+    </div>
+    <div>
+      <div class="feeCard" aria-live="polite" id="fee-out"></div>
+      <div id="fee-notes"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2 data-i="h_feetable">All official fees</h2>
+    <p class="muted">Your current choice is highlighted. MRP fees effective 7 Mar 2024 · Fast Track 8 May 2024 · Source: DGI&amp;P.</p>
+    <div class="tw"><table id="fee-tables"></table></div>
+  </div>
+</section>
+
+<!-- ===================== GUIDE ===================== -->
+<section class="panel" id="p-guide" role="tabpanel" aria-labelledby="t-guide">
+  <div class="banner"><img data-photo="guide" alt="" loading="lazy"><div class="in"><h2 data-i="h_guide">Step-by-step guide</h2><p data-i="guide_intro">Pick your situation. Tick documents as you collect them — your progress is shown.</p></div><span class="credit" data-credit="guide"></span></div>
+  <div class="scen" role="group" aria-label="Situation" id="g-scen"></div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <h3>📂 <span data-i="docs">Documents to bring</span></h3>
+      <div class="row" style="justify-content:space-between"><span class="muted" id="g-prog-t"></span></div>
+      <div class="progress" aria-hidden="true"><i id="g-prog"></i></div>
+      <ul class="docs" id="g-docs"></ul>
+      <div class="row no-print" style="margin-top:14px">
+        <button type="button" class="btn ghost" id="g-speak">🔊 <span data-i="read_aloud">Read aloud</span></button>
+        <button type="button" class="btn ghost" onclick="window.print()">🖨️ <span data-i="print">Print</span></button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🧭 <span data-i="steps">Steps</span></h3>
+      <ol class="tl" id="g-steps"></ol>
+    </div>
+  </div>
+  <div class="note"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Not allowed inside passport offices: weapons, cameras and mobile phone use. Only the applicant goes in; companions wait outside. Passports are handed only to the applicant or blood relatives.</span></div>
+</section>
+
+<!-- ===================== ONLINE ===================== -->
+<section class="panel" id="p-online" role="tabpanel" aria-labelledby="t-online">
+  <div class="banner"><img data-photo="online" alt="" loading="lazy"><div class="in"><h2 data-i="h_online">Do it online</h2><p data-i="online_intro">Renew, track and get help without standing in a queue.</p></div><span class="credit" data-credit="online"></span></div>
+  <div class="links">
+    <a href="https://onlinemrp.dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">💻</span><div><b>Renew passport online</b><span>Inland & overseas Pakistanis with an existing passport. Pay by card.</span></div></a>
+    <a href="https://tracking.dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">🔎</span><div><b>Track your passport</b><span>Enter your 11-digit token — or SMS the token to 9988.</span></div></a>
+    <a href="https://dgip.gov.pk/eServices/epassport.php" target="_blank" rel="noopener"><span class="ic">🔐</span><div><b>About the e-Passport</b><span>Chip passport, available at every office since Aug 2023.</span></div></a>
+    <a href="https://visa.nadra.gov.pk/" target="_blank" rel="noopener"><span class="ic">🛂</span><div><b>Pakistan e-Visa</b><span>Official portal for foreign visitors.</span></div></a>
+    <a href="https://citizenportal.gov.pk/" target="_blank" rel="noopener"><span class="ic">📣</span><div><b>File a complaint</b><span>Pakistan Citizen Portal — delays or misconduct.</span></div></a>
+    <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="noopener"><span class="ic">🏢</span><div><b>Embassies & consulates</b><span>Pakistan missions abroad.</span></div></a>
+    <a href="tel:051111344777"><span class="ic">📞</span><div><b>Helpline 051-111-344-777</b><span>Mon–Fri 08:30–16:30 · +92-51-111-344-777</span></div></a>
+    <a href="https://dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">🏛️</span><div><b>DGI&amp;P official site</b><span>Notices, policy and fee charts.</span></div></a>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h2>🗞️ <span data-i="h_news">What's new in 2026</span></h2>
+    <ul class="news">
+      <li><span class="d">Sept 2026</span><div><b>Saturday collection</b><br><span class="muted">Collection counters open Saturdays 08:00–16:00 for two months. Uncollected passports are destroyed after six months.</span></div></li>
+      <li><span class="d">July 2026</span><div><b>Home delivery with TCS</b><br><span class="muted">"Passport Aapki Dehleez Par" delivers passports to your registered address.</span></div></li>
+      <li><span class="d">June 2026</span><div><b>Moving fully to e-passports</b><br><span class="muted">Machine-readable passports are being phased out — check options before paying.</span></div></li>
+      <li><span class="d">2026</span><div><b>Cashless payments</b><br><span class="muted">Cashless fee payment is being introduced at passport offices.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== VISITORS ===================== -->
+<section class="panel" id="p-foreign" role="tabpanel" aria-labelledby="t-foreign">
+  <div class="banner"><img data-photo="foreign" alt="" loading="lazy"><div class="in"><h2 data-i="h_foreign">Visitors & overseas Pakistanis</h2><p data-i="foreign_intro">Choose your country and who you are — we'll show exactly what applies.</p></div><span class="credit" data-credit="foreign"></span></div>
+  <div class="card">
+    <div class="lbl" style="margin-top:0" data-i="your_country">Your country</div>
+    <div class="field"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" id="fx-country" list="pps-countrylist" placeholder="Start typing… e.g. United Kingdom" autocomplete="off"></div>
+    <datalist id="pps-countrylist"></datalist>
+    <div class="lbl" data-i="you_are">You are…</div>
+    <div class="chips" id="fx-who">
+      <label class="chip"><input type="radio" name="fw2" value="foreign" checked><span>🌍 Foreign visitor</span></label>
+      <label class="chip"><input type="radio" name="fw2" value="origin"><span>🤝 Pakistani-origin / spouse</span></label>
+      <label class="chip"><input type="radio" name="fw2" value="overseas"><span>🇵🇰 Pakistani living there</span></label>
+      <label class="chip"><input type="radio" name="fw2" value="dual"><span>🛂 Dual national</span></label>
+    </div>
+    <div id="fx-out" aria-live="polite" style="margin-top:14px"></div>
+  </div>
+  <div class="card">
+    <h3>💡 Good to know</h3>
+    <ul>
+      <li>Pakistani passports are only for Pakistani citizens (including dual nationals). Visitors use a <b>visa</b>, or a <b>POC / NICOP</b> card if eligible — both remove the need for a visa.</li>
+      <li>The free "Visa Prior to Arrival" ended on 1 Jan 2026. Online visas now take about 7–10 business days and the fee depends on nationality.</li>
+      <li>Your passport should be valid for at least 6 months beyond your stay.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Compiled from official DGI&amp;P sources (dgip.gov.pk), October 2026. Fees, timings and rules change — always confirm on <a href="https://dgip.gov.pk" target="_blank" rel="noopener">dgip.gov.pk</a> before paying or travelling. "Approx. pin" offices use town-centre locations. Independent guide — not a government website.</p>
+  <p id="pps-credits"></p>
+</footer>
+<button type="button" class="totop" id="pps-top" aria-label="Back to top">↑</button>
+</div>
+
+<script>
+/* ===== OFFICE DATA (source: dgip.gov.pk/contactus/offices.php, July 2026) =====
+   Row: [name, type, province, city, address, phone, lat, lng, hoursCode, approxCoords]
+   type: RPO | EPO | PPC | SPC (special counter) | HQ | OPF
+   hoursCode: S = Mon–Fri 08:00–16:00 | A = 24/7 | E = daily 08:00–24:00 | L = daily 08:00–22:30
+   approxCoords: 1 = coordinates are town-centre approximations (no pin on DGIP site)          */
+var PPS_OFFICES = [
+// ---------- Islamabad Capital Territory ----------
+["DGIP Headquarters","HQ","Islamabad","Islamabad","G-8/1 Mauve Area, Islamabad","051-111-344-777",33.6865482,73.0476461,"S",0],
+["RPO Islamabad G-10/4 (incl. Senior Citizen Branch)","RPO","Islamabad","Islamabad","I&T Centre, Plot 18, Sector G-10/4, Islamabad","051-9239308",33.6755,73.0257778,"A",0],
+["EPO Islamabad (Blue Area)","EPO","Islamabad","Islamabad","Plot 19-A, Ground Floor, Pak Plaza, Fazal-e-Haq Road, Blue Area","",33.7221897,73.0814785,"S",0],
+["Passport Office for Overseas Pakistanis (OPF)","OPF","Islamabad","Islamabad","OPF Head Office Building, 2 Shahrah-e-Jamhuriat, G-5","",33.7223062,73.0971468,"S",0],
+["National Assembly Counter","SPC","Islamabad","Islamabad","Parliament House, Constitution Ave, Red Zone","051-9103239",33.7301478,73.0969393,"S",0],
+["Pakistan Asaan Khidmat Center","PPC","Islamabad","Islamabad","Rohtas Rd, G-9/1, Islamabad","051-9265375",33.688,73.030,"S",1],
+// ---------- Punjab ----------
+["RPO Lahore-I (Garden Town)","RPO","Punjab","Lahore","4-A Sher Shah Block, behind Barkat Market, New Garden Town","042-9201836",31.496455,74.319796,"A",0],
+["RPO Lahore-II (Shalimar)","RPO","Punjab","Lahore","Jalal Park, near Quaid-e-Azam Interchange, GT Road, Shalimar","",31.5902883,74.4383916,"S",0],
+["RPO Lahore-III (Raiwind)","RPO","Punjab","Lahore","14 km Main Raiwind Road, Araiyan Morr","",31.3467316,74.2392838,"S",0],
+["EPO Lahore (DHA)","EPO","Punjab","Lahore","27-XX Phase 3, DHA, Khayaban-e-Iqbal Road","042-99264396",31.4710231,74.3642581,"S",0],
+["RPO Lahore (Shahdara)","RPO","Punjab","Lahore","Saeed Park, near Ravi Toll Plaza, Shahdara","042-37921900",31.6061317,74.2515757,"S",0],
+["Lahore High Court Bar Counter","SPC","Punjab","Lahore","Lahore High Court Bar Association","",31.5636,74.3157,"S",1],
+["LCCI Passport Counter","SPC","Punjab","Lahore","Lahore Chamber of Commerce & Industry, 11-A Shara-e-Aiwan-e-Sanat-o-Tijarat","042-99264396",31.5477363,74.3320779,"S",0],
+["Punjab Assembly Counter","SPC","Punjab","Lahore","Punjab Assembly Building, Shahra-e-Quaid-e-Azam","042-99200335",31.5614675,74.3260406,"S",0],
+["NADRA Mega Center Egerton Road","PPC","Punjab","Lahore","9-Egerton Road, near Shimla Pahari","042-99205150",31.5621326,74.3345696,"A",0],
+["NADRA Mega Center PECO Road","PPC","Punjab","Lahore","Abu Bakar Plaza, Block-10, Sector B-1, Township","0302-8444273",31.4659035,74.3103433,"L",0],
+["NADRA Mega Center Sanda Road","PPC","Punjab","Lahore","15-A Sanda Road, near M.A.O College","042-9933346",31.5616189,74.2990204,"L",0],
+["RPO Rawalpindi","RPO","Punjab","Rawalpindi","Opp. Station High School No.3, Gunjmandi More, Railway Workshop Rd","051-9237253",33.6168636,73.0347123,"E",0],
+["EPO Rawalpindi","EPO","Punjab","Rawalpindi","Near Rehmanabad, Murree Road","051-111-786-100",33.6364802,73.0752393,"S",0],
+["Rawalpindi High Court Bar Counter","SPC","Punjab","Rawalpindi","LHC Rawalpindi Bench Bar Association","051-9277044",33.5552632,73.0999794,"S",0],
+["RPO Kahuta","RPO","Punjab","Kahuta","Near TMA Office, Kallar Chowk, Rawalpindi Road","",33.5935064,73.3782292,"S",0],
+["RPO Gujar Khan","RPO","Punjab","Gujar Khan","NBP Plaza, near Railway underpass","",33.2571486,73.3104419,"S",0],
+["PPC Taxila","PPC","Punjab","Taxila","NRC, GT Road N5, Wahdat Colony","051-111-789-100",33.7235,72.8009,"S",1],
+["RPO Jhelum","RPO","Punjab","Jhelum","Al-Madina Center, Old GT Road, near Civil Hospital","",32.933,73.726,"S",1],
+["RPO Pind Dadan Khan","RPO","Punjab","Pind Dadan Khan","Mandhar Plaza, near AC Office, Main Jhelum Road","",32.592617,73.0519048,"S",0],
+["RPO Attock","RPO","Punjab","Attock","Hunt Hall near Session Court Chowk, Civil Lines","057-9316211",33.7681574,72.3642451,"S",0],
+["PPC Pindi Gheb","PPC","Punjab","Pindi Gheb","NRC, WAPDA Colony, Pindi Gheb","057-2351297",33.2463477,72.2701917,"S",0],
+["RPO Chakwal","RPO","Punjab","Chakwal","Flat 10-11, Zila Council Plaza, Tehsil Chowk","",32.9404199,72.8591904,"S",0],
+["RPO Gujrat","RPO","Punjab","Gujrat","Near Deona Mandi, G.T. Road","053-3706270",32.5808875,74.0584693,"S",0],
+["EPO Gujrat","EPO","Punjab","Gujrat","Near Services Industries Morr, opp. Falak Marriage Hall","053-3706270",32.5881357,74.0524515,"S",0],
+["RPO Mandi Bahauddin","RPO","Punjab","Mandi Bahauddin","Opp. District Complex, Phalia Road","",32.5861,73.4917,"S",1],
+["PPC Malikwal","PPC","Punjab","Malikwal","NRC, Islampura Rd, Malakwal","054-6582321",32.548356,73.2057525,"S",0],
+["RPO Gujranwala","RPO","Punjab","Gujranwala","Bukhari Road, Civil Lines, near Railway Station","",32.1748844,74.1881143,"E",0],
+["EPO Gujranwala","EPO","Punjab","Gujranwala","Near FBR Regional Office, G.T Road","",32.2232196,74.1709777,"S",0],
+["PPC Kamoke","PPC","Punjab","Kamoke","NADRA Office Kamoke","",31.9971103,74.2192077,"S",0],
+["PPC Nowshera Virkan","PPC","Punjab","Nowshera Virkan","NRC, Karyal Rd","051-111-786-100",31.9630851,73.9738616,"S",0],
+["RPO Sialkot","RPO","Punjab","Sialkot","Zeeshan Housing Complex, Kashmir Road","052-3550096",32.5020127,74.5000727,"S",0],
+["EPO Sialkot","EPO","Punjab","Sialkot","Haji Pura Rd, opp. Gulzar Book Depot, Muslim Colony","052-3240140",32.4818005,74.527981,"S",0],
+["RPO Kubay Chak (Sialkot)","RPO","Punjab","Sialkot","Kubay Chak, Sialkot","052-4350224",32.5898591,74.5614014,"S",0],
+["PPC Daska","PPC","Punjab","Daska","NRC, Habibpura, Daska","",32.3350938,74.3423001,"S",0],
+["PPC Pasrur","PPC","Punjab","Pasrur","NRC, Pasrur","052-6440296",32.2587373,74.6578833,"S",0],
+["PPC Sambrial","PPC","Punjab","Sambrial","NRC, Sialkot–Wazirabad Road, Azam Town","051-111-786-100",32.4783506,74.3477323,"S",0],
+["RPO Narowal","RPO","Punjab","Narowal","Old District Hospital, near Old Kacheri","",32.095474,74.8680456,"S",0],
+["RPO Faisalabad","RPO","Punjab","Faisalabad","Jail Road, opp. Allied Hospital, adjacent to WASA","041-9210129",31.4495242,73.0834461,"E",0],
+["EPO Faisalabad","EPO","Punjab","Faisalabad","Fazal Plaza behind Kohinoor Plaza, 1 Jaranwala Road","041-9330415",31.4129729,73.1154243,"S",0],
+["Faisalabad District Bar Counter","SPC","Punjab","Faisalabad","District Bar Association, District Courts","041-9200915",31.4221018,73.0819516,"S",0],
+["RPO Jaranwala","RPO","Punjab","Jaranwala","238 Nankana Sahib Rd, near Sabzi Mandi","041-4318891",31.3403505,73.4300384,"S",0],
+["PPC Painsra","PPC","Punjab","Painsra","NRC, Jhang–Faisalabad Rd","",31.3459356,72.8265074,"S",0],
+["PPC Samundri","PPC","Punjab","Samundri","NRC, Housing Colony No 1 Road","041-9240071",31.0610704,72.9647922,"S",0],
+["PPC Tandlianwala","PPC","Punjab","Tandlianwala","NRC, Okara Road, Hussainabad","041-3442546",31.0269478,73.1265765,"S",0],
+["RPO Sargodha","RPO","Punjab","Sargodha","Masood Zaidi Road, opp. LOGIX College","048-9230667",32.0823725,72.6784743,"S",0],
+["EPO Sargodha","EPO","Punjab","Sargodha","M.M Alam Road, near Sher Zaman Town, Toheed Plaza","",32.0606958,72.6858779,"S",0],
+["RPO Bhalwal","RPO","Punjab","Bhalwal","Sargodha–Gujrat Road, near Bismillah CNG","",32.2770877,72.9090131,"S",0],
+["RPO Sahiwal","RPO","Punjab","Sahiwal","520/C Jail Road","",30.662018,73.093844,"S",0],
+["EPO Sahiwal","EPO","Punjab","Sahiwal","Gulistan Road, near Ali Masjid","040-9200565",30.6681823,73.101361,"S",0],
+["RPO Jhang","RPO","Punjab","Jhang","Canal Road, Ghaziabad, Jhang Saddar","",31.268236,72.3348858,"S",0],
+["RPO Hafizabad","RPO","Punjab","Hafizabad","Jami House, Mohalla Gari Awan, Sarkari Parao","0547-5228588",32.0698824,73.6925351,"S",0],
+["RPO Okara","RPO","Punjab","Okara","Depalpur Road, Madina Block, near Mahi Marriage Hall","",30.8000143,73.4701388,"S",0],
+["PPC Depalpur","PPC","Punjab","Depalpur","NRC, Basirpur Rd","044-4544543",30.6696975,73.6557888,"S",0],
+["RPO Kasur","RPO","Punjab","Kasur","58-A Club Road, Abdul Shakoor Khan Colony","",31.113144,74.4636115,"S",0],
+["PPC Pattoki","PPC","Punjab","Pattoki","NRC, Pattoki","",31.0104877,73.8384948,"S",0],
+["PPC Chunian","PPC","Punjab","Chunian","NRC, Chunian","",30.9648846,73.9733056,"S",0],
+["RPO Chiniot","RPO","Punjab","Chiniot","House 11/1, W-Block, Satellite Town","",31.7076594,72.990796,"S",0],
+["RPO Sheikhupura","RPO","Punjab","Sheikhupura","Shami Road","",31.711831,73.965382,"S",0],
+["PPC Sharaqpur","PPC","Punjab","Sharaqpur","NRC, Mohalla Madina Park","",31.4630769,74.1025616,"S",0],
+["PPC Safdarabad","PPC","Punjab","Safdarabad","NRC, Safdarabad","056-3862797",31.728166,73.5743562,"S",0],
+["PPC Ferozewala","PPC","Punjab","Ferozewala","NRC, GT Rd, Rachna Town","",31.6561371,74.2820062,"S",0],
+["RPO Nankana Sahib","RPO","Punjab","Nankana Sahib","Main Magtanwal Road near PTCL Exchange","",31.4515811,73.7139564,"S",0],
+["PPC Sangla Hill","PPC","Punjab","Sangla Hill","NRC, Shahkot–Sangla Hill Rd","",31.7127752,73.3791437,"S",0],
+["RPO Khushab","RPO","Punjab","Khushab","Near Municipal Committee, Civil Lines","",32.2882536,72.275073,"S",0],
+["RPO Toba Tek Singh","RPO","Punjab","Toba Tek Singh","Near Zila Council & NADRA Office","",30.9609999,72.4883636,"S",0],
+["RPO Multan","RPO","Punjab","Multan","Near Madni Chowk, Passport Office Road, New Multan Colony","061-9220088",30.2026735,71.5184403,"E",0],
+["EPO Multan","EPO","Punjab","Multan","3rd Floor, ChenOne Tower, Abdali Road","061-9200069",30.1936779,71.4515501,"S",0],
+["Multan High Court Bar Counter","SPC","Punjab","Multan","Near High Court Bar","061-9201221",30.1939449,71.4414472,"S",0],
+["RPO Jalalpur Pirwala","RPO","Punjab","Jalalpur Pirwala","Shuja Abad Road, opp. Govt. Special Education School","061-4210066",29.5196165,71.2229557,"S",0],
+["RPO Qadirpur Rawan","RPO","Punjab","Qadirpur Rawan","Near NBP, Main Khanewal Road","",30.2931158,71.6691204,"S",0],
+["RPO Khanewal","RPO","Punjab","Khanewal","House 20-A, Civil Lines","",30.2973169,71.9296874,"S",0],
+["RPO Jahanian","RPO","Punjab","Jahanian","Near Khanewal Road Bypass","",30.048373,71.8243719,"S",0],
+["PPC Kabirwala","PPC","Punjab","Kabirwala","NRC, Bypass","065-2411168",30.4001853,71.8713515,"S",0],
+["RPO Bahawalpur","RPO","Punjab","Bahawalpur","Building 9-A, Model Town A","062-9255362",29.3908325,71.6594465,"E",0],
+["RPO Dera Ghazi Khan","RPO","Punjab","Dera Ghazi Khan","Near D.G Khan Medical College","064-9260308",30.0401644,70.6339074,"S",0],
+["PPC Jampur","PPC","Punjab","Jampur","NRC, Jampur","",29.6637078,70.6003362,"S",0],
+["RPO Taunsa Sharif","RPO","Punjab","Taunsa Sharif","Near Post Office, Kachehri Road","",30.7022656,70.6513272,"S",0],
+["RPO Rahim Yar Khan","RPO","Punjab","Rahim Yar Khan","Canal Road, Allama Iqbal Town","068-9230433",28.4198698,70.3306894,"S",0],
+["PPC Khanpur","PPC","Punjab","Khanpur","NRC, Zahir Pir Rd","068-5576546",28.6578855,70.6409171,"S",0],
+["RPO Muzaffargarh","RPO","Punjab","Muzaffargarh","Talairy Bypass, Multan Road","",30.0695533,71.2058732,"S",0],
+["PPC Khangarh","PPC","Punjab","Khangarh","NRC, Khangarh","051-111-786-100",29.9125059,71.1591232,"S",0],
+["RPO Kot Addu","RPO","Punjab","Kot Addu","Near Irrigation Colony, Layyah–Kot Addu Road","",30.501571,70.9559791,"S",0],
+["RPO Bahawalnagar","RPO","Punjab","Bahawalnagar","House 8, East Jail Road, Hussainabad","",29.9971305,73.2689039,"S",0],
+["RPO Vehari","RPO","Punjab","Vehari","House 128, Sharki Colony, near Cotton Research Center","",30.034875,72.359898,"S",0],
+["PPC Burewala","PPC","Punjab","Burewala","NRC, Burewala","",30.1685434,72.6891912,"S",0],
+["PPC Mailsi","PPC","Punjab","Mailsi","NRC, Karampur Rd, Fida Town","",29.8,72.175,"S",1],
+["RPO Mianwali","RPO","Punjab","Mianwali","Near Jahaz Chowk, Jail Road","",32.5870291,71.5534937,"S",0],
+["RPO Layyah","RPO","Punjab","Layyah","House 08, Block I, Canal View Colony, College Road","",30.9852376,70.9564779,"S",0],
+["RPO Bhakkar","RPO","Punjab","Bhakkar","Near Piala Chowk, Mandi Town","",31.616831,71.0675328,"S",0],
+["RPO Pakpattan","RPO","Punjab","Pakpattan","5-S Green Town","",30.3613332,73.3776384,"S",0],
+["RPO Rajanpur","RPO","Punjab","Rajanpur","Opp. Income Tax Office, Lari Adda","",29.1033296,70.3394458,"S",0],
+["RPO Lodhran","RPO","Punjab","Lodhran","Hawayli Arraiyan Road, Ward 5","",29.5407769,71.6444521,"S",0],
+// ---------- Khyber Pakhtunkhwa ----------
+["RPO Peshawar","RPO","Khyber Pakhtunkhwa","Peshawar","Phase-5, near North West Hospital, Hayatabad","091-9217616",33.9941479,71.4366899,"E",0],
+["EPO Peshawar","EPO","Khyber Pakhtunkhwa","Peshawar","NADRA Mega Centre, Tambowanu Mor","",34.0089277,71.5151,"S",0],
+["KP Assembly Counter","SPC","Khyber Pakhtunkhwa","Peshawar","Khyber Road, Cantt","091-9210489",34.0137732,71.5654607,"S",0],
+["RPO Kohat","RPO","Khyber Pakhtunkhwa","Kohat","DHQ Hospital Road, Gate 2, KDA Township","0922-9260342",33.6126422,71.4671149,"S",0],
+["RPO Dera Ismail Khan","RPO","Khyber Pakhtunkhwa","Dera Ismail Khan","Near Agriculture Research Center, Main Bannu Road","0966-9280219",31.8502457,70.9095068,"S",0],
+["RPO Swat (Saidu Sharif)","RPO","Khyber Pakhtunkhwa","Swat","Kanju Township","0946-818205",34.8322385,72.3546226,"S",0],
+["PPC Khwazakhela","PPC","Khyber Pakhtunkhwa","Khwazakhela","Matta & Khwazakhela Rd","",34.9321748,72.4656402,"S",0],
+["RPO Abbottabad","RPO","Khyber Pakhtunkhwa","Abbottabad","House 878, near PC Hotel, Mansehra Road","0992-385672",34.1811184,73.2307719,"S",0],
+["RPO Bannu","RPO","Khyber Pakhtunkhwa","Bannu","Miranshah Road, Bannu Cantt","0928-9270112",32.9924673,70.6019318,"S",0],
+["RPO Mardan","RPO","Khyber Pakhtunkhwa","Mardan","Near College Chowk, opp. DIG House","",34.1934882,72.0336633,"S",0],
+["PPC Shergarh","PPC","Khyber Pakhtunkhwa","Shergarh","NRC, Malakand–Mardan Road","",34.3842524,71.8977229,"S",0],
+["RPO Timergara (Lower Dir)","RPO","Khyber Pakhtunkhwa","Timergara","Near Shaheed Chowk, Bypass Road","",34.8294474,71.8345802,"S",0],
+["PPC Chakdara","PPC","Khyber Pakhtunkhwa","Chakdara","Chakdara, Lower Dir","",34.6637138,72.0379463,"S",0],
+["RPO Buner (Daggar)","RPO","Khyber Pakhtunkhwa","Buner","Near Sultana General Hospital","",34.513,72.487,"S",1],
+["RPO Hangu","RPO","Khyber Pakhtunkhwa","Hangu","Mohallah Farooq Abad, Kohat Road","",33.5367152,71.0686114,"S",0],
+["RPO Battagram","RPO","Khyber Pakhtunkhwa","Battagram","Adjacent to NADRA Office, opp. Attock Petrol Pump","",34.6796907,73.0202748,"S",0],
+["RPO Haripur","RPO","Khyber Pakhtunkhwa","Haripur","Awan Colony, Tehsil Road","0995-612241",33.9934905,72.9521296,"S",0],
+["RPO Batkhela (Malakand)","RPO","Khyber Pakhtunkhwa","Batkhela","Near District Courts","",34.6055056,71.9535347,"S",0],
+["RPO Upper Dir","RPO","Khyber Pakhtunkhwa","Upper Dir","College Colony, near Govt. Degree College","",35.1973064,71.8741699,"S",0],
+["PPC Sheringal","PPC","Khyber Pakhtunkhwa","Sheringal","NRC, Chitral–Dir Rd","",35.2002422,71.8742998,"S",0],
+["RPO Tank","RPO","Khyber Pakhtunkhwa","Tank","EllahiAbad, Tank–D.I. Khan Road","",32.2058878,70.3926414,"S",0],
+["RPO Chitral","RPO","Khyber Pakhtunkhwa","Chitral","Galogh, Mohallah Danin","0943-413690",35.8640621,71.7921721,"S",0],
+["RPO Alpuri (Shangla)","RPO","Khyber Pakhtunkhwa","Alpuri","College Road, opp. UBL & District Court","",34.9190477,72.6315195,"S",0],
+["RPO Swabi","RPO","Khyber Pakhtunkhwa","Swabi","Hajji Mastan Khan Plaza, Jehangira Road","",34.1254193,72.4730861,"S",0],
+["RPO Charsadda","RPO","Khyber Pakhtunkhwa","Charsadda","Tangi Road","",34.1576571,71.7510172,"S",0],
+["RPO Nowshera","RPO","Khyber Pakhtunkhwa","Nowshera","Al-Jamil Plaza, G.T. Road","",34.0050611,71.9789973,"S",0],
+["RPO Karak","RPO","Khyber Pakhtunkhwa","Karak","Near NBP, Saddam Chowk","",33.1160435,71.1000099,"S",0],
+["RPO Mansehra","RPO","Khyber Pakhtunkhwa","Mansehra","Opp. Income Tax Office, Lari Adda","",34.3522232,73.2013437,"S",0],
+["RPO Lakki Marwat","RPO","Khyber Pakhtunkhwa","Lakki Marwat","Nazim Town, Main Adda","",32.608,70.911,"S",1],
+["RPO Torghar","RPO","Khyber Pakhtunkhwa","Torghar","Torghar","",34.65,72.88,"S",1],
+["RPO Dassu (Kohistan)","RPO","Khyber Pakhtunkhwa","Dassu","N-35, Komila","",35.2590401,73.2173843,"S",0],
+["PPC Pattan (Lower Kohistan)","PPC","Khyber Pakhtunkhwa","Pattan","NRC, Airport Rd","",35.1067411,73.0032133,"S",0],
+["RPO Ghalanai (Mohmand)","RPO","Khyber Pakhtunkhwa","Ghalanai","Ghalanai, Mohmand","",34.33,71.41,"S",1],
+["RPO Parachinar (Kurram)","RPO","Khyber Pakhtunkhwa","Parachinar","Parachinar","",33.899,70.1,"S",1],
+["RPO Sadda (Lower Kurram)","RPO","Khyber Pakhtunkhwa","Sadda","Sadda","",33.706,70.327,"S",1],
+["RPO Wana (South Waziristan)","RPO","Khyber Pakhtunkhwa","Wana","Wana","",32.3,69.58,"S",1],
+["RPO Orakzai","RPO","Khyber Pakhtunkhwa","Orakzai","Orakzai","",33.62,70.93,"S",1],
+["RPO Khar (Bajaur)","RPO","Khyber Pakhtunkhwa","Khar","Khar, Bajaur","",34.73,71.52,"S",1],
+["RPO Miranshah (North Waziristan)","RPO","Khyber Pakhtunkhwa","Miranshah","Miranshah","",32.985,70.07,"S",1],
+// ---------- Sindh ----------
+["RPO Karachi-I (Saddar)","RPO","Sindh","Karachi","Shahrah-e-Iraq, adjacent to National Bank, Saddar","021-99203092",24.8577249,67.0235068,"S",0],
+["RPO Karachi-V (Awami Markaz)","RPO","Sindh","Karachi","1st Floor, EOBI House, Shahrah-e-Faisal","021-99203091",24.8701044,67.0903683,"A",0],
+["EPO Karachi (Clifton)","EPO","Sindh","Karachi","Commercial Plot 2/5, Clifton Block 3, behind South City Hospital","",24.8100192,67.0198609,"S",0],
+["Sindh Assembly Counter","SPC","Sindh","Karachi","Sindh Assembly Building, Court Road, Saddar","021-9212000",24.8544294,67.0201518,"S",0],
+["RPO Malir","RPO","Sindh","Karachi","Near Nehal Hospital, Kala Board, Malir","",24.884406,67.1827084,"S",0],
+["Passport Office Karsaz","SPC","Sindh","Karachi","Karsaz, Faisal Cantonment","",24.8803274,67.0995135,"S",0],
+["NADRA Mega Center North Nazimabad","PPC","Sindh","Karachi","Euro Twin Tower, Block L, North Nazimabad","021-90393174",24.9462936,67.0513509,"A",0],
+["NADRA Mega Center Siemens Chowrangi","PPC","Sindh","Karachi","Plot B/64-A, S.I.T.E","021-8503479",24.9059427,67.0054365,"A",0],
+["PPC Malir (Rafi Mall)","PPC","Sindh","Karachi","Rafi Mall, N5, Malir","",24.8714026,67.197679,"S",0],
+["RPO Hyderabad","RPO","Sindh","Hyderabad","Plot S-3, SITE Area, Passport Office Road","022-3883864",25.3626765,68.3891978,"E",0],
+["RPO Sukkur","RPO","Sindh","Sukkur","House C-628, Mules Road, near Local Board","071-5625453",27.6997576,68.874106,"S",0],
+["RPO Larkana","RPO","Sindh","Larkana","Central Jail Road, SITE Area","074-4058013",27.5747512,68.2038143,"S",0],
+["RPO Shaheed Benazirabad","RPO","Sindh","Nawabshah","1-A Sachal Sarmast Colony","",26.2490279,68.3903207,"S",0],
+["RPO Khairpur","RPO","Sindh","Khairpur","NBP Kachehri Road, near TCS","",27.5344753,68.7596763,"S",0],
+["RPO Dadu","RPO","Sindh","Dadu","Qureshi Street, near Sindh Medical Centre, Jagatabad","",26.7312119,67.7805406,"S",0],
+["RPO Jacobabad","RPO","Sindh","Jacobabad","Near Grid Station, Sahafi Colony, Stadium Road","",28.2719873,68.4464382,"S",0],
+["RPO Sanghar","RPO","Sindh","Sanghar","Near Police Line Gate 1, Mirpurkhas Road","",26.0398471,68.9507354,"S",0],
+["RPO Badin","RPO","Sindh","Badin","Plot 57-58, Main Hyderabad Road","",24.6707498,68.8312631,"S",0],
+["RPO Thatta","RPO","Sindh","Thatta","Near DC Office, Makli","",24.7413538,67.891865,"S",0],
+["RPO Mirpur Khas","RPO","Sindh","Mirpur Khas","B-1 Railway Co-op Society, Hyderabad Road","",25.522767,68.991946,"S",0],
+["RPO Jamshoro","RPO","Sindh","Jamshoro","A-202, Sindh University Employees Housing Society","",25.4085246,68.2702952,"S",0],
+["RPO Naushahro Feroze","RPO","Sindh","Naushahro Feroze","Sindh Colony, MA Jinnah Road","",26.8364846,68.1168704,"S",0],
+["RPO Qambar Shahdadkot","RPO","Sindh","Qambar","Opp. Session Court, Main Qambar Road","",27.5746975,67.9968732,"S",0],
+["RPO Matiari","RPO","Sindh","Matiari","Main Bypass Road","",25.5958927,68.4400734,"S",0],
+["RPO Tando Muhammad Khan","RPO","Sindh","Tando Muhammad Khan","Opp. Indus Medical College","",25.1442179,68.530593,"S",0],
+["RPO Kashmore (Kandhkot)","RPO","Sindh","Kandhkot","Mohallah Mirzapur, IBA University Road","",28.2469255,69.1825671,"S",0],
+["RPO Shikarpur","RPO","Sindh","Shikarpur","HMB Tower, Hathidar Road","",27.9547689,68.6378494,"S",0],
+["RPO Tando Allahyar","RPO","Sindh","Tando Allahyar","Gulshan-e-Mehran Colony, Nasarpur Road","",25.459815,68.7097651,"S",0],
+["RPO Ghotki (Mirpur Mathelo)","RPO","Sindh","Mirpur Mathelo","Near DC Office, N-5","",28.0297508,69.5822067,"S",0],
+["RPO Umerkot","RPO","Sindh","Umerkot","Near Golimar Ground","",25.3612141,69.740523,"S",0],
+["PPC Umerkot","PPC","Sindh","Umerkot","NRC District Office, near Eidgah Ground","",25.3678828,69.735202,"S",0],
+["RPO Tharparkar (Mithi)","RPO","Sindh","Mithi","Near Airport Office, Naukot–Mithi Road","",24.7421659,69.7922148,"S",0],
+["RPO Sujawal","RPO","Sindh","Sujawal","Near BISP Office, Boys High School Road","",24.6048442,68.0752859,"S",0],
+// ---------- Balochistan ----------
+["RPO Quetta","RPO","Balochistan","Quetta","Arbab Barkat Ali Road, near Railway Football Ground","081-9201762",30.1944869,66.9990755,"E",0],
+["EPO Quetta","EPO","Balochistan","Quetta","Plot 30, Main Commercial Area, Jinnah Town","",30.2184513,66.9909164,"S",0],
+["RPO Zhob","RPO","Balochistan","Zhob","House A/78, near WAPDA Office, Cantonment","0822-412696",31.3306945,69.4505933,"S",0],
+["RPO Gwadar","RPO","Balochistan","Gwadar","TTC Colony Ward","",25.1500884,62.3248289,"S",0],
+["RPO Kech (Turbat)","RPO","Balochistan","Turbat","Makran Plaza, in front of NADRA Office","",26.0034354,63.0680416,"S",0],
+["RPO Khuzdar","RPO","Balochistan","Khuzdar","Divisional Secretariat, Commissioner Office","",27.8052436,66.6012994,"S",0],
+["RPO Dera Allah Yar (Jaffarabad)","RPO","Balochistan","Dera Allah Yar","House 353, Irrigation Colony, Quetta Road","",28.3790206,68.3486563,"S",0],
+["RPO Qilla Saifullah","RPO","Balochistan","Qilla Saifullah","Near Deputy Commissioner Office","",30.6963875,68.3565383,"S",0],
+["RPO Sibi","RPO","Balochistan","Sibi","1883/B Ziarat Colony, Jail Road","",29.5532055,67.8808243,"S",0],
+["RPO Kharan","RPO","Balochistan","Kharan","Girls College Road, near DC Office","",28.5914699,65.4228625,"S",0],
+["RPO Qilla Abdullah (Chaman)","RPO","Balochistan","Chaman","Opp. DC Office, Mall Road","",30.921,66.451,"S",1],
+["RPO Pishin","RPO","Balochistan","Pishin","Salahuddin Plaza, Band Road","",30.5784111,66.9918123,"S",0],
+["RPO Loralai","RPO","Balochistan","Loralai","Pathan Kot Road, near Jirga Hall","",30.3262491,68.5515441,"S",0],
+["RPO Ziarat","RPO","Balochistan","Ziarat","Behind Shalimar Hotel, Baldia Road","",30.3810146,67.7240271,"S",0],
+["RPO Noshki","RPO","Balochistan","Noshki","Main Market Road, opp. PTCL Exchange","",29.555,66.02,"S",1],
+["RPO Panjgur","RPO","Balochistan","Panjgur","Municipal Building, near Football Stadium","",26.9739072,64.0963689,"S",0],
+["RPO Jhal Magsi (Gandawah)","RPO","Balochistan","Gandawah","Near Election Commission Office","",28.6103942,67.4859543,"S",0],
+["RPO Nasirabad (Dera Murad Jamali)","RPO","Balochistan","Dera Murad Jamali","Near Gola Chowk","",28.5403863,68.216464,"S",0],
+["RPO Barkhan","RPO","Balochistan","Barkhan","Near DC Complex, Kohlu Road","",29.9000157,69.5250561,"S",0],
+["RPO Musakhel","RPO","Balochistan","Musakhel","Near DC Office","",30.8655256,69.8309613,"S",0],
+["RPO Harnai","RPO","Balochistan","Harnai","Muhalla Jalal Abad, near NADRA Office","",30.0986865,67.9415127,"S",0],
+["RPO Dalbandin (Chaghi)","RPO","Balochistan","Dalbandin","Town Gali, near Iqbal Hotel","",28.884466,64.405803,"S",0],
+["RPO Kalat","RPO","Balochistan","Kalat","Near NADRA Office, Alizai Market","",29.0189181,66.5890571,"S",0],
+["RPO Dhadar","RPO","Balochistan","Dhadar","Opp. District Education Office, Quetta Road","",29.4858048,67.6409303,"S",0],
+["RPO Mastung","RPO","Balochistan","Mastung","Jahangir Shaheed Road, Link Quetta Road","",29.8016613,66.8504604,"S",0],
+["RPO Awaran","RPO","Balochistan","Awaran","Near DC Office","",26.456,65.231,"S",1],
+["RPO Kohlu","RPO","Balochistan","Kohlu","Kohlu","",29.896,69.253,"S",1],
+["RPO Lasbela (Uthal)","RPO","Balochistan","Uthal","Shareef Colony","",25.7939617,66.6239952,"S",0],
+["RPO Washuk","RPO","Balochistan","Washuk","Near DC Office","",27.723,64.798,"S",1],
+["RPO Sherani","RPO","Balochistan","Sherani","Sherani","",31.55,69.7,"S",1],
+["RPO Dera Bugti","RPO","Balochistan","Dera Bugti","Near Old Jamia Masjid","",29.0300242,69.1526827,"S",0],
+["RPO Sohbatpur","RPO","Balochistan","Sohbatpur","DC Road, opp. SP Office","",28.5179089,68.5384263,"S",0],
+// ---------- Gilgit-Baltistan ----------
+["RPO Gilgit","RPO","Gilgit-Baltistan","Gilgit","Muhalla Qazilbash, near Yadgar Chowk, Khomar","05811-920338",35.9208,74.308,"S",1],
+["RPO Skardu","RPO","Gilgit-Baltistan","Skardu","Near Shell Pump, Olding Road","05815-920109",35.2971,75.6333,"S",1],
+["RPO Chilas (Diamer)","RPO","Gilgit-Baltistan","Chilas","Khasra No. 426, Harpan","05812-920216",35.4206,74.096,"S",1],
+["RPO Hunza (Ganish)","RPO","Gilgit-Baltistan","Hunza","Main KKH, Ganish","05813-920338",36.31,74.665,"S",1],
+["RPO Astore","RPO","Gilgit-Baltistan","Astore","Near Polo Ground, Eidgah","05817-920194",35.366,74.857,"S",1],
+["RPO Ghanche (Khaplu)","RPO","Gilgit-Baltistan","Khaplu","Near PTDC Khaplu","05816-920320",35.158,76.337,"S",1],
+["RPO Ghizer (Gahkuch)","RPO","Gilgit-Baltistan","Gahkuch","Main Bazar, Gahkuch","05814-921634",36.172,73.765,"S",1],
+["RPO Nagar","RPO","Gilgit-Baltistan","Nagar","Jaffarabad, Nagar-2","",36.26,74.63,"S",1],
+["RPO Shigar","RPO","Gilgit-Baltistan","Shigar","Near National Bank, Fort Road","",35.422,75.74,"S",1],
+// ---------- Azad Jammu & Kashmir ----------
+["RPO Muzaffarabad","RPO","Azad Kashmir","Muzaffarabad","Mir Plaza, Bela Noor Shah, near Bus Stand","05822-62792",34.37,73.471,"S",1],
+["RPO Mirpur","RPO","Azad Kashmir","Mirpur","Near Bhutto Park, near PC Hotel","05827-42133",33.1529817,73.708525,"S",0],
+["RPO Kotli","RPO","Azad Kashmir","Kotli","Near DC Office, G&A Plaza, Pindi Road","",33.5079427,73.895911,"S",0],
+["RPO Rawalakot","RPO","Azad Kashmir","Rawalakot","Near Baldia Chowk Bus Stand, Hajeera Bypass","",33.8499466,73.754951,"S",0],
+["RPO Bagh (Arja)","RPO","Azad Kashmir","Bagh","Arja, near Arja Road","",33.972721,73.6577885,"S",0],
+["RPO Hattian Bala","RPO","Azad Kashmir","Hattian Bala","Near NADRA Office, Kanda Bala","",34.1473,73.7075,"S",1],
+["RPO Neelam (Athmuqam)","RPO","Azad Kashmir","Athmuqam","Main Bazar, near HBL","",34.585,73.907,"S",1],
+["RPO Sudhnoti","RPO","Azad Kashmir","Pallandri","District Council, Sudhnoti","",33.715,73.685,"S",1],
+["RPO Bhimber","RPO","Azad Kashmir","Bhimber","Custodian Building, District Courts Road","",32.9700959,74.0795057,"S",0],
+["RPO Haveli (Forward Kahuta)","RPO","Azad Kashmir","Forward Kahuta","Bypass Road, near AJK Bank","",33.88,74.1,"S",1]
+];
+
+/* ===== FEES (source: dgip.gov.pk/passport/ordinary-passport.php, last modified Sept 2026) ===== */
+var PPS_FEES = {
+  MRP: { // [normal, urgent]
+    "36-5":[4500,7500], "36-10":[6700,11200],
+    "72-5":[8200,13500], "72-10":[12400,20200],
+    "100-5":[9000,18000], "100-10":[13500,27000]
+  },
+  EPP: {
+    "36-5":[9000,15000], "36-10":[13500,22500],
+    "72-5":[16500,27000], "72-10":[24750,40500]
+  },
+  FAST: { // MRP only
+    "36-5":12500, "36-10":16200, "72-5":18500, "72-10":25200, "100-5":23000, "100-10":32000
+  }
+};
+
+/* ===== COUNTRIES ===== */
+var PPS_COUNTRIES = ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","DR Congo","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"];
+
+var PPS_DUAL = ["United Kingdom","France","Italy","Belgium","Iceland","Australia","New Zealand","Canada","Finland","Egypt","Jordan","Syria","Switzerland","Netherlands","United States","Sweden","Ireland","Bahrain","Denmark","Germany","Norway","Luxembourg"];
+var PPS_VISA_FREE = ["Maldives","Nepal","Samoa","Tonga","Trinidad and Tobago"];
+var PPS_GCC = ["Saudi Arabia","United Arab Emirates","Qatar","Kuwait","Bahrain","Oman"];
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script>
+/* ===== PHOTOS — replace any URL with your own photo (or set to "" to use the green background) =====
+   Current photos are from Wikimedia Commons (free licences; credit shown on the photo and in the footer). */
+var PPS_PHOTOS={
+  hero:   {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Faisal_Mosque_islamabad_07.jpg?width=1800", page:"https://commons.wikimedia.org/wiki/File:Faisal_Mosque_islamabad_07.jpg", label:"Faisal Mosque, Islamabad"},
+  find:   {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Badshahi_Mosque_front_picture.jpg?width=1400", page:"https://commons.wikimedia.org/wiki/File:Badshahi_Mosque_front_picture.jpg", label:"Badshahi Mosque, Lahore"},
+  fee:    {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Islamabad_-_Faisal_Mosque.jpg?width=1400", page:"https://commons.wikimedia.org/wiki/File:Islamabad_-_Faisal_Mosque.jpg", label:"Islamabad"},
+  guide:  {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Minar-e-Pakistan-lhr.jpg?width=1400", page:"https://commons.wikimedia.org/wiki/File:Minar-e-Pakistan-lhr.jpg", label:"Minar-e-Pakistan, Lahore"},
+  online: {src:"https://commons.wikimedia.org/wiki/Special:FilePath/Shah_Faisal_Masjid,_Islamabad.JPG?width=1400", page:"https://commons.wikimedia.org/wiki/File:Shah_Faisal_Masjid,_Islamabad.JPG", label:"Shah Faisal Masjid"},
+  foreign:{src:"https://commons.wikimedia.org/wiki/Special:FilePath/Hunza_Valley_07.jpg?width=1400", page:"https://commons.wikimedia.org/wiki/File:Hunza_Valley_07.jpg", label:"Hunza Valley, Gilgit-Baltistan"}
+};
+(function(){
+"use strict";
+var root=document.getElementById('pps'),$=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function radio(name){var r=root.querySelector('input[name='+name+']:checked');return r?r.value:null}
+function setRadio(name,v){var r=root.querySelector('input[name='+name+'][value="'+v+'"]');if(r)r.checked=true}
+
+/* ---------- Photos ---------- */
+var credits=[];
+[].forEach.call(root.querySelectorAll('img[data-photo]'),function(img){var k=img.getAttribute('data-photo'),p=PPS_PHOTOS[k];
+  if(!p||!p.src){img.remove();return}
+  img.onerror=function(){img.remove();var c=root.querySelector('[data-credit='+k+']');if(c)c.remove()};
+  img.src=p.src;var c=root.querySelector('[data-credit='+k+']');
+  if(c&&p.page)c.innerHTML='📷 <a href="'+p.page+'" target="_blank" rel="noopener">'+esc(p.label)+'</a> · Wikimedia Commons';
+  if(p.page&&credits.indexOf(p.page)<0)credits.push(p.page)});
+$('pps-credits').innerHTML='Photos: '+Object.keys(PPS_PHOTOS).filter(function(k){return PPS_PHOTOS[k].page}).map(function(k){return '<a href="'+PPS_PHOTOS[k].page+'" target="_blank" rel="noopener">'+esc(PPS_PHOTOS[k].label)+'</a>'}).join(' · ')+' — via Wikimedia Commons (see each page for author & licence).';
+
+/* ---------- Data ---------- */
+var TYPE_LABEL={RPO:"Passport Office",EPO:"Executive Office",PPC:"NADRA Counter",SPC:"Special Counter",HQ:"Headquarters",OPF:"Overseas Pakistanis"};
+var HOURS_LABEL={S:"Mon–Fri 8am–4pm",A:"Open 24/7",E:"Daily 8am–midnight",L:"Daily 8am–10:30pm"};
+var offices=PPS_OFFICES.map(function(r,i){return {id:i,n:r[0],t:r[1],p:r[2],c:r[3],a:r[4],ph:r[5],lat:r[6],lng:r[7],h:r[8],ap:r[9]}});
+var userPos=null,shown=24,view='list',prov='';
+
+/* ---------- Urdu ---------- */
+var UR={brand:"پاسپورٹ ہیلپ پی کے",display:"ڈسپلے",hero_h:"آپ کا پاسپورٹ، آسان طریقے سے۔",hero_p:"221 دفاتر میں سے قریب ترین تلاش کریں، درست فیس اور انتظار کا وقت جانیں، اور واضح مراحل پر عمل کریں۔",search_btn:"دفاتر تلاش کریں",near_me:"میرے قریب",
+textsize:"متن کا سائز",dark:"ڈارک موڈ",contrast:"ہائی کنٹراسٹ",readable:"آسان مطالعہ",
+q1:"قریب ترین دفتر",q1s:"فاصلہ، اوقات اور راستہ",q2:"فیس اور وقت",q2s:"3 کلک میں درست قیمت",q3:"آن لائن تجدید",q3s:"دفتر جانے کی ضرورت نہیں",q4:"پاسپورٹ ٹریک کریں",q4s:"ٹوکن یا SMS 9988",q5:"گمشدہ پاسپورٹ",q5s:"اب کیا کریں",q6:"پاکستان آنا ہے؟",q6s:"ملک کے لحاظ سے ویزا",
+f1:"دفاتر",f2:"24/7 کھلے",f3:"کم از کم فیس",f4:"تیز ترین ترسیل",
+t_find:"دفاتر",t_fee:"فیس",t_guide:"رہنمائی",t_online:"آن لائن",t_foreign:"غیر ملکی",
+h_find:"پاسپورٹ آفس تلاش کریں",find_intro:"آپ پاکستان کے کسی بھی پاسپورٹ آفس میں درخواست دے سکتے ہیں — شناختی کارڈ کا پتہ اہم نہیں۔",use_loc:"میرا مقام استعمال کریں",or:"یا",pick_city:"اپنا شہر منتخب کریں…",search:"تلاش",region:"علاقہ",show_only:"صرف دکھائیں",open_now:"ابھی کھلا",late:"شام / 24 گھنٹے",weekend:"ہفتہ وار تعطیل میں کھلا",rpo_only:"مرکزی پاسپورٹ دفاتر",epo_only:"ایگزیکٹو دفاتر",hasphone:"فون موجود",h_hours:"دفتری اوقات",list:"فہرست",map:"نقشہ",show_more:"مزید دفاتر دکھائیں",
+h_fee:"کتنا خرچ اور کتنا وقت؟",fee_intro:"اپنے انتخاب پر کلک کریں — قیمت اور تاریخ فوراً اپ ڈیٹ ہو گی۔",ptype:"1 · پاسپورٹ کی قسم",speed:"2 · کتنی جلدی؟",pages:"3 · صفحات اور مدت",reason:"4 · آپ کی صورتحال",where_apply:"5 · کہاں درخواست دیں گے؟",h_feetable:"تمام سرکاری فیسیں",
+h_guide:"مرحلہ وار رہنمائی",guide_intro:"اپنی صورتحال منتخب کریں۔ دستاویزات پر نشان لگائیں — پیش رفت نظر آئے گی۔",docs:"ساتھ لانے والی دستاویزات",steps:"مراحل",read_aloud:"بلند آواز سنیں",print:"پرنٹ",
+h_online:"آن لائن کریں",online_intro:"قطار میں لگے بغیر تجدید، ٹریکنگ اور مدد۔",h_news:"2026 میں نیا کیا ہے",
+h_foreign:"غیر ملکی اور بیرون ملک پاکستانی",foreign_intro:"اپنا ملک اور اپنی حیثیت منتخب کریں۔",your_country:"آپ کا ملک",you_are:"آپ ہیں…"};
+var EN={};[].forEach.call(root.querySelectorAll('[data-i]'),function(el){EN[el.getAttribute('data-i')]=el.innerHTML});
+var lang='en';
+function setLang(l){lang=l;var d=l==='ur'?UR:EN;[].forEach.call(root.querySelectorAll('[data-i]'),function(el){var k=el.getAttribute('data-i');if(d[k]!=null)el.innerHTML=d[k]});
+  root.dir=l==='ur'?'rtl':'ltr';root.lang=l;$('pps-lang').textContent=l==='ur'?'English':'اردو'}
+
+/* ---------- Display settings ---------- */
+var prefs={fs:16,dark:false,hc:false,read:false,lang:'en'};
+try{var s=localStorage.getItem('pps-prefs');if(s)prefs=Object.assign(prefs,JSON.parse(s));else if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)prefs.dark=true}catch(e){}
+function save(){try{localStorage.setItem('pps-prefs',JSON.stringify(prefs))}catch(e){}}
+function applyPrefs(){root.style.setProperty('--fs',prefs.fs+'px');root.classList.toggle('dark',prefs.dark);root.classList.toggle('contrast',prefs.hc);root.classList.toggle('readable',prefs.read);
+  $('pps-dark').setAttribute('aria-checked',prefs.dark);$('pps-hc').setAttribute('aria-checked',prefs.hc);$('pps-read').setAttribute('aria-checked',prefs.read)}
+$('pps-set').onclick=function(e){e.stopPropagation();var on=!$('pps-settings').classList.contains('on');$('pps-settings').classList.toggle('on',on);this.setAttribute('aria-expanded',on)};
+document.addEventListener('click',function(e){if(!$('pps-settings').contains(e.target)){$('pps-settings').classList.remove('on');$('pps-set').setAttribute('aria-expanded','false')}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('pps-settings').classList.remove('on')});
+$('pps-fplus').onclick=function(){prefs.fs=Math.min(24,prefs.fs+2);applyPrefs();save()};
+$('pps-fminus').onclick=function(){prefs.fs=Math.max(13,prefs.fs-2);applyPrefs();save()};
+$('pps-dark').onclick=function(){prefs.dark=!prefs.dark;applyPrefs();save()};
+$('pps-hc').onclick=function(){prefs.hc=!prefs.hc;applyPrefs();save()};
+$('pps-read').onclick=function(){prefs.read=!prefs.read;applyPrefs();save()};
+$('pps-lang').onclick=function(){prefs.lang=lang==='en'?'ur':'en';setLang(prefs.lang);save();renderProv();render()};
+
+/* ---------- Tabs ---------- */
+var tabs=[].slice.call(root.querySelectorAll('[role=tab]'));
+function selectTab(t,scroll){tabs.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;$(b.getAttribute('aria-controls')).classList.toggle('on',on)});
+  if(scroll){var y=root.querySelector('nav.tabs').getBoundingClientRect().top+window.scrollY-4;window.scrollTo({top:Math.max(0,y),behavior:'smooth'})}
+  if(t.id==='t-find'&&view==='map')setTimeout(function(){map&&map.invalidateSize()},60)}
+tabs.forEach(function(t,i){t.onclick=function(){selectTab(t,true)};t.onkeydown=function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var d=((e.key==='ArrowRight')!==(root.dir==='rtl'))?1:-1,n=tabs[(i+d+tabs.length)%tabs.length];selectTab(n);n.focus();e.preventDefault()}}});
+function go(id){selectTab($('t-'+id),true)}
+[].forEach.call(root.querySelectorAll('.tile'),function(b){b.onclick=function(){var g=b.getAttribute('data-go');if(b.getAttribute('data-scen')){curG=b.getAttribute('data-scen');renderGuide()}go(g);if(b.getAttribute('data-geo'))locate()}});
+
+/* ---------- Time ---------- */
+function pkNow(){var d=new Date(Date.now()+(new Date().getTimezoneOffset()+300)*60000);return {day:d.getDay(),min:d.getHours()*60+d.getMinutes(),d:d}}
+function isOpen(o){var n=pkNow();if(o.h==='A')return true;if(o.h==='E')return n.min>=480;if(o.h==='L')return n.min>=480&&n.min<1350;return n.day>=1&&n.day<=5&&n.min>=480&&n.min<960&&!(n.min>=780&&n.min<810)}
+function nextOpen(o){var n=pkNow();if(o.h!=='S')return 'Opens 8:00 am';if(n.day>=1&&n.day<=5&&n.min<480)return 'Opens today 8:00 am';if(n.day>=1&&n.day<=5&&n.min>=780&&n.min<810)return 'Back at 1:30 pm';if(n.day>=1&&n.day<=4)return 'Opens tomorrow 8:00 am';return 'Opens Monday 8:00 am'}
+
+/* ---------- Distance ---------- */
+function hav(a,b,c,d){var R=6371,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h))}
+function hilly(o){return /Gilgit|Azad|Khyber/.test(o.p)&&o.lat>34.2}
+function distInfo(o){if(!userPos)return null;var km=hav(userPos.lat,userPos.lng,o.lat,o.lng),road=km*(hilly(o)?1.6:1.3),spd=hilly(o)?30:(road<15?25:50);return {km:km,road:road,mins:Math.round(road/spd*60+5)}}
+function fmtT(m){if(m<60)return m+' min';var h=Math.floor(m/60),r=m%60;return h+' h'+(r?' '+r+' m':'')}
+
+/* ---------- Selects / lists ---------- */
+var provs=[];offices.forEach(function(o){if(provs.indexOf(o.p)<0)provs.push(o.p)});
+var cities={};offices.forEach(function(o){var k=o.c+', '+o.p;if(!cities[k])cities[k]=o});
+Object.keys(cities).sort().forEach(function(k){$('pps-from').add(new Option(k,k));var op=document.createElement('option');op.value=cities[k].c;$('pps-citylist').appendChild(op)});
+PPS_COUNTRIES.forEach(function(c){var op=document.createElement('option');op.value=c;$('pps-countrylist').appendChild(op)});
+function renderProv(){var all=lang==='ur'?'تمام':'All';$('pps-provchips').innerHTML=['',].concat(provs).map(function(p){var n=p?offices.filter(function(o){return o.p===p}).length:offices.length;
+  return '<label class="chip"><input type="radio" name="pv" value="'+esc(p)+'"'+(p===prov?' checked':'')+'><span>'+(p?esc(p):all)+' <small class="muted">'+n+'</small></span></label>'}).join('');
+  [].forEach.call(root.querySelectorAll('input[name=pv]'),function(r){r.onchange=function(){prov=r.value;shown=24;render()}})}
+
+function setFrom(key){var o=cities[key];if(!o)return false;userPos={lat:o.lat,lng:o.lng,label:o.c};$('pps-from').value=key;$('pps-geo-status').innerHTML='📍 Distances measured from <b>'+esc(o.c)+'</b> town centre.';return true}
+$('pps-from').onchange=function(){if(!setFrom(this.value)){userPos=null;$('pps-geo-status').textContent=''}shown=24;render()};
+function locate(){var st=$('pps-geo-status');if(!navigator.geolocation){st.textContent='Location is not available in this browser — please pick your city.';return}
+  st.textContent='⏳ Finding your location…';
+  navigator.geolocation.getCurrentPosition(function(p){userPos={lat:p.coords.latitude,lng:p.coords.longitude,label:'you',gps:1};$('pps-from').value='';
+    st.innerHTML='✅ Using your current location. It stays on your device.';shown=24;render()},
+   function(){st.textContent='⚠️ Could not get your location (permission denied or unavailable). Please pick your city from the list.'},{timeout:12000,maximumAge:600000})}
+$('pps-geo').onclick=locate;$('pps-heroGeo').onclick=function(){go('find');locate()};
+$('pps-heroform').onsubmit=function(e){e.preventDefault();var q=$('pps-heroq').value.trim();go('find');if(!q)return;
+  var key=Object.keys(cities).filter(function(k){return cities[k].c.toLowerCase()===q.toLowerCase()})[0]||Object.keys(cities).filter(function(k){return k.toLowerCase().indexOf(q.toLowerCase())===0})[0];
+  if(key){setFrom(key);$('pps-q').value=''}else{$('pps-q').value=q}shown=24;render()};
+['pps-open','pps-late','pps-weekend','pps-phone','pps-rpo','pps-epo'].forEach(function(id){$(id).onchange=function(){shown=24;render()}});
+$('pps-q').oninput=function(){shown=24;render()};
+$('pps-more').onclick=function(){shown+=24;render()};
+
+/* ---------- Map ---------- */
+var map=null,layer=null;
+function setView(v){view=v;$('pps-vlist').setAttribute('aria-pressed',v==='list');$('pps-vmap').setAttribute('aria-pressed',v==='map');
+  $('pps-mapwrap').hidden=v!=='map';$('pps-list').hidden=v==='map';$('pps-more').parentNode.hidden=v==='map';
+  if(v==='map'){if(!window.L){$('pps-mapwrap').innerHTML='<p class="empty">The map could not load. Please use the list view.</p>';return}
+    if(!map){map=L.map('pps-map',{scrollWheelZoom:false}).setView([30.4,69.3],5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);layer=L.layerGroup().addTo(map)}
+    setTimeout(function(){map.invalidateSize();render()},50)}}
+$('pps-vlist').onclick=function(){setView('list')};$('pps-vmap').onclick=function(){setView('map')};
+
+/* ---------- Render offices ---------- */
+function filtered(){var q=$('pps-q').value.trim().toLowerCase();
+  var list=offices.filter(function(o){if(prov&&o.p!==prov)return false;if(q&&(o.n+' '+o.c+' '+o.a+' '+o.p).toLowerCase().indexOf(q)<0)return false;
+    if($('pps-open').checked&&!isOpen(o))return false;if($('pps-late').checked&&o.h==='S')return false;if($('pps-weekend').checked&&o.h==='S')return false;
+    if($('pps-phone').checked&&!o.ph)return false;
+    var tf=[];if($('pps-rpo').checked)tf.push('RPO');if($('pps-epo').checked)tf.push('EPO');if(tf.length&&tf.indexOf(o.t)<0)return false;return true});
+  list.forEach(function(o){o._d=distInfo(o)});
+  if(userPos)list.sort(function(a,b){return a._d.km-b._d.km});else list.sort(function(a,b){return a.c.localeCompare(b.c)||a.n.localeCompare(b.n)});return list}
+function dirUrl(o){return 'https://www.google.com/maps/dir/?api=1&destination='+o.lat+','+o.lng+(userPos&&userPos.gps?'&origin='+userPos.lat+','+userPos.lng:'')}
+function card(o,i){var op=isOpen(o),d=o._d;
+  return '<li class="office'+(op?' isopen':'')+(i===0&&userPos?' first':'')+'">'+
+   (i===0&&userPos?'<span class="tag gold">⭐ Nearest to you</span>':'')+
+   '<h4>'+esc(o.n)+'</h4><div class="tags"><span class="tag '+(op?'open':'closed')+'">'+(op?'● Open now':'● Closed · '+nextOpen(o))+'</span><span class="tag">'+TYPE_LABEL[o.t]+'</span><span class="tag">🕒 '+HOURS_LABEL[o.h]+'</span></div>'+
+   '<p class="addr"><span>📍</span><span>'+esc(o.a)+', '+esc(o.c)+(o.ap?' <em>(approx. pin)</em>':'')+'</span></p>'+
+   (d?'<div class="dist"><span><b>'+(d.km<1?d.km.toFixed(1):Math.round(d.km))+' km</b> away</span><span>🚗 ~'+Math.round(d.road)+' km · '+fmtT(d.mins)+'</span></div>':'')+
+   '<div class="acts"><a class="btn" href="'+dirUrl(o)+'" target="_blank" rel="noopener">🧭 Directions</a>'+(o.ph?'<a class="btn ghost" href="tel:'+o.ph.replace(/[^0-9+]/g,'')+'">📞 Call</a>':'<a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query='+o.lat+','+o.lng+'" target="_blank" rel="noopener">🗺️ Map</a>')+'</div></li>'}
+function render(){var list=filtered(),open=list.filter(isOpen).length;
+  $('pps-stats').innerHTML='<span class="tag">'+list.length+' offices</span><span class="tag open">'+open+' open now</span>'+(userPos?'':'<span class="tag gold">Tip: tap "Use my location" for distances</span>');
+  $('pps-list').innerHTML=list.length?list.slice(0,shown).map(card).join(''):'<li class="empty">😕 No offices match these filters.<br><button type="button" class="btn ghost" id="pps-clear" style="margin-top:10px">Clear filters</button></li>';
+  var c=$('pps-clear');if(c)c.onclick=clearAll;
+  $('pps-more').style.display=list.length>shown?'':'none';
+  if(map&&view==='map'){layer.clearLayers();var pts=[];
+    list.forEach(function(o){var op=isOpen(o);var m=L.circleMarker([o.lat,o.lng],{radius:o.t==='RPO'?8:6,color:'#fff',weight:2,fillColor:op?'#0f7a3b':'#b3261e',fillOpacity:.95});
+      m.bindPopup('<b>'+esc(o.n)+'</b><br>'+esc(o.a)+'<br>🕒 '+HOURS_LABEL[o.h]+'<br>'+(op?'<span style="color:#0f7a3b">● Open now</span>':'<span style="color:#b3261e">● Closed</span>')+(o._d?'<br>📏 '+Math.round(o._d.km)+' km away':'')+'<br><a href="'+dirUrl(o)+'" target="_blank" rel="noopener">Directions →</a>'+(o.ph?' · <a href="tel:'+o.ph.replace(/[^0-9+]/g,'')+'">Call</a>':''));
+      layer.addLayer(m);pts.push([o.lat,o.lng])});
+    if(userPos){L.circleMarker([userPos.lat,userPos.lng],{radius:9,color:'#fff',weight:3,fillColor:'#2563eb',fillOpacity:1}).bindPopup('You are here').addTo(layer);
+      if(list.length)map.fitBounds([[userPos.lat,userPos.lng]].concat(pts.slice(0,5)),{padding:[30,30],maxZoom:12})}
+    else if(pts.length)map.fitBounds(pts,{padding:[20,20],maxZoom:12})}}
+function clearAll(){$('pps-q').value='';prov='';['pps-open','pps-late','pps-weekend','pps-phone','pps-rpo','pps-epo'].forEach(function(i){$(i).checked=false});renderProv();shown=24;render()}
+
+/* ---------- Fees ---------- */
+var PASS_SVG='<svg class="pp" viewBox="0 0 100 130" aria-hidden="true"><rect x="5" y="5" width="90" height="120" rx="10" fill="#fff"/><circle cx="50" cy="55" r="20" fill="none" stroke="#01411c" stroke-width="5"/><path d="M58 47a12 12 0 1 0 0 16a10 10 0 1 1 0-16z" fill="#01411c"/><rect x="25" y="95" width="50" height="6" rx="3" fill="#01411c"/></svg>';
+function addWD(n){var d=pkNow().d,c=0;while(c<n){d.setDate(d.getDate()+1);var w=d.getDay();if(w!==0&&w!==6)c++}return d}
+function rs(n){return 'Rs. '+n.toLocaleString('en-PK')}
+root.querySelectorAll('#p-fee input').forEach(function(i){i.addEventListener('change',renderFee)});
+function renderFee(){var t=radio('ft'),warn=[];
+  var minor=$('fee-minor').checked,wh=radio('fw');
+  // availability rules
+  function dis(name,val,off){var r=root.querySelector('input[name='+name+'][value="'+val+'"]');r.disabled=off;if(off&&r.checked){r.checked=false;return true}return false}
+  if(dis('fs','2',t==='EPP'||wh==='oin'||wh==='oout')){setRadio('fs','1');warn.push(t==='EPP'?'Fast Track isn\'t available for e-Passports, so Urgent is selected.':'Fast Track is only for in-person applications, so Urgent is selected.')}
+  if(dis('fp','100',t==='EPP')){setRadio('fp','72');warn.push('e-Passports come in 36 or 72 pages, so 72 is selected.')}
+  if(dis('fv','10',minor)){setRadio('fv','5');warn.push('Children under 15 get a 5-year passport only.')}
+  var sp=+radio('fs'),pg=radio('fp'),v=radio('fv'),mult=+radio('fr'),key=pg+'-'+v;
+  var base=sp===2?PPS_FEES.FAST[key]:PPS_FEES[t][key][sp],fee=base*mult,days=[21,5,2][sp],date=addWD(days);
+  var svc={oin:'+ about Rs. 1,000 online service charge',oout:'+ about Rs. 2,500 + tax service charge, plus courier',epo:'+ NADRA service charges at the counter',rpo:''}[wh];
+  $('fee-out').innerHTML=PASS_SVG+'<div class="k">Government fee</div><div class="amt">'+rs(fee)+'</div>'+
+    '<div>'+(t==='EPP'?'e-Passport':'Machine-readable')+' · '+pg+' pages · '+v+' years · '+['Normal','Urgent','Fast Track'][sp]+'</div>'+
+    (mult>1?'<div style="opacity:.85;font-size:.9em">'+rs(base)+' × '+mult+' lost-passport fee</div>':'')+(svc?'<div style="opacity:.85;font-size:.9em">'+svc+'</div>':'')+
+    '<div class="meta"><div><small>Processing</small><b>'+days+' working days</b></div><div><small>Ready around</small><b>'+date.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+'</b></div></div>';
+  $('fee-notes').innerHTML=warn.map(function(w){return '<div class="note">ℹ️ <span>'+w+'</span></div>'}).join('')+
+    '<div class="note ok">✅ <span>Pay only through official channels (bank / QR code at the office / online portal). No agent can legitimately charge extra to speed things up.</span></div>'+
+    '<div class="note">📅 <span>Dates exclude public holidays, courier time'+(sp===2?', and Fast Track is available in 47 cities':'')+'.</span></div>';
+  // table
+  var h='<thead><tr><th>Type</th><th>Pages</th><th>Years</th><th>Normal</th><th>Urgent</th><th>Fast Track</th></tr></thead><tbody>';
+  [['MRP','Machine-readable'],['EPP','e-Passport']].forEach(function(x){Object.keys(PPS_FEES[x[0]]).forEach(function(k){var p=k.split('-'),f=PPS_FEES[x[0]][k],hl=x[0]===t&&k===key;
+    h+='<tr'+(hl?' class="hl"':'')+'><td>'+x[1]+'</td><td>'+p[0]+'</td><td>'+p[1]+'</td><td>'+rs(f[0])+'</td><td>'+rs(f[1])+'</td><td>'+(x[0]==='MRP'?rs(PPS_FEES.FAST[k]):'—')+'</td></tr>'})});
+  $('fee-tables').innerHTML=h+'</tbody>'}
+
+/* ---------- Guide ---------- */
+var GUIDES={
+ newp:{em:"🆕",label:"New passport",docs:["Original valid CNIC + photocopy","NOC from your department (government / semi-government / autonomous employees only)","Foreign passport + copy (dual nationals only)"],
+  steps:["Check your CNIC is valid and your NADRA details are correct — the passport uses your NADRA record.","Choose type, pages, validity and speed in the Fees tab.","Go to any passport office early with your original documents.","Your photo is taken and you get a token with a QR code.","Give fingerprints, then data entry. Check name spellings and give your mobile number for SMS updates from 9988.","Your record is verified and an officer interviews and approves you.","Pay the fee via the QR code / bank / cashless counter. Keep the receipt and token.","Track with your token at tracking.dgip.gov.pk or SMS it to 9988.","Collect in person on the delivery date (or use TCS home delivery if offered) — within 6 months."]},
+ renew:{em:"🔄",label:"Renew at office",docs:["Original valid CNIC/NICOP + photocopy","Old passport (original + copy)","NOC (government employees)","Foreign passport + copy (dual nationals)"],
+  steps:["You can renew any time — even before expiry.","Choose fee and speed in the Fees tab.","Visit any passport office with your old passport and CNIC.","Photo, token, fingerprints and data entry.","Interview / approval, then pay the fee.","Your cancelled old passport is returned to you.","Track by token, then collect on the delivery date."]},
+ online:{em:"💻",label:"Renew online",docs:["Valid CNIC or NICOP","Your current passport details","Debit or credit card","Photo, signature and fingerprint images (as the portal specifies)"],
+  steps:["Open onlinemrp.dgip.gov.pk and choose Renew Passport (for inland and overseas Pakistanis).","Enter details exactly as on your CNIC/NICOP and old passport.","Upload photo, signature and fingerprints following the portal's guide.","Pick pages, validity and Normal or Urgent.","Pay by card (fee + service charge).","Save your tracking ID and check status online.","Receive by courier (abroad) or as instructed."]},
+ minor:{em:"👶",label:"Child (under 18)",docs:["Age 10+: updated CRC (with fingerprints & photo) OR Juvenile Card + copy","Under 10: CRC (B-Form) OR Family Registration Certificate + copy","Both parents' original CNICs/passports + copies","If parents separated: custody papers or other parent's consent on attested stamp paper","If a guardian applies: court guardianship certificate","If a parent has died: death certificate"],
+  steps:["Get the child's CRC/B-Form or Juvenile Card from NADRA first.","Children under 15 get a 5-year passport only.","The child must come with one parent or the legal guardian.","Bring both parents' original CNICs/passports.","Fingerprints, data entry, interview and payment as normal.","Every child gets their own passport — children can't be added to a parent's."]},
+ lost:{em:"🆘",label:"Lost passport",docs:["Police report showing the lost passport number","Original CNIC/NICOP + copy","Higher fee: ×2 first loss, ×4 second loss"],
+  steps:["Report the loss at your local police station; get a report with the passport number.","Don't know the number? Request it in writing at your nearest passport office with a CNIC copy.","Visit any passport office with the report and documents.","Pay the higher fee. Third-time losses go to DGI&P Islamabad for approval.","Stuck abroad? Pakistan's embassy can issue an Emergency Travel Document to return home."]},
+ modify:{em:"✏️",label:"Change name / DOB",docs:["Updated CNIC/NICOP + copy","Old passport + copy","Birth or matric certificate if asked"],
+  steps:["First correct your CNIC/NICOP at NADRA — the passport follows the CNIC.","Visit a passport office with the updated CNIC and old passport.","Changing name, father's name AND date of birth together needs DGI&P Islamabad approval — allow extra time.","Fingerprints, interview and payment as normal."]},
+ overseas:{em:"🌍",label:"Living abroad",docs:["Valid NICOP or CNIC","Current passport","Card for online payment"],
+  steps:["Easiest: renew online at onlinemrp.dgip.gov.pk — it's couriered to you.","Or visit the passport section of the nearest Pakistan embassy/consulate.","Visiting Pakistan? Use the OPF office in Islamabad (G-5) or any office.","Embassy fees are in local currency and vary — check your mission's website."]}};
+var curG='newp',checked={};
+function renderGuide(){$('g-scen').innerHTML=Object.keys(GUIDES).map(function(k){return '<button type="button" aria-pressed="'+(k===curG)+'" data-g="'+k+'"><span class="em">'+GUIDES[k].em+'</span>'+GUIDES[k].label+'</button>'}).join('');
+  [].forEach.call($('g-scen').querySelectorAll('button'),function(b){b.onclick=function(){curG=b.getAttribute('data-g');renderGuide()}});
+  var g=GUIDES[curG],c=checked[curG]||(checked[curG]={});
+  $('g-docs').innerHTML=g.docs.map(function(d,i){return '<li><label><input type="checkbox" data-d="'+i+'"'+(c[i]?' checked':'')+'><span>'+d+'</span></label></li>'}).join('');
+  $('g-steps').innerHTML=g.steps.map(function(s){return '<li>'+s+'</li>'}).join('');
+  [].forEach.call($('g-docs').querySelectorAll('input'),function(i){i.onchange=function(){c[i.getAttribute('data-d')]=i.checked;prog()}});prog()}
+function prog(){var g=GUIDES[curG],c=checked[curG]||{},n=Object.keys(c).filter(function(k){return c[k]}).length;$('g-prog').style.width=(n/g.docs.length*100)+'%';
+  $('g-prog-t').textContent=n===g.docs.length?'🎉 All documents ready!':n+' of '+g.docs.length+' ready'}
+$('g-speak').onclick=function(){if(!('speechSynthesis' in window)){alert('Read-aloud is not supported in this browser.');return}speechSynthesis.cancel();var g=GUIDES[curG];
+  var u=new SpeechSynthesisUtterance(g.label+'. Documents: '+g.docs.join('. ')+'. Steps: '+g.steps.map(function(s,i){return 'Step '+(i+1)+'. '+s}).join(' '));u.rate=.95;speechSynthesis.speak(u)};
+
+/* ---------- Visitors ---------- */
+$('fx-country').addEventListener('input',renderFx);root.querySelectorAll('input[name=fw2]').forEach(function(r){r.onchange=renderFx});
+function renderFx(){var raw=$('fx-country').value.trim(),w=radio('fw2'),o=$('fx-out');
+  var c=PPS_COUNTRIES.filter(function(x){return x.toLowerCase()===raw.toLowerCase()})[0];
+  if(!c){o.innerHTML='<p class="muted">👆 '+(raw?'Keep typing and pick a country from the list.':'Type your country to see what applies to you.')+'</p>';return}
+  var h='',dual=PPS_DUAL.indexOf(c)>=0,N='<div class="note">',NB='<div class="note bad">',NO='<div class="note ok">',E='</div>';
+  if(w==='foreign'){
+    if(c==='Israel')h=NB+'⛔ <span><b>Entry not permitted.</b> Pakistan does not admit holders of Israeli passports.</span>'+E;
+    else if(c==='India')h=NB+'⚠️ <span><b>Special rules.</b> Apply through a Pakistan mission; the Ministry of Interior clears applications. No tourist visas — only family visit, business, transit and pilgrimage. Police registration is mandatory, entry/exit only via designated points (Wagah, Islamabad, Lahore, Karachi airports), and no extensions.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/indians.php" target="_blank" rel="noopener">DGI&amp;P – Visa for Indian nationals →</a></p>';
+    else if(c==='Afghanistan')h=N+'ℹ️ <span>Afghan nationals follow a separate visa policy — apply via Pakistan\'s embassy/consulates in Afghanistan or online where eligible.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/afghan-visa.php" target="_blank" rel="noopener">DGI&amp;P – Afghanistan visa policy →</a></p>';
+    else if(PPS_VISA_FREE.indexOf(c)>=0)h=NO+'✅ <span><b>No visa needed</b> for ordinary passports (generally up to 90 days). Carry a passport valid 6+ months and a return ticket.</span>'+E;
+    else if(PPS_GCC.indexOf(c)>=0)h=NO+'✅ <span><b>Visa-free entry</b> was introduced for GCC nationals in August 2024. Confirm the permitted stay with your airline.</span>'+E;
+    else h=NO+'🖥️ <span><b>Apply online</b> at <a href="https://visa.nadra.gov.pk" target="_blank" rel="noopener">visa.nadra.gov.pk</a> — tourist, business, family, student, pilgrimage and more. Takes about 7–10 business days; fee depends on nationality.</span>'+E+(c==='Turkey'?NO+'🎫 <span>Turkish nationals with a valid Schengen, UK or US visa can get a visa on arrival.</span>'+E:'');
+    if(['Israel','India','Afghanistan'].indexOf(c)<0&&PPS_VISA_FREE.indexOf(c)<0&&PPS_GCC.indexOf(c)<0)
+      h+='<h3>How to get your e-visa</h3><ol class="tl"><li>Create an account at visa.nadra.gov.pk and set up 2-step login (Google Authenticator).</li><li>Choose the visa category.</li><li>Upload passport page, photo and supporting documents (invitation, hotel booking).</li><li>Pay online and wait ~7–10 business days.</li><li>Print the grant letter and show it with your passport on arrival.</li></ol>';
+    h+=N+'ℹ️ <span>Foreign nationals can\'t get a Pakistani passport. For your own passport, contact your country\'s embassy in Islamabad.</span>'+E;
+  } else if(w==='origin'){
+    h=NO+'🪪 <span><b>Pakistan Origin Card (POC)</b> — for people with Pakistani parents/grandparents or the foreign spouse of a Pakistani. Gives visa-free entry, the right to stay and buy property. Apply via NADRA Pak-ID online or at a Pakistan mission.</span>'+E+'<p><a href="https://id.nadra.gov.pk/" target="_blank" rel="noopener">NADRA Pak-ID →</a></p>'+
+      (dual?N+'🛂 <span>Pakistan has a dual-nationality arrangement with '+esc(c)+' — you may also be able to hold Pakistani citizenship and passport.</span>'+E:N+'ℹ️ <span>'+esc(c)+' is not on Pakistan\'s dual-nationality list, so a POC is usually the right route.</span>'+E);
+  } else if(w==='overseas'){
+    h=NO+'💻 <span><b>Renew online</b> from '+esc(c)+' at <a href="https://onlinemrp.dgip.gov.pk" target="_blank" rel="noopener">onlinemrp.dgip.gov.pk</a> — couriered to you (service charge ~Rs. 2,500 + tax, plus courier).</span>'+E+
+      N+'🏢 <span>Or visit the passport section of the Pakistan embassy/consulate in '+esc(c)+' for renewal, lost, damaged or change cases. <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="noopener">Find your mission →</a></span>'+E+
+      N+'🪪 <span>Keep your NICOP valid — it\'s needed for passport services and lets you enter Pakistan without a visa. Lost your passport abroad? The mission can issue an Emergency Travel Document.</span>'+E;
+  } else {
+    h=dual?NO+'✅ <span><b>Dual nationality is allowed</b> between Pakistan and '+esc(c)+'. Keep both passports; when applying for a Pakistani passport, bring your foreign passport (original + copy) and declare it.</span>'+E:
+      NB+'⚠️ <span><b>'+esc(c)+' is not among the 22 countries</b> with a dual-nationality arrangement. Taking that citizenship may require giving up Pakistani citizenship — check with DGI&amp;P first.</span>'+E;
+    h+='<p><a href="https://dgip.gov.pk/immigration/dual_nationality.php" target="_blank" rel="noopener">DGI&amp;P – Dual nationality →</a></p>'}
+  o.innerHTML=h}
+
+/* ---------- Init ---------- */
+function tick(){$('pps-clock').textContent='Now in Pakistan: '+pkNow().d.toLocaleString('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit'})}
+var topBtn=$('pps-top');window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>600?'block':'none'},{passive:true});topBtn.onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+applyPrefs();setLang(prefs.lang);renderProv();tick();render();renderFee();renderGuide();renderFx();
+setInterval(function(){tick();render()},60000);
+var h=location.hash.slice(1);if(h&&$(h)&&$(h).getAttribute('role')==='tab')selectTab($(h));
+})();
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@ Static website explaining Pakistani government services, schemes, loans, travel 
 | `route-planner/` | Road route planner between Pakistani cities |
 | `trains/` | Train finder: timetables and estimated fares (generated from `content/trains.md`) |
 | `parcels/` | Parcel guide: courier prices and rules (generated from `content/parcels.md`) |
+| `fees/` | Pay school, college, university, board and test fees online: 1Bill/Kuickpay how-to, exact codes for major institutions, and 500+ institutions from 1Link's 1Bill biller list (data inline in the page) |
 | `admin-units/` | Directory of every division, district and tehsil in Pakistan, council tiers and official election-office numbers (data is inline in the page script, checked 6 Oct 2026) |
 
 ## Editing the train and parcel guides

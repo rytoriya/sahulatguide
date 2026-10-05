@@ -62,6 +62,7 @@ const TOOLS = [
   ["Road route planner", "", "Routes, distances and travel times between Pakistani cities", "route-planner/", "road route map distance travel motorway highway"],
   ["Train finder", "ٹرین", "Pakistan Railways timetables and estimated fares", "trains/", "train railway timetable fare ticket"],
   ["Parcel guide", "پارسل", "Courier prices and rules: TCS, Leopards, M&P, Pakistan Post", "parcels/", "parcel courier delivery tcs leopards post"],
+  ["Pay school & university fees", "فیس آن لائن", "Pay fee vouchers with 1Bill or Kuickpay; 500+ institutions", "fees/", "fee fees voucher challan school college university 1bill kuickpay pay online"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);
@@ -74,6 +75,13 @@ for (const [dir, label] of [["trains", "Train finder"], ["parcels", "Parcel guid
     const title = m[2].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&#39;/g, "'").replace(/&quot;/g, '"').trim();
     items.push(["Section", title, "", label, `${dir}/#${m[1]}`, label]);
   }
+}
+
+/* ---- Institutions that take fees online (fees page) ---- */
+const feeSrc = read("fees/index.html");
+const INST = evalLiteral(grab(feeSrc, "INST"));
+for (const [name, type] of INST) {
+  items.push(["Fee", name, "", `Pay fees online with 1Bill · ${type}`, `fees/?q=${encodeURIComponent(name)}`, "fee voucher pay online 1bill"]);
 }
 
 /* ---- Divisions, districts and tehsils (admin-units) ---- */

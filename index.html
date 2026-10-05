@@ -339,6 +339,11 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}.cat:hover,.toolgrid a:hover,.dirgrid a:hover,.btn:hover{transform:none}}
 @media (max-width:767px){.hero .eyebrow{letter-spacing:.1em;font-size:10px}.h2row{margin-top:48px}.hero{margin-inline:6px;border-radius:24px}.toolgrid{gap:18px}}
+.feebtn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:14.5px;text-decoration:none;white-space:nowrap;box-shadow:var(--shadow-sm)}
+.feebtn svg{width:19px;height:19px}
+.feebtn:hover{filter:brightness(1.08)}
+.feebtn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media (max-width:600px){.feebtn{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
@@ -356,6 +361,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
     <span class="t"><span class="n">Sahulat <span>Guide</span></span><span class="ur" lang="ur">سہولت گائیڈ · پاکستان</span></span>
   </a>
   <div class="search"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></svg><input id="q" type="search" placeholder="Search: passport, bill, car loan, bus, cargo…" aria-label="Search services"></div>
+  <a class="feebtn" href="fees/"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Pay school &amp; university fees</a>
 </div>
 
 <div class="tabs"><div class="scroll"><nav id="tabs" role="tablist" aria-label="Sections"></nav></div></div>
@@ -392,6 +398,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       <a href="trains/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M184,26H72A30,30,0,0,0,42,56V184a30,30,0,0,0,30,30H84L67.2,236.4a6,6,0,1,0,9.6,7.2L99,214h58l22.2,29.6a6,6,0,0,0,9.6-7.2L172,214h12a30,30,0,0,0,30-30V56A30,30,0,0,0,184,26ZM54,122V78h68v44Zm80-44h68v44H134ZM72,38H184a18,18,0,0,1,18,18V66H54V56A18,18,0,0,1,72,38ZM184,202H72a18,18,0,0,1-18-18V134H202v50A18,18,0,0,1,184,202Zm-2-30a10,10,0,1,1-10-10A10,10,0,0,1,182,172Zm-88,0a10,10,0,1,1-10-10A10,10,0,0,1,94,172Z"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
       <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
       <a href="admin-units/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 24 26 78v20h204V78Zm0 15.5L199 78H57ZM46 110h18v76H46Zm48 0h18v76H94Zm50 0h18v76h-18Zm48 0h18v76h-18ZM26 198h204v18H26Z"/></svg></span><b>Districts &amp; Union Councils</b><span class="d">Every division, district and tehsil in Pakistan, and who to call to find your Union Council.</span><span class="go">Open directory →</span></a>
+      <a href="fees/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 92-46v62h18V92Zm0 20.5L197.5 92 128 126.7 58.5 92ZM60 136v44c30 22 106 22 136 0v-44l-18 9v26c-24 14-76 14-100 0v-26Z"/></svg></span><b>Pay school &amp; university fees</b><span class="d">Pay fee vouchers with 1Bill or Kuickpay from any bank app; 500+ institutions listed.</span><span class="go">Open tool →</span></a>
     </div>
 
     <div class="h2row"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
@@ -426,6 +433,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       <a href="trains/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M184,26H72A30,30,0,0,0,42,56V184a30,30,0,0,0,30,30H84L67.2,236.4a6,6,0,1,0,9.6,7.2L99,214h58l22.2,29.6a6,6,0,0,0,9.6-7.2L172,214h12a30,30,0,0,0,30-30V56A30,30,0,0,0,184,26ZM54,122V78h68v44Zm80-44h68v44H134ZM72,38H184a18,18,0,0,1,18,18V66H54V56A18,18,0,0,1,72,38ZM184,202H72a18,18,0,0,1-18-18V134H202v50A18,18,0,0,1,184,202Zm-2-30a10,10,0,1,1-10-10A10,10,0,0,1,182,172Zm-88,0a10,10,0,1,1-10-10A10,10,0,0,1,94,172Z"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
       <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
       <a href="admin-units/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 24 26 78v20h204V78Zm0 15.5L199 78H57ZM46 110h18v76H46Zm48 0h18v76H94Zm50 0h18v76h-18Zm48 0h18v76h-18ZM26 198h204v18H26Z"/></svg></span><b>Districts &amp; Union Councils</b><span class="d">Every division, district and tehsil in Pakistan, and who to call to find your Union Council.</span><span class="go">Open directory →</span></a>
+      <a href="fees/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 92-46v62h18V92Zm0 20.5L197.5 92 128 126.7 58.5 92ZM60 136v44c30 22 106 22 136 0v-44l-18 9v26c-24 14-76 14-100 0v-26Z"/></svg></span><b>Pay school &amp; university fees</b><span class="d">Pay fee vouchers with 1Bill or Kuickpay from any bank app; 500+ institutions listed.</span><span class="go">Open tool →</span></a>
     </div>
     <div class="grid2">
       <div class="panel">
@@ -1432,7 +1440,17 @@ const S = [
   steps:["Watch official announcements from the federal government, BISP or your provincial government in early 2027.","Check eligibility only through the official SMS code or website announced by the government.","Collect support only through the official channel (bank, wallet, or designated centre)."],
   table:null,
   note:"Dozens of unofficial websites copy government logos and promise Ramzan cash. They collect CNICs and phone numbers for fraud. Use only links from official government sites.",
-  links:[["BISP","https://bisp.gov.pk"]], help:"BISP 0800-26477" }
+  links:[["BISP","https://bisp.gov.pk"]], help:"BISP 0800-26477" },
+
+{ id:"pay-fees-online", grp:"education", sub:"school", region:["national"], art:"school", name:"Pay school & university fees online", ur:"فیس آن لائن جمع کروائیں", by:"1Link 1Bill · Kuickpay · institutions", status:"open",
+  summary:"Most school, college, university, board and test fee vouchers now carry a 1Bill or Kuickpay number. Pay it from any bank app, JazzCash or Easypaisa instead of queuing at a bank. Our fees page lists 500+ institutions that accept 1Bill and the exact codes for major boards and universities.",
+  facts:[["1Bill","Any bank app · wallet"],["Kuickpay","Bank app · card"],["Institutions","500+ listed"],["Cost","Usually free"]],
+  elig:["Anyone with a fee voucher that shows a 1Bill, invoice, consumer or Kuickpay number"],
+  docs:["Fee voucher or challan","Bank app, JazzCash or Easypaisa (or cash at an ATM or counter)"],
+  steps:["Find the 1Bill or Kuickpay number on the voucher.","Open Bill Payment in your bank app or wallet and choose 1Bill (Invoice/Voucher) or Kuickpay.","Enter the number; some boards and universities need a prefix before the challan number (see the fees page).","Check that the institution's name and amount match, then pay.","Save the transaction ID as proof."],
+  table:{head:["Institution","Online payment"],rows:[["BISE Lahore","Add 1001145011 before the challan number"],["Quaid-i-Azam University","1Bill 1001145146 + challan, or Kuickpay 71090 + challan"],["University of the Punjab","1Bill in mobile banking, HBL / UBL"],["University of Karachi","Kuickpay app, UBL / Bank Alfalah"],["Beaconhouse, The City School","1Bill or Kuickpay on the voucher"]]},
+  note:"Never pay fees to an agent or a personal account. Open the full list on the fees page to check your institution.",
+  links:[["Pay fees online (all institutions)","fees/"],["How to pay with Kuickpay","https://app.kuickpay.com/PaymentsBillPayment"]], help:"Your institution's accounts office" }
 ];
 const NEWS = [
   ["2 Oct 2026","6-month KIBOR at 12.35%: compare bank loan costs in the calculator","bank-loans"],
@@ -1622,7 +1640,7 @@ function renderSheet(id){
     <div class="sec"><h3>How to apply</h3><ol class="steps">${s.steps.map(e=>`<li><span>${e}</span></li>`).join("")}</ol></div>
     ${t}
     ${s.note?`<p class="note">${esc(s.note)}</p>`:""}
-    <div class="official">${s.links.map(([l,u],i)=>`<a class="btn ${i?"ghost":""}" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("")}
+    <div class="official">${s.links.map(([l,u],i)=>/^https?:/.test(u)?`<a class="btn ${i?"ghost":""}" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`:`<a class="btn ${i?"ghost":""}" href="${u}">${esc(l)} →</a>`).join("")}
       <span>Helpline: <span class="mono">${esc(s.help)}</span></span></div>
     <div class="official" style="background:var(--bg)"><span>Need help with this scheme?</span>
       <a class="btn wa" href="${waLink("Assalam-o-Alaikum, I need help with: "+s.name)}" target="_blank" rel="noopener">${ICON.wa}Ask on WhatsApp</a>

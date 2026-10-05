@@ -13,8 +13,8 @@
 
   var me = document.currentScript || document.querySelector('script[src*="search.js"]');
   var BASE = new URL(".", me ? me.src : location.href).href;
-  var GROUP_ORDER = ["Service", "Category", "Tool", "Section", "Place"];
-  var GROUP_LABEL = { Service: "Services", Category: "Categories", Tool: "Tools", Section: "Guide sections", Place: "Districts & tehsils" };
+  var GROUP_ORDER = ["Service", "Category", "Tool", "Section", "Fee", "Place"];
+  var GROUP_LABEL = { Service: "Services", Category: "Categories", Tool: "Tools", Section: "Guide sections", Fee: "Pay fees online", Place: "Districts & tehsils" };
   var ICON = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>';
 
   /* ---------- styles (scoped, themed) ---------- */
@@ -179,7 +179,7 @@
         else if (words.every(function (x) { return d.t.indexOf(x) >= 0; })) score = 45;
         else score = 20;
       }
-      score += { Service: 8, Category: 6, Tool: 7, Section: 2, Place: 0 }[d.type] || 0;
+      score += { Service: 8, Category: 6, Tool: 7, Section: 2, Fee: 1, Place: 0 }[d.type] || 0;
       if (d.type === "Place" && /tehsil|taluka/i.test(d.title)) score -= 3;
       if (d.type === "Place" && / District$/.test(d.title)) score += 2;
       scored.push([score, d]);

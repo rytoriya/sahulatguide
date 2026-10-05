@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: citizen help-desk — logo bar, sticky tab strip, news ticker; tabs switch between Home, service sheets (list + procedure sheet), Tools, Portals and Contact */
+/* Layout: citizen help-desk: logo bar, sticky tab strip, news ticker; tabs switch between Home, service sheets (list + procedure sheet), Tools, Portals and Contact */
 :root{
   --bg:#f5f7f6; --surface:#ffffff; --ink:#17232e; --muted:#5a6872; --line:#dde3e1;
   --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
@@ -60,7 +60,6 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2
 
 .ticker{background:var(--ink);color:var(--bg);display:flex;align-items:stretch;overflow:hidden;font-size:14px}
 .ticker .lbl{flex:none;background:var(--stamp);color:#fff;font:700 12px var(--f-display);letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;display:flex;align-items:center;gap:8px}
-.ticker .lbl i{width:8px;height:8px;border-radius:50%;background:#fff;display:block}
 .ticker .track{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center}
 .ticker .belt{display:flex;width:max-content;animation:run 70s linear infinite}
 .ticker:hover .belt,.ticker:focus-within .belt{animation-play-state:paused}
@@ -69,7 +68,6 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2
 .ticker a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--bg) 40%,transparent)}
 @keyframes run{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.ticker .belt{animation:none}.ticker .track{overflow-x:auto}}
-@media (prefers-reduced-motion:no-preference){.ticker .lbl i{animation:blink 1.4s steps(2) infinite}@keyframes blink{50%{opacity:.2}}}
 
 main{padding-block:24px 64px}
 .view[hidden]{display:none!important}
@@ -225,98 +223,122 @@ footer .brand svg{width:32px;height:32px}
 .toolgrid .ic{font-size:26px;line-height:1}
 .toolgrid .d{font-size:13px;color:var(--muted)}
 .toolgrid .go{font:600 13px var(--f-body);color:var(--accent);margin-top:auto;padding-top:6px}
-/* ===== Visual refinement layer ===== */
-:root{--shadow-sm:0 1px 2px rgba(16,32,28,.05),0 1px 3px rgba(16,32,28,.06);--shadow-md:0 2px 4px rgba(16,32,28,.04),0 10px 24px -6px rgba(16,32,28,.14);--shadow-lg:0 24px 48px -16px rgba(13,107,82,.28);--ease:cubic-bezier(.2,.7,.2,1)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow-md:0 12px 28px -8px rgba(0,0,0,.55);--shadow-lg:0 24px 48px -16px rgba(0,0,0,.6)}}
-:root[data-theme="dark"]{--shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow-md:0 12px 28px -8px rgba(0,0,0,.55);--shadow-lg:0 24px 48px -16px rgba(0,0,0,.6)}
+/* ===== Visual refinement layer =====
+   Design read: trust-first citizen help-desk, brand preserved (green accent, Sora, illustrations).
+   Dials: variance 4, motion 4, density 5.
+   Shape rule: buttons, chips and search are full pills; cards and panels 20px; inner items and inputs 12px.
+   Icons: Phosphor Light (MIT). */
+:root{--surface:#fcfdfc;--r:12px;--r-card:20px;
+  --ease:cubic-bezier(.32,.72,0,1);--ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-sm:0 1px 2px rgba(13,60,48,.05),0 2px 6px -2px rgba(13,60,48,.06);
+  --shadow-md:0 2px 6px -2px rgba(13,60,48,.06),0 18px 36px -14px rgba(13,60,48,.18);
+  --shadow-lg:0 30px 60px -24px rgba(13,107,82,.30);
+  --bezel:0 0 0 5px color-mix(in srgb,var(--accent) 3.5%,transparent),0 0 0 6px color-mix(in srgb,var(--accent) 7%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--surface:#172129;--shadow-sm:0 1px 2px rgba(0,0,0,.28);--shadow-md:0 18px 36px -14px rgba(0,0,0,.55);--shadow-lg:0 30px 60px -24px rgba(0,0,0,.6);--bezel:0 0 0 6px rgba(255,255,255,.03),0 0 0 7px rgba(255,255,255,.07)}}
+:root[data-theme="dark"]{--surface:#172129;--shadow-sm:0 1px 2px rgba(0,0,0,.28);--shadow-md:0 18px 36px -14px rgba(0,0,0,.55);--shadow-lg:0 30px 60px -24px rgba(0,0,0,.6);--bezel:0 0 0 6px rgba(255,255,255,.03),0 0 0 7px rgba(255,255,255,.07)}
 body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 ::selection{background:var(--accent);color:var(--accent-ink)}
+
+/* header */
 .brandbar{padding-block:18px}
 .search{position:relative;align-items:center}
-.search svg{position:absolute;left:14px;width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;pointer-events:none}
-.search input{padding:12px 16px 12px 42px;box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s}
-.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
-.tabs{background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
-.tab{transition:color .2s,border-color .2s}
+.search svg{position:absolute;left:15px;width:19px;height:19px;color:var(--muted);pointer-events:none}
+.search input{padding:12px 18px 12px 44px;box-shadow:var(--shadow-sm);transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 16%,transparent)}
+.tabs{background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px)}
+@media (prefers-reduced-transparency:reduce){.tabs{background:var(--surface);backdrop-filter:none;-webkit-backdrop-filter:none}}
+.tab{transition:color .3s var(--ease),border-color .3s var(--ease)}
 
-/* hero */
-.hero{position:relative;overflow:hidden;border-radius:24px;padding:clamp(24px,4vw,48px);gap:clamp(24px,4vw,48px);box-shadow:var(--shadow-md);
-  background:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 60%),radial-gradient(80% 70% at 0% 100%,color-mix(in srgb,var(--sun) 12%,transparent),transparent 60%),var(--surface)}
-.hero{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+/* hero: double-bezel shell, left text / right asset */
+.hero{position:relative;overflow:hidden;border-radius:28px;padding:clamp(24px,4.5vw,56px);gap:clamp(24px,4vw,56px);grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);
+  box-shadow:var(--bezel),var(--shadow-md);margin-inline:7px;
+  background:radial-gradient(110% 90% at 100% 0%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 62%),radial-gradient(70% 60% at 0% 100%,color-mix(in srgb,var(--sun) 10%,transparent),transparent 60%),var(--surface)}
 @media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:520px){.hero .eyebrow::before{display:none}.hero .eyebrow{font-size:11px}}
-.hero h1{font-size:clamp(30px,4.4vw,50px);letter-spacing:-.03em;line-height:1.05;margin-top:10px}
-.hero p{font-size:clamp(15px,1.4vw,17px);line-height:1.65;margin-top:16px}
-.hero .cta{margin-top:24px;gap:12px}
-.hero #heroArt svg{border-radius:20px;box-shadow:var(--shadow-lg)}
-.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--accent)}
-.hero .eyebrow::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
-.trust{list-style:none;padding:20px 0 0;margin:24px 0 0;display:flex;flex-wrap:wrap;gap:12px 32px;border-top:1px solid var(--line)}
-.trust li{display:grid;line-height:1.25}
-.trust b{font:700 22px var(--f-display);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:tabular-nums}
-.trust span{font-size:13px;color:var(--muted)}
+.hero h1{font-size:clamp(30px,3.4vw,42px);letter-spacing:-.03em;line-height:1.08;margin-top:16px}
+.hero p{font-size:clamp(16px,1.35vw,18px);line-height:1.6;margin-top:18px;max-width:46ch}
+.hero .cta{margin-top:28px;gap:12px}
+.hero #heroArt svg{border-radius:22px;box-shadow:var(--shadow-lg)}
+.hero .eyebrow{display:inline-block;font-size:10.5px;letter-spacing:.18em;padding:5px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
 
-/* buttons */
-.btn{padding:12px 20px;border-radius:12px;font-size:15px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),background-color .2s}
-.btn:not(.ghost){box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 6px 16px -6px color-mix(in srgb,var(--accent) 70%,transparent)}
+/* buttons: pills; primary carries a nested arrow ("button-in-button") */
+.btn{padding:12px 22px;border-radius:999px;font-size:15px;transition:transform .5s var(--ease),box-shadow .5s var(--ease),background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.btn:not(.ghost){box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px -8px color-mix(in srgb,var(--accent) 75%,transparent)}
 .btn:hover{transform:translateY(-1px)}
-.btn:not(.ghost):hover{box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 10px 22px -8px color-mix(in srgb,var(--accent) 80%,transparent)}
+.btn:active{transform:scale(.98)}
 .btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}
 .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
-.btn:active{transform:translateY(0)}
+.btn.island{padding:6px 6px 6px 22px;gap:14px}
+.btn .nub{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,.16);transition:transform .5s var(--ease)}
+.btn .nub svg{width:17px;height:17px}
+.btn.island:hover .nub{transform:translateX(3px) scale(1.05)}
+.btn.ghost{padding-block:12px}
+.panel .btn,.official .btn{border-radius:999px}
 
-/* section headings */
-.h2row{margin:56px 0 18px}
-.h2row h2{font-size:clamp(21px,2.4vw,26px);letter-spacing:-.02em}
+/* section rhythm: heading with its note stacked below, never floated right */
+.h2row{margin:72px 0 20px;display:grid;gap:4px;justify-content:start}
+.h2row p{font-size:14.5px}
+/* 8 categories: 4 + 4 on desktop, 2 + 2 on tablet and phone, no empty cells */
+.cats{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}
+.h2row h2{font-size:clamp(22px,2.4vw,28px);letter-spacing:-.025em}
 
-/* cards: lift on hover */
+/* cards */
 .cat,.toolgrid a,.dirgrid a,.ecard,.panel,.sheet,.svc,.updates{box-shadow:var(--shadow-sm)}
-.cat{border-radius:18px;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
-.cat svg{transition:transform .5s var(--ease)}
-.cat .c{padding:14px 16px 16px}
-.cat .c b{font-size:16px;letter-spacing:-.01em;margin-bottom:2px}
-.cat:hover,.toolgrid a:hover,.dirgrid a:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.cat,.panel,.sheet,.updates,.ecard{border-radius:var(--r-card)}
+.svc,.dirgrid a,.fact,.match,.emi div,.msg,.tbl,.empty,.official,.warn,.status{border-radius:var(--r)}
+.cat{transition:transform .6s var(--ease),box-shadow .6s var(--ease),border-color .4s var(--ease)}
+.cat svg{transition:transform .8s var(--ease)}
+.cat .c{padding:14px 16px 18px}
+.cat .c b{font-size:16px;letter-spacing:-.01em;margin-bottom:3px}
+.cat:hover,.dirgrid a:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
 .cat:hover svg{transform:scale(1.04)}
-.svc,.dirgrid a,.ecard{transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s}
+.cat:active,.toolgrid a:active{transform:scale(.99)}
+.svc,.dirgrid a,.ecard{transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .3s var(--ease)}
 .svc:hover{box-shadow:var(--shadow-md)}
 
-/* tools */
-.toolgrid{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:16px}
-.toolgrid a{border-radius:18px;padding:20px;gap:6px;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
-.toolgrid .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:8px;transition:background-color .25s,color .25s}
-.toolgrid .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.toolgrid a:hover .ic{background:var(--accent);color:var(--accent-ink)}
+/* tools: double-bezel cards with tinted icon well */
+.toolgrid{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:22px;padding:7px}
+.toolgrid a{border-radius:var(--r-card);padding:22px;gap:6px;box-shadow:var(--bezel),var(--shadow-sm);transition:transform .6s var(--ease),box-shadow .6s var(--ease),border-color .4s var(--ease)}
+.toolgrid a:hover{transform:translateY(-4px);box-shadow:var(--bezel),var(--shadow-md);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.toolgrid .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);margin-bottom:10px;font-size:0;transition:background-color .4s var(--ease),color .4s var(--ease),transform .6s var(--ease)}
+.toolgrid .ic svg{width:28px;height:28px}
+.toolgrid a:hover .ic{background:var(--accent);color:var(--accent-ink);transform:rotate(-4deg)}
 .toolgrid b{font-size:17px;letter-spacing:-.01em}
 .toolgrid .d{font-size:14px;line-height:1.55}
-.toolgrid .go{padding-top:12px;transition:letter-spacing .25s var(--ease)}
-.toolgrid a:hover .go{letter-spacing:.02em}
+.toolgrid .go{padding-top:14px;display:inline-block;transition:transform .5s var(--ease)}
+.toolgrid a:hover .go{transform:translateX(4px)}
 
 /* updates */
-.updates{border-radius:18px;overflow:hidden}
-.upd{padding:14px 20px;transition:background-color .15s}
+.updates{overflow:hidden}
+.upd{padding:15px 20px;transition:background-color .3s var(--ease)}
 .upd:hover{background:color-mix(in srgb,var(--accent-soft) 45%,transparent)}
-.upd time{display:inline-block}
 .updates.clip .upd:nth-child(n+7){display:none}
-.more{display:block;margin:14px auto 0;font:600 14px var(--f-body);color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 20px;cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .2s}
+.more{display:block;margin:16px auto 0;font:600 14px var(--f-body);color:var(--accent);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 22px;cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .3s var(--ease),transform .5s var(--ease)}
 .more:hover{border-color:var(--accent)}
+.more:active{transform:scale(.98)}
 
-/* panels and sheets */
-.panel,.sheet{border-radius:20px}
-.panel{padding:24px}
-.sos{border-radius:16px;padding:12px 16px}
-.sos .n{transition:transform .15s var(--ease)}
+/* panels, chips, misc */
+.panel{padding:26px}
+.sos{border-radius:var(--r-card);padding:12px 18px}
+.sos .n{transition:transform .4s var(--ease)}
 .sos .n:hover{transform:translateY(-1px)}
-.chip{transition:background-color .2s,border-color .2s,color .2s}
+.chip{transition:background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
 .chip:hover{border-color:var(--accent)}
-.fab{transition:transform .2s var(--ease),box-shadow .2s}
-.fab:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 28px rgba(0,0,0,.26)}
+select,input[type=number],input[type=text],input[type=tel],input[type=email],textarea{border-radius:var(--r);transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent)}
+.fab{box-shadow:0 14px 30px -10px color-mix(in srgb,var(--wa) 70%,transparent);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.fab:hover{transform:translateY(-2px)}
+.fab:active{transform:scale(.97)}
 
-/* entrance motion */
+/* motion: view switch + scroll reveal (transform/opacity only; JS adds .rv) */
 @media (prefers-reduced-motion:no-preference){
-  .view:not([hidden]){animation:rise .45s var(--ease) both}
-  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .view:not([hidden]){animation:rise .7s var(--ease-out) both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);transition-delay:calc(var(--i,0) * 70ms)}
+  .rv.in{opacity:1;transform:none}
 }
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}.cat:hover,.toolgrid a:hover,.dirgrid a:hover,.btn:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}.cat:hover,.toolgrid a:hover,.dirgrid a:hover,.btn:hover{transform:none}}
+@media (max-width:767px){.hero .eyebrow{letter-spacing:.1em;font-size:10px}.h2row{margin-top:48px}.hero{margin-inline:6px;border-radius:24px}.toolgrid{gap:18px}}
 </style>
 </head>
 <body>
@@ -333,13 +355,13 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
     </svg>
     <span class="t"><span class="n">Sahulat <span>Guide</span></span><span class="ur" lang="ur">سہولت گائیڈ · پاکستان</span></span>
   </a>
-  <div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search: passport, bill, car loan, bus, cargo…" aria-label="Search services"></div>
+  <div class="search"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></svg><input id="q" type="search" placeholder="Search: passport, bill, car loan, bus, cargo…" aria-label="Search services"></div>
 </div>
 
 <div class="tabs"><div class="scroll"><nav id="tabs" role="tablist" aria-label="Sections"></nav></div></div>
 
 <div class="ticker" aria-label="Latest updates">
-  <div class="lbl"><i></i>Updates</div>
+  <div class="lbl">Updates</div>
   <div class="track" tabindex="0"><div class="belt" id="belt"></div></div>
 </div>
 
@@ -351,16 +373,11 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
       <div>
         <div class="eyebrow">Government services, explained</div>
         <h1>Every government service, <em>explained step by step</em></h1>
-        <p>ID cards and passports, loans, bills and taxes, health cards, scholarships, city buses, trains and cargo, across Pakistan. Each guide lists who qualifies, which documents to prepare, what it costs, and the official place to apply.</p>
+        <p>Who qualifies, which documents to bring, what it costs and where to apply, for every major government service in Pakistan.</p>
         <div class="cta">
-          <button class="btn" data-go="all">Browse all services</button>
+          <button class="btn island" data-go="all">Browse all services<span class="nub"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M220.24,132.24l-72,72a6,6,0,0,1-8.48-8.48L201.51,134H40a6,6,0,0,1,0-12H201.51L139.76,60.24a6,6,0,0,1,8.48-8.48l72,72A6,6,0,0,1,220.24,132.24Z"/></svg></span></button>
           <button class="btn ghost" data-go="tools">Find a scheme for me</button>
         </div>
-        <ul class="trust">
-          <li><b id="heroCount">28</b><span>step-by-step guides</span></li>
-          <li><b>Free</b><span>no sign-up, no agents</span></li>
-          <li><b>5 Oct</b><span>last checked 2026</span></li>
-        </ul>
       </div>
       <div id="heroArt"></div>
     </div>
@@ -370,10 +387,10 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 
     <div class="h2row"><h2>Travel &amp; delivery tools</h2><p>Free planners and price guides</p></div>
     <div class="toolgrid">
-      <a href="passport/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16h6"/></svg></span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
-      <a href="route-planner/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg></span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
-      <a href="trains/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
-      <a href="parcels/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9M8 5.3l8 4.4"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
+      <a href="passport/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M198,112a6,6,0,0,1-6,6H152a6,6,0,0,1,0-12h40A6,6,0,0,1,198,112Zm-6,26H152a6,6,0,0,0,0,12h40a6,6,0,0,0,0-12Zm38-82V200a14,14,0,0,1-14,14H40a14,14,0,0,1-14-14V56A14,14,0,0,1,40,42H216A14,14,0,0,1,230,56Zm-12,0a2,2,0,0,0-2-2H40a2,2,0,0,0-2,2V200a2,2,0,0,0,2,2H216a2,2,0,0,0,2-2ZM133.81,166.51a6,6,0,0,1-11.62,3C119.34,158.38,108.08,150,96,150s-23.33,8.38-26.19,19.5a6,6,0,0,1-11.62-3A38,38,0,0,1,76.78,143a30,30,0,1,1,38.45,0A38,38,0,0,1,133.81,166.51ZM96,138a18,18,0,1,0-18-18A18,18,0,0,0,96,138Z"/></svg></span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
+      <a href="route-planner/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M200,170a30.05,30.05,0,0,0-29.4,24H72a34,34,0,0,1,0-68h96a38,38,0,0,0,0-76H72a6,6,0,0,0,0,12h96a26,26,0,0,1,0,52H72a46,46,0,0,0,0,92h98.6A30,30,0,1,0,200,170Zm0,48a18,18,0,1,1,18-18A18,18,0,0,1,200,218Z"/></svg></span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
+      <a href="trains/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M184,26H72A30,30,0,0,0,42,56V184a30,30,0,0,0,30,30H84L67.2,236.4a6,6,0,1,0,9.6,7.2L99,214h58l22.2,29.6a6,6,0,0,0,9.6-7.2L172,214h12a30,30,0,0,0,30-30V56A30,30,0,0,0,184,26ZM54,122V78h68v44Zm80-44h68v44H134ZM72,38H184a18,18,0,0,1,18,18V66H54V56A18,18,0,0,1,72,38ZM184,202H72a18,18,0,0,1-18-18V134H202v50A18,18,0,0,1,184,202Zm-2-30a10,10,0,1,1-10-10A10,10,0,0,1,182,172Zm-88,0a10,10,0,1,1-10-10A10,10,0,0,1,94,172Z"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
+      <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
     </div>
 
     <div class="h2row"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
@@ -403,10 +420,10 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   <section class="view" id="v-tools" hidden>
     <div class="vhead"><h1>Tools</h1><p>Check which schemes fit you and estimate your monthly instalment.</p></div>
     <div class="toolgrid" style="margin-bottom:20px">
-      <a href="passport/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16h6"/></svg></span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
-      <a href="route-planner/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg></span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
-      <a href="trains/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
-      <a href="parcels/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9M8 5.3l8 4.4"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
+      <a href="passport/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M198,112a6,6,0,0,1-6,6H152a6,6,0,0,1,0-12h40A6,6,0,0,1,198,112Zm-6,26H152a6,6,0,0,0,0,12h40a6,6,0,0,0,0-12Zm38-82V200a14,14,0,0,1-14,14H40a14,14,0,0,1-14-14V56A14,14,0,0,1,40,42H216A14,14,0,0,1,230,56Zm-12,0a2,2,0,0,0-2-2H40a2,2,0,0,0-2,2V200a2,2,0,0,0,2,2H216a2,2,0,0,0,2-2ZM133.81,166.51a6,6,0,0,1-11.62,3C119.34,158.38,108.08,150,96,150s-23.33,8.38-26.19,19.5a6,6,0,0,1-11.62-3A38,38,0,0,1,76.78,143a30,30,0,1,1,38.45,0A38,38,0,0,1,133.81,166.51ZM96,138a18,18,0,1,0-18-18A18,18,0,0,0,96,138Z"/></svg></span><b>Passport services</b><span class="d">Nearest passport office, fee calculator, timings, renewal and visa help.</span><span class="go">Open tool →</span></a>
+      <a href="route-planner/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M200,170a30.05,30.05,0,0,0-29.4,24H72a34,34,0,0,1,0-68h96a38,38,0,0,0,0-76H72a6,6,0,0,0,0,12h96a26,26,0,0,1,0,52H72a46,46,0,0,0,0,92h98.6A30,30,0,1,0,200,170Zm0,48a18,18,0,1,1,18-18A18,18,0,0,1,200,218Z"/></svg></span><b>Road route planner</b><span class="d">Routes, distances and travel times between Pakistani cities.</span><span class="go">Open tool →</span></a>
+      <a href="trains/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M184,26H72A30,30,0,0,0,42,56V184a30,30,0,0,0,30,30H84L67.2,236.4a6,6,0,1,0,9.6,7.2L99,214h58l22.2,29.6a6,6,0,0,0,9.6-7.2L172,214h12a30,30,0,0,0,30-30V56A30,30,0,0,0,184,26ZM54,122V78h68v44Zm80-44h68v44H134ZM72,38H184a18,18,0,0,1,18,18V66H54V56A18,18,0,0,1,72,38ZM184,202H72a18,18,0,0,1-18-18V134H202v50A18,18,0,0,1,184,202Zm-2-30a10,10,0,1,1-10-10A10,10,0,0,1,182,172Zm-88,0a10,10,0,1,1-10-10A10,10,0,0,1,94,172Z"/></svg></span><b>Train finder</b><span class="d">Timetables and estimated fares for 50 Pakistan Railways trains.</span><span class="go">Open guide →</span></a>
+      <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
     </div>
     <div class="grid2">
       <div class="panel">
@@ -451,9 +468,9 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
           <label>Years<input id="eYrs" type="number" min="1" max="20" value="3"></label>
         </div>
         <div class="emi">
-          <div><div class="k">Monthly</div><div class="v" id="oM">–</div></div>
-          <div><div class="k">Total markup</div><div class="v" id="oI">–</div></div>
-          <div><div class="k">Total repaid</div><div class="v" id="oT">–</div></div>
+          <div><div class="k">Monthly</div><div class="v" id="oM">-</div></div>
+          <div><div class="k">Total markup</div><div class="v" id="oI">-</div></div>
+          <div><div class="k">Total repaid</div><div class="v" id="oT">-</div></div>
         </div>
         <p class="sub" style="margin-top:10px">Estimate only. Grace periods, equity contribution and bank fees change the real figure. Your bank's sanction letter is final.</p>
       </div>
@@ -724,20 +741,20 @@ const S = [
   links:[["Pak-Identity portal","https://id.nadra.gov.pk"],["NADRA fee structure","https://www.nadra.gov.pk/feeStructure"]], help:"NADRA UAN 051-111-786-100" },
 { id:"pm-youth-loan", grp:"money", sub:"business", region:["national"], art:"loan", name:"PM Youth Business & Agriculture Loan", ur:"وزیراعظم یوتھ بزنس و زراعت قرض", by:"Govt. of Pakistan + SBP", status:"open",
   summary:"Federal loan scheme (formerly Kamyab Jawan) for new and existing businesses and farming. Loans go up to Rs 7.5 million in three tiers through partner banks; the government pays most of the markup.",
-  facts:[["Max loan","Rs 7.5 M"],["Markup","0% / 5% / 7%"],["Age","21–45"],["Women quota","25%"]],
+  facts:[["Max loan","Rs 7.5 M"],["Markup","0% / 5% / 7%"],["Age","21-45"],["Women quota","25%"]],
   elig:["Pakistani citizen with a valid CNIC, aged 21 to 45","For IT / e-commerce businesses the minimum age is 18, with at least Matric","New startups and existing businesses can both apply","Government employees are not eligible","Clean credit history; no outstanding default"],
   docs:["CNIC (front and back)","Mobile number registered in your name","Business plan / feasibility (the portal guides you)","Two references with CNIC numbers","For existing businesses: proof of business, e.g. bank statement, tax or utility documents","For Tier 3: security documents as the bank requires"],
   steps:["Open the official PM Youth Programme portal and choose the Business & Agriculture Loan.","Create an account with your CNIC and mobile number and verify the OTP.","Select your tier based on the amount you need.","Fill in personal, education and business details, and choose a preferred bank and branch.","Upload documents and submit. Note your tracking ID.","The bank reviews your plan and may call you for an interview and site visit.","If sanctioned, sign the documents, provide security (Tier 3) and equity if required.","Funds are disbursed by the bank. Repay in monthly instalments after any grace period."],
-  table:{head:["Tier","Amount","Markup","Max tenure","Security"],rows:[["T1","Up to Rs 0.5 M","0%","3 years","Personal guarantee"],["T2","Rs 0.5 M – 1.5 M","5%","8 years","Personal guarantee"],["T3","Rs 1.5 M – 7.5 M","7%","8 years","As per bank policy"]]},
+  table:{head:["Tier","Amount","Markup","Max tenure","Security"],rows:[["T1","Up to Rs 0.5 M","0%","3 years","Personal guarantee"],["T2","Rs 0.5 M - 1.5 M","5%","8 years","Personal guarantee"],["T3","Rs 1.5 M - 7.5 M","7%","8 years","As per bank policy"]]},
   note:"Tier 2 and 3 offer a grace period of up to one year on principal. New businesses may need an equity contribution in the higher tiers.",
   links:[["PM Youth Programme portal","https://pmyp.gov.pk"]], help:"Helpline listed on pmyp.gov.pk" },
 { id:"asaan-karobar-finance", grp:"money", sub:"business", region:["punjab"], art:"loan", name:"CM Punjab Asaan Karobar Finance", ur:"آسان کاروبار فنانس", by:"Govt. of Punjab + Bank of Punjab", status:"open",
   summary:"Interest-free business loans from Rs 1 million to Rs 30 million for small and medium businesses and startups in Punjab, processed by the Bank of Punjab.",
-  facts:[["Range","Rs 1 M – 30 M"],["Markup","0%"],["Tenure","Up to 5 years"],["Age","25–55"]],
+  facts:[["Range","Rs 1 M - 30 M"],["Markup","0%"],["Tenure","Up to 5 years"],["Age","25-55"]],
   elig:["Resident of Punjab with a valid CNIC, aged 25 to 55","Active FBR tax filer with an NTN","Business located in Punjab (owned or rented premises)","Clean credit history","One facility per business"],
   docs:["CNIC and mobile number registered in your name","NTN / active taxpayer status","Business plan or feasibility","Proof of business premises (ownership or rent agreement)","Bank statements for existing businesses","For Tier 2: property or other acceptable security"],
   steps:["Open akf.punjab.gov.pk and register with your CNIC-linked mobile number.","Fill in personal and business information and choose Tier 1 or Tier 2.","Enter the amount and purpose (startup, expansion, machinery, etc.).","Upload documents.","Pay the non-refundable processing fee online.","Bank of Punjab checks your feasibility, credit history and security.","If approved, funds are released, often in tranches. Repay in equal monthly instalments after the grace period."],
-  table:{head:["Tier","Amount","Security","Processing fee","Grace period"],rows:[["T1","Rs 1 M – 5 M","Personal guarantee","Rs 5,000","Startups ≤ 6 months"],["T2","Rs 6 M – 30 M","Secured","Rs 10,000","Existing ≤ 3 months"]]},
+  table:{head:["Tier","Amount","Security","Processing fee","Grace period"],rows:[["T1","Rs 1 M - 5 M","Personal guarantee","Rs 5,000","Startups ≤ 6 months"],["T2","Rs 6 M - 30 M","Secured","Rs 10,000","Existing ≤ 3 months"]]},
   note:"The scheme is in its second phase. Check the portal for the current window before paying the fee.",
   links:[["Asaan Karobar Finance portal","https://akf.punjab.gov.pk"]], help:"Bank of Punjab / PITB helpline on the portal" },
 { id:"apni-chhat-apna-ghar", grp:"money", sub:"housing", region:["punjab"], art:"house", name:"Apni Chhat Apna Ghar", ur:"اپنی چھت اپنا گھر", by:"Govt. of Punjab (PHATA)", status:"open",
@@ -769,7 +786,7 @@ const S = [
   links:[["Livestock Card portal","https://plc.punjab.gov.pk"]], help:"CM Facilitation Desks at veterinary hospitals" },
 
 { id:"punjab-health-card", grp:"health", sub:"cards", region:["punjab"], art:"health", name:"Punjab Health Card (Sehat Card)", ur:"پنجاب صحت کارڈ", by:"Govt. of Punjab (PHIMC)", status:"check",
-  summary:"Free admitted (indoor) treatment at empanelled public and private hospitals for families permanently resident in Punjab. Your CNIC is your card. The programme was restructured in 2025–26, so check what is covered before you go.",
+  summary:"Free admitted (indoor) treatment at empanelled public and private hospitals for families permanently resident in Punjab. Your CNIC is your card. The programme was restructured in 2025-26, so check what is covered before you go.",
   facts:[["Secondary care","Rs 60,000 / family / yr"],["Priority care","Rs 400,000 / family / yr"],["Card","Your CNIC"],["Helpline","0800-07542"]],
   elig:["Permanent resident of Punjab (as per CNIC address)","Covers you, your spouse, unmarried children and newborns registered with NADRA","Family members must be linked in NADRA's family record","OPD (outdoor) visits are not covered; treatment is for admitted patients"],
   docs:["Original CNIC of the patient or head of family","Form-B for children; for a newborn born elsewhere, bring the Form-B to the hospital's health card desk","Doctor's referral or admission advice"],
@@ -800,7 +817,7 @@ const S = [
 
 { id:"hec-need-based", grp:"education", sub:"university", region:["national"], art:"grad", name:"HEC Need-Based Scholarship", ur:"ایچ ای سی نیڈ بیسڈ اسکالرشپ", by:"Higher Education Commission", status:"open",
   summary:"Covers full tuition and a Rs 6,000 monthly stipend for undergraduate students at HEC-funded public universities. There is no online portal: you apply on paper through your university.",
-  facts:[["Tuition","Full fee"],["Stipend","Rs 6,000 / month"],["Programmes","4–5 year degrees"],["Apply at","Your university"]],
+  facts:[["Tuition","Full fee"],["Stipend","Rs 6,000 / month"],["Programmes","4-5 year degrees"],["Apply at","Your university"]],
   elig:["Undergraduate student on open merit in a 4- or 5-year programme (MBBS and Pharm-D included)","Enrolled at a public university that receives HEC grants; affiliated colleges are not covered","First-year and continuing students can apply","Not holding another scholarship","Family income limit is set by each university (for example Rs 45,000 a month at one university in 2025-26)"],
   docs:["Parents' or guardian's CNIC copies","Salary certificate of each earning family member","Six months of electricity, gas, phone and water bills","Fee receipts of siblings in education","Rent agreement, medical bills (if applicable)","Statement of purpose"],
   steps:["Ask your university's Financial Aid Office when the window opens; HEC does not announce national dates.","Collect the form from the Financial Aid Office or HEC's website.","Fill in all sections: personal, family, assets, financial arrangements and education.","Attach the documents in the checklist order.","Submit to the Financial Aid Office before its deadline; HEC does not accept forms directly.","Attend the interview. Awards are announced by the university."],
@@ -820,12 +837,12 @@ const S = [
 
 { id:"free-education-punjab", grp:"education", sub:"school", region:["punjab"], art:"school", name:"Free schooling in Punjab", ur:"مفت تعلیم پنجاب", by:"School Education Dept. + PEF", status:"open",
   summary:"Every child aged 5 to 16 has a constitutional right to free education. In Punjab, government schools charge no tuition and give free textbooks, and the Punjab Education Foundation pays for children's schooling at partner private schools in underserved areas.",
-  facts:[["Ages","5–16"],["Govt schools","No tuition fee"],["Textbooks","Free"],["PEF schools","Fee paid by PEF"]],
-  elig:["Any child aged 5–16 can join the nearest government school","PEF voucher schools are for children of low-income families in areas where seats are available","Admission campaigns usually run in spring, but government schools admit children year-round"],
+  facts:[["Ages","5-16"],["Govt schools","No tuition fee"],["Textbooks","Free"],["PEF schools","Fee paid by PEF"]],
+  elig:["Any child aged 5-16 can join the nearest government school","PEF voucher schools are for children of low-income families in areas where seats are available","Admission campaigns usually run in spring, but government schools admit children year-round"],
   docs:["Child's Form-B (or birth certificate)","Parent's CNIC","Previous school leaving certificate, if moving schools"],
   steps:["Visit the nearest government school with the child and documents.","Ask the head teacher for admission; there is no tuition fee.","Collect free textbooks at the start of the session.","For a PEF partner school, ask the school or the PEF district office whether voucher seats are open.","Keep the child's attendance regular; stipend schemes such as Taleemi Wazaif depend on it."],
   table:null,
-  note:"Article 25-A of the Constitution makes free and compulsory education a right for children aged 5–16.",
+  note:"Article 25-A of the Constitution makes free and compulsory education a right for children aged 5-16.",
   links:[["Punjab Education Foundation","https://www.pef.edu.pk"],["School Education Dept.","https://schools.punjab.gov.pk"]], help:"Your district education office" },
 
 { id:"clean-water", grp:"health", sub:"water", region:["punjab"], art:"water", name:"Free clean drinking water plants", ur:"صاف پانی فلٹریشن پلانٹس", by:"Punjab Saaf Pani Authority", status:"open",
@@ -852,9 +869,9 @@ const S = [
   summary:"File your yearly income tax return on IRIS to become an active filer. Filers pay much lower withholding tax on bank profit, property, vehicles and cash withdrawals. The Tax Year 2026 deadline has been extended to 15 October 2026.",
   facts:[["TY2026 deadline","15 Oct 2026"],["Check status","SMS CNIC to 9966"],["Portal","IRIS / Tax Asaan"],["Filing fee","Free"]],
   elig:["Anyone with taxable income above the exemption limit must file","Anyone who owns property or a car, or has large bank transactions, benefits from filing","You need an NTN first (see NTN registration)"],
-  docs:["Salary certificate / income details for the tax year (1 July – 30 June)","Bank account statements and withholding tax certificates","Property, vehicle and asset details for the wealth statement","Utility bills, phone bills (tax deducted on them is adjustable)","Zakat and donation receipts, if any"],
+  docs:["Salary certificate / income details for the tax year (1 July - 30 June)","Bank account statements and withholding tax certificates","Property, vehicle and asset details for the wealth statement","Utility bills, phone bills (tax deducted on them is adjustable)","Zakat and donation receipts, if any"],
   steps:["Log in to iris.fbr.gov.pk (or the Tax Asaan app).","Choose Declaration → Income Tax Return (Form 114) for the current tax year.","Enter income, deductions and taxes already deducted (shown from withholding data).","Fill in the wealth statement: assets, liabilities and how they changed during the year.","Pay any tax due through a PSID on IRIS, payable in banking apps.","Submit the return and wealth statement. Keep the acknowledgement.","Check your status by sending your 13-digit CNIC to 9966. The Active Taxpayers List is updated regularly."],
-  table:{head:["Transaction","Filer","Non-filer"],rows:[["Tax on bank profit","15%","30%"],["Buying property (advance tax)","1.5%","3%"],["Selling property (CGT)","5%","10%"],["1,000–2,000 cc car registration","Rs 50,000","Rs 200,000"]]},
+  table:{head:["Transaction","Filer","Non-filer"],rows:[["Tax on bank profit","15%","30%"],["Buying property (advance tax)","1.5%","3%"],["Selling property (CGT)","5%","10%"],["1,000-2,000 cc car registration","Rs 50,000","Rs 200,000"]]},
   note:"Late filers can still file, but may pay a surcharge to get on the Active Taxpayers List. Rates in the table are examples; confirm current rates with FBR.",
   links:[["FBR IRIS portal","https://iris.fbr.gov.pk"],["FBR website","https://www.fbr.gov.pk"]], help:"FBR helpline 051-111-772-772" },
 
@@ -864,7 +881,7 @@ const S = [
   elig:["Anyone with a CNIC (children travel on the parent's booking)","Concessions are available for some groups, such as senior citizens and students; ask at the booking office"],
   docs:["CNIC of the passenger booking","Mobile number for the e-ticket","Debit/credit card, bank app or mobile wallet for payment"],
   steps:["Install Rabta from the Play Store / App Store, or open pakrail.gov.pk.","Sign up with your CNIC and mobile number and verify the OTP.","Choose the departure and arrival stations and the date.","Pick the train and class (Economy, AC Standard, AC Business, AC Sleeper), then select seats or berths.","Enter passenger details and pay.","The e-ticket arrives in the app and by SMS. Carry your CNIC on the journey.","To cancel, use the app or a booking office before departure; the refund depends on timing (table below)."],
-  table:{head:["Cancel","Refund"],rows:[["48+ hours before departure","Up to 90%"],["24–48 hours before","80%"],["Within 24 hours","70%"],["Within 2 hours","50%"],["Train delayed 6+ hours","Full refund"],["After departure","No refund"]]},
+  table:{head:["Cancel","Refund"],rows:[["48+ hours before departure","Up to 90%"],["24-48 hours before","80%"],["Within 24 hours","70%"],["Within 2 hours","50%"],["Train delayed 6+ hours","Full refund"],["After departure","No refund"]]},
   note:"Book only through the official Rabta app, pakrail.gov.pk or station counters. Avoid ticket agents who charge extra.",
   links:[["Pakistan Railways","https://www.pakrail.gov.pk"]], help:"117" },
 
@@ -873,18 +890,18 @@ const S = [
   facts:[["Domestic ID","CNIC / Form-B"],["International","Passport + visa"],["Workers abroad","Protector stamp"],["Buy from","Airline site/app"]],
   elig:["Domestic flights: CNIC (Form-B or birth certificate for children)","International flights: valid passport and visa for the destination","Workers going abroad on an employment visa need protector registration from the Bureau of Emigration (a government service)"],
   docs:["CNIC or passport","Visa (international)","Protector stamp / emigration clearance for overseas employment","Card, bank transfer or mobile wallet for payment"],
-  steps:["Compare fares on the airline's official website or app (PIA, Airblue, AirSial, Fly Jinnah, or foreign airlines).","Enter your name exactly as on your CNIC or passport.","Choose fare type: check the baggage allowance and change/refund rules before paying.","Pay online and download the e-ticket; check the email for the PNR / booking reference.","Check in online 24–48 hours before the flight where offered.","Reach the airport early (about 2 hours domestic, 3–4 hours international) with your CNIC or passport."],
+  steps:["Compare fares on the airline's official website or app (PIA, Airblue, AirSial, Fly Jinnah, or foreign airlines).","Enter your name exactly as on your CNIC or passport.","Choose fare type: check the baggage allowance and change/refund rules before paying.","Pay online and download the e-ticket; check the email for the PNR / booking reference.","Check in online 24-48 hours before the flight where offered.","Reach the airport early (about 2 hours domestic, 3-4 hours international) with your CNIC or passport."],
   table:null,
   note:"If buying from a travel agent, use an IATA-accredited agent and check the PNR on the airline's own website before paying in full.",
   links:[["PIA","https://www.piac.com.pk"],["Bureau of Emigration","https://beoe.gov.pk"]], help:"Airline's own call centre" },
 
 { id:"mera-ghar-mera-ashiana", grp:"money", sub:"housing", region:["national"], art:"bank", name:"Mera Ghar Mera Ashiana (bank home loan)", ur:"میرا گھر میرا آشیانہ", by:"Govt. of Pakistan + SBP, through banks", status:"open",
   summary:"Government-subsidised home loans through banks for first-time owners buying or building a small house or flat. Markup is fixed at 5% or 8% for the first ten years, and the loan can run for up to 20 years.",
-  facts:[["Max loan","Rs 3.5 M"],["Markup (yr 1–10)","5% / 8% fixed"],["Tenure","Up to 20 years"],["House size","Up to 5 marla"]],
+  facts:[["Max loan","Rs 3.5 M"],["Markup (yr 1-10)","5% / 8% fixed"],["Tenure","Up to 20 years"],["House size","Up to 5 marla"]],
   elig:["Pakistani citizen with a valid CNIC","First-time home owner (no house in your name)","House up to 5 marla, or flat up to 1,360 sq ft","Repayment capacity as assessed by the bank"],
   docs:["CNIC","Income proof: salary slips or business income and bank statements","Property papers (sale agreement, title documents, approved map for construction)","Tax return / NTN if you have one","Two recent photos and references as asked by the bank"],
   steps:["Visit any participating bank, Islamic bank, microfinance bank or HBFCL branch and ask for Mera Ghar Mera Ashiana.","Choose the tier based on the amount you need.","Submit the application with documents; the bank checks your income and credit history.","The bank evaluates the property (legal and technical check).","On approval, sign the loan papers; the property is mortgaged to the bank.","Pay a monthly instalment. The subsidised markup applies for the first ten years."],
-  table:{head:["Tier","Loan amount","Markup (first 10 years)"],rows:[["Tier 1","Up to Rs 2 M","5% fixed"],["Tier 2","Rs 2 M – 3.5 M","8% fixed"]]},
+  table:{head:["Tier","Loan amount","Markup (first 10 years)"],rows:[["Tier 1","Up to Rs 2 M","5% fixed"],["Tier 2","Rs 2 M - 3.5 M","8% fixed"]]},
   note:"Markup after year ten follows the bank's terms; ask the bank for the full repayment schedule before signing.",
   links:[["State Bank of Pakistan","https://www.sbp.org.pk"]], help:"Your bank branch / SBP" },
 { id:"passport", grp:"identity", sub:"passport", region:["national"], art:"passport", name:"Passport: new and renewal", ur:"پاسپورٹ", by:"Directorate General of Immigration & Passports", status:"open",
@@ -893,7 +910,7 @@ const S = [
   elig:["Pakistani citizen with a valid CNIC or NICOP","Children: CRC (B-Form) or Juvenile Card, with both parents' CNICs","Government employees need an NOC from their department","Overseas Pakistanis can renew online"],
   docs:["Original CNIC / NICOP and a photocopy","Previous passport, if any","Lost passport: police report","Minors: CRC/FRC and both parents' original CNICs or passports; custody or guardianship papers if relevant","Dual nationals: the foreign passport","Fee paid at the bank (or online, for online renewal)"],
   steps:["Pay the fee at a designated bank branch (or online for overseas renewal). Keep the receipt.","Visit a Regional Passport Office with your original CNIC; there is no prior appointment for most offices.","Get a token; your photo, fingerprints and signature are taken live.","Check the printed data form carefully and sign it.","Collect your passport on the given date, or track it on the DGIP website.","Living abroad? Use the official online renewal portal; the passport is couriered to your mission or address."],
-  table:{head:["Processing","Time","36 pages · 5 years"],rows:[["Normal","21 working days","Rs 4,500"],["Urgent","5 working days","Rs 7,500"],["Fast track","2 working days","Rs 12,500"],["e-Passport","Varies","Rs 9,000 – 24,750"]]},
+  table:{head:["Processing","Time","36 pages · 5 years"],rows:[["Normal","21 working days","Rs 4,500"],["Urgent","5 working days","Rs 7,500"],["Fast track","2 working days","Rs 12,500"],["e-Passport","Varies","Rs 9,000 - 24,750"]]},
   note:"Fees shown are for a 36-page, 5-year passport. 10-year and 72/100-page passports cost more; children under 15 get 5-year passports only. Confirm the current fee on dgip.gov.pk.",
   links:[["DGIP website","https://dgip.gov.pk"],["Online renewal (abroad)","https://onlinemrp.dgip.gov.pk"]], help:"051-111-344-777" },
 
@@ -913,7 +930,7 @@ const S = [
   elig:["Owners of houses, plots, shops and other urban property in Punjab","Land owners who need a fard, mutation (intiqal) or record check"],
   docs:["Property ID / the 28-digit code on your old property tax bill","CNIC","For a fard: khewat/khatoni details or your CNIC as the land owner"],
   steps:["Property tax: open the Excise & Taxation website and find your property using the code on your old bill (new properties are added through self-assessment).","Download the tax bill with its payment reference.","Open the ePay Punjab app or website and generate a 17-digit PSID for the bill.","Pay the PSID in any bank app, internet banking, ATM, JazzCash, Easypaisa or at a bank counter. Keep the receipt.","Fard: visit an Arazi Record Centre or NADRA e-Sahulat outlet with your CNIC, or start on the PLRA website, and pay the fee to get a computerised fard.","For land transfer (registry and mutation), use Punjab's e-Registration through the PLRA / Arazi Record Centre."],
-  table:{head:["Pay by","Rebate / surcharge"],rows:[["30 Sep 2026","5% rebate (full-year payment)"],["1 Oct – 31 Dec 2026","+1%"],["1 Jan – 31 Mar 2027","+2%"],["1 Apr – 30 Jun 2027","+3%"],["From 1 Jul 2027","+4%"]]},
+  table:{head:["Pay by","Rebate / surcharge"],rows:[["30 Sep 2026","5% rebate (full-year payment)"],["1 Oct - 31 Dec 2026","+1%"],["1 Jan - 31 Mar 2027","+2%"],["1 Apr - 30 Jun 2027","+3%"],["From 1 Jul 2027","+4%"]]},
   note:"The rebate window for 2026 has closed; tax paid now carries a 1% surcharge until 31 December 2026.",
   links:[["Excise & Taxation Punjab","https://excise.punjab.gov.pk"],["ePay Punjab","https://epay.punjab.gov.pk"],["PLRA land records","https://www.punjab-zameen.gov.pk"]], help:"Property tax 1035" },
 
@@ -946,8 +963,8 @@ const S = [
 { id:"bank-loans", grp:"money", sub:"bank", region:["national"], art:"bank", name:"Bank loans: compare & calculate", ur:"بینک قرضے", by:"Commercial & Islamic banks (regulated by SBP)", status:"open",
   summary:"Personal, car, home and business loans from Pakistani banks are priced as KIBOR plus the bank's own margin (spread). Islamic banks use a similar benchmark for their profit rate. Use the calculator with today's KIBOR and the spread your bank quotes you.",
   facts:[["6-month KIBOR","12.35%"],["12-month KIBOR","12.64%"],["KIBOR date","2 Oct 2026"],["Regulator","SBP"]],
-  elig:["Usually aged 21–60 (to 65 at loan maturity for some products)","Salaried: confirmed job and salary in a bank account; self-employed: business proof","Clean credit history (checked with the SBP credit bureau, eCIB)","Income meets the bank's minimum for the product"],
-  docs:["CNIC and recent photos","Salary slips (3–6 months) or business documents","Bank statements (6–12 months)","Tax return / NTN (needed for larger loans)","For car or home loans: quotation or property documents"],
+  elig:["Usually aged 21-60 (to 65 at loan maturity for some products)","Salaried: confirmed job and salary in a bank account; self-employed: business proof","Clean credit history (checked with the SBP credit bureau, eCIB)","Income meets the bank's minimum for the product"],
+  docs:["CNIC and recent photos","Salary slips (3-6 months) or business documents","Bank statements (6-12 months)","Tax return / NTN (needed for larger loans)","For car or home loans: quotation or property documents"],
   steps:["Decide the loan type: personal, car, home or business.","Use the calculator (Tools tab) with today's KIBOR and a few banks' quoted spreads to compare monthly payments.","Ask each bank for its key fact statement (KFS): rate, fees, insurance and prepayment charges.","Apply at the branch or in the bank's app with your documents.","The bank checks your credit report and income, and may visit your home or business.","Read the offer letter carefully before signing; check total cost, not just the monthly instalment.","For cheaper subsidised options, compare with Mera Ghar Mera Ashiana, PM Youth Loan or Asaan Karobar Finance first."],
   table:{head:["Bank","Type","Loan products & calculators"],rows:[
    ["HBL","Conventional","hbl.com"],["MCB","Conventional","mcb.com.pk"],["UBL","Conventional","ubldigital.com"],["National Bank (NBP)","Government-owned","nbp.com.pk"],
@@ -956,20 +973,20 @@ const S = [
   links:[["KIBOR rates (SBP)","https://www.sbp.org.pk/ecodata/kibor_index.asp"],["SBP consumer protection","https://www.sbp.org.pk"]], help:"Your bank's helpline · SBP complaints on sbp.org.pk" },
 
 { id:"city-buses", grp:"transport", sub:"bus", region:["punjab", "sindh", "kp", "ict"], art:"bus", name:"City bus services", ur:"شہری بس سروس", by:"PMA · CDA · Sindh Mass Transit · TransPeshawar", status:"open",
-  summary:"Government-run metro and city buses operate in Lahore, Rawalpindi–Islamabad, Multan, Karachi, Peshawar and a growing list of Punjab cities. Most use a tap card you top up; some take cash. The table lists fares and how to pay in each city.",
-  facts:[["Punjab metro","Rs 25–30"],["Punjab e-buses","Rs 20"],["Islamabad e-bus","Rs 100"],["Karachi Green Line","Rs 15–55"]],
+  summary:"Government-run metro and city buses operate in Lahore, Rawalpindi-Islamabad, Multan, Karachi, Peshawar and a growing list of Punjab cities. Most use a tap card you top up; some take cash. The table lists fares and how to pay in each city.",
+  facts:[["Punjab metro","Rs 25-30"],["Punjab e-buses","Rs 20"],["Islamabad e-bus","Rs 100"],["Karachi Green Line","Rs 15-55"]],
   elig:["Open to everyone","Student cards: Punjab metro gives school students two free trips a day","Islamabad offers discounted cards for students, women and senior citizens"],
   docs:["Tap card for the city (T-Cash, Zu card, Metrobus card) or exact cash where accepted","CNIC or student ID for concession cards"],
   steps:["Find your city in the table below.","Buy the city's card at a station counter, or in the city's app where offered (eTransit in Punjab, Breeze in Karachi).","Top up the card at stations, bank apps or wallets.","Tap in when boarding or at the station gate; tap out where required.","Check routes on the operator's map: Punjab on pma.punjab.gov.pk, Sindh routes on smta.gos.pk/route-map.","Complaints: Punjab 1762, Sindh 0800-07682."],
   table:{head:["City / service","Fare","Pay with"],rows:[
    ["Lahore Metro, Orange Line, Speedo","Rs 30 (metro)","T-Cash card (Rs 275)"],
-   ["Rawalpindi–Islamabad Metro","Rs 30","T-Cash card"],
+   ["Rawalpindi-Islamabad Metro","Rs 30","T-Cash card"],
    ["Multan Metro","Rs 25","T-Cash card"],
    ["Punjab e-buses (Sialkot, Okara, Chiniot, Layyah, Murree and more)","Rs 20","Card or QR ticket"],
    ["Islamabad CDA electric buses (17 routes)","Rs 100","Card; concession cards available"],
-   ["Karachi Green Line BRT","Rs 15–55","Metrobus card (Rs 100) · Breeze app"],
-   ["Karachi People's Bus (17 routes) · Pink Bus for women","Rs 80–120 · Pink Rs 50","Cash to conductor"],
-   ["Peshawar BRT (Zu)","Rs 30–70 by distance","Zu card (Rs 300)"]]},
+   ["Karachi Green Line BRT","Rs 15-55","Metrobus card (Rs 100) · Breeze app"],
+   ["Karachi People's Bus (17 routes) · Pink Bus for women","Rs 80-120 · Pink Rs 50","Cash to conductor"],
+   ["Peshawar BRT (Zu)","Rs 30-70 by distance","Zu card (Rs 300)"]]},
   note:"Punjab is extending electric buses to all 91 tehsils from January 2027. People's Bus also runs in seven other Sindh cities. Fares change from time to time; check at the station.",
   links:[["Punjab Masstransit Authority","https://pma.punjab.gov.pk"],["Sindh Mass Transit (routes)","https://smta.gos.pk/route-map"],["TransPeshawar","https://transpeshawar.pk"]], help:"Punjab 1762 · Sindh 0800-07682" },
 
@@ -985,11 +1002,11 @@ const S = [
 
 { id:"rail-freight", grp:"cargo", sub:"rail", region:["national"], art:"train", name:"Pakistan Railways freight & parcels", ur:"ریلوے کارگو", by:"Pakistan Railways", status:"open",
   summary:"Send motorcycles, cars, household goods and parcels between cities by train. Book at the goods office of the railway station or on Pakistan Railways' online freight system.",
-  facts:[["Freight helpline","021-99201665"],["Motorcycle","Rs 500–1,750"],["Car","Rs 20,000–40,000"],["Tariff change","+20% Mar 2026"]],
+  facts:[["Freight helpline","021-99201665"],["Motorcycle","Rs 500-1,750"],["Car","Rs 20,000-40,000"],["Tariff change","+20% Mar 2026"]],
   elig:["Anyone; bulk freight customers can register on the online freight system"],
   docs:["CNIC of sender","Vehicle registration book (for motorcycles and cars)","Receiver's name, CNIC and phone","Packing list for household goods"],
   steps:["Call the freight helpline or visit the goods/parcel office at your station for a quote.","Pack items securely; drain fuel from motorcycles as instructed.","Book the consignment and pay the freight charge (plus handling and a refundable deposit for cars).","Keep the railway receipt (RR); the receiver needs it and a CNIC to collect.","Track the train's location and collect from the destination station's goods office."],
-  table:{head:["Item","Approximate charge"],rows:[["Motorcycle, up to 100 km","~Rs 500"],["Motorcycle, long distance","Rs 1,250 – 1,750"],["Car","Rs 20,000 – 40,000 + ~Rs 5,000 handling"],["Car security deposit","~Rs 10,000 (refundable)"]]},
+  table:{head:["Item","Approximate charge"],rows:[["Motorcycle, up to 100 km","~Rs 500"],["Motorcycle, long distance","Rs 1,250 - 1,750"],["Car","Rs 20,000 - 40,000 + ~Rs 5,000 handling"],["Car security deposit","~Rs 10,000 (refundable)"]]},
   note:"Explosives and inflammable goods cannot be sent. Charges are approximate and vary by distance and weight.",
   links:[["Pakistan Railways","https://www.pakrail.gov.pk"]], help:"021-99201665" },
 
@@ -1024,14 +1041,14 @@ const NEWS = [
   ["Jul 2026","Punjab moves cancer and heart treatment from the Health Card to free CM programmes","punjab-health-card"],
   ["Jan 2026","Federal Sehat Card relaunched for Islamabad, AJK and Gilgit-Baltistan","federal-sehat-card"],
   ["Sep 2026","HEC Benazir Undergraduate Scholarship portal usually opens around September","benazir-undergrad"],
-  ["5 Oct 2026","Asaan Karobar Finance (Rs 1–30 M, 0% markup) is taking applications in its second phase","asaan-karobar-finance"],
+  ["5 Oct 2026","Asaan Karobar Finance (Rs 1-30 M, 0% markup) is taking applications in its second phase","asaan-karobar-finance"],
   ["Ongoing","Book train tickets on the official Rabta app; helpline 117","railway-tickets"],
   ["15 Jul 2026","Livestock Card phase 3 registration opened across Punjab","livestock-card"],
-  ["Ongoing","Kissan Card: register free by SMS — PKC and your CNIC to 8070","kissan-card"],
+  ["Ongoing","Kissan Card: register free by SMS: PKC and your CNIC to 8070","kissan-card"],
   ["Ongoing","Apni Chhat Apna Ghar: interest-free loan up to Rs 1.5 M, free registration, helpline 0800-09100","apni-chhat-apna-ghar"],
-  ["Ongoing","Mera Ghar Mera Ashiana: bank home loans at 5–8% fixed markup for first-time owners","mera-ghar-mera-ashiana"],
+  ["Ongoing","Mera Ghar Mera Ashiana: bank home loans at 5-8% fixed markup for first-time owners","mera-ghar-mera-ashiana"],
   ["Emergency","Police 15 · Rescue & ambulance 1122 · Fire 16 · Motorway police 130 · Cyber crime 1799",null],
-  ["2026","CNIC renewal from Rs 400 — renew from home on the Pak-ID app","cnic-renewal"],
+  ["2026","CNIC renewal from Rs 400. Renew from home on the Pak-ID app","cnic-renewal"],
   ["Always","Government schemes never ask you to pay an agent. Apply only on official portals",null]
 ];
 const EMERG = [
@@ -1341,7 +1358,7 @@ $("#emerg").innerHTML = EMERG.map(([g,list])=>`<h2 class="egroup">${g}</h2><div 
 document.addEventListener("click", async e=>{
   const c=e.target.closest("[data-copy]"); if(!c) return;
   try{ await navigator.clipboard.writeText(c.dataset.copy); c.textContent="Copied"; }
-  catch(_){ const r=document.createRange(); r.selectNodeContents(c.parentElement.previousElementSibling.previousElementSibling.previousElementSibling); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); c.textContent="Selected — press copy"; }
+  catch(_){ const r=document.createRange(); r.selectNodeContents(c.parentElement.previousElementSibling.previousElementSibling.previousElementSibling); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); c.textContent="Selected, press copy"; }
   setTimeout(()=>c.textContent="Copy number",2000);
 });
 
@@ -1350,10 +1367,18 @@ $("#footLogo").innerHTML = document.querySelector(".brandbar .brand svg").outerH
 $("#dir").innerHTML = DIR.map(([g,list])=>`<h2 class="egroup">${g}</h2><div class="dirgrid">${list.map(([n,d,u,f])=>`<a href="${u}" target="_blank" rel="noopener"><span style="display:flex;justify-content:space-between;gap:8px"><b>${n}</b><span class="pill ${f==="Free"?"open":"check"}">${f}</span></span><span class="d">${d}</span><span class="u">${u.replace("https://","")}</span></a>`).join("")}</div>`).join("");
 renderHome(); finder(); emi();
 $("#guideCount").textContent = S.length + " detailed guides";
-$("#heroCount").textContent = S.length;
 const h = location.hash.slice(1);
 const hs = S.find(s=>s.id===h);
 if(hs) go(hs.grp, hs.id); else go(TABS.some(t=>t[0]===h)?h:"home");
+
+/* ===== Scroll reveal (IntersectionObserver; skipped under reduced motion) ===== */
+(function(){
+  if(!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }),{rootMargin:"0px 0px -8% 0px"});
+  const mark = (el,i)=>{ el.classList.add("rv"); el.style.setProperty("--i", i%6); io.observe(el); };
+  document.querySelectorAll("#v-home .h2row, #v-home .updates").forEach(el=>mark(el,0));
+  document.querySelectorAll("#cats > *, #v-home .toolgrid > a").forEach(mark);
+})();
 </script>
 
 </body>

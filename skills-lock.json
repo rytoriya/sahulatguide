@@ -19,6 +19,12 @@
       "skillPath": "skills/soft-skill/SKILL.md",
       "computedHash": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
     },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "3178f9b1b55208b61fedaaa79d18ebf91545ecd2a2e08a30c11dd1059ee970f8"
+    },
     "web-artifacts-builder": {
       "source": "anthropics/skills",
       "sourceType": "github",

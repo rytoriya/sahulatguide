@@ -1,0 +1,42 @@
+# Collects raw police station data (OpenStreetMap + official police websites) for the
+# Police Station Directory, and commits it to data/police/raw/. GitHub's servers can reach
+# these sites; the development environment cannot. Run it from the Actions tab
+# ("Police station data" -> Run workflow) or by changing scripts/police_fetch.py.
+name: Police station data
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/police_fetch.py
+      - .github/workflows/police-data.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: police-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch OpenStreetMap and official pages
+        run: python3 scripts/police_fetch.py
+      - name: Pack the raw pages
+        run: |
+          cd data/police/raw
+          tar -czf pages.tar.gz pages && rm -rf pages
+          [ -f osm-police.json ] && gzip -f osm-police.json || true
+          ls -la
+      - name: Commit the results
+        run: |
+          git config user.name "sahulat-data-bot"
+          git config user.email "sahulat-data-bot@users.noreply.github.com"
+          git add data/police/raw
+          git diff --cached --quiet && { echo "No changes"; exit 0; }
+          git commit -m "Police data: raw OpenStreetMap and official station pages ($(date -u +%Y-%m-%d))"
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 10; done

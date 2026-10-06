@@ -21,6 +21,7 @@ import tarfile
 sys.path.insert(0, os.path.dirname(__file__))
 from police_geo import Locator  # noqa: E402
 import police_parse_karachi  # noqa: E402
+import police_parse_islamabad  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 RAW = os.path.join(ROOT, "data", "police", "raw")
@@ -134,6 +135,9 @@ def match(L, off, pts):
         if p["district"]:
             by_d.setdefault(p["district"], []).append(p)
     kar = police_parse_karachi.stations_by_district()
+    isb = police_parse_islamabad.parse()
+    for x in isb["stations"]:  # same shape as the Karachi records, so one loop handles both
+        kar.setdefault("ict-islamabad", []).append({"name": x["name"], "ll": x["ll"], "contacts": [], "url": "", "addr": x["addr"]})
     result = {}
     for did, d in dist.items():
         drop = [d["name"], d["hq"]] + d["name"].split()
@@ -142,8 +146,8 @@ def match(L, off, pts):
         for s in stations:
             for k in kar.get(did, []):
                 if key(k["name"]) == key(s["name"]) and k["ll"]:
-                    s.update({"lat": k["ll"][0], "lon": k["ll"][1], "loc": "official", "ref": "kp:" + k["url"], "addr": "", "ur": "",
-                              "contacts": k["contacts"], "page": k["url"]})
+                    s.update({"lat": k["ll"][0], "lon": k["ll"][1], "loc": "official", "ref": "off:" + (k["url"] or k["name"]),
+                              "addr": k.get("addr", ""), "ur": "", "contacts": k["contacts"], "page": k["url"]})
                     if k.get("jur"):
                         s["jur"] = [[round(x, 4), round(y, 4)] for x, y in _simplify(k["jur"], 0.0008)]
                     break
@@ -355,6 +359,10 @@ def write_district_files(L, built, off):
         o = off.get(did, {})
         doc = {"id": did, "bbox": bbox, "outline": rings, "stations": b["stations"], "extra": b["extra"],
                "src": o.get("src", ""), "url": o.get("url", "")}
+        if did == "ict-islamabad":
+            isb = police_parse_islamabad.parse()
+            doc["centres"] = [{"n": x["name"], "a": x["addr"], "ph": x["phone"], "ll": x["ll"], "services": x["services"], "hours": x["hours"]} for x in isb["centres"]]
+            doc["extra"] = doc["extra"] + [{"n": x["name"], "a": x["addr"], "ph": x["phone"], "ll": x["ll"], "q": "exact"} for x in isb["offices"]]
         json.dump(doc, open(os.path.join(ROOT, "police", "districts", did + ".json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
         n += 1
     print(f"police/districts/: {n} files")

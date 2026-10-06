@@ -12,6 +12,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
+import police_parse_islamabad  # noqa: E402
 import police_parse_karachi  # noqa: E402
 import police_parse_punjab  # noqa: E402
 
@@ -41,6 +42,10 @@ def parsed_sources():
             name = " ".join(st["name"].replace("Police Station", "").replace("police station", "").split()) or st["name"]
             circles.setdefault((st["sub"] or "").title() + " Sub-Division" if st["sub"] else "", []).append((name, sho[2] if sho else ""))
         out[did] = ("Karachi Police", "https://karachipolice.gov.pk/services/police-stations-in-karachi/", sorted(circles.items()))
+    isb = police_parse_islamabad.parse()["stations"]
+    if isb:
+        out["ict-islamabad"] = ("Islamabad Police", "https://islamabadpolice.gov.pk/index.php#locator",
+                                [("", [(x["name"], x["phone"]) for x in isb])])
     return out
 
 

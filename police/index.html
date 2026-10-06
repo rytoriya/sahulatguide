@@ -184,6 +184,11 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 
 .st .who{display:grid;gap:3px;font-size:13px;margin:4px 0 6px;padding:8px 10px;border-radius:10px;background:var(--bg)}
 .st .who .role{display:inline-block;min-width:96px;font-weight:700;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+
+.centres{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin-top:10px}
+.centre{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px;font-size:13.5px;align-content:start}
+.centre .svc{font-size:12.5px;color:var(--muted)}
+.centre .mini{justify-self:start;margin-top:4px}
 </style>
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -230,7 +235,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
     <div class="layout">
       <div class="mapcol">
         <div class="mapbox"><div id="map" role="application" aria-label="Map of police stations in this district"></div><div class="mapnote" id="mapnote" hidden></div></div>
-                <div class="legend"><span><i style="background:var(--police)"></i>Police station</span><span><i style="background:transparent;border:2px dashed var(--police)"></i>Approximate: town or area</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:transparent;border:2px solid var(--police);border-radius:3px"></i>District boundary</span></div>
+                <div class="legend"><span><i style="background:var(--police)"></i>Police station</span><span><i style="background:transparent;border:2px dashed var(--police)"></i>Approximate: town or area</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:#c98a1b"></i>Service centre (Islamabad)</span><span><i style="background:transparent;border:2px solid var(--police);border-radius:3px"></i>District boundary</span></div>
       </div>
       <div>
         <div class="regtools"><input id="dq" type="search" placeholder="Filter stations in this district" aria-label="Filter stations in this district"></div>
@@ -242,6 +247,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
       <div class="card"><h2>District numbers</h2><div id="nums"></div><div class="links" id="links"></div></div>
       <div class="card" id="extraCard"><h2>Other police points on the map</h2><p class="muted" style="font-size:13.5px">Tagged as police on OpenStreetMap in this district but not in the official list: posts, offices, check posts, or a different spelling.</p><div id="extra"></div></div>
     </div>
+    <div class="card" id="centreCard" hidden><h2>Police Khidmat Markaz (service centres)</h2><p class="muted" style="font-size:13.5px">Character certificates, tenant and foreigner registration, lost reports and driving licence services. Times and services as published by the police.</p><div class="centres" id="centres"></div></div>
     <article class="guide" id="guide"></article>
   </section>
 
@@ -383,6 +389,9 @@ function renderLower(){
   const extra=DF?DF.extra:[];
   $("#extraCard").hidden=!extra.length;
   $("#extra").innerHTML=extra.map((o,i)=>`<div class="nrow"><span>${esc(o.n)}${o.a?`<br><span class="muted" style="font-size:12.5px">${esc(o.a)}</span>`:""}</span><button class="mini" type="button" data-x="${i}">Show on map</button></div>`).join("");
+  const cen=DF&&DF.centres?DF.centres:[];
+  $("#centreCard").hidden=!cen.length;
+  $("#centres").innerHTML=cen.map((c,i)=>`<div class="centre"><b>${esc(c.n)}</b>${c.a?`<div>${esc(c.a)}</div>`:""}<div class="muted">${c.hours?esc(c.hours)+" · ":""}${c.ph?`<a href="${telHref(c.ph)}">${esc(c.ph)}</a>`:""}</div>${c.services?`<div class="svc">${esc(c.services)}</div>`:""}<button class="mini" type="button" data-k="${i}">Show on map</button></div>`).join("");
   $("#guide").innerHTML=window.policeGuide?window.policeGuide(d):"";
 }
 function renderDistrict(){ renderHead(); renderRegister(); renderLower(); }
@@ -407,6 +416,7 @@ function drawMap(fit){
   if(DF.outline&&DF.outline.length){
     outlineLayer=L.polygon(DF.outline.map(r=>r.map(([x,y])=>[y,x])),{color:css("--police"),weight:2,opacity:.8,fillColor:css("--police"),fillOpacity:.05,interactive:false}).addTo(map);
   }
+  (DF.centres||[]).forEach(c=>{ c.m=L.circleMarker(c.ll,{radius:7,weight:2,color:"#fff",fillColor:"#c98a1b",fillOpacity:.95}).bindPopup(()=>`<div class="pop"><b>${esc(c.n)}</b><div class="muted">Police Khidmat Markaz</div>${c.a?`<div>${esc(c.a)}</div>`:""}${c.hours?`<div>${esc(c.hours)}</div>`:""}${c.ph?`<div><a href="${telHref(c.ph)}">${esc(c.ph)}</a></div>`:""}</div>`).addTo(layer); });
   DF.extra.forEach(o=>{ o.m=L.circleMarker(o.ll,{radius:5,weight:1.5,color:"#fff",fillColor:css("--muted"),fillOpacity:.9}).bindPopup(()=>`<div class="pop"><b>${esc(o.n)}</b>${o.a?`<div>${esc(o.a)}</div>`:""}<div class="muted">Police point on OpenStreetMap</div></div>`).addTo(layer); });
   DF.stations.forEach(s=>{
     if(s.jur&&s.jur.length>2){
@@ -495,6 +505,7 @@ document.addEventListener("click",e=>{
     try{navigator.clipboard.writeText(v).then(()=>done("Copied"),()=>done("Copy failed"));}catch(_){done("Copy failed");} return; }
   const st=e.target.closest("[data-i]"); if(st){ focusOn(DF&&DF.stations[+st.dataset.i]); return; }
   const x=e.target.closest("[data-x]"); if(x){ focusOn(DF&&DF.extra[+x.dataset.x]); return; }
+  const k=e.target.closest("[data-k]"); if(k){ focusOn(DF&&DF.centres&&DF.centres[+k.dataset.k]); return; }
 });
 $("#locate").addEventListener("click",()=>{
   const note=$("#mapnote");

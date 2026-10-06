@@ -9,35 +9,37 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
-/* Layout: dispatch board. Emergency numbers strip, city picker, then map and nearest-station list side by side; official directory below */
+/* Layout: duty register. Dark green header band with search; province coverage ledgers of district tiles; district = sticky map beside station cards grouped by SDPO circle */
 :root{
-  --bg:#f5f7f6; --surface:#ffffff; --sunk:#eaefed; --line:#dde3e1;
-  --ink:#17232e; --muted:#5a6872; --brand:#0d6b52; --brand-ink:#ffffff; --brand-soft:#e2f1ec;
-  --police:#1d4ed8; --police-soft:#e0e8fb; --rescue:#c62828; --rescue-soft:#fbe4e4; --fire:#d9600b; --fire-soft:#fcebdc;
-  --display:"Sora", system-ui, sans-serif; --body:"Noto Sans", "Segoe UI", system-ui, sans-serif; --r:14px;
+  --bg:#f3f6f5; --surface:#ffffff; --sunk:#e8eeec; --line:#d9e1de;
+  --ink:#15232c; --muted:#56656e; --brand:#0d6b52; --brand-ink:#ffffff; --brand-soft:#dcefe8;
+  --band:#0b3a2f; --band-ink:#eaf5f0; --band-muted:#a9c9bd; --band-line:#1d5546;
+  --police:#1e4fd8; --police-soft:#e3eafc; --rescue:#c62828; --fire:#d9600b; --gold:#c08a1e;
+  --display:"Sora", system-ui, sans-serif; --body:"Noto Sans", "Segoe UI", system-ui, sans-serif; --urdu:"Noto Nastaliq Urdu", serif;
+  --r:16px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
-  --police:#7ea2ff; --police-soft:#1b2747; --rescue:#ff8a80; --rescue-soft:#3d1d1d; --fire:#ffab5e; --fire-soft:#3d2a16; color-scheme:dark}}
+  --bg:#0f161a; --surface:#162027; --sunk:#1c2830; --line:#26353e; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#15372d;
+  --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; --band-line:#1a4337; --police:#86a6ff; --police-soft:#1b2747; --rescue:#ff8a80; --fire:#ffab5e; --gold:#e8b45a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
-  --police:#7ea2ff; --police-soft:#1b2747; --rescue:#ff8a80; --rescue-soft:#3d1d1d; --fire:#ffab5e; --fire-soft:#3d2a16; color-scheme:dark}
+  --bg:#0f161a; --surface:#162027; --sunk:#1c2830; --line:#26353e; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#15372d;
+  --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; --band-line:#1a4337; --police:#86a6ff; --police-soft:#1b2747; --rescue:#ff8a80; --fire:#ffab5e; --gold:#e8b45a; color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 [hidden]{display:none!important}
 a{color:var(--brand)}
-button,select,input{font:inherit;color:inherit}
+button,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
-main.wrap{padding-block:20px 56px;display:grid;gap:20px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
-h1{font-size:clamp(26px,4vw,38px);font-weight:700;letter-spacing:-.02em}
-h2{font-size:20px;font-weight:700}
 p{margin:0}
 .muted{color:var(--muted)}
+.ur{font-family:var(--urdu);direction:rtl;font-weight:400}
 .num{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:no-preference){.fade{animation:fade .25s ease-out}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}}
 
-header.site{position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
+/* site header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
 header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
 header.site .brand svg{width:34px;height:34px}
@@ -46,153 +48,171 @@ header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decorat
 header.site .hdr-r{display:flex;align-items:center;gap:8px}
 @media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}}
 
-.sos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
-.sos a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-radius:12px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);font-weight:600}
-.sos a b{font-family:var(--display);font-size:20px}
-.sos a.p b{color:var(--police)} .sos a.r b{color:var(--rescue)} .sos a.f b{color:var(--fire)}
-.intro{display:grid;gap:8px}
-.intro p{max-width:70ch}
-.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.controls select{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;min-width:220px;max-width:100%}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink);font-size:14px}
+/* band */
+.band{background:var(--band);color:var(--band-ink);position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 46px,color-mix(in srgb,var(--band-line) 55%,transparent) 46px 47px);opacity:.5;pointer-events:none}
+.band .wrap{position:relative;display:grid;gap:18px;padding-block:30px 26px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted);font-weight:600}
+.band h1{font-size:clamp(28px,4.6vw,46px);font-weight:700;letter-spacing:-.025em}
+.band h1 .ur{font-size:.55em;color:var(--band-muted);margin-left:10px}
+.band p.lede{color:var(--band-muted);max-width:62ch;font-size:16px}
+.finder{position:relative;max-width:640px}
+.finder input{width:100%;padding:15px 16px 15px 48px;border-radius:14px;border:1px solid transparent;background:var(--surface);color:var(--ink);font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.finder input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 35%,transparent),0 10px 30px rgba(0,0,0,.25)}
+.finder svg{position:absolute;left:17px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.results{position:absolute;z-index:1200;left:0;right:0;top:calc(100% + 8px);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.28);max-height:380px;overflow-y:auto}
+.results button{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:none;padding:11px 16px;border-top:1px solid var(--line);cursor:pointer}
+.results button:first-child{border-top:0}
+.results button:hover,.results button:focus-visible{background:var(--brand-soft)}
+.results .t{font-weight:600}
+.results .s{font-size:12.5px;color:var(--muted)}
+.results .ph{font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);white-space:nowrap}
+.figs{display:flex;flex-wrap:wrap;gap:10px 34px}
+.fig b{display:block;font-family:var(--display);font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fig span{font-size:13px;color:var(--band-muted)}
+.sos{display:flex;flex-wrap:wrap;gap:8px}
+.sos a{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--band-ink);background:color-mix(in srgb,var(--band-ink) 10%,transparent);border:1px solid color-mix(in srgb,var(--band-ink) 18%,transparent);font-weight:600;font-size:14px}
+.sos a b{font-family:var(--display);font-size:16px}
+.sos a:hover{background:color-mix(in srgb,var(--band-ink) 18%,transparent)}
+
+main.wrap{padding-block:26px 56px;display:grid;gap:26px}
+
+/* overview */
+.provtabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.ptab{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 15px;cursor:pointer;font-weight:600;font-size:14px;white-space:nowrap}
+.ptab[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.prov{display:grid;gap:14px}
+.provhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:8px 20px;padding-bottom:10px;border-bottom:2px solid var(--ink)}
+.provhead h2{font-size:clamp(20px,2.6vw,26px);letter-spacing:-.015em}
+.cov{display:grid;gap:5px;min-width:240px;font-size:13px;color:var(--muted)}
+.bar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:99px}
+.divlabel{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 -4px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:10px}
+.tile{display:grid;gap:6px;align-content:start;padding:12px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
+.tile:hover{border-color:var(--brand);transform:translateY(-1px)}
+.tile .n{font-weight:700;font-size:15px;line-height:1.25}
+.tile .h{font-size:12.5px;color:var(--muted)}
+.tile .c{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600}
+.tile.has{border-left:4px solid var(--police)}
+.tile.has .c{color:var(--police)}
+.tile.map .c{color:var(--muted);font-weight:500}
+.dotc{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}
+
+/* district */
+.crumb{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.crumb a{color:var(--brand);font-weight:600}
+.dhead{display:grid;gap:10px}
+.dhead h2{font-size:clamp(26px,3.6vw,38px);letter-spacing:-.025em}
+.dhead h2 .ur{font-size:.55em;color:var(--muted);margin-left:8px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.fact{display:inline-flex;align-items:baseline;gap:6px;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13.5px}
+.fact b{font-family:var(--display);font-variant-numeric:tabular-nums}
+.fact.src{background:var(--police-soft);border-color:transparent;color:var(--police);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink);font-size:14px;white-space:nowrap}
 .btn:hover{border-color:var(--brand)}
 .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
-.btn svg{width:18px;height:18px}
-.layers{display:flex;flex-wrap:wrap;gap:6px}
-.lay{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:13.5px;font-weight:600}
-.lay i{width:10px;height:10px;border-radius:50%;display:inline-block}
-.lay[aria-pressed="false"]{opacity:.5}
-.lay .n{color:var(--muted);font-weight:500;font-variant-numeric:tabular-nums}
+.btn svg{width:17px;height:17px}
 
-.board{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
-@media (max-width:900px){.board{grid-template-columns:1fr}}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:22px;align-items:start}
+@media (max-width:940px){.layout{grid-template-columns:1fr}}
+.mapcol{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);display:grid;gap:8px}
+@media (max-width:940px){.mapcol{position:static}}
 .mapbox{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--sunk)}
-#map{height:min(68vh,620px);min-height:380px;width:100%}
-.mapnote{position:absolute;z-index:500;left:10px;right:10px;bottom:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-width:0;max-height:min(68vh,620px)}
-@media (max-width:900px){.panel{max-height:none}}
-.phead{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;gap:4px}
-.list{overflow-y:auto;padding:6px}
-.item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px;border-radius:10px;cursor:pointer}
-.item:hover,.item.on{background:var(--sunk)}
-.dot{width:12px;height:12px;border-radius:50%;margin-top:5px}
-.item .nm{font-weight:600;line-height:1.35}
-.item .sub{font-size:12.5px;color:var(--muted)}
-.item .km{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:14px}
-.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.acts a{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--ink);background:var(--bg)}
-.empty{padding:16px;color:var(--muted);font-size:14px}
+#map{height:min(72vh,660px);min-height:340px;width:100%}
+@media (max-width:940px){#map{height:46vh}}
+.mapnote{position:absolute;z-index:500;left:12px;right:12px;bottom:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px;box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.regtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.regtools input{flex:1 1 200px;min-width:0;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.circles{display:flex;flex-wrap:wrap;gap:6px}
+.cchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap}
+.cchip[aria-pressed="true"]{background:var(--police);border-color:var(--police);color:#fff}
+.circle{display:grid;gap:10px;margin-top:16px}
+.circle h3{display:flex;align-items:baseline;gap:10px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-family:var(--body);font-weight:700}
+.circle h3 span{font-weight:500;letter-spacing:0;text-transform:none}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.st{display:grid;gap:8px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);align-content:start;scroll-margin-top:96px}
+.st.hit{border-color:var(--police);box-shadow:0 0 0 3px color-mix(in srgb,var(--police) 25%,transparent)}
+.st .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.st .nm{font-weight:700;font-size:15.5px;line-height:1.3}
+.st .km{font-size:12.5px;font-weight:700;color:var(--police);font-variant-numeric:tabular-nums;white-space:nowrap;background:var(--police-soft);padding:2px 8px;border-radius:999px}
+.st .phone{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:var(--sunk)}
+.st .phone a{font-family:var(--display);font-weight:700;font-size:16px;text-decoration:none;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.st .phone .none{color:var(--muted);font-size:13.5px}
+.mini{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink);white-space:nowrap}
+.mini:hover{border-color:var(--brand)}
+.st .row{display:flex;flex-wrap:wrap;gap:6px}
+.st .state{font-size:12px;color:var(--muted)}
+.st .state.on{color:var(--police);font-weight:600}
+.empty{padding:18px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:14px}
+
+.lower{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
-.nums{display:grid;gap:2px}
+.card h2{font-size:18px}
 .nrow{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
 .nrow:last-child{border-bottom:0}
-.nrow .k{font-size:14px}
 .nrow a{font-weight:700;text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap}
 .links{display:flex;flex-wrap:wrap;gap:8px}
-.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table{border-collapse:collapse;width:100%;font-size:14px}
-th,td{padding:9px 12px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
-thead th{border-top:0;background:var(--sunk);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
-td a{white-space:nowrap}
-.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand)}
 footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px}
-footer ul{margin:0;padding-left:18px}
 .leaflet-container{font:inherit}
 .leaflet-popup-content{margin:10px 12px;line-height:1.45}
 .pop b{display:block;font-size:14px;margin-bottom:2px}
 .pop a{font-weight:600}
-/* Directory-specific: register layout. Overview = province ledgers of districts; district view = map beside the station register */
-.ur{font-family:"Noto Nastaliq Urdu",serif;direction:rtl}
-.stats{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--muted)}
-.stats b{color:var(--ink);font-family:var(--display);font-size:18px;margin-right:4px}
-.finder{position:relative;flex:1 1 320px;max-width:560px}
-.finder input{width:100%;padding:12px 14px 12px 42px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:16px}
-.finder input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px color-mix(in srgb,var(--brand) 16%,transparent)}
-.finder svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
-.results{position:absolute;z-index:1200;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.18);max-height:360px;overflow-y:auto}
-.results button{display:flex;justify-content:space-between;gap:10px;width:100%;text-align:left;border:0;background:none;padding:10px 14px;border-top:1px solid var(--line);cursor:pointer}
-.results button:first-child{border-top:0}
-.results button:hover,.results button:focus-visible{background:var(--brand-soft)}
-.results .s{font-size:12.5px;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;cursor:pointer;font-size:14px}
-.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
-.ledger{display:grid;gap:18px}
-.prov h2{margin-bottom:10px}
-.divs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
-.dv{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.dv h3{font-size:14px;color:var(--muted);font-family:var(--body);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
-.drow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
-.drow:first-of-type{border-top:0}
-.drow:hover .dn{color:var(--brand);text-decoration:underline}
-.dn{font-weight:600}
-.badge{font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
-.badge.ok{background:var(--brand-soft);color:var(--brand)}
-.badge.map{background:var(--sunk);color:var(--muted)}
-.crumb{font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.crumb a{color:var(--brand)}
-.dhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;align-items:flex-end}
-.reg{overflow-x:auto}
-.reg table td.c{font-size:12.5px;color:var(--muted)}
-.reg tr.circle td{background:var(--sunk);font-weight:600;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.reg tr.hit td{background:var(--brand-soft)}
-.reg .km{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;white-space:nowrap}
-.mapbtn{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap}
-.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
-#map{height:min(70vh,640px)}
 </style>
 </head>
 <body>
 <header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+<section class="band">
+  <div class="wrap">
+    <span class="kicker">Pakistan · every district · official numbers</span>
+    <h1>Police Station Directory <span class="ur">پولیس اسٹیشن ڈائریکٹری</span></h1>
+    <p class="lede">Find any police station's phone number, its SDPO circle and where it is on the map. Search by station or district.</p>
+    <label class="finder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><input id="q" type="search" autocomplete="off" placeholder="Search a police station or district, e.g. Hayatabad, Kotwali, Bannu" aria-label="Search police stations and districts"><div class="results" id="results" hidden></div></label>
+    <div class="figs" id="figs"></div>
+    <nav class="sos" aria-label="Emergency numbers"><a href="tel:15">Police <b>15</b></a><a href="tel:1122">Rescue <b>1122</b></a><a href="tel:16">Fire <b>16</b></a><a href="../emergency/">Nearest station to me →</a></nav>
+  </div>
+</section>
+
 <main class="wrap">
-  <nav class="sos" aria-label="Emergency numbers">
-    <a class="p" href="tel:15"><span>Police</span><b>15</b></a>
-    <a class="r" href="tel:1122"><span>Rescue &amp; ambulance</span><b>1122</b></a>
-    <a class="f" href="tel:16"><span>Fire brigade</span><b>16</b></a>
-    <a href="../emergency/"><span>Nearest station to me</span><b>→</b></a>
-  </nav>
+  <section id="overview" class="fade" style="display:grid;gap:26px">
+    <div class="provtabs" id="provs" role="group" aria-label="Province"></div>
+    <div id="ledger" style="display:grid;gap:34px"></div>
+  </section>
 
-  <div class="intro">
-    <h1>Police Station Directory</h1>
-    <p class="muted">Every district of Pakistan, with its police stations, official phone numbers, SDPO circles and each station's place on the map. Search a station or pick a district.</p>
-    <div class="stats" id="stats"></div>
-  </div>
-
-  <div class="controls">
-    <label class="finder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><input id="q" type="search" autocomplete="off" placeholder="Search a police station or district, e.g. Hayatabad, Bannu" aria-label="Search police stations and districts"><div class="results" id="results" hidden></div></label>
-    <div class="chips" id="provs" role="group" aria-label="Province"></div>
-  </div>
-
-  <section id="overview" class="ledger"></section>
-
-  <section id="district" hidden>
-    <div style="display:grid;gap:10px">
-      <div class="crumb" id="crumb"></div>
-      <div class="dhead"><div><h2 id="dTitle" style="font-size:clamp(22px,3vw,28px)"></h2><p class="muted" id="dSub"></p></div>
-        <button class="btn primary" id="locate" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>Distance from me</button></div>
+  <section id="district" class="fade" hidden style="display:grid;gap:18px">
+    <div class="crumb" id="crumb"></div>
+    <div class="dhead">
+      <h2 id="dTitle"></h2>
+      <div class="facts" id="facts"></div>
+      <div class="actions">
+        <button class="btn primary" id="locate" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>Show distance from me</button>
+        <span id="srcBtn"></span>
+      </div>
     </div>
-    <div class="board" style="margin-top:14px">
-      <div style="display:grid;gap:8px">
+    <div class="layout">
+      <div class="mapcol">
         <div class="mapbox"><div id="map" role="application" aria-label="Map of police stations in this district"></div><div class="mapnote" id="mapnote" hidden></div></div>
-        <div class="legend"><span><i style="background:var(--police)"></i>Station in official list</span><span><i style="background:#8a94a0"></i>Other police point on the map</span><span><i style="background:#111827"></i>You</span></div>
+        <div class="legend"><span><i style="background:var(--police)"></i>Station in the official list</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:var(--ink)"></i>You</span></div>
       </div>
-      <div class="panel">
-        <div class="phead"><h2 id="regTitle">Police stations</h2><p class="muted" style="font-size:13px" id="regNote"></p></div>
-        <div class="list reg"><table><thead><tr><th>Station</th><th>Phone</th><th>Map</th></tr></thead><tbody id="reg"></tbody></table></div>
+      <div>
+        <div class="regtools"><input id="dq" type="search" placeholder="Filter stations in this district" aria-label="Filter stations in this district"></div>
+        <div class="circles" id="circles" role="group" aria-label="SDPO circle"></div>
+        <div id="register"></div>
       </div>
     </div>
-    <div class="grid2" style="margin-top:16px">
-      <div class="card"><h2>District numbers</h2><div class="nums" id="nums"></div><div class="links" id="links"></div></div>
-      <div class="card" id="extraCard"><h2>Other police points on the map</h2><p class="muted" style="font-size:13.5px">Places tagged as police on OpenStreetMap in this district that aren't in the official list above: posts, offices, check posts, or stations with a different spelling.</p><div class="nums" id="extra"></div></div>
+    <div class="lower">
+      <div class="card"><h2>District numbers</h2><div id="nums"></div><div class="links" id="links"></div></div>
+      <div class="card" id="extraCard"><h2>Other police points on the map</h2><p class="muted" style="font-size:13.5px">Tagged as police on OpenStreetMap in this district but not in the official list: posts, offices, check posts, or a different spelling.</p><div id="extra"></div></div>
     </div>
   </section>
 
   <footer>
-    <div><b>In an emergency, call 15.</b> Station names and phone numbers come only from official police websites (sources linked in each district). Where a police force doesn't publish a station list, the district shows police points from OpenStreetMap, a public map anyone can edit, which may be incomplete. Distances are straight-line.</div>
-    <div>Official sources: <a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="noopener">KP Police</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="noopener">Islamabad Police</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="noopener">Punjab Police</a> · <a href="https://karachipolice.gov.pk/services/police-stations-in-karachi/" target="_blank" rel="noopener">Karachi Police</a> · <a href="https://balochistanpolice.gov.pk/dpo_contactdetails" target="_blank" rel="noopener">Balochistan Police</a>. Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>; district areas from Nominatim. Directory built <span id="built"></span>.</div>
+    <div><b>In an emergency, call 15.</b> Station names and phone numbers come only from official police websites, linked in each district. Where a force doesn't publish a station list, the district shows police points from OpenStreetMap, a public map anyone can edit, which may be incomplete. Distances are straight-line.</div>
+    <div>Official sources: <a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="noopener">KP Police</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="noopener">Islamabad Police</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="noopener">Punjab Police</a> · <a href="https://karachipolice.gov.pk/services/police-stations-in-karachi/" target="_blank" rel="noopener">Karachi Police</a> · <a href="https://balochistanpolice.gov.pk/dpo_contactdetails" target="_blank" rel="noopener">Balochistan Police</a>. Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>. Directory built <span id="built"></span>.</div>
   </footer>
 </main>
 
@@ -208,84 +228,111 @@ const norm=s=>String(s||"").toLowerCase().replace(/\b(police station|police chow
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function km(a,b){const R=6371,t=x=>x*Math.PI/180,dLa=t(b[0]-a[0]),dLo=t(b[1]-a[1]);const h=Math.sin(dLa/2)**2+Math.cos(t(a[0]))*Math.cos(t(b[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
 const fmtKm=d=>d<1?Math.round(d*1000)+" m":(d<10?d.toFixed(1):Math.round(d))+" km";
+const divLabel=n=>n+(n.includes("Territory")?"":" Division");
 
-/* index */
+/* ---------- index ---------- */
 const DIST={}, STATIONS=[];
 PS.provs.forEach(p=>p.divs.forEach(dv=>dv.districts.forEach(d=>{ DIST[d.id]={...d,prov:p,div:dv,data:PS.data[d.id]||null}; })));
 Object.entries(PS.data).forEach(([id,d])=>d.circles.forEach(([c,list])=>list.forEach(([n,ph])=>STATIONS.push({id,name:n,phone:ph,circle:c}))));
-const listed=Object.values(DIST).filter(d=>d.data&&d.data.circles.length).length;
-$("#stats").innerHTML=`<span><b>${Object.keys(DIST).length}</b>districts</span><span><b>${listed}</b>with official station lists</span><span><b class="num">${STATIONS.length}</b>stations with phone numbers</span><span>Every district mapped</span>`;
+const countOf=d=>d.data?d.data.circles.reduce((a,c)=>a+c[1].length,0):0;
+const listedAll=Object.values(DIST).filter(d=>countOf(d)).length;
+$("#figs").innerHTML=[[STATIONS.length,"stations with official numbers"],[listedAll,"districts with full station lists"],[Object.keys(DIST).length,"districts on the map"]].map(([n,l])=>`<div class="fig"><b>${n}</b><span>${l}</span></div>`).join("");
 $("#built").textContent=PS.built;
 
-let prov="all", cur=null, me=null, map=null, layer=null, meMarker=null, osm=[];
+let prov="all", cur=null, me=null, map=null, layer=null, meMarker=null, osm=[], circ="all", hlName=null;
 
 /* ---------- overview ---------- */
 function renderProvs(){
-  $("#provs").innerHTML=[["all","All"]].concat(PS.provs.map(p=>[p.id,p.name])).map(([id,n])=>`<button class="chip" type="button" data-p="${id}" aria-pressed="${prov===id}">${esc(n)}</button>`).join("");
+  $("#provs").innerHTML=[["all","All Pakistan"]].concat(PS.provs.map(p=>[p.id,p.name])).map(([id,n])=>`<button class="ptab" type="button" data-p="${id}" aria-pressed="${prov===id}">${esc(n)}</button>`).join("");
 }
-function badge(d){
-  const n=d.data?d.data.circles.reduce((a,c)=>a+c[1].length,0):0;
-  return n?`<span class="badge ok">${n} station${n>1?"s":""}</span>`:`<span class="badge map">Map</span>`;
-}
-function renderOverview(){
-  $("#overview").innerHTML=PS.provs.filter(p=>prov==="all"||p.id===prov).map(p=>`
-    <div class="prov"><h2>${esc(p.name)} <span class="ur muted" style="font-size:15px;font-weight:400">${p.ur}</span></h2>
-    <div class="divs">${p.divs.map(dv=>`<div class="dv"><h3>${esc(dv.name)}${dv.name.includes("Territory")?"":" Division"}</h3>${dv.districts.map(d=>`<a class="drow" href="?d=${d.id}" data-d="${d.id}"><span class="dn">${esc(d.name)}</span>${badge(DIST[d.id])}</a>`).join("")}</div>`).join("")}</div></div>`).join("");
+function renderLedger(){
+  $("#ledger").innerHTML=PS.provs.filter(p=>prov==="all"||p.id===prov).map(p=>{
+    const ds=p.divs.flatMap(dv=>dv.districts), withList=ds.filter(d=>countOf(DIST[d.id])).length, st=ds.reduce((a,d)=>a+countOf(DIST[d.id]),0);
+    const pct=Math.round(withList/ds.length*100);
+    return `<div class="prov">
+      <div class="provhead"><h2>${esc(p.name)} <span class="ur muted" style="font-size:.6em">${p.ur}</span></h2>
+        <div class="cov"><span><b style="color:var(--ink)">${withList}</b> of ${ds.length} districts listed · <b style="color:var(--ink)">${st}</b> stations</span><div class="bar"><i style="width:${Math.max(pct,withList?4:0)}%"></i></div></div></div>
+      ${p.divs.map(dv=>`<div class="divlabel">${esc(divLabel(dv.name))}</div><div class="tiles">${dv.districts.map(d=>{const n=countOf(DIST[d.id]);return `<a class="tile ${n?"has":"map"}" href="?d=${d.id}" data-d="${d.id}"><span class="n">${esc(d.name)}</span><span class="h">HQ ${esc(d.hq)}</span><span class="c"><span class="dotc"></span>${n?n+" stations":"Map & official links"}</span></a>`;}).join("")}</div>`).join("")}
+    </div>`;}).join("");
 }
 
 /* ---------- district ---------- */
-function stationsOf(d){ return d.data?d.data.circles:[]; }
-function renderDistrict(hl){
-  const d=cur, n=stationsOf(d).reduce((a,c)=>a+c[1].length,0);
-  $("#crumb").innerHTML=`<a href="./" data-home>All districts</a><span>›</span><span>${esc(d.prov.name)}</span><span>›</span><span>${esc(d.div.name)}${d.div.name.includes("Territory")?"":" Division"}</span>`;
-  $("#dTitle").innerHTML=`${esc(d.name)} District <span class="ur muted" style="font-size:.7em;font-weight:400">${d.ur}</span>`;
-  $("#dSub").textContent=`Headquarters: ${d.hq} · ${n?n+" police stations from the "+d.data.src+" official directory":"No official station list published online; showing police points from the map"}`;
-  const reg=$("#reg");
+function findOsm(name){ const n=norm(name); if(!n) return null; return osm.find(o=>o.key===n)||osm.find(o=>(" "+o.key+" ").includes(" "+n+" "))||null; }
+function renderHead(){
+  const d=cur, n=countOf(d), circles=d.data?d.data.circles.length:0;
+  $("#crumb").innerHTML=`<a href="./" data-home>All districts</a><span>›</span><span>${esc(d.prov.name)}</span><span>›</span><span>${esc(divLabel(d.div.name))}</span>`;
+  $("#dTitle").innerHTML=`${esc(d.name)} District<span class="ur">${d.ur}</span>`;
+  const mapped=osm.filter(o=>o.official).length;
+  $("#facts").innerHTML=[`<span class="fact">HQ <b>${esc(d.hq)}</b></span>`].concat(n?[`<span class="fact"><b>${n}</b> stations</span>`, circles>1?`<span class="fact"><b>${circles}</b> circles</span>`:"", osm.length?`<span class="fact"><b>${mapped}</b> on the map</span>`:"", `<span class="fact src">Official list · ${esc(d.data.src)}</span>`]:[`<span class="fact">No official station list online</span>`, osm.length?`<span class="fact"><b>${osm.length}</b> police points on the map</span>`:""]).join("");
+  $("#srcBtn").innerHTML=d.data&&d.data.url?`<a class="btn" href="${d.data.url}" target="_blank" rel="noopener">Official source ↗</a>`:"";
+}
+function cardHtml(nm,ph,c){
+  const o=findOsm(nm);
+  const dist=(me&&o)?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:"";
+  const hit=hlName&&norm(hlName)===norm(nm);
+  return `<article class="st${hit?" hit":""}" data-name="${esc(nm)}">
+    <div class="top"><div class="nm">${esc(nm)}</div>${dist}</div>
+    <div class="phone">${ph?`<a href="${telHref(ph)}">${esc(ph)}</a><button class="mini" type="button" data-copy="${esc(ph)}">Copy</button>`:`<span class="none">Number not published</span>`}</div>
+    <div class="row">${o?`<button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a>`:`<a class="mini" href="https://www.google.com/maps/search/${encodeURIComponent(nm+" police station, "+cur.name+", Pakistan")}" target="_blank" rel="noopener">Find on Google Maps ↗</a>`}</div>
+    <div class="state${o?" on":""}">${o?"Located on the map":"Not on the map yet"}</div>
+  </article>`;
+}
+function renderRegister(){
+  const d=cur, n=countOf(d), fq=norm($("#dq").value);
+  const reg=$("#register");
   if(n){
-    $("#regTitle").textContent="Police stations";
-    $("#regNote").textContent="Tap Map to see where a station is. Stations not yet on the map open a Google Maps search.";
-    reg.innerHTML=stationsOf(d).map(([c,list],ci)=>(c?`<tr class="circle"><td colspan="3">${esc(c)}</td></tr>`:"")+list.map(([nm,ph],si)=>{
-      const o=findOsm(nm);
-      const dist=(me&&o)?`<div class="km">${fmtKm(km(me.ll,o.ll))}</div>`:"";
-      return `<tr id="r-${ci}-${si}" class="${hl&&norm(hl)===norm(nm)?"hit":""}"><td><b>${esc(nm)}</b>${dist}</td><td>${ph?`<a href="${telHref(ph)}">${esc(ph)}</a>`:'<span class="muted">Not listed</span>'}</td><td>${o?`<button class="mapbtn" type="button" data-o="${osm.indexOf(o)}">On map</button>`:`<a class="mapbtn" style="text-decoration:none;color:inherit" href="https://www.google.com/maps/search/${encodeURIComponent(nm+" police station, "+d.name+", Pakistan")}" target="_blank" rel="noopener">Find ↗</a>`}</td></tr>`;}).join("")).join("");
+    const circles=d.data.circles;
+    $("#circles").hidden=circles.length<2;
+    $("#circles").innerHTML=[["all","All circles"]].concat(circles.map(([c])=>[c,c.replace(/ Circle$/,"")])).map(([v,l])=>`<button class="cchip" type="button" data-c="${esc(v)}" aria-pressed="${circ===v}">${esc(l)}</button>`).join("");
+    let html="";
+    circles.forEach(([c,list])=>{
+      if(circ!=="all"&&circ!==c) return;
+      let items=list.filter(([nm])=>!fq||norm(nm).includes(fq));
+      if(me) items=items.slice().sort((a,b)=>{const oa=findOsm(a[0]),ob=findOsm(b[0]);return (oa?km(me.ll,oa.ll):1e9)-(ob?km(me.ll,ob.ll):1e9);});
+      if(!items.length) return;
+      html+=`<section class="circle">${c?`<h3>${esc(c)} <span>${items.length} station${items.length>1?"s":""}</span></h3>`:""}<div class="cards">${items.map(([nm,ph])=>cardHtml(nm,ph,c)).join("")}</div></section>`;
+    });
+    reg.innerHTML=html||`<div class="empty">No station matches “${esc($("#dq").value)}” in ${esc(d.name)}.</div>`;
   } else {
-    $("#regTitle").textContent="Police points on the map";
-    $("#regNote").textContent=osm.length?"From OpenStreetMap. Use the official links on this page for phone numbers.":"Loading map data…";
-    const pts=osm.slice().sort((a,b)=>me?km(me.ll,a.ll)-km(me.ll,b.ll):a.name.localeCompare(b.name));
-    reg.innerHTML=pts.length?pts.map(o=>`<tr><td><b>${esc(o.name)}</b>${me?`<div class="km">${fmtKm(km(me.ll,o.ll))}</div>`:""}</td><td>${o.phone?`<a href="${telHref(o.phone)}">${esc(o.phone)}</a>`:'<span class="muted">—</span>'}</td><td><button class="mapbtn" type="button" data-o="${osm.indexOf(o)}">On map</button></td></tr>`).join(""):`<tr><td colspan="3" class="muted">No police points mapped here yet. Call 15, or use the district police office number below.</td></tr>`;
+    $("#circles").hidden=true;
+    let pts=osm.filter(o=>!fq||o.key.includes(fq));
+    pts=pts.slice().sort((a,b)=>me?km(me.ll,a.ll)-km(me.ll,b.ll):a.name.localeCompare(b.name));
+    reg.innerHTML=`<div class="empty" style="margin-bottom:12px;border-style:solid;background:var(--surface)">The ${esc(d.prov.name)} police don't publish a station list for ${esc(d.name)} online yet. Below are police points from the map; use the district numbers and official links further down for phone numbers.</div>`+
+      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
   }
-  const office=(d.data?d.data.office:[]);
-  $("#nums").innerHTML=[["Police emergency","15"]].concat(office).map(([k,v])=>`<div class="nrow"><span class="k">${esc(k)}</span><a href="${telHref(v)}">${esc(v)}</a></div>`).join("");
+  if(hlName){ const h=document.querySelector(".st.hit"); if(h){ setTimeout(()=>h.scrollIntoView({block:"center",behavior:"smooth"}),120); } hlName=null; }
+}
+function renderLower(){
+  const d=cur, n=countOf(d);
+  const office=d.data?d.data.office:[];
+  $("#nums").innerHTML=[["Police emergency","15"]].concat(office).map(([k,v])=>`<div class="nrow"><span>${esc(k)}</span><a href="${telHref(v)}">${esc(v)}</a></div>`).join("");
   const links=(d.data?d.data.links:[]).concat(d.data&&d.data.url?[["Source: "+d.data.src,d.data.url]]:[]).concat(PS.provLinks[d.prov.id]||[]);
   const seen=new Set();
   $("#links").innerHTML=links.filter(([,u])=>!seen.has(u)&&seen.add(u)).map(([l,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("");
   const extra=n?osm.filter(o=>!o.official):[];
-  $("#extraCard").hidden=!n;
-  $("#extra").innerHTML=extra.length?extra.map(o=>`<div class="nrow"><span class="k">${esc(o.name)}</span><button class="mapbtn" type="button" data-o="${osm.indexOf(o)}">On map</button></div>`).join(""):`<p class="muted" style="font-size:13.5px">${osm.length?"None: every police point on the map matches the official list.":"Map data not loaded yet."}</p>`;
-  if(hl){ const r=document.querySelector("#reg tr.hit"); if(r) setTimeout(()=>r.scrollIntoView({block:"center",behavior:"smooth"}),80); }
+  $("#extraCard").hidden=!n||!osm.loaded;
+  $("#extra").innerHTML=extra.length?extra.map(o=>`<div class="nrow"><span>${esc(o.name)}</span><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button></div>`).join(""):`<p class="muted" style="font-size:13.5px">None. Every police point on the map matches the official list.</p>`;
 }
-function findOsm(name){
-  const n=norm(name); if(!n) return null;
-  return osm.find(o=>o.key===n)||osm.find(o=>(" "+o.key+" ").includes(" "+n+" "))||null;
-}
+function renderDistrict(){ renderHead(); renderRegister(); renderLower(); }
 
 /* ---------- map ---------- */
 function ensureMap(){
   if(map||!window.L) return;
   map=L.map("map").setView([30.4,69.4],5);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  const tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  let errs=0; tiles.on&&tiles.on("tileerror",()=>{ if(++errs===4){ const n=$("#mapnote"); n.hidden=false; n.textContent="Map images can't load here. The station list and numbers work; open the directory on sahulatguide.pk to see the map."; } });
   layer=L.layerGroup().addTo(map);
   map.on("click",e=>setMe([e.latlng.lat,e.latlng.lng],"Point you tapped"));
 }
 async function bboxOf(d){
   const key="sg-ps-bbox:"+d.id;
   try{const h=JSON.parse(sessionStorage.getItem(key)||"null"); if(h) return h;}catch(e){}
-  const q=async s=>{const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pk&q="+encodeURIComponent(s),{headers:{"Accept":"application/json"}});const j=await r.json();return j[0]?j[0].boundingbox.map(Number):null;};
+  const q=async s=>{const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pk&q="+encodeURIComponent(s));const j=await r.json();return j[0]?j[0].boundingbox.map(Number):null;};
   let b=null;
   try{ b=await q(`${d.name} District, ${d.prov.name}`); }catch(e){}
   if(!b){ try{ const c=await q(`${d.hq}, ${d.prov.name}`); if(c){ const la=(c[0]+c[1])/2, lo=(c[2]+c[3])/2; b=[la-.25,la+.25,lo-.3,lo+.3]; } }catch(e){} }
   if(b){ try{sessionStorage.setItem(key,JSON.stringify(b));}catch(e){} }
-  return b; // [south, north, west, east]
+  return b;
 }
 async function loadOsm(d){
   const key="sg-ps-osm:"+d.id;
@@ -298,9 +345,8 @@ async function loadOsm(d){
       const r=await fetch(url,{method:"POST",body:"data="+encodeURIComponent(qs),headers:{"Content-Type":"application/x-www-form-urlencoded"}});
       if(!r.ok) throw new Error(r.status);
       const j=await r.json();
-      const out=(j.elements||[]).map(e=>{const t=e.tags||{};const lat=e.lat??e.center?.lat, lon=e.lon??e.center?.lon; const name=t.name||t["name:en"]||"Police (unnamed)"; return lat==null?null:{name,ll:[lat,lon],phone:t.phone||t["contact:phone"]||"",key:norm(name)};}).filter(Boolean);
-      const res={bbox:b,pts:out};
-      try{sessionStorage.setItem(key,JSON.stringify(res));}catch(e){}
+      const pts=(j.elements||[]).map(e=>{const t=e.tags||{};const lat=e.lat??e.center?.lat, lon=e.lon??e.center?.lon; const name=t.name||t["name:en"]||"Police (unnamed)"; return lat==null?null:{name,ll:[lat,lon],phone:t.phone||t["contact:phone"]||"",key:norm(name)};}).filter(Boolean);
+      const res={bbox:b,pts}; try{sessionStorage.setItem(key,JSON.stringify(res));}catch(e){}
       return res;
     }catch(e){ last=e; }
   }
@@ -311,67 +357,73 @@ function drawMap(){
   layer.clearLayers();
   osm.forEach(o=>{
     const off=o.official;
-    o.m=L.circleMarker(o.ll,{radius:off?8:6,weight:2,color:"#fff",fillColor:off?css("--police"):"#8a94a0",fillOpacity:.95})
+    o.m=L.circleMarker(o.ll,{radius:off?8:6,weight:2,color:"#fff",fillColor:off?css("--police"):css("--muted"),fillOpacity:.95})
       .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>`)
       .addTo(layer);
   });
 }
 async function openDistrict(id,hl,push){
   cur=DIST[id]; if(!cur) return;
-  osm=[]; me=null; if(meMarker&&map){map.removeLayer(meMarker);meMarker=null;}
+  osm=[]; me=null; circ="all"; hlName=hl||null; $("#dq").value="";
+  if(meMarker&&map){map.removeLayer(meMarker);meMarker=null;}
   $("#overview").hidden=true; $("#district").hidden=false;
   if(push!==false){ try{history.pushState({d:id},"","?d="+id+(hl?"&s="+encodeURIComponent(hl):""));}catch(e){} }
   document.title=`${cur.name} District Police Stations | Sahulat Guide`;
-  renderDistrict(hl);
-  ensureMap();
-  if(map){ setTimeout(()=>map.invalidateSize&&map.invalidateSize(),50); }
+  window.scrollTo({top:0});
+  renderDistrict();
+  ensureMap(); if(map&&map.invalidateSize) setTimeout(()=>map.invalidateSize(),60);
   const note=$("#mapnote"); note.hidden=false; note.textContent="Loading the map for "+cur.name+"…";
   const d=cur;
   try{
     const r=await loadOsm(d); if(cur!==d) return;
-    osm=r.pts;
-    stationsOf(d).forEach(([c,list])=>list.forEach(([nm,ph])=>{ const o=findOsm(nm); if(o&&!o.official) o.official={name:nm,phone:ph,circle:c}; }));
-    if(map){ map.fitBounds([[r.bbox[0],r.bbox[2]],[r.bbox[1],r.bbox[3]]]); }
+    osm=r.pts; osm.loaded=true;
+    if(countOf(d)) d.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{ const o=findOsm(nm); if(o&&!o.official) o.official={name:nm,phone:ph,circle:c}; }));
+    if(map) map.fitBounds([[r.bbox[0],r.bbox[2]],[r.bbox[1],r.bbox[3]]]);
     note.hidden=!!osm.length; if(!osm.length) note.textContent="No police stations are mapped in this district yet.";
   }catch(e){
     if(cur!==d) return;
-    note.hidden=false; note.textContent="The map service is busy. The station list and phone numbers below still work; try the map again in a minute.";
+    osm.loaded=true;
+    note.hidden=false; note.textContent="The map service didn't respond. The station list and phone numbers still work; try the map again later.";
   }
-  drawMap(); renderDistrict(hl);
-  window.scrollTo({top:0});
+  hlName=hl||null;
+  drawMap(); renderDistrict();
 }
 function showHome(push){
   cur=null; $("#overview").hidden=false; $("#district").hidden=true; document.title="Police Station Directory of Pakistan | Sahulat Guide";
   if(push!==false){ try{history.pushState({},"","./");}catch(e){} }
-  renderOverview();
+  renderLedger();
 }
 function setMe(ll,label){
   me={ll,label};
-  if(map){ if(meMarker) map.removeLayer(meMarker); meMarker=L.circleMarker(ll,{radius:9,weight:3,color:"#fff",fillColor:"#111827",fillOpacity:1}).addTo(map).bindTooltip(label); }
-  renderDistrict();
+  if(map){ if(meMarker) map.removeLayer(meMarker); meMarker=L.circleMarker(ll,{radius:9,weight:3,color:"#fff",fillColor:css("--ink"),fillOpacity:1}).addTo(map).bindTooltip(label); }
+  renderRegister();
 }
 
 /* ---------- search ---------- */
 const q=$("#q"), res=$("#results");
 q.addEventListener("input",()=>{
   const v=norm(q.value); if(!v){res.hidden=true;return;}
-  const ds=Object.values(DIST).filter(d=>norm(d.name).includes(v)||norm(d.hq).includes(v)).slice(0,5).map(d=>({t:"d",d}));
-  const ss=STATIONS.filter(s=>norm(s.name).includes(v)).slice(0,12).map(s=>({t:"s",s}));
-  const all=ds.concat(ss);
+  const ds=Object.values(DIST).filter(d=>norm(d.name).includes(v)||norm(d.hq).includes(v)).slice(0,5);
+  const ss=STATIONS.filter(s=>norm(s.name).includes(v)).sort((a,b)=>(norm(a.name).startsWith(v)?0:1)-(norm(b.name).startsWith(v)?0:1)).slice(0,12);
   res.hidden=false;
-  res.innerHTML=all.length?all.map((r,i)=>r.t==="d"?`<button type="button" data-d="${r.d.id}"><span><b>${esc(r.d.name)} District</b><br><span class="s">${esc(r.d.prov.name)} · HQ ${esc(r.d.hq)}</span></span><span class="s">District</span></button>`
-     :`<button type="button" data-d="${r.s.id}" data-s="${esc(r.s.name)}"><span><b>${esc(r.s.name)}</b><br><span class="s">${esc(DIST[r.s.id].name)} District${r.s.circle?" · "+esc(r.s.circle):""}</span></span><span class="s">${esc(r.s.phone||"")}</span></button>`).join("")
-    :`<div style="padding:12px 14px" class="muted">No station or district called “${esc(q.value)}” in the official lists. Try the district name.</div>`;
+  res.innerHTML=(ds.length||ss.length)?ds.map(d=>`<button type="button" data-d="${d.id}"><span><span class="t">${esc(d.name)} District</span><br><span class="s">${esc(d.prov.name)} · ${countOf(d)?countOf(d)+" stations":"map & official links"}</span></span><span class="s">District</span></button>`).join("")
+    +ss.map(s=>`<button type="button" data-d="${s.id}" data-s="${esc(s.name)}"><span><span class="t">${esc(s.name)}</span><br><span class="s">${esc(DIST[s.id].name)} District${s.circle?" · "+esc(s.circle):""}</span></span><span class="ph">${esc(s.phone||"")}</span></button>`).join("")
+    :`<div style="padding:12px 16px" class="muted">No station or district called “${esc(q.value)}” in the official lists. Try the district name.</div>`;
 });
 res.addEventListener("click",e=>{const b=e.target.closest("button[data-d]"); if(!b) return; res.hidden=true; q.value=""; openDistrict(b.dataset.d,b.dataset.s||null);});
 document.addEventListener("click",e=>{ if(!e.target.closest(".finder")) res.hidden=true; });
 
 /* ---------- events ---------- */
 $("#provs").addEventListener("click",e=>{const b=e.target.closest("[data-p]");if(!b)return;prov=b.dataset.p;renderProvs();showHome();});
-$("#overview").addEventListener("click",e=>{const a=e.target.closest("[data-d]");if(!a)return;e.preventDefault();openDistrict(a.dataset.d);});
+$("#ledger").addEventListener("click",e=>{const a=e.target.closest("[data-d]");if(!a)return;e.preventDefault();openDistrict(a.dataset.d);});
 $("#crumb").addEventListener("click",e=>{if(e.target.closest("[data-home]")){e.preventDefault();showHome();}});
+$("#circles").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;circ=b.dataset.c;renderRegister();});
+$("#dq").addEventListener("input",renderRegister);
 document.addEventListener("click",e=>{
-  const b=e.target.closest(".mapbtn[data-o]"); if(!b) return;
+  const c=e.target.closest("[data-copy]");
+  if(c){ const v=c.dataset.copy, done=t=>{c.textContent=t;setTimeout(()=>c.textContent="Copy",1400);};
+    try{navigator.clipboard.writeText(v).then(()=>done("Copied"),()=>done("Copy failed"));}catch(_){done("Copy failed");} return; }
+  const b=e.target.closest("[data-o]"); if(!b) return;
   const o=osm[+b.dataset.o]; if(!o||!map) return;
   document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});
   map.setView(o.ll,16); if(o.m) o.m.openPopup();
@@ -382,12 +434,13 @@ $("#locate").addEventListener("click",()=>{
   navigator.geolocation.getCurrentPosition(p=>{ setMe([p.coords.latitude,p.coords.longitude],"Your location"); if(map) map.setView(me.ll,13); },
     err=>{ note.hidden=false; note.textContent=err.code===1?"Location permission was refused. Tap your area on the map instead.":"Couldn't get your location. Tap your area on the map instead."; },{enableHighAccuracy:true,timeout:15000});
 });
-addEventListener("popstate",()=>route(false));
-function route(push){
+addEventListener("popstate",()=>route());
+function route(){
   let d=null,s=null; try{const u=new URLSearchParams(location.search); d=u.get("d"); s=u.get("s");}catch(e){}
+  if(!d&&/^#d-/.test(location.hash)) d=location.hash.slice(3);
   if(d&&DIST[d]) openDistrict(d,s,false); else showHome(false);
 }
-renderProvs(); route(false);
+renderProvs(); route();
 })();
 </script>
 <script src="../search.js" defer></script>

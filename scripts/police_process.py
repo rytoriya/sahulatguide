@@ -268,10 +268,80 @@ def build(L, res):
                 extra.append(item)
         out[did] = {"stations": stations, "extra": extra}
     json.dump(out, open(os.path.join(ROOT, "data", "police", "stations.json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+    write_district_files(L, out, official())
     total = sum(len(v["stations"]) for v in out.values())
     print(f"stations.json: {total} stations in {sum(1 for v in out.values() if v['stations'])} districts; "
           f"located exactly {stats['exact']}, found by name {stats['found']}, approximate {stats['area']}, no location {stats['none']}; "
           f"other police points {sum(len(v['extra']) for v in out.values())}")
+
+
+
+# ---------------------------------------------------------------- per-district files for the page
+def _simplify(pts, tol):
+    """Douglas-Peucker on a ring of [lon, lat] points."""
+    if len(pts) < 5:
+        return pts
+    def d(p, a, b):
+        (x, y), (x1, y1), (x2, y2) = p, a, b
+        dx, dy = x2 - x1, y2 - y1
+        if dx == dy == 0:
+            return ((x - x1) ** 2 + (y - y1) ** 2) ** .5
+        t = max(0, min(1, ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy)))
+        return ((x - x1 - t * dx) ** 2 + (y - y1 - t * dy) ** 2) ** .5
+    keep = [0, len(pts) - 1]
+    stack = [(0, len(pts) - 1)]
+    while stack:
+        i, j = stack.pop()
+        best, idx = 0, None
+        for k in range(i + 1, j):
+            dd = d(pts[k], pts[i], pts[j])
+            if dd > best:
+                best, idx = dd, k
+        if idx is not None and best > tol:
+            keep.append(idx)
+            stack += [(i, idx), (idx, j)]
+    return [pts[k] for k in sorted(keep)]
+
+
+def outlines(L):
+    """{district_id: [polygon rings…]} built from tehsil boundaries, simplified for the web."""
+    out = {}
+    for name, polys, (x0, y0, x1, y1) in L.adm3.feats:
+        ring = max((p[0] for p in polys), key=len)
+        # a point inside the tehsil: try the bbox centre, then ring vertices nudged inward
+        cand = [((y0 + y1) / 2, (x0 + x1) / 2)] + [(ring[k][1] * .98 + (y0 + y1) / 2 * .02, ring[k][0] * .98 + (x0 + x1) / 2 * .02) for k in range(0, len(ring), max(1, len(ring) // 12))]
+        did = None
+        for la, lo in cand:
+            d, _ = L.district(la, lo)
+            if d:
+                did = d["id"]
+                break
+        if not did:
+            continue
+        for p in polys:
+            r = _simplify([[round(x, 4), round(y, 4)] for x, y in p[0]], 0.004)
+            if len(r) >= 4:
+                out.setdefault(did, []).append(r)
+    return out
+
+
+def write_district_files(L, built, off):
+    os.makedirs(os.path.join(ROOT, "police", "districts"), exist_ok=True)
+    outl = outlines(L)
+    n = 0
+    for d in L.D:
+        did = d["id"]
+        b = built.get(did, {"stations": [], "extra": []})
+        rings = outl.get(did, [])
+        xs = [p[0] for r in rings for p in r] + [s["ll"][1] for s in b["stations"] + b["extra"] if s.get("ll")]
+        ys = [p[1] for r in rings for p in r] + [s["ll"][0] for s in b["stations"] + b["extra"] if s.get("ll")]
+        bbox = [min(ys), min(xs), max(ys), max(xs)] if xs else None
+        o = off.get(did, {})
+        doc = {"id": did, "bbox": bbox, "outline": rings, "stations": b["stations"], "extra": b["extra"],
+               "src": o.get("src", ""), "url": o.get("url", "")}
+        json.dump(doc, open(os.path.join(ROOT, "police", "districts", did + ".json"), "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        n += 1
+    print(f"police/districts/: {n} files")
 
 
 if __name__ == "__main__":

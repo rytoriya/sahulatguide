@@ -163,6 +163,24 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 .leaflet-popup-content{margin:10px 12px;line-height:1.45}
 .pop b{display:block;font-size:14px;margin-bottom:2px}
 .pop a{font-weight:600}
+
+/* station address, guide section */
+.st .addr{display:flex;gap:6px;align-items:flex-start;font-size:13.5px;color:var(--ink);line-height:1.45;margin:2px 0 4px}
+.st .addr svg{width:15px;height:15px;flex:none;margin-top:2px;fill:none;stroke:var(--police);stroke-width:2}
+.st .addr .none,.st .phone .none{color:var(--muted)}
+.guide{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);display:grid;gap:14px;margin-top:8px}
+.guide h2{font-size:clamp(20px,2.4vw,26px);letter-spacing:-.02em;margin:0}
+.guide .lead{margin:0;max-width:75ch;color:var(--ink)}
+.guide .gcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.guide .gbox{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--bg)}
+.guide h3{font-size:16px;margin:0 0 8px}
+.guide ul{margin:0;padding-left:18px;display:grid;gap:7px;font-size:14.5px;line-height:1.55}
+.guide .gsub{margin-top:6px}
+.guide .gcomp{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px}
+.guide .gitem{border-left:3px solid var(--police);padding:4px 0 4px 12px}
+.guide .gitem .gt{font-weight:700}
+.guide .gitem p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.guide .gsrc{font-size:12.5px;color:var(--muted);margin:0}
 </style>
 <link rel="stylesheet" href="../site.css">
 </head>
@@ -209,8 +227,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
     <div class="layout">
       <div class="mapcol">
         <div class="mapbox"><div id="map" role="application" aria-label="Map of police stations in this district"></div><div class="mapnote" id="mapnote" hidden></div></div>
-        <div class="legend" id="geoNote" hidden style="font-weight:600;color:var(--police)"></div>
-        <div class="legend"><span><i style="background:var(--police)"></i>Station in the official list</span><span><i style="background:transparent;border:2px dashed var(--police)"></i>Approximate area</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:var(--ink)"></i>You</span></div>
+                <div class="legend"><span><i style="background:var(--police)"></i>Police station</span><span><i style="background:transparent;border:2px dashed var(--police)"></i>Approximate: town or area</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:transparent;border:2px solid var(--police);border-radius:3px"></i>District boundary</span></div>
       </div>
       <div>
         <div class="regtools"><input id="dq" type="search" placeholder="Filter stations in this district" aria-label="Filter stations in this district"></div>
@@ -222,6 +239,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
       <div class="card"><h2>District numbers</h2><div id="nums"></div><div class="links" id="links"></div></div>
       <div class="card" id="extraCard"><h2>Other police points on the map</h2><p class="muted" style="font-size:13.5px">Tagged as police on OpenStreetMap in this district but not in the official list: posts, offices, check posts, or a different spelling.</p><div id="extra"></div></div>
     </div>
+    <article class="guide" id="guide"></article>
   </section>
 
   <footer>
@@ -251,6 +269,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 <!-- /sg:footer -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="guide.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -268,24 +287,14 @@ const divLabel=n=>n+(n.includes("Territory")?"":" Division");
 const DIST={}, STATIONS=[];
 PS.provs.forEach(p=>p.divs.forEach(dv=>dv.districts.forEach(d=>{ DIST[d.id]={...d,prov:p,div:dv,data:PS.data[d.id]||null}; })));
 Object.entries(PS.data).forEach(([id,d])=>d.circles.forEach(([c,list])=>list.forEach(([n,ph])=>STATIONS.push({id,name:n,phone:ph,circle:c}))));
-const countOf=d=>d.data?d.data.circles.reduce((a,c)=>a+c[1].length,0):0;
+(PS.mapOnly||[]).forEach(([id,n,ph])=>STATIONS.push({id,name:n,phone:ph,circle:""}));
+const countOf=d=>(PS.counts&&PS.counts[d.id])?PS.counts[d.id][0]:(d.data?d.data.circles.reduce((a,c)=>a+c[1].length,0):0);
 const listedAll=Object.values(DIST).filter(d=>countOf(d)).length;
-$("#figs").innerHTML=[[STATIONS.length,"stations with official numbers"],[listedAll,"districts with full station lists"],[Object.keys(DIST).length,"districts on the map"]].map(([n,l])=>`<div class="fig"><b>${n}</b><span>${l}</span></div>`).join("");
+const onMap=Object.values(PS.counts||{}).reduce((a,c)=>a+c[1],0);
+$("#figs").innerHTML=[[STATIONS.length,"police stations listed"],[onMap,"pinned on the map"],[listedAll,"of "+Object.keys(DIST).length+" districts covered"]].map(([n,l])=>`<div class="fig"><b>${n}</b><span>${l}</span></div>`).join("");
 $("#built").textContent=PS.built;
 
 let prov="all", cur=null, me=null, map=null, layer=null, meMarker=null, osm=[], circ="all", hlName=null;
-let GEO={}, geoLeft=0, geoToken=0, geoDone=false;
-const GEO_VER="v1";
-const stKey=nm=>norm(nm)||String(nm).toLowerCase();
-function cacheGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
-function cacheSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const exact=l=>l&&(l.kind==="osm"||l.kind==="geo");
-function gQuery(nm){ return `${nm} Police Station, ${cur.name}, ${cur.prov.name}, Pakistan`; }
-function dirUrl(nm,l){ const dest=exact(l)?`${l.ll[0]},${l.ll[1]}`:gQuery(nm); return "https://www.google.com/maps/dir/?api=1"+(me?`&origin=${me.ll[0]},${me.ll[1]}`:"")+"&destination="+encodeURIComponent(dest); }
-function gUrl(nm,l){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(exact(l)?`${l.ll[0]},${l.ll[1]}`:gQuery(nm)); }
-function locText(l){ if(!l) return geoDone?"Exact place not found: use Google Maps":"Finding location on the map…"; if(exact(l)) return "Located on the map"; if(l.kind==="area") return `Approximate: ${l.label} area`; return `General area: ${l.label}`; }
-
 /* ---------- overview ---------- */
 function renderProvs(){
   $("#provs").innerHTML=[["all","All Pakistan"]].concat(PS.provs.map(p=>[p.id,p.name])).map(([id,n])=>`<button class="ptab" type="button" data-p="${id}" aria-pressed="${prov===id}">${esc(n)}</button>`).join("");
@@ -301,209 +310,132 @@ function renderLedger(){
     </div>`;}).join("");
 }
 
-/* ---------- district ---------- */
-function findOsm(name){ const n=norm(name); if(!n) return null; return osm.find(o=>o.key===n)||osm.find(o=>(" "+o.key+" ").includes(" "+n+" "))||null; }
-function locOf(nm){ const o=findOsm(nm); if(o) return {ll:o.ll,kind:"osm",o}; return GEO[stKey(nm)]||null; }
+/* ---------- district ----------
+   Each district's stations, locations, addresses and outline come from police/districts/<id>.json,
+   built by scripts/police_process.py (official lists + OpenStreetMap + Nominatim). */
+const DFILES={};
+async function loadDistrict(id){
+  if(DFILES[id]) return DFILES[id];
+  const r=await fetch(`districts/${id}.json`); if(!r.ok) throw new Error(r.status);
+  return DFILES[id]=await r.json();
+}
+let DF=null; // current district file
+const LOC_TEXT={exact:"Exact location",found:"Located by name",area:"Approximate: town or area"};
+function stAll(){ return DF?DF.stations:[]; }
+function circlesOf(){
+  const m=new Map(); stAll().forEach((s,i)=>{ const c=s.c||""; if(!m.has(c)) m.set(c,[]); m.get(c).push(i); }); return [...m.entries()];
+}
+function gUrlS(s){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(s.ll&&s.q!=="area"?`${s.ll[0]},${s.ll[1]}`:`${s.n} Police Station, ${cur.name}, ${cur.prov.name}, Pakistan`); }
+function dirUrlS(s){ const dest=s.ll&&s.q!=="area"?`${s.ll[0]},${s.ll[1]}`:`${s.n} Police Station, ${cur.name}, ${cur.prov.name}, Pakistan`; return "https://www.google.com/maps/dir/?api=1"+(me?`&origin=${me.ll[0]},${me.ll[1]}`:"")+"&destination="+encodeURIComponent(dest); }
+function stName(s){ return /police|thana|p\.?s\b|station/i.test(s.n)?s.n:s.n+" Police Station"; }
 function renderHead(){
-  const d=cur, n=countOf(d), circles=d.data?d.data.circles.length:0;
+  const d=cur, all=stAll(), n=all.length, cs=circlesOf().filter(([c])=>c).length;
   $("#crumb").innerHTML=`<a href="./" data-home>All districts</a><span>›</span><span>${esc(d.prov.name)}</span><span>›</span><span>${esc(divLabel(d.div.name))}</span>`;
   $("#dTitle").innerHTML=`${esc(d.name)} District<span class="ur">${d.ur}</span>`;
-  let mapped=0, approx=0; if(n) d.data.circles.forEach(([,l])=>l.forEach(([nm])=>{const x=locOf(nm); if(exact(x)) mapped++; else if(x) approx++;}));
-  $("#facts").innerHTML=[`<span class="fact">HQ <b>${esc(d.hq)}</b></span>`].concat(n?[`<span class="fact"><b>${n}</b> stations</span>`, circles>1?`<span class="fact"><b>${circles}</b> circles</span>`:"", (mapped||approx)?`<span class="fact"><b>${mapped+approx}</b> of ${n} on the map${approx?` · ${approx} approximate`:""}</span>`:"", `<span class="fact src">Official list · ${esc(d.data.src)}</span>`]:[`<span class="fact">No official station list online</span>`, osm.length?`<span class="fact"><b>${osm.length}</b> police points on the map</span>`:""]).join("");
+  const located=all.filter(s=>s.ll&&s.q!=="area").length, approx=all.filter(s=>s.q==="area").length;
+  $("#facts").innerHTML=[`<span class="fact">HQ <b>${esc(d.hq)}</b></span>`].concat(n?[`<span class="fact"><b>${n}</b> police stations</span>`, cs>1?`<span class="fact"><b>${cs}</b> circles</span>`:"", `<span class="fact"><b>${located+approx}</b> of ${n} on the map${approx?` · ${approx} approximate`:""}</span>`]:[]).join("");
   $("#srcBtn").innerHTML=d.data&&d.data.url?`<a class="btn" href="${d.data.url}" target="_blank" rel="noopener">Official source ↗</a>`:"";
 }
-function cardHtml(nm,ph,c){
-  const l=locOf(nm);
-  const dist=(me&&l&&l.kind!=="hq")?`<span class="km">${exact(l)?"":"≈ "}${fmtKm(km(me.ll,l.ll))}</span>`:"";
-  const hit=hlName&&norm(hlName)===norm(nm);
-  const show=l?(l.kind==="osm"?`<button class="mini" type="button" data-o="${osm.indexOf(l.o)}">Show on map</button>`:`<button class="mini" type="button" data-g="${esc(stKey(nm))}">Show on map</button>`):"";
-  return `<article class="st${hit?" hit":""}" data-name="${esc(nm)}">
-    <div class="top"><div class="nm">${esc(nm)}</div>${dist}</div>
-    <div class="phone">${ph?`<a href="${telHref(ph)}">${esc(ph)}</a><button class="mini" type="button" data-copy="${esc(ph)}">Copy</button>`:`<span class="none">Number not published</span>`}</div>
-    <div class="row">${show}<a class="mini" href="${dirUrl(nm,l)}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="${gUrl(nm,l)}" target="_blank" rel="noopener">Google Maps ↗</a></div>
-    <div class="state${exact(l)?" on":l?" approx":""}">${esc(locText(l))}</div>
+function cardHtml(s,i){
+  const dist=(me&&s.ll)?`<span class="km">${s.q==="area"?"≈ ":""}${fmtKm(km(me.ll,s.ll))}</span>`:"";
+  const hit=hlName&&norm(hlName)===norm(s.n);
+  return `<article class="st${hit?" hit":""}" data-name="${esc(s.n)}">
+    <div class="top"><div class="nm">${esc(stName(s))}${s.ur?` <span class="ur muted">${esc(s.ur)}</span>`:""}</div>${dist}</div>
+    <div class="addr">${s.a?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${s.q==="area"?"Near ":""}${esc(s.a)}${s.q==="area"?"":", "+esc(cur.name)}</span>`:`<span class="none">Address not published</span>`}</div>
+    <div class="phone">${s.ph?`<a href="${telHref(s.ph)}">${esc(s.ph)}</a><button class="mini" type="button" data-copy="${esc(s.ph)}">Copy</button>`:`<span class="none">Number not published</span>`}</div>
+    <div class="row">${s.ll?`<button class="mini" type="button" data-i="${i}">Show on map</button>`:""}<a class="mini" href="${dirUrlS(s)}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="${gUrlS(s)}" target="_blank" rel="noopener">Google Maps ↗</a></div>
+    <div class="state${s.q==="exact"||s.q==="found"?" on":s.q==="area"?" approx":""}">${s.ll?esc(LOC_TEXT[s.q]||"On the map"):"Not on the map yet: use Google Maps"}</div>
   </article>`;
 }
 function renderRegister(){
-  const d=cur, n=countOf(d), fq=norm($("#dq").value);
-  const reg=$("#register");
-  if(n){
-    const circles=d.data.circles;
-    $("#circles").hidden=circles.length<2;
-    $("#circles").innerHTML=[["all","All circles"]].concat(circles.map(([c])=>[c,c.replace(/ Circle$/,"")])).map(([v,l])=>`<button class="cchip" type="button" data-c="${esc(v)}" aria-pressed="${circ===v}">${esc(l)}</button>`).join("");
-    let html="";
-    circles.forEach(([c,list])=>{
-      if(circ!=="all"&&circ!==c) return;
-      let items=list.filter(([nm])=>!fq||norm(nm).includes(fq));
-      if(me) items=items.slice().sort((a,b)=>{const oa=locOf(a[0]),ob=locOf(b[0]);return (oa&&oa.kind!=="hq"?km(me.ll,oa.ll):1e9)-(ob&&ob.kind!=="hq"?km(me.ll,ob.ll):1e9);});
-      if(!items.length) return;
-      html+=`<section class="circle">${c?`<h3>${esc(c)} <span>${items.length} station${items.length>1?"s":""}</span></h3>`:""}<div class="cards">${items.map(([nm,ph])=>cardHtml(nm,ph,c)).join("")}</div></section>`;
-    });
-    reg.innerHTML=html||`<div class="empty">No station matches “${esc($("#dq").value)}” in ${esc(d.name)}.</div>`;
-  } else {
+  const d=cur, all=stAll(), fq=norm($("#dq").value), reg=$("#register");
+  if(!DF){ $("#circles").hidden=true; reg.innerHTML=`<div class="empty">Loading the stations of ${esc(d.name)}…</div>`; return; }
+  if(!all.length){
     $("#circles").hidden=true;
-    let pts=osm.filter(o=>!fq||o.key.includes(fq));
-    pts=pts.slice().sort((a,b)=>me?km(me.ll,a.ll)-km(me.ll,b.ll):a.name.localeCompare(b.name));
-    reg.innerHTML=`<div class="empty" style="margin-bottom:12px;border-style:solid;background:var(--surface)">The ${esc(d.prov.name)} police don't publish a station list for ${esc(d.name)} online yet. Below are police points from the map; use the district numbers and official links further down for phone numbers.</div>`+
-      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Directions ↗</a><a class="mini" href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Google Maps ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
+    reg.innerHTML=`<div class="empty" style="border-style:solid;background:var(--surface)">The ${esc(d.prov.name)} police don't publish a station list for ${esc(d.name)} online, and no police station is mapped here yet. Call <a href="tel:15">15</a> or use the district numbers and official links below.</div>`;
+    return;
   }
+  const circles=circlesOf();
+  $("#circles").hidden=circles.length<2;
+  $("#circles").innerHTML=[["all","All circles"]].concat(circles.map(([c])=>[c,(c||"Other").replace(/ Circle$/,"")])).map(([v,l])=>`<button class="cchip" type="button" data-c="${esc(v)}" aria-pressed="${circ===v}">${esc(l)}</button>`).join("");
+  let html="";
+  circles.forEach(([c,idx])=>{
+    if(circ!=="all"&&circ!==c) return;
+    let items=idx.filter(i=>!fq||norm(all[i].n).includes(fq)||norm(all[i].a).includes(fq));
+    if(me) items=items.slice().sort((a,b)=>(all[a].ll?km(me.ll,all[a].ll):1e9)-(all[b].ll?km(me.ll,all[b].ll):1e9));
+    if(!items.length) return;
+    html+=`<section class="circle">${c?`<h3>${esc(c)} <span>${items.length} station${items.length>1?"s":""}</span></h3>`:""}<div class="cards">${items.map(i=>cardHtml(all[i],i)).join("")}</div></section>`;
+  });
+  reg.innerHTML=html||`<div class="empty">No station matches “${esc($("#dq").value)}” in ${esc(d.name)}.</div>`;
   if(hlName){ const h=document.querySelector(".st.hit"); if(h){ setTimeout(()=>h.scrollIntoView({block:"center",behavior:"smooth"}),120); } hlName=null; }
 }
 function renderLower(){
-  const d=cur, n=countOf(d);
+  const d=cur;
   const office=d.data?d.data.office:[];
   $("#nums").innerHTML=[["Police emergency","15"]].concat(office).map(([k,v])=>`<div class="nrow"><span>${esc(k)}</span><a href="${telHref(v)}">${esc(v)}</a></div>`).join("");
   const links=(d.data?d.data.links:[]).concat(d.data&&d.data.url?[["Source: "+d.data.src,d.data.url]]:[]).concat(PS.provLinks[d.prov.id]||[]);
   const seen=new Set();
   $("#links").innerHTML=links.filter(([,u])=>!seen.has(u)&&seen.add(u)).map(([l,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("");
-  const extra=n?osm.filter(o=>!o.official):[];
-  $("#extraCard").hidden=!n||!osm.loaded;
-  $("#extra").innerHTML=extra.length?extra.map(o=>`<div class="nrow"><span>${esc(o.name)}</span><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button></div>`).join(""):`<p class="muted" style="font-size:13.5px">None. Every police point on the map matches the official list.</p>`;
+  const extra=DF?DF.extra:[];
+  $("#extraCard").hidden=!extra.length;
+  $("#extra").innerHTML=extra.map((o,i)=>`<div class="nrow"><span>${esc(o.n)}${o.a?`<br><span class="muted" style="font-size:12.5px">${esc(o.a)}</span>`:""}</span><button class="mini" type="button" data-x="${i}">Show on map</button></div>`).join("");
+  $("#guide").innerHTML=window.policeGuide?window.policeGuide(d):"";
 }
 function renderDistrict(){ renderHead(); renderRegister(); renderLower(); }
 
 /* ---------- map ---------- */
+let outlineLayer=null;
 function ensureMap(){
   if(map||!window.L) return;
-  map=L.map("map").setView([30.4,69.4],5);
+  map=L.map("map",{scrollWheelZoom:false}).setView([30.4,69.4],5);
   const tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a rel="nofollow" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-  let errs=0; tiles.on&&tiles.on("tileerror",()=>{ if(++errs===4){ const n=$("#mapnote"); n.hidden=false; n.textContent="Map images can't load here. The station list and numbers work; open the directory on sahulatguide.pk to see the map."; } });
+  let errs=0; tiles.on&&tiles.on("tileerror",()=>{ if(++errs===4){ const n=$("#mapnote"); n.hidden=false; n.textContent="Map images can't load here. The station list, addresses and numbers still work."; } });
   layer=L.layerGroup().addTo(map);
   map.on("click",e=>setMe([e.latlng.lat,e.latlng.lng],"Point you tapped"));
+  map.on("focus",()=>map.scrollWheelZoom.enable());
 }
-async function bboxOf(d){
-  const key="sg-ps-bbox:"+d.id;
-  try{const h=JSON.parse(sessionStorage.getItem(key)||"null"); if(h) return h;}catch(e){}
-  const q=async s=>{const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=pk&q="+encodeURIComponent(s));const j=await r.json();return j[0]?j[0].boundingbox.map(Number):null;};
-  let b=null;
-  try{ b=await q(`${d.name} District, ${d.prov.name}`); }catch(e){}
-  if(!b){ try{ const c=await q(`${d.hq}, ${d.prov.name}`); if(c){ const la=(c[0]+c[1])/2, lo=(c[2]+c[3])/2; b=[la-.25,la+.25,lo-.3,lo+.3]; } }catch(e){} }
-  if(b){ try{sessionStorage.setItem(key,JSON.stringify(b));}catch(e){} }
-  return b;
+function popup(s){
+  return `<div class="pop"><b>${esc(stName(s))}</b>${s.c?`<div class="muted">${esc(s.c)}</div>`:""}${s.a?`<div>${s.q==="area"?"Near ":""}${esc(s.a)}</div>`:""}${s.ph?`<div><a href="${telHref(s.ph)}">${esc(s.ph)}</a></div>`:""}<div class="muted">${esc(LOC_TEXT[s.q]||"")}${me?` · ${s.q==="area"?"≈ ":""}${fmtKm(km(me.ll,s.ll))} away`:""}</div><div style="margin-top:6px"><a href="${dirUrlS(s)}" target="_blank" rel="noopener">Directions ↗</a></div></div>`;
 }
-async function loadOsm(d){
-  const key="sg-ps-osm:"+d.id;
-  try{const h=JSON.parse(sessionStorage.getItem(key)||"null"); if(h) return h;}catch(e){}
-  const b=await bboxOf(d); if(!b) throw new Error("no area");
-  const qs=`[out:json][timeout:25];nwr["amenity"="police"](${b[0]},${b[2]},${b[1]},${b[3]});out center tags;`;
-  let last;
-  for(const url of ["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"]){
-    try{
-      const r=await fetch(url,{method:"POST",body:"data="+encodeURIComponent(qs),headers:{"Content-Type":"application/x-www-form-urlencoded"}});
-      if(!r.ok) throw new Error(r.status);
-      const j=await r.json();
-      const pts=(j.elements||[]).map(e=>{const t=e.tags||{};const lat=e.lat??e.center?.lat, lon=e.lon??e.center?.lon; const name=t.name||t["name:en"]||"Police (unnamed)"; return lat==null?null:{name,ll:[lat,lon],phone:t.phone||t["contact:phone"]||"",key:norm(name)};}).filter(Boolean);
-      const res={bbox:b,pts}; try{sessionStorage.setItem(key,JSON.stringify(res));}catch(e){}
-      return res;
-    }catch(e){ last=e; }
+function drawMap(fit){
+  if(!map||!DF) return;
+  layer.clearLayers(); if(outlineLayer){ map.removeLayer(outlineLayer); outlineLayer=null; }
+  if(DF.outline&&DF.outline.length){
+    outlineLayer=L.polygon(DF.outline.map(r=>r.map(([x,y])=>[y,x])),{color:css("--police"),weight:2,opacity:.8,fillColor:css("--police"),fillOpacity:.05,interactive:false}).addTo(map);
   }
-  throw last;
-}
-async function nomi(q,b){
-  const vb=b?`&viewbox=${b[2]},${b[1]},${b[3]},${b[0]}&bounded=1`:"";
-  const r=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=pk${vb}&q=${encodeURIComponent(q)}`);
-  if(!r.ok) throw new Error(r.status);
-  const j=await r.json(); return j[0]||null;
-}
-async function hqOf(d,b){
-  const k=`sg-ps-hq:${GEO_VER}:${d.id}`; let h=cacheGet(k); if(h) return h;
-  try{ const r=await nomi(`${d.hq}, ${d.prov.name}`,null); if(r){ h=[+r.lat,+r.lon]; cacheSet(k,h); } }catch(e){}
-  if(!h&&b) h=[(b[0]+b[1])/2,(b[2]+b[3])/2];
-  return h;
-}
-function updateGeoNote(){
-  const el=$("#geoNote"); if(!el) return;
-  el.textContent = geoLeft>0 ? `Pinning stations on the map… ${geoLeft} left` : "";
-  el.hidden = !(geoLeft>0);
-}
-async function geocodeDistrict(d,b){
-  const token=++geoToken; geoDone=false;
-  const todo=[];
-  d.data.circles.forEach(([c,list])=>list.forEach(([nm])=>{ if(!findOsm(nm)) todo.push(nm); }));
-  todo.forEach(nm=>{ const h=cacheGet(`sg-ps-geo:${GEO_VER}:${d.id}:${stKey(nm)}`); if(h) GEO[stKey(nm)]=h; });
-  drawMap(); renderHead(); renderRegister();
-  let pending=todo.filter(nm=>!GEO[stKey(nm)]);
-  if(hlName) pending.sort((a,b2)=>(norm(a)===norm(hlName)?-1:0)-(norm(b2)===norm(hlName)?-1:0));
-  geoLeft=pending.length; updateGeoNote();
-  const hq = pending.length ? await hqOf(d,b) : null;
-  let n=0;
-  for(const nm of pending){
-    if(token!==geoToken||cur!==d) return;
-    let loc=null;
-    const clean=nm.replace(/\b(city|saddar|sadar|cantt|cantonment|police post|police lines|women police station|women desk|control room|dpo office|town|division|[a-c]-division)\b/ig," ").replace(/\s+/g," ").trim();
-    try{
-      const r=await nomi(`${nm} police station`,b); await sleep(1100);
-      if(r&&r.category==="amenity"&&r.type==="police") loc={ll:[+r.lat,+r.lon],kind:"geo",label:r.name||nm};
-      else if(clean){ const pl=await nomi(clean,b); await sleep(1100); if(pl) loc={ll:[+pl.lat,+pl.lon],kind:"area",label:pl.name||clean}; }
-    }catch(e){ await sleep(1500); }
-    if(token!==geoToken||cur!==d) return;
-    if(!loc&&hq) loc={ll:hq,kind:clean?"hq":"area",label:d.hq};
-    if(loc){ GEO[stKey(nm)]=loc; if(loc.kind!=="hq") cacheSet(`sg-ps-geo:${GEO_VER}:${d.id}:${stKey(nm)}`,loc); }
-    geoLeft=pending.length-(++n); updateGeoNote();
-    if(n%3===0||geoLeft===0){ drawMap(); renderHead(); renderRegister(); }
-  }
-  geoDone=true; geoLeft=0; updateGeoNote(); drawMap(); renderHead(); renderRegister();
-}
-function stationPopup(nm,ph,c,l){
-  return `<div class="pop"><b>${esc(nm)}</b><div class="muted">Official list${c?" · "+esc(c):""}</div><div class="muted">${esc(locText(l))}</div>${me&&l.kind!=="hq"?`<div class="muted">${exact(l)?"":"≈ "}${fmtKm(km(me.ll,l.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${ph?`<a href="${telHref(ph)}">Call ${esc(ph)}</a>`:""}<a href="${dirUrl(nm,l)}" target="_blank" rel="noopener">Directions</a><a href="${gUrl(nm,l)}" target="_blank" rel="noopener">Google Maps</a></div></div>`;
-}
-function drawMap(){
-  if(!map) return;
-  layer.clearLayers();
-  osm.forEach(o=>{
-    const off=o.official;
-    o.m=L.circleMarker(o.ll,{radius:off?8:6,weight:2,color:"#fff",fillColor:off?css("--police"):css("--muted"),fillOpacity:.95})
-      .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Google Maps</a></div></div>`)
-      .addTo(layer);
+  DF.extra.forEach(o=>{ o.m=L.circleMarker(o.ll,{radius:5,weight:1.5,color:"#fff",fillColor:css("--muted"),fillOpacity:.9}).bindPopup(()=>`<div class="pop"><b>${esc(o.n)}</b>${o.a?`<div>${esc(o.a)}</div>`:""}<div class="muted">Police point on OpenStreetMap</div></div>`).addTo(layer); });
+  DF.stations.forEach(s=>{
+    if(!s.ll) return;
+    const ap=s.q==="area";
+    s.m=L.circleMarker(s.ll,ap?{radius:8,weight:2,color:css("--police"),dashArray:"3 3",fillColor:css("--police"),fillOpacity:.25}:{radius:8,weight:2,color:"#fff",fillColor:css("--police"),fillOpacity:.95})
+      .bindPopup(()=>popup(s)).bindTooltip(s.n,{direction:"top",offset:[0,-6]}).addTo(layer);
   });
-  if(cur&&countOf(cur)) cur.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{
-    if(findOsm(nm)) return; const g=GEO[stKey(nm)]; if(!g) return;
-    const ex=exact(g);
-    g.m=L.circleMarker(g.ll,ex?{radius:8,weight:2,color:"#fff",fillColor:css("--police"),fillOpacity:.95}:{radius:g.kind==="hq"?6:8,weight:2,color:css("--police"),dashArray:"3 3",fillColor:css("--police"),fillOpacity:.22})
-      .bindPopup(()=>stationPopup(nm,ph,c,g)).addTo(layer);
-  }));
+  if(fit){
+    const b=DF.bbox; if(b) map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:[12,12]});
+  }
 }
+function focusOn(o){ if(!o||!o.ll||!map) return; document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); map.setView(o.ll,o.q==="area"?14:16); if(o.m) o.m.openPopup(); }
 async function openDistrict(id,hl,push){
   cur=DIST[id]; if(!cur) return;
-  osm=[]; me=null; circ="all"; hlName=hl||null; $("#dq").value=""; GEO={}; geoLeft=0; geoDone=false; geoToken++; updateGeoNote();
+  DF=null; me=null; circ="all"; hlName=hl||null; $("#dq").value="";
   if(meMarker&&map){map.removeLayer(meMarker);meMarker=null;}
   $("#overview").hidden=true; $("#district").hidden=false;
   if(push!==false){ try{history.pushState({d:id},"","?d="+id+(hl?"&s="+encodeURIComponent(hl):""));}catch(e){} }
-  document.title=`${cur.name} District Police Stations | Sahulat Guide`;
+  document.title=`Police Stations in ${cur.name}: Addresses, Phone Numbers & Map | Sahulat Guide`;
+  const md=document.querySelector('meta[name="description"]'); if(md) md.setAttribute("content",`Every police station in ${cur.name} District, ${cur.prov.name}: addresses, phone numbers, SDPO circles and a map, plus how to register an FIR and complain.`);
   window.scrollTo({top:0});
   renderDistrict();
   ensureMap(); if(map&&map.invalidateSize) setTimeout(()=>map.invalidateSize(),60);
-  const note=$("#mapnote"); note.hidden=false; note.textContent="Loading the map for "+cur.name+"…";
-  const d=cur;
+  const d=cur, note=$("#mapnote");
   try{
-    const r=await loadOsm(d); if(cur!==d) return;
-    osm=r.pts; osm.loaded=true;
-    if(countOf(d)) d.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{ const o=findOsm(nm); if(o&&!o.official) o.official={name:nm,phone:ph,circle:c}; }));
-    if(map) map.fitBounds([[r.bbox[0],r.bbox[2]],[r.bbox[1],r.bbox[3]]]);
-    note.hidden=true;
-    hlName=hl||null; drawMap(); renderDistrict();
-    if(countOf(d)) geocodeDistrict(d,r.bbox);
-    return;
+    const f=await loadDistrict(id); if(cur!==d) return;
+    DF=f; note.hidden=true;
+    renderDistrict(); drawMap(true);
   }catch(e){
     if(cur!==d) return;
-    osm.loaded=true;
-    note.hidden=false; note.textContent="The map service didn't respond. Pinning stations by name instead; phone numbers work as usual.";
-    if(countOf(d)){ bboxOf(d).then(b=>{ if(cur===d){ if(b&&map) map.fitBounds([[b[0],b[2]],[b[1],b[3]]]); geocodeDistrict(d,b); } }); }
+    note.hidden=false; note.textContent="The station list couldn't load. Check your connection and reopen the district.";
   }
-  hlName=hl||null;
-  drawMap(); renderDistrict();
 }
-function showHome(push){
-  cur=null; $("#overview").hidden=false; $("#district").hidden=true; document.title="Police Station Directory of Pakistan | Sahulat Guide";
-  if(push!==false){ try{history.pushState({},"","./");}catch(e){} }
-  renderLedger();
-}
-function setMe(ll,label){
-  me={ll,label};
-  if(map){ if(meMarker) map.removeLayer(meMarker); meMarker=L.circleMarker(ll,{radius:9,weight:3,color:"#fff",fillColor:css("--ink"),fillOpacity:1}).addTo(map).bindTooltip(label); }
-  renderRegister();
-}
-
 /* ---------- search ---------- */
 const q=$("#q"), res=$("#results");
 q.addEventListener("input",()=>{
@@ -528,12 +460,8 @@ document.addEventListener("click",e=>{
   const c=e.target.closest("[data-copy]");
   if(c){ const v=c.dataset.copy, done=t=>{c.textContent=t;setTimeout(()=>c.textContent="Copy",1400);};
     try{navigator.clipboard.writeText(v).then(()=>done("Copied"),()=>done("Copy failed"));}catch(_){done("Copy failed");} return; }
-  const g=e.target.closest("[data-g]");
-  if(g){ const l=GEO[g.dataset.g]; if(!l||!map) return; document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); map.setView(l.ll,exact(l)?16:14); if(l.m) l.m.openPopup(); return; }
-  const b=e.target.closest("[data-o]"); if(!b) return;
-  const o=osm[+b.dataset.o]; if(!o||!map) return;
-  document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});
-  map.setView(o.ll,16); if(o.m) o.m.openPopup();
+  const st=e.target.closest("[data-i]"); if(st){ focusOn(DF&&DF.stations[+st.dataset.i]); return; }
+  const x=e.target.closest("[data-x]"); if(x){ focusOn(DF&&DF.extra[+x.dataset.x]); return; }
 });
 $("#locate").addEventListener("click",()=>{
   const note=$("#mapnote");

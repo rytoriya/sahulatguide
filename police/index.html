@@ -183,7 +183,10 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 .guide .gsrc{font-size:12.5px;color:var(--muted);margin:0}
 
 .st .who{display:grid;gap:3px;font-size:13px;margin:4px 0 6px;padding:8px 10px;border-radius:10px;background:var(--bg)}
-.st .who .role{display:inline-block;min-width:96px;font-weight:700;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.st .who>div{display:grid;line-height:1.35}
+.st .who .role{font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.st .who a{white-space:nowrap}
+@media (min-width:941px){.mapcol{position:sticky;top:64px;align-self:start}}
 
 .centres{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px;margin-top:10px}
 .centre{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px;font-size:13.5px;align-content:start}
@@ -352,7 +355,7 @@ function cardHtml(s,i){
     <div class="top"><div class="nm">${esc(stName(s))}${s.ur?` <span class="ur muted">${esc(s.ur)}</span>`:""}</div>${dist}</div>
     <div class="addr">${s.a?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>${s.q==="area"?"Near ":""}${esc(s.a)}${s.q==="area"?"":", "+esc(cur.name)}</span>`:`<span class="none">Address not published</span>`}</div>
     <div class="phone">${s.ph?`<a href="${telHref(s.ph)}">${esc(s.ph)}</a><button class="mini" type="button" data-copy="${esc(s.ph)}">Copy</button>`:`<span class="none">Number not published</span>`}</div>
-    ${s.contacts&&s.contacts.length?`<div class="who">${s.contacts.map(([r,n,ph])=>`<div><span class="role">${esc(r)}</span> ${esc(n)} · <a href="${telHref(ph)}">${esc(ph)}</a></div>`).join("")}</div>`:""}
+    ${s.contacts&&s.contacts.length?`<div class="who">${s.contacts.map(([r,n,ph])=>`<div><span class="role">${esc(r)}</span><span>${esc(n)} · <a href="${telHref(ph)}">${esc(ph.split(/[,/]/)[0].trim())}</a></span></div>`).join("")}</div>`:""}
     <div class="row">${s.ll?`<button class="mini" type="button" data-i="${i}">Show on map</button>`:""}${s.page?`<a class="mini" href="${s.page}" target="_blank" rel="noopener">Official page ↗</a>`:""}<a class="mini" href="${dirUrlS(s)}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="${gUrlS(s)}" target="_blank" rel="noopener">Google Maps ↗</a></div>
     <div class="state${s.q==="exact"||s.q==="found"?" on":s.q==="area"?" approx":""}">${s.ll?esc(LOC_TEXT[s.q]||"On the map"):"Not on the map yet: use Google Maps"}</div>
   </article>`;

@@ -1,9 +1,34 @@
 {
  "items": [
   {
+   "src": "Geo News",
+   "t": "PM Shehbaz offers PTI fresh talks, but only if the long march to Islamabad is called off",
+   "url": "https://www.geo.tv/latest/685224-pm-shehbaz-links-fresh-talks-with-pti-to-end-of-islamabad-long-march"
+  },
+  {
+   "src": "Geo News",
+   "t": "Four FBR staff shot dead in Dera Ismail Khan; policeman also martyred in separate Bannu Road attack",
+   "url": "https://www.geo.tv/latest/685218-four-fbr-personnel-shot-dead-in-di-khan-police"
+  },
+  {
+   "src": "Geo News",
+   "t": "Pakistan and IMF expected to reach staff-level agreement this week, clearing way for about $1.2bn",
+   "url": "https://www.geo.tv/latest/685207-pakistan-imf-expected-to-reach-staff-level-agreement-this-week"
+  },
+  {
+   "src": "Geo News",
+   "t": "Pakistan, Saudi Arabia and Turkiye agree rapid force deployment; Pakistani general named alliance secretary-general",
+   "url": "https://www.geo.tv/latest/685171-makkah-alliance-names-pakistani-general-as-first-secretary-general-amid-rising-regional-threats"
+  },
+  {
    "src": "Express Tribune",
    "t": "Punjab bans public gatherings of five or more for 10 days under Section 144, citing security threats",
    "url": "https://tribune.com.pk/story/2633254/punjab-imposes-section-144-for-10-days-amid-security-threats"
+  },
+  {
+   "src": "Geo News",
+   "t": "Polio cases this year rise to six after seven-year-old boy tests positive in Khyber district",
+   "url": "https://www.geo.tv/latest/685175-pakistans-polio-tally-rises-to-six-after-case-detected-in-khyber"
   },
   {
    "src": "Express Tribune",
@@ -11,35 +36,10 @@
    "url": "https://tribune.com.pk/story/2633248/un-chief-arrives-in-pakistan-for-three-day-visit"
   },
   {
-   "src": "APP",
-   "t": "Security forces kill five militants in North Waziristan operation; President and PM praise troops",
-   "url": "https://www.app.com.pk/national/security-forces-kill-5-terrorists-in-north-waziristan/"
-  },
-  {
-   "src": "Express Tribune",
-   "t": "KSE-100 rebounds over 550 points to 166,421 as global oil prices ease",
-   "url": "https://tribune.com.pk/story/2633263/kse-100-gains-over-500-points-as-investors-build-positions-across-major-sectors"
-  },
-  {
-   "src": "Express Tribune",
-   "t": "Flour prices spike in Peshawar: 20kg bag hits Rs3,300 and roti rises to Rs30",
-   "url": "https://tribune.com.pk/story/2633239/wheat-flour-price-surge-triggers-roti-crisis"
-  },
-  {
-   "src": "Dawn",
-   "t": "IMF review talks expected to wrap up this week, opening way for about $1.2bn disbursement",
-   "url": "https://dawn.com/news/2035070/imf-talks-likely-to-clear-way-for-12bn-disbursement"
-  },
-  {
-   "src": "Dawn",
-   "t": "Power Division admits marginal electricity costs surged, leaving non-industrial users cross-subsidising industry",
-   "url": "https://www.dawn.com/news/2035047/govt-concedes-marginal-power-tariff-surges"
-  },
-  {
    "src": "Dawn",
    "t": "Rain, windstorms and hail forecast across upper parts of the country on 6–7 October",
    "url": "https://www.dawn.com/news/2034958/upper-parts-of-country-likely-to-see-rainy-windy-conditions-from-oct-6-7"
   }
  ],
- "updated": "2026-10-06T15:08:00+05:00"
+ "updated": "2026-10-06T17:30:00+05:00"
 }

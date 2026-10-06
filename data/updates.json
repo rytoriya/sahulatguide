@@ -9,6 +9,13 @@
   },
   {
    "d": "6 Oct 2026",
+   "src": "Dawn",
+   "svc": "",
+   "t": "Power Division admits average supply cost now Rs32 per unit; industry subsidy burdens other consumers",
+   "url": "https://www.dawn.com/news/2035047/govt-concedes-marginal-power-tariff-surges"
+  },
+  {
+   "d": "6 Oct 2026",
    "src": "Express Tribune",
    "svc": "",
    "t": "Section 144 across Punjab for 10 days: gatherings of five or more banned",
@@ -27,6 +34,13 @@
    "svc": "",
    "t": "Weather alert: rain, windstorms and hail likely in upper parts of the country",
    "url": "https://www.dawn.com/news/2034958/upper-parts-of-country-likely-to-see-rainy-windy-conditions-from-oct-6-7"
+  },
+  {
+   "d": "15 Oct 2026",
+   "src": "Geo News",
+   "svc": "",
+   "t": "SBP starts image-based electronic cheque clearing pilot from 15 October; nationwide by April 2027",
+   "url": "https://www.geo.tv/latest/685208-sbp-to-begin-electronic-cheque-clearing-from-oct-15"
   },
   {
    "d": "15 Oct 2026",
@@ -57,18 +71,11 @@
    "url": "https://propakistani.pk/2026/10/02/punjab-electric-bike-scheme-distribution-date-revealed/"
   },
   {
-   "d": "2 Oct 2026",
+   "d": "3 Oct 2026",
    "src": "Business Recorder",
    "svc": "",
-   "t": "Punjab launches Rs5bn interest-free loans, up to Rs50m, for pink salt businesses",
-   "url": "https://brecorder.com/news/40442209/punjab-launches-rs5bn-interest-free-scheme-for-pink-salt-products"
-  },
-  {
-   "d": "25 Sep 2026",
-   "src": "SBP",
-   "svc": "",
-   "t": "SBP launches Pasban Remittance Reward Scheme with Rs16bn in annual prizes",
-   "url": "https://www.sbp.org.pk/assets/documents/press-release/PR-25-September-2026.pdf"
+   "t": "KP launches e-Fard portal: get land record Fard online, via e-Sahulat or Dastak app",
+   "url": "https://www.brecorder.com/news/40442775/kp-govt-launches-e-fard-portal-digital-public-feedback-system"
   },
   {
    "d": "Ongoing",
@@ -76,14 +83,7 @@
    "svc": "bank-loans",
    "t": "SBP policy rate unchanged at 11.5% since 14 September decision",
    "url": "https://www.sbp.org.pk/"
-  },
-  {
-   "d": "17 Sep 2026",
-   "src": "SBP",
-   "svc": "",
-   "t": "SBP: Rs10 banknote is not being discontinued; new note series still under review",
-   "url": "https://www.sbp.org.pk/assets/documents/press-release/PR-17-Sep-2026.pdf"
   }
  ],
- "updated": "2026-10-06T15:08:00+05:00"
+ "updated": "2026-10-06T17:30:00+05:00"
 }

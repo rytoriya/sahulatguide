@@ -20,43 +20,43 @@
   "note": "Government-notified price"
  },
  "fx": {
-  "date": "5 Oct 2026",
+  "date": "6 Oct 2026",
   "items": [
    {
-    "buy": 278,
-    "chg": null,
+    "buy": 277.5,
+    "chg": 0,
     "code": "USD",
     "name": "US dollar",
     "sell": 278.1,
     "ur": "امریکی ڈالر"
    },
    {
-    "buy": 75.65,
-    "chg": null,
+    "buy": 75.55,
+    "chg": -0.1,
     "code": "AED",
     "name": "UAE dirham",
-    "sell": 76.4,
+    "sell": 76.3,
     "ur": "درہم"
    },
    {
-    "buy": 73.95,
-    "chg": null,
+    "buy": 73.85,
+    "chg": 0,
     "code": "SAR",
     "name": "Saudi riyal",
     "sell": 74.5,
     "ur": "سعودی ریال"
    },
    {
-    "buy": 191.65,
-    "chg": null,
+    "buy": 191.99,
+    "chg": 0.36,
     "code": "AUD",
     "name": "Australian dollar",
-    "sell": 198.76,
+    "sell": 199.12,
     "ur": "آسٹریلوی ڈالر"
    },
    {
-    "buy": 366.65,
-    "chg": null,
+    "buy": 366.55,
+    "chg": 0,
     "code": "GBP",
     "name": "British pound",
     "sell": 372.45,
@@ -64,7 +64,7 @@
    },
    {
     "buy": 312.48,
-    "chg": null,
+    "chg": 0,
     "code": "EUR",
     "name": "Euro",
     "sell": 319.1,
@@ -72,7 +72,7 @@
    },
    {
     "buy": 193.93,
-    "chg": null,
+    "chg": 0,
     "code": "CAD",
     "name": "Canadian dollar",
     "sell": 199.25,
@@ -85,7 +85,7 @@
   "date": "6 Oct 2026",
   "items": [
    {
-    "chg": 536,
+    "chg": 0,
     "g10": 375116,
     "k": "gold24",
     "name": "Gold 24K",
@@ -93,7 +93,7 @@
     "ur": "سونا ۲۴ قیراط"
    },
    {
-    "chg": 79,
+    "chg": 0,
     "g10": 343506,
     "k": "gold22",
     "name": "Gold 22K",
@@ -101,7 +101,7 @@
     "ur": "سونا ۲۲ قیراط"
    },
    {
-    "chg": 66,
+    "chg": 0,
     "g10": 5648,
     "k": "silver",
     "name": "Silver",
@@ -111,5 +111,5 @@
   ],
   "note": "Sarafa association rate"
  },
- "updated": "2026-10-06T14:40:00+05:00"
+ "updated": "2026-10-06T16:58:00+05:00"
 }

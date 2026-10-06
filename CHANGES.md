@@ -1,5 +1,45 @@
 # Changes
 
+## 6 October 2026 (evening) — features from the chat version brought into the code
+
+The claude.ai version of the site had several features built in earlier chats that were not in this code yet. They are now added, in this code's style (tool pages in their own folder):
+
+### Find a hospital (new page `hospitals/`)
+- 251 government and private hospitals across all 41 Punjab districts (teaching, specialist, DHQ, THQ, private/trust, armed forces, social security), with beds and notes where known.
+- Nearest hospitals to your town or Google Maps coordinates, with filters (any, 24/7 emergency, specialist, government only) and directions.
+- "Which hospital for what" guide to the five care levels (BHU → teaching), ambulance 1122 and health helpline 1033.
+- Search and filters by division, district, type and sector; district summary panel; division/district index (new districts marked).
+- "For people / For animals" switch at the top; animals goes to `vets/`.
+- Home page: "Find a hospital near you" box (opens `hospitals/?where=<town>`), with a "Need a vet?" link.
+- Data in `hospitals/data.js`.
+
+### Government jobs (new page `jobs/`)
+- Important FPSC, PPSC, SPSC, KPPSC, BPSC, AJK PSC and armed forces recruitment with status (open, closing, upcoming, test date), posts, last date, who can apply and the official website.
+- Filters: All · Open now · Public service commissions · Armed forces.
+- Home page: "Government jobs" panel with the top 5 open jobs.
+- Data in `data/jobs.json`.
+
+### Pakistan sports (home page panel)
+- Pakistan cricket and other major sport: fixtures, live matches and results. Data in `data/scores.json`.
+
+### About, Privacy Policy, Terms & Disclaimer
+- Three pages at `#about`, `#privacy`, `#terms` (Google AdSense-ready wording, cookies, opt-out links, not-a-government-site disclaimer).
+- Fill in `SITE_OWNER`, `SITE_CITY`, `SITE_EMAIL` and `SITE_DOMAIN` near the top of the script in `index.html`; blanks show as highlighted placeholders until then.
+
+### Site footer
+- Full footer: about blurb, all service categories, useful links (jobs, rates, hospitals, vets, police, universities, calculators, portals, emergency), company links (About, Contact, Privacy, Terms) and emergency numbers.
+
+### "About" boxes on guides
+- 28 guides now show an "About: …" box with a search-friendly title, a short description and "also searched as" keywords (`SEO` object in `index.html`).
+
+### Tabs and tools
+- Tab strip: **Find a hospital** and **Govt jobs** added next to Daily rates.
+- "Tools & directories" and Calculators: cards for Find a hospital and Government jobs.
+- Site search: Find a hospital, Government jobs and About/Privacy/Terms added.
+
+### Live data
+`live-feeds.js` now also reads `data/jobs.json` and `data/scores.json` (home panels and `jobs/`).
+
 ## 6 October 2026 — Daily rates, KSE-100, live tickers, veterinary care
 
 These changes were first built and tested in the Claude chat version of the site (the claude.ai artifact "Sahulat Guide Pakistan") and are now added to this code.

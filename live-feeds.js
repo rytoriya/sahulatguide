@@ -6,6 +6,8 @@
  *   data/stocks.json     KSE-100 index and most active shares
  *   data/headlines.json  Pakistan news headlines (each links to its article)
  *   data/updates.json    government service updates (each links to its source)
+ *   data/jobs.json       important government recruitment (home panel, jobs/ page)
+ *   data/scores.json     Pakistan sport: fixtures, live and results (home panel)
  * and re-checks them every 5 minutes while the page is open. Update the JSON
  * files (by hand or with a scheduled job) and every page shows the new figures
  * without a rebuild.
@@ -14,12 +16,13 @@
  *   #rateSide  three rotating boxes: Fuel, gold & silver · Currency · KSE-100
  *   #belt2     Headlines ticker
  *   #belt      Updates ticker (replaces the built-in list once the file loads)
+ *   #scores    Pakistan sports panel        #jobsMini  top 5 open government jobs
  * Other pages can listen for the "sg-feeds" event: e.detail = {rates, stocks, headlines, updates, checked}.
  */
 (function(){
   const me = document.currentScript;
   const base = new URL("data/", me ? me.src : location.href);
-  const FEEDS = ["rates","stocks","headlines","updates"];
+  const FEEDS = ["rates","stocks","headlines","updates","jobs","scores"];
   const state = {checked:null};
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const nf = (v,d=0) => (v==null||isNaN(v)) ? "—" : Number(v).toLocaleString("en-PK",{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -154,6 +157,22 @@
       belt("belt", U.items.map(u=>`<span class="item"><b>${esc(u.d)}</b>${u.url?`<a href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.t)}</a>`:(u.svc?`<a href="#${esc(u.svc)}">${esc(u.t)}</a>`:esc(u.t))}${u.src?`<span class="src">${esc(u.src)}</span>`:""}</span>`).join("") + `<span class="item"><b>Updated</b>${esc(fmtTime(U.updated))}</span>`);
   }
 
+  /* ---------- Home panels: sports and jobs ---------- */
+  const JOB_STATUS = {open:["Open","open"],closing:["Closing","closed"],upcoming:["Upcoming","check"],test:["Test date","check"],none:["No ads now","check"],closed:["Closed","closed"]};
+  window.SGJobStatus = JOB_STATUS;
+  function drawPanels(){
+    const sc = document.getElementById("scores"), S = state.scores;
+    if (sc && S && S.items){
+      sc.innerHTML = S.items.length ? S.items.map(x=>`<div class="score"><span class="st${/live/i.test(x.status)?" live":""}">${esc(x.status)}</span><b>${esc(x.title)}</b><span>${esc(x.sport)} · ${esc(x.detail||"")}</span></div>`).join("") : `<div class="empty">No Pakistan matches scheduled right now.</div>`;
+      const u = document.getElementById("scoresUpd"); if (u) u.textContent = "Updated " + fmtTime(S.updated);
+    }
+    const jm = document.getElementById("jobsMini"), J = state.jobs;
+    if (jm && J && J.items){
+      const live = J.items.filter(j=>j.status!=="closed" && j.status!=="none").slice(0,5);
+      jm.innerHTML = live.length ? live.map(j=>`<div class="jrow"><span><b>${esc(j.title)}</b><br><span style="font-size:13px;color:var(--muted)">${esc(j.org)} · ${esc(j.last)}</span></span><span class="pill ${(JOB_STATUS[j.status]||[,"check"])[1]}">${esc((JOB_STATUS[j.status]||[j.status])[0])}</span></div>`).join("") : `<div class="empty">No open government jobs listed right now.</div>`;
+    }
+  }
+
   /* ---------- Loading ---------- */
   async function load(name){
     try{ const r = await fetch(new URL(name+".json", base).href + "?t=" + Math.floor(Date.now()/60e3), {cache:"no-store"}); if (!r.ok) return null; return await r.json(); }catch(_){ return null; }
@@ -162,7 +181,7 @@
     const got = await Promise.all(FEEDS.map(load));
     FEEDS.forEach((f,i)=>{ if (got[i]) state[f] = got[i]; });
     state.checked = new Date();
-    drawSide(); drawTickers();
+    drawSide(); drawTickers(); drawPanels();
     document.dispatchEvent(new CustomEvent("sg-feeds", {detail: state}));
   }
   window.SGFeeds = {check, state, marketOpen};

@@ -223,6 +223,61 @@ input:user-invalid,textarea:user-invalid{border-color:var(--stamp)}
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--wa);color:#fff;border-radius:999px;display:flex;align-items:center;gap:8px;padding:12px 16px 12px 12px;text-decoration:none;font:600 14px var(--f-body);box-shadow:0 6px 20px rgba(0,0,0,.22)}
 .fab svg{width:26px;height:26px}
 @media (max-width:520px){.fab span{display:none}.fab{padding:12px}}
+.scores,.jobmini{display:grid;gap:8px}
+.score{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);align-items:center}
+.score .st{grid-row:span 2;font:600 11px var(--f-mono);text-transform:uppercase;padding:4px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);text-align:center;min-width:72px}
+.score .st.live{background:var(--stamp);color:#fff}
+.score b{font-family:var(--f-display);font-size:14.5px}
+.score span{font-size:13px;color:var(--muted)}
+.linkbtn{font:600 13px var(--f-body);background:none;border:0;color:var(--accent);cursor:pointer;padding:0}
+.jobgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+.job{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:6px;align-content:start}
+.job .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.job h3{font-size:16px}
+.job .org{font:600 12px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.job .last{font:500 13px var(--f-mono);color:var(--ink)}
+.job p{margin:0;font-size:14px;color:var(--muted)}
+.jrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:center}
+.jrow:last-child{border-bottom:0}
+.about{margin-top:18px;padding:14px 16px;border-radius:var(--r);background:var(--bg)}
+.about h3{font-size:15px;margin-bottom:6px}
+.about p{margin:0 0 8px;max-width:72ch}
+.kw{display:flex;flex-wrap:wrap;gap:6px}
+.kw span{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+footer.site{border-top:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:14px;padding-block:32px 96px;margin-top:24px}
+.fgrid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:28px}
+@media (max-width:900px){.fgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.fbrand{grid-column:1/-1}}
+@media (max-width:420px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+.fcol{display:grid;gap:8px;align-content:start;min-width:0}
+.fcol h4{margin:0 0 4px;font:600 13px var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.fcol nav{display:grid;gap:7px}
+.fcol a{color:var(--muted);text-decoration:none}
+.fcol a:hover{color:var(--accent);text-decoration:underline}
+.fbrand p{margin:0;max-width:44ch}
+.fbrand .fnote{font-size:12.5px}
+.fbrand .brand svg{width:36px;height:36px}
+.fsos{display:grid;gap:6px}
+.fsos b{font-family:var(--f-mono);color:var(--stamp);margin-right:6px}
+.fbottom{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between;border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:12.5px}
+.legal{max-width:760px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 28px}
+@media (max-width:520px){.legal{padding:18px}}
+.legal h2{font-size:19px;margin:24px 0 8px}
+.legal p,.legal li{line-height:1.75;max-width:70ch}
+.legal ul{padding-left:20px;display:grid;gap:6px}
+.legal .upd{font-size:13px;color:var(--muted)}
+.ph{background:var(--amber-soft);color:var(--amber);padding:1px 6px;border-radius:4px;font-weight:600}
+footer.site{padding-block:32px 96px}
+footer.site .wrap{display:grid}
+footer.site .fbottom{display:flex}
+.homefeeds{margin-top:36px}
+.homefeeds .h2row{margin:0 0 10px}
+.home-hosp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;margin-top:36px;padding:18px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent)}
+@media (max-width:620px){.home-hosp{grid-template-columns:minmax(0,1fr)}}
+.home-hosp h2{font-size:19px}
+.home-hosp p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.home-hosp form{display:flex;gap:8px;flex-wrap:wrap}
+.home-hosp input{min-width:0;flex:1 1 200px}
+.home-hosp .linkbtn{text-decoration:none;margin-left:4px}
 footer{border-top:1px solid var(--line);padding-block:20px 90px;color:var(--muted);font-size:13px}
 footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
 footer p{max-width:75ch;margin:0}
@@ -424,10 +479,20 @@ a.tab.tablink svg{width:16px;height:16px}
       <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
       <a href="police/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 18 40 52v58c0 58 38 108 88 128 50-20 88-70 88-128V52Zm0 19 70 27v46c0 48-30 90-70 108-40-18-70-60-70-108V64Zm-30 63h60v16H98Zm0 30h60v16H98Zm0 30h40v16H98Z"/></svg></span><b>Police Station Directory</b><span class="d">Every district: stations, official phone numbers, circles and locations on the map.</span><span class="go">Open directory →</span></a>
       <a href="universities/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 116-58Zm0 20.5L197 92l-69 34.5L59 92ZM56 128v44c0 22 32 42 72 42s72-20 72-42v-44l-18 9v35c0 10-22 24-54 24s-54-14-54-24v-35Zm166-20v68h18v-77Z"/></svg></span><b>Government Universities</b><span class="d">Entry test calendar (MDCAT, NET, ECAT, USAT…), admission criteria and fees for every public university.</span><span class="go">Open guide →</span></a>
-      <a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
+            <a href="hospitals/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M208 32H48a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm-24 104h-48v48a8 8 0 0 1-16 0v-48H72a8 8 0 0 1 0-16h48V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 0 16Z"/></svg></span><b>Find a hospital</b><span class="d">251 Punjab hospitals, nearest to your town first, with directions.</span><span class="go">Find hospitals →</span></a>
+      <a href="jobs/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M216 64h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16ZM96 56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm120 24v41.6a184 184 0 0 1-88 22.4 184 184 0 0 1-88-22.4V80Z"/></svg></span><b>Government jobs</b><span class="d">FPSC, PPSC and other commissions, and armed forces intakes, with last dates.</span><span class="go">See jobs →</span></a>
+<a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
       <a href="vets/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M212 80a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-168 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm48-48a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm72 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-36 88c-33 0-64 34-64 64 0 17 13 28 30 28 13 0 20-6 34-6s21 6 34 6c17 0 30-11 30-28 0-30-31-64-64-64Z"/></svg></span><b>Find a vet</b><span class="d">Nearest government vet hospital, pet clinics by city, and animal first aid.</span><span class="go">Find a vet →</span></a>
     </div>
 
+    <div class="home-hosp">
+      <div><h2>Find a hospital near you</h2><p>251 government and private hospitals across all 41 districts of Punjab, sorted by distance from your town. <a class="linkbtn" href="vets/">Need a vet for an animal? →</a></p></div>
+      <form action="hospitals/" method="get" autocomplete="off"><input type="text" name="where" placeholder="Your town, e.g. Sahiwal" aria-label="Your town"><button class="btn" type="submit">Find hospitals</button></form>
+    </div>
+    <div class="grid2 homefeeds">
+      <div class="panel"><div class="h2row"><h2>Pakistan sports</h2><p id="scoresUpd"></p></div><div class="scores" id="scores"><div class="empty">Loading…</div></div></div>
+      <div class="panel"><div class="h2row"><h2>Government jobs</h2><a class="linkbtn" href="jobs/">All jobs →</a></div><div class="jobmini" id="jobsMini"><div class="empty">Loading…</div></div></div>
+    </div>
     <div class="h2row" id="updatesHead"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
     <div class="updates" id="updates"></div>
     <button class="more" id="updMore" type="button" hidden></button>
@@ -465,7 +530,9 @@ a.tab.tablink svg{width:16px;height:16px}
       <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
       <a href="police/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 18 40 52v58c0 58 38 108 88 128 50-20 88-70 88-128V52Zm0 19 70 27v46c0 48-30 90-70 108-40-18-70-60-70-108V64Zm-30 63h60v16H98Zm0 30h60v16H98Zm0 30h40v16H98Z"/></svg></span><b>Police Station Directory</b><span class="d">Every district: stations, official phone numbers, circles and locations on the map.</span><span class="go">Open directory →</span></a>
       <a href="universities/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 116-58Zm0 20.5L197 92l-69 34.5L59 92ZM56 128v44c0 22 32 42 72 42s72-20 72-42v-44l-18 9v35c0 10-22 24-54 24s-54-14-54-24v-35Zm166-20v68h18v-77Z"/></svg></span><b>Government Universities</b><span class="d">Entry test calendar (MDCAT, NET, ECAT, USAT…), admission criteria and fees for every public university.</span><span class="go">Open guide →</span></a>
-          <a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
+                <a href="hospitals/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M208 32H48a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h160a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm-24 104h-48v48a8 8 0 0 1-16 0v-48H72a8 8 0 0 1 0-16h48V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 0 16Z"/></svg></span><b>Find a hospital</b><span class="d">251 Punjab hospitals, nearest to your town first, with directions.</span><span class="go">Find hospitals →</span></a>
+      <a href="jobs/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M216 64h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a16 16 0 0 0-16 16v128a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16ZM96 56a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm120 24v41.6a184 184 0 0 1-88 22.4 184 184 0 0 1-88-22.4V80Z"/></svg></span><b>Government jobs</b><span class="d">FPSC, PPSC and other commissions, and armed forces intakes, with last dates.</span><span class="go">See jobs →</span></a>
+<a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
       <a href="vets/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M212 80a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-168 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm48-48a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm72 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-36 88c-33 0-64 34-64 64 0 17 13 28 30 28 13 0 20-6 34-6s21 6 34 6c17 0 30-11 30-28 0-30-31-64-64-64Z"/></svg></span><b>Find a vet</b><span class="d">Nearest government vet hospital, pet clinics by city, and animal first aid.</span><span class="go">Find a vet →</span></a>
 </div>
     <div class="grid2">
@@ -540,6 +607,13 @@ a.tab.tablink svg{width:16px;height:16px}
   </section>
 
   <!-- CONTACT -->
+  <!-- ABOUT -->
+  <section class="view" id="v-about" hidden><article class="legal" id="aboutBody"></article></section>
+  <!-- PRIVACY -->
+  <section class="view" id="v-privacy" hidden><article class="legal" id="privacyBody"></article></section>
+  <!-- TERMS -->
+  <section class="view" id="v-terms" hidden><article class="legal" id="termsBody"></article></section>
+
   <section class="view" id="v-contact" hidden>
     <div class="vhead"><h1>Contact us</h1><p>Questions about a scheme or this guide? Send a message and we'll reply on your phone or email.</p></div>
     <div class="grid2">
@@ -587,18 +661,35 @@ a.tab.tablink svg{width:16px;height:16px}
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <a class="brand" href="./" data-go="home"><span id="footLogo"></span><span class="t"><span class="n" style="font-size:16px">Sahulat <span>Guide</span></span></span></a>
-    <p>Information checked against official notices and news reports in early October 2026. Scheme terms, fees and deadlines change often. Confirm every figure on the official portal or helpline before you pay or submit anything. This site is not affiliated with NADRA, the Government of Pakistan or the Government of Punjab. Illustrations are for decoration only.</p>
+<footer class="site">
+  <div class="wrap fgrid">
+    <div class="fcol fbrand">
+      <a class="brand" href="#home" data-go="home"><span id="footLogo"></span><span class="t"><span class="n" style="font-size:17px">Sahulat <span>Guide</span></span><span class="ur" lang="ur" style="font-size:13px">سہولت گائیڈ · پاکستان</span></span></a>
+      <p>Free, step-by-step guides to Pakistani government services: ID and passports, loans, bills and taxes, health, education, transport, cargo and government jobs.</p>
+      <p class="fnote">Independent information website. Not affiliated with NADRA, FBR, the Government of Pakistan or any provincial government.</p>
+    </div>
+    <div class="fcol"><h4>Services</h4><nav id="fServices"></nav></div>
+    <div class="fcol"><h4>Useful</h4><nav>
+      <a href="jobs/">Government jobs</a><a href="rates/">Daily rates</a><a href="hospitals/">Find a hospital</a><a href="vets/">Find a vet</a><a href="police/">Police stations</a><a href="universities/">Universities</a><a href="#tools" data-go="tools">Loan calculators</a><a href="#portals" data-go="portals">Official websites</a><a href="#all" data-go="all">All services</a><a href="#emergency" data-go="emergency">Emergency numbers</a><a href="emergency/">Nearest police station</a></nav></div>
+    <div class="fcol"><h4>Company</h4><nav>
+      <a href="#about" data-go="about">About us</a><a href="#contact" data-go="contact">Contact us</a><a href="#privacy" data-go="privacy">Privacy Policy</a><a href="#terms" data-go="terms">Terms & Disclaimer</a></nav></div>
+    <div class="fcol"><h4>Emergency</h4><div class="fsos">
+      <span><b>15</b> Police</span><span><b>1122</b> Rescue & ambulance</span><span><b>16</b> Fire</span><span><b>130</b> Motorway police</span><span><b>1799</b> Cyber crime</span></div></div>
   </div>
+  <div class="wrap fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
 
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"></a>
 
 <script>
 /* ===== Site settings ===== */
-const WHATSAPP_NUMBER = "";            // e.g. "923001234567" (country code, no + or spaces)
+const WHATSAPP_NUMBER = "";
+/* ==== YOUR DETAILS: fill these in before going live (AdSense checks them) ==== */
+const SITE_OWNER = "";                 // e.g. "Muhammad Farooq"
+const SITE_CITY  = "";                 // e.g. "Bannu"
+const SITE_EMAIL = "";                 // e.g. "contact@yourdomain.pk"
+const SITE_DOMAIN = "";                // e.g. "www.sahulatguide.pk"
+//            // e.g. "923001234567" (country code, no + or spaces)
 const CHECKED = "6 Oct 2026";
 
 /* ===== Illustrations (original, drawn in SVG) ===== */
@@ -755,6 +846,8 @@ const ART = {
    <g transform="translate(40 228)"><ellipse cx="20" cy="22" rx="20" ry="6" class="f-sun"/><rect x="0" y="8" width="40" height="14" class="f-sun"/><ellipse cx="20" cy="8" rx="20" ry="6" class="f-e"/><text x="20" y="12" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`
 };
 const ICON = {
+ plus:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>`,
+ brief:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>`,
  chart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>`,
  shield:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="M9 12h6M9 15h4"/></svg>`,
  grad:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>`,
@@ -780,7 +873,7 @@ const GROUPS = {
 };
 const REGIONS = [["all","All of Pakistan"],["punjab","Punjab"],["sindh","Sindh"],["kp","Khyber Pakhtunkhwa"],["balochistan","Balochistan"],["ict","Islamabad"],["ajkgb","AJK & Gilgit-Baltistan"]];
 const REGION_LABEL = {national:"Nationwide",punjab:"Punjab",sindh:"Sindh",kp:"KP",balochistan:"Balochistan",ict:"Islamabad",ajkgb:"AJK & GB"};
-const TABS = [["home","Home"],["emergency","Emergency"],["police","Police stations","police/","shield"],["universities","Universities","universities/","grad"],["rates","Daily rates","rates/","chart"],...Object.entries(GROUPS).map(([k,g])=>[k,g.name]),["all","All services"],["tools","Calculators"],["portals","More services"],["contact","Contact"]];
+const TABS = [["home","Home"],["emergency","Emergency"],["police","Police stations","police/","shield"],["universities","Universities","universities/","grad"],["rates","Daily rates","rates/","chart"],["hospitals","Find a hospital","hospitals/","plus"],["govtjobs","Govt jobs","jobs/","brief"],...Object.entries(GROUPS).map(([k,g])=>[k,g.name]),["all","All services"],["tools","Calculators"],["portals","More services"],["contact","Contact"]];
 const S = [
 { id:"cnic-renewal", grp:"identity", sub:"id", region:["national"], art:"id", name:"CNIC renewal (online)", ur:"شناختی کارڈ کی تجدید", by:"NADRA", status:"open",
   summary:"Renew an expired or expiring Computerised National Identity Card from your phone with the Pak-ID app or the Pak-Identity website. You can also renew at any NADRA Registration Centre.",
@@ -1676,6 +1769,90 @@ const statusLabel = {open:"Open",closed:"Closed",check:"Check portal"};
 const waLink = text => "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
 let view = "home", sub = "all", region = "all", current = S[0].id;
 
+const SEO = {
+"cnic-renewal":{t:"CNIC Renewal Online 2026: Pak-ID App Steps, NADRA Fees & Time",d:"Renew your CNIC online from home with the NADRA Pak-ID app. See 2026 fees (from Rs 400), documents, step-by-step process, delivery time and tracking.",k:["CNIC renewal online","NADRA ID card renewal fee 2026","Pak-ID app","shanakhti card renew","smart card renewal","NADRA fee structure"]},
+"passport":{t:"Pakistan Passport Renewal & New Passport 2026: Fees, Documents, Time",d:"How to apply for a new Pakistani passport or renew it: normal Rs 4,500, urgent Rs 7,500, fast track Rs 12,500. Documents, steps, e-passport and online renewal abroad.",k:["passport renewal Pakistan","passport fee 2026","DGIP passport","e-passport Pakistan","online passport renewal","urgent passport fee"]},
+"sim-check":{t:"Check SIMs on Your CNIC: 668 SMS & cnic.sims.pk (Free PTA Check)",d:"Find how many SIMs are registered on your CNIC by SMS to 668 or free on cnic.sims.pk, and block any SIM that isn't yours. Up to 5 SIMs per CNIC.",k:["check SIMs on CNIC","668 SIM check","cnic.sims.pk","how many SIMs on my CNIC","block SIM Pakistan","PTA SIM verification"]},
+"pm-youth-loan":{t:"PM Youth Business & Agriculture Loan 2026: Tiers, Markup, Apply",d:"PM Youth Loan (Kamyab Jawan) gives up to Rs 7.5 million at 0%, 5% or 7% markup to people aged 21–45. Eligibility, documents, tiers and how to apply on pmyp.gov.pk.",k:["PM Youth Loan 2026","Kamyab Jawan loan","PMYB&ALS","interest free loan Pakistan","youth business loan","pmyp.gov.pk apply"]},
+"asaan-karobar-finance":{t:"CM Punjab Asaan Karobar Finance 2026: Rs 1–30 Million Interest-Free",d:"Interest-free business loans of Rs 1 million to Rs 30 million for Punjab SMEs and startups. Tiers, eligibility (age 25–55, FBR filer), processing fee and how to apply.",k:["Asaan Karobar Finance","Asaan Karobar loan apply","akf.punjab.gov.pk","interest free business loan Punjab","Maryam Nawaz loan scheme","CM Punjab business loan"]},
+"apni-chhat-apna-ghar":{t:"Apni Chhat Apna Ghar 2026: Rs 15 Lakh Interest-Free Housing Loan",d:"Punjab's Apni Chhat Apna Ghar gives up to Rs 1.5 million interest-free to build a house on your own plot, repaid over 7 years. Eligibility, documents and online apply.",k:["Apni Chhat Apna Ghar","acag.punjab.gov.pk","interest free housing loan Punjab","Mehfooz Chhat","Apna Ghar scheme","house construction loan"]},
+"mera-ghar-mera-ashiana":{t:"Mera Ghar Mera Ashiana 2026: 5% Home Loan for First-Time Buyers",d:"Government-subsidised bank home loans up to Rs 3.5 million at 5% or 8% fixed markup for 10 years. Eligibility, house size limits, documents and how to apply at banks.",k:["Mera Ghar Mera Ashiana","SBP housing scheme","5% home loan Pakistan","low markup home finance","first time home buyer loan","housing finance scheme 2026"]},
+"bank-loans":{t:"Bank Loans in Pakistan 2026: Compare Banks & KIBOR Loan Calculator",d:"Compare personal, car, home and business loans from HBL, MCB, UBL, NBP, BOP, Bank Alfalah and Meezan. KIBOR-based calculator, documents and tips to get the lowest rate.",k:["bank loan calculator Pakistan","car loan calculator","KIBOR rate today","personal loan Pakistan","home loan Pakistan","compare bank loans"]},
+"utility-bills":{t:"Pay Utility Bills Online in Pakistan: Electricity, Gas, PTCL, Water",d:"Pay LESCO, IESCO, MEPCO, K-Electric, SNGPL, SSGC and PTCL bills online by bank app, JazzCash or Easypaisa. Duplicate bill links and complaint helplines for all Pakistan.",k:["pay electricity bill online","duplicate bill LESCO","SNGPL bill online","K-Electric bill","PTCL bill payment","online bill payment Pakistan"]},
+"ntn-registration":{t:"NTN Registration Online 2026: FBR IRIS Step-by-Step (Free)",d:"Register for your NTN free on FBR's IRIS portal or Tax Asaan app. Documents, step-by-step registration and how your CNIC becomes your NTN.",k:["NTN registration online","how to get NTN","FBR IRIS registration","NTN number check","become tax filer","Tax Asaan app"]},
+"tax-return":{t:"File Income Tax Return 2026 Online: Deadline 15 Oct, Filer Status 9966",d:"File your Tax Year 2026 return on IRIS before 15 October 2026. Steps, documents, wealth statement, filer benefits and how to check ATL status by SMS to 9966.",k:["income tax return 2026","FBR return last date","active taxpayer list check","9966 filer status","IRIS return filing","become filer Pakistan"]},
+"property-tax":{t:"Punjab Property Tax Online & Fard: ePay Punjab, Rebate, Surcharge",d:"Pay Punjab property tax online with an ePay Punjab PSID and get your land record (fard) from PLRA. 2026 rebate, surcharge dates, documents and helpline 1035.",k:["property tax Punjab online","ePay Punjab property tax","excise property tax check","fard online Punjab","PLRA land record","property tax surcharge"]},
+"punjab-health-card":{t:"Punjab Health Card (Sehat Card) 2026: Coverage, Hospitals, Helpline",d:"Free indoor treatment for Punjab families at empanelled hospitals with your CNIC. Coverage limits, what changed for cancer and heart care in 2026, and helpline 0800-07542.",k:["Punjab Sehat Card","health card Punjab 2026","Sehat card check by CNIC","free treatment Punjab","PHIMC helpline","health insurance Punjab"]},
+"federal-sehat-card":{t:"Sehat Sahulat Card 2026: Islamabad, AJK & GB Health Card",d:"The federal Sehat Card was relaunched in January 2026 for Islamabad, AJK and Gilgit-Baltistan. Who is covered, how to use it at hospitals, and the KP Sehat Card Plus.",k:["Sehat Sahulat Card","Sehat card Islamabad","health card AJK","Gilgit Baltistan Sehat card","Sehat card relaunch 2026","KP Sehat Card Plus"]},
+"clean-water":{t:"Free Clean Drinking Water Plants Punjab: Saaf Pani Helpline 1336",d:"Find free drinking water filtration plants in Punjab, report a broken plant on 1336 or WhatsApp 0322-2391336, and request a plant for your area.",k:["water filtration plant Punjab","Saaf Pani Authority","clean water helpline 1336","free drinking water","filter plant complaint","Punjab clean water program"]},
+"benazir-undergrad":{t:"Benazir Undergraduate Scholarship 2026-27 (HEC): Eligibility & Apply",d:"Full tuition plus Rs 4,000 a month for public university students from families earning up to Rs 45,000. Eligibility, documents and how to apply on the HEC portal.",k:["Benazir undergraduate scholarship","Ehsaas scholarship HEC","HEC scholarship 2026","need based scholarship Pakistan","BISP scholarship","university scholarship apply"]},
+"hec-need-based":{t:"HEC Need-Based Scholarship 2026-27: Rs 6,000 Stipend, How to Apply",d:"HEC need-based scholarship pays full tuition and Rs 6,000 a month for undergraduates at public universities. Eligibility, documents and how to apply through your university.",k:["HEC need based scholarship","HEC scholarship form","financial aid office","undergraduate scholarship Pakistan","scholarship for poor students","HEC stipend"]},
+"taleemi-wazaif":{t:"Benazir Taleemi Wazaif 2026: Stipend Amounts for Boys & Girls",d:"Quarterly school stipends for children of BISP Kafaalat families: Rs 1,500 to Rs 4,000 per quarter by level, with a bonus for girls. Enrolment steps and helpline.",k:["Benazir Taleemi Wazaif","BISP education stipend","Taleemi Wazaif amount 2026","8171 Taleemi Wazaif","school stipend Pakistan","BISP registration"]},
+"free-education-punjab":{t:"Free Education in Punjab 2026: Government Schools & PEF Vouchers",d:"Children aged 5–16 study free in Punjab government schools with free textbooks, and PEF pays fees at partner schools. Admission steps and documents.",k:["free education Punjab","government school admission","PEF voucher scheme","free textbooks Punjab","Article 25-A","school admission 2026"]},
+"kissan-card":{t:"CM Punjab Kissan Card 2026: Rs 1.5 Lakh Interest-Free, SMS 8070",d:"Interest-free crop input loans of Rs 30,000 per acre (up to Rs 150,000) for Punjab farmers with up to 12.5 acres. Apply by SMS PKC and CNIC to 8070.",k:["Kissan Card Punjab","8070 Kissan card","Kisan card registration","farmer loan Punjab","Maryam Nawaz Kissan card","interest free agriculture loan"]},
+"livestock-card":{t:"CM Punjab Livestock Card 2026 Phase 3: Registration & Eligibility",d:"Interest-free credit for small livestock farmers in Punjab. Phase 3 registration opened on 15 July 2026. Eligibility, documents and how to apply.",k:["Livestock Card Punjab","livestock card registration 2026","plc.punjab.gov.pk","cattle farmer loan","Maryam Nawaz livestock card","dairy farmer scheme"]},
+"city-buses":{t:"Metro & City Bus Fares 2026: Lahore, Pindi, Multan, Karachi, Peshawar",d:"Fares, cards and helplines for Metro Bus, Orange Line, Punjab e-buses, Islamabad electric buses, Karachi Green Line, People's Bus and Peshawar BRT.",k:["metro bus fare 2026","T-Cash card","Islamabad electric bus fare","Green Line Karachi fare","People's Bus Service routes","Peshawar BRT Zu card"]},
+"railway-tickets":{t:"Pakistan Railways Online Ticket Booking 2026: Rabta App & Refunds",d:"Book train tickets on the official Rabta app or pakrail.gov.pk, pay online and travel with an e-ticket. Classes, steps, refund rules and helpline 117.",k:["Pakistan Railways online booking","Rabta app","train ticket online Pakistan","railway refund policy","pakrail.gov.pk","train booking 2026"]},
+"airline-tickets":{t:"Buy Airline Tickets in Pakistan: PIA & Domestic Flights Guide 2026",d:"How to book domestic and international flights safely on airline websites, documents for travel, protector stamp for overseas workers, and tips to avoid ticket fraud.",k:["PIA ticket booking","cheap flights Pakistan","domestic flights Pakistan","protector stamp","air ticket online","PIA privatisation 2026"]},
+"us-green-card":{t:"US Green Card (DV Lottery) for Pakistanis 2026: Eligibility & Scams",d:"Pakistan-born applicants are not eligible for the DV lottery, except through a spouse born in an eligible country. Official site, free entry and how to avoid fake agents.",k:["DV lottery Pakistan","green card lottery 2027","US green card Pakistan","dvprogram.state.gov","diversity visa eligibility","green card scam"]},
+"pak-post":{t:"Pakistan Post Parcel & UMS Courier: Rates, Tracking, Complaints",d:"Send parcels, UMS express and cash-on-delivery (VPL) anywhere in Pakistan or abroad through Pakistan Post. Steps, tracking and complaint helpline 051-111-111-117.",k:["Pakistan Post tracking","UMS courier","VPL parcel","Pakistan Post helpline","send parcel Pakistan","ep.gov.pk tracking"]},
+"rail-freight":{t:"Send Car, Bike or Cargo by Train: Pakistan Railways Freight 2026",d:"Book motorcycles, cars and goods on Pakistan Railways freight. Charges, documents, steps and freight helpline 021-99201665.",k:["send bike by train","car transport by train Pakistan","railway cargo booking","Pakistan Railways freight charges","parcel by train","freight helpline"]},
+"ports-cargo":{t:"Pakistan Ports, Dry Ports & Customs Clearance: Contacts & Steps",d:"Contacts for Port Qasim, Karachi Port, NLC dry ports and customs, plus step-by-step import/export clearance on Pakistan Single Window (PSW).",k:["dry port Lahore contact","Port Qasim contact","customs clearance Pakistan","Pakistan Single Window","NLC dry port","import export clearance"]}
+};
+
+/* ===== About, Privacy, Terms ===== */
+const ph = (v,label) => v ? esc(v) : `<span class="ph">${label}</span>`;
+function renderLegal(){
+  const site = SITE_DOMAIN ? esc(SITE_DOMAIN) : "this website";
+  const mail = ph(SITE_EMAIL,"your email");
+  const wa = WHATSAPP_NUMBER ? "+"+esc(WHATSAPP_NUMBER) : '<span class="ph">your WhatsApp</span>';
+  $("#aboutBody").innerHTML = `<h1 style="font-size:clamp(24px,3.4vw,32px)">About Sahulat Guide</h1>
+<p>Sahulat Guide is an independent website that explains Pakistani government services in plain language: how to renew a CNIC or passport, apply for government loan schemes, pay utility bills and taxes, use health cards, find scholarships and school stipends, travel by bus, train or air, send parcels and cargo, and find government jobs.</p>
+<h2>Who we are</h2><p>Sahulat Guide is run by <b>${ph(SITE_OWNER,"owner's full name")}</b> from ${ph(SITE_CITY,"city")}, Pakistan. We are not a government department and are not paid by any government body. We do not process applications, collect fees or sell services on behalf of any department.</p>
+<h2>Why we built it</h2><p>Government information in Pakistan is spread across dozens of websites, notifications and helplines, and people often pay agents for help they don't need. We bring the essential steps, documents, fees and official links together in one place so anyone can apply themselves, safely and for free.</p>
+<h2>How we research</h2><ul><li>Every guide is written from official sources such as department websites, notifications and helplines, and checked against reputable news reports.</li><li>Each guide shows when it was last checked and links to the official portal where you actually apply.</li><li>When fees, deadlines or rules change, we update the guide. If you spot a mistake, please <a href="#contact" data-go="contact">tell us</a>.</li></ul>
+<h2>Our promise to you</h2><ul><li>We will never ask for your CNIC copy, passwords, OTP codes or payments.</li><li>We never claim to guarantee a loan, job or scheme approval.</li><li>Apply only on official government websites, and never pay an agent.</li></ul>
+<h2>Advertising</h2><p>The website is free to use and is supported by advertising, including Google AdSense. Advertisements are kept separate from our guides and do not influence what we write. See our <a href="#privacy" data-go="privacy">Privacy Policy</a> to learn how ads use cookies.</p>
+<h2>Contact</h2><p>Email: <span class="mono">${mail}</span> · WhatsApp: <span class="mono">${wa}</span> · or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
+  $("#privacyBody").innerHTML = `<h1 style="font-size:clamp(24px,3.4vw,32px)">Privacy Policy</h1><p class="upd">Last updated: 5 October 2026</p>
+<p>This Privacy Policy explains how Sahulat Guide ("we", "us", "our") at ${site} collects, uses and protects information when you use our website. By using the website you agree to this policy.</p>
+<h2>Information we collect</h2><ul>
+<li><b>Information you give us:</b> when you use our contact form, email or WhatsApp, we receive your name, phone number, email address (if given), city and message. We use this only to reply to you.</li>
+<li><b>Automatically collected information:</b> our hosting provider, analytics and advertising partners may record technical data such as IP address, browser type, device, pages visited, time spent and approximate location (city/country).</li>
+<li><b>Information we never ask for:</b> CNIC copies, bank card numbers, passwords or OTP codes. Please do not send them to us.</li></ul>
+<h2>How we use information</h2><ul><li>To answer your questions and fix errors you report.</li><li>To understand which guides are useful and improve the website.</li><li>To show advertising that keeps the website free.</li><li>To keep the website secure and prevent abuse.</li></ul>
+<h2>Cookies</h2><p>Cookies are small text files stored on your device. We and our partners use cookies to remember your preferences (for example your selected region), measure traffic, and show and measure advertising. You can block or delete cookies in your browser settings; some features may then not work.</p>
+<h2>Google AdSense and third-party advertising</h2><ul>
+<li>We use Google AdSense to display ads. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites.</li>
+<li>Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this site and/or other sites on the Internet.</li>
+<li>You may opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>. You can also opt out of some third-party vendors' use of cookies for personalised advertising at <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">www.aboutads.info</a>.</li>
+<li>Read <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">how Google uses information from sites that use its services</a>.</li>
+<li>Visitors from the European Economic Area, the United Kingdom and Switzerland are asked for consent through a Google-certified consent message before personalised ads are shown.</li></ul>
+<h2>Analytics</h2><p>We may use Google Analytics or similar tools to count visits and see which pages are popular. These tools use cookies and collect usage data in aggregate. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>.</p>
+<h2>WhatsApp and external links</h2><p>If you contact us on WhatsApp, WhatsApp's own privacy policy applies to that conversation. Our guides link to official government portals and other websites; we are not responsible for their content or privacy practices.</p>
+<h2>Sharing of information</h2><p>We do not sell your personal information. We share data only with service providers that run the website (hosting, analytics, advertising) or when required by law.</p>
+<h2>Data retention and security</h2><p>We keep messages only as long as needed to reply and keep records, and we take reasonable steps to protect them. No method of transmission over the internet is completely secure.</p>
+<h2>Children's privacy</h2><p>Our website is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has sent us personal information, contact us and we will delete it.</p>
+<h2>Your choices and rights</h2><p>You can ask us what personal information we hold about you, or ask us to correct or delete it, by emailing us. You can control cookies through your browser and Google Ads Settings.</p>
+<h2>Changes to this policy</h2><p>We may update this policy from time to time. The "Last updated" date shows the latest version.</p>
+<h2>Contact us</h2><p>Questions about this Privacy Policy? Email <span class="mono">${mail}</span> or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
+  $("#termsBody").innerHTML = `<h1 style="font-size:clamp(24px,3.4vw,32px)">Terms of Use & Disclaimer</h1><p class="upd">Last updated: 5 October 2026</p>
+<p>By using Sahulat Guide (${site}) you agree to these terms. If you do not agree, please do not use the website.</p>
+<h2>1. Not a government website</h2><p>Sahulat Guide is an independent information website. It is <b>not affiliated with, endorsed by or operated by</b> NADRA, FBR, the Directorate General of Immigration & Passports, the State Bank of Pakistan, PTA, the Government of Pakistan, any provincial government, or any bank, airline or company mentioned. Department and scheme names are used only to describe them, and all trademarks belong to their owners.</p>
+<h2>2. Information only, not advice</h2><p>Our guides, news headlines, sports scores and job listings are general information. They are not legal, financial, tax or immigration advice. Fees, eligibility, deadlines and procedures change often and may differ from what is shown here. Always confirm on the official portal or helpline before you apply, pay or sign anything.</p>
+<h2>3. No applications, payments or job placement</h2><p>We do not accept applications, documents or payments for any government service, and we do not offer jobs or guarantee approvals. Anyone claiming to act for Sahulat Guide to process applications, sell jobs or guarantee loans is not connected with us. Please report them to us and to the FIA / NCCIA cyber crime helpline 1799.</p>
+<h2>4. Calculators and estimates</h2><p>Loan, instalment and other calculators give estimates only, based on the figures you enter and published benchmark rates on the date shown. Your bank's key fact statement or the programme's sanction letter is final.</p>
+<h2>5. News, scores and jobs</h2><p>Headlines are short summaries written by us with links to the original publisher. Scores and job details are provided for convenience and may be delayed or change; check the official source.</p>
+<h2>6. Limitation of liability</h2><p>We work to keep information accurate, but we make no guarantee that it is complete, current or error-free. To the fullest extent allowed by law, Sahulat Guide is not liable for any loss or damage arising from use of, or reliance on, this website or linked websites.</p>
+<h2>7. External links</h2><p>Links to other websites are provided for convenience. We do not control and are not responsible for their content, availability or practices.</p>
+<h2>8. Advertising</h2><p>The website shows third-party advertisements, including Google AdSense. An advertisement does not mean we endorse the product or service. Please do not click ads on our behalf or ask others to.</p>
+<h2>9. Acceptable use</h2><p>Do not misuse the website: no attempts to hack, overload or copy it automatically, and no posting of false, abusive or unlawful content through our contact channels.</p>
+<h2>10. Copyright</h2><p>The guides, illustrations and design on this website belong to Sahulat Guide. You may share links to our pages; copying guides in full to other websites or apps without permission is not allowed.</p>
+<h2>11. Changes and governing law</h2><p>We may update these terms at any time; the "Last updated" date shows the current version. These terms are governed by the laws of Pakistan.</p>
+<h2>12. Contact</h2><p>Email <span class="mono">${mail}</span> or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
+  $("#fServices").innerHTML = Object.entries(GROUPS).map(([k,g])=>`<a href="#${k}" data-go="${k}">${esc(g.name)}</a>`).join("");
+}
+
 /* ===== Navigation ===== */
 function renderTabs(){
   $("#tabs").innerHTML = TABS.map(([k,l,url,ic])=>url?`<a class="tab tablink" href="${url}">${ICON[ic]||""}${l}</a>`:`<button class="tab" role="tab" data-go="${k}" aria-selected="${k===view}">${k==="home"?ICON.home:""}${l}</button>`).join("");
@@ -1731,6 +1908,7 @@ function renderSheet(id){
     <div class="sheet-head"><div><div class="eyebrow">${esc(GROUPS[s.grp].name)} · ${esc(regionTag(s))}</div><div class="by">${esc(s.by)}</div><h2>${esc(s.name)}</h2><div class="ur" lang="ur">${s.ur}</div></div>
     <span class="pill ${s.status}">${statusLabel[s.status]}</span></div>
     <p class="summary">${esc(s.summary)}</p>
+    ${SEO[s.id]?`<div class="about"><h3>About: ${esc(SEO[s.id].t)}</h3><p>${esc(SEO[s.id].d)}</p><div class="kw" aria-label="Also searched as">${SEO[s.id].k.map(k=>`<span>${esc(k)}</span>`).join("")}</div></div>`:""}
     <div class="facts">${s.facts.map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("")}</div>
     <div class="sec"><h3>${esc((s.hd||[])[0]||"Who can apply")}</h3><ul>${s.elig.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
     <div class="sec"><h3>${esc((s.hd||[])[1]||"Documents to prepare")}</h3><ul>${s.docs.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
@@ -1922,12 +2100,12 @@ document.addEventListener("click", async e=>{
 /* ===== Boot ===== */
 $("#footLogo").innerHTML = document.querySelector(".brandbar .brand svg").outerHTML;
 $("#dir").innerHTML = DIR.map(([g,list])=>`<h2 class="egroup">${g}</h2><div class="dirgrid">${list.map(([n,d,u,f])=>`<a href="${u}" target="_blank" rel="noopener"><span style="display:flex;justify-content:space-between;gap:8px"><b>${n}</b><span class="pill ${f==="Free"?"open":"check"}">${f}</span></span><span class="d">${d}</span><span class="u">${u.replace("https://","")}</span></a>`).join("")}</div>`).join("");
-renderHome(); finder(); emi();
+renderHome(); finder(); emi(); renderLegal();
 $("#guideCount").textContent = S.length + " detailed guides";
 const h = location.hash.slice(1);
 const hs = S.find(s=>s.id===h);
-if(hs) go(hs.grp, hs.id); else go(TABS.some(t=>t[0]===h&&!t[2])?h:"home");
-addEventListener("hashchange",()=>{ const k=location.hash.slice(1); const g=S.find(s=>s.id===k); if(g){ go(g.grp,g.id); scrollTo({top:0}); } else if(TABS.some(t=>t[0]===k&&!t[2])){ go(k); scrollTo({top:0}); } });
+if(hs) go(hs.grp, hs.id); else go((TABS.some(t=>t[0]===h&&!t[2])||["about","privacy","terms"].includes(h))?h:"home");
+addEventListener("hashchange",()=>{ const k=location.hash.slice(1); const g=S.find(s=>s.id===k); if(g){ go(g.grp,g.id); scrollTo({top:0}); } else if(TABS.some(t=>t[0]===k&&!t[2])||["about","privacy","terms"].includes(k)){ go(k); scrollTo({top:0}); } });
 
 /* ===== Scroll reveal (IntersectionObserver; skipped under reduced motion) ===== */
 (function(){

@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Find a Hospital in Punjab: Nearest Govt & Private Hospitals | Sahulat Guide</title>
+<meta name="description" content="251 government and private hospitals across all 41 districts of Punjab: teaching, DHQ, THQ, specialist, trust and military hospitals, sorted by distance from your town with directions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: hospital finder. Dark band; people/animals switch; nearest-hospital panel beside a care-levels guide; filters, cards and division index. */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#17232e; --muted:#5a6872; --line:#dde3e1;
+  --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
+  --amber:#8a5a00; --amber-soft:#fbf0d9; --sky:#dcebf3; --earth:#c98d5a;
+  --band:#0b3a2f; --band-ink:#eaf5f0; --band-muted:#a9c9bd;
+  --f-display:"Sora",system-ui,sans-serif; --f-body:"Noto Sans",system-ui,sans-serif;
+  --f-urdu:"Noto Nastaliq Urdu",serif; --f-mono:"JetBrains Mono",ui-monospace,monospace; --r:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sky:#1b2d38; --earth:#a8754a; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sky:#1b2d38; --earth:#a8754a; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+header.site{position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--f-display);color:var(--ink);text-decoration:none}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--accent)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}header.site .brand > span{display:none}}
+.band{background:var(--band);color:var(--band-ink)}
+.band .wrap{padding-block:30px 22px;display:grid;gap:10px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted);font-weight:600}
+.band h1{font-size:clamp(28px,4.4vw,44px);letter-spacing:-.025em}
+.band h1 .ur{font-family:var(--f-urdu);font-weight:500;font-size:.5em;color:var(--band-muted);margin-left:10px}
+.band p{color:var(--band-muted);max-width:68ch}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.jump a{font:600 13px var(--f-body);color:var(--band-ink);text-decoration:none;padding:6px 12px;border:1px solid color-mix(in srgb,var(--band-ink) 30%,transparent);border-radius:999px}
+.jump a:hover{background:color-mix(in srgb,var(--band-ink) 12%,transparent)}
+main{padding-block:22px 64px}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:34px 0 12px;flex-wrap:wrap}
+.h2row h2{font-size:21px}
+.h2row p{color:var(--muted);font-size:14px}
+.top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.top{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:19px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.near{border-left:5px solid var(--accent)}
+.btn{font:600 14px var(--f-body);padding:10px 16px;border-radius:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+form.find{display:flex;gap:8px;flex-wrap:wrap}
+form.find input{flex:1 1 240px;min-width:0;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{font:600 13px var(--f-body);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip span{font:500 11px var(--f-mono);color:var(--muted);margin-left:2px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] span{color:inherit;opacity:.8}
+.msg{margin:12px 0 0;color:var(--muted);font-size:14px}
+.msg.err{color:var(--stamp)}
+.res{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--line)}
+.res:empty{display:none}
+.res li{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.km{font:600 16px var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.km small{display:block;font:400 11px var(--f-body);color:var(--muted)}
+.res b{display:block;font-family:var(--f-display);font-size:14.5px}
+.res .d{font-size:13px;color:var(--muted)}
+.res a{font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+@media (max-width:520px){.res li{grid-template-columns:60px minmax(0,1fr)}.res li a{grid-column:2}}
+.gps{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.help{display:grid;gap:8px}
+.help .n{font:600 15px var(--f-mono);color:var(--stamp);text-decoration:none}
+.note{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px}
+.note.amber{background:var(--amber-soft)} .note.amber b{color:var(--amber)}
+.note.green{background:var(--accent-soft)} .note.green b{color:var(--accent)}
+.note a{font-weight:600;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card:hover{border-color:var(--accent)}
+.card h3{font-size:15.5px}
+.card .w{font-size:13px;color:var(--muted)}
+.card p{font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11px var(--f-mono);color:var(--c,var(--muted));border:1px solid var(--c,var(--muted));border-radius:5px;padding:1px 6px;white-space:nowrap}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px;margin-top:4px}
+.row a{font-weight:600;text-decoration:none}
+.dist{font:600 13px var(--f-mono);color:var(--accent)}
+input.q{width:100%;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin-bottom:12px}
+.more{display:flex;margin:14px auto 0}
+label{font-size:12px;color:var(--muted);display:grid;gap:4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=number]{font:15px var(--f-body);padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;text-transform:none}
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px}
+@media (max-width:560px){.form{grid-template-columns:minmax(0,1fr)}}
+.aid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin-top:14px}
+.aidcol{border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.aidcol h3{font-size:15px;margin-bottom:8px}
+.aidcol ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:14px}
+.aidcol.no{background:var(--stamp-soft);border-color:transparent} .aidcol.no h3{color:var(--stamp)}
+.aidcol.call{background:var(--amber-soft);border-color:transparent} .aidcol.call h3{color:var(--amber)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:10px}
+.steps li::before{content:counter(s);font:600 12px var(--f-mono);width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.wt{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;align-items:end;margin-top:8px}
+.wt .out{font:600 20px var(--f-display);padding:6px 0}
+.sec{border-top:1px solid var(--line);padding-top:16px;margin-top:20px}
+.sec h3{font-size:16px;margin-bottom:4px}
+.warn{margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--stamp-soft);font-size:14px}
+.warn b{color:var(--stamp)}
+.warn.plain{background:var(--surface);border:1px solid var(--line)} .warn.plain b{color:var(--ink)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;margin-top:30px;display:grid;gap:8px}
+.sos{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px;padding:10px 14px;border-radius:12px;background:var(--stamp-soft)}
+.sos b{color:var(--stamp);font-family:var(--f-display)}
+.sos .n{font:600 15px var(--f-mono);background:var(--surface);padding:3px 10px;border-radius:999px;color:var(--ink);text-decoration:none}
+.sos button{margin-left:auto;font:600 13px var(--f-body);background:none;border:0;color:var(--stamp);cursor:pointer}
+.empty{color:var(--muted);padding:16px;border:1px dashed var(--line);border-radius:10px}
+.mode{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.mode a{text-decoration:none}
+select,input[type=text]{font:15px var(--f-body);padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:100%}
+.hf-form input{background:var(--bg)}
+.hf-top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.hf-top{grid-template-columns:minmax(0,1fr)}}
+.hf-near{border-left:5px solid var(--accent)}
+.hf-form{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.hf-form input{flex:1 1 240px;min-width:0;font-size:16px}
+.hf-opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hf-msg{margin:12px 0 0;color:var(--muted);font-size:14px}
+.hf-msg.err{color:var(--stamp)}
+.hf-res{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--line)}
+.hf-res:empty{display:none}
+.hf-res li{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.hf-km{font:600 16px var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.hf-km small{display:block;font:400 11px var(--f-body);color:var(--muted)}
+.hf-res b{display:block;font-family:var(--f-display);font-size:14.5px}
+.hf-res .d{font-size:13px;color:var(--muted)}
+.hf-res a{font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+@media (max-width:520px){.hf-res li{grid-template-columns:60px minmax(0,1fr)}.hf-res li a{grid-column:2}}
+.hf-gps{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.hf-lvls{display:grid;gap:8px}
+.hf-lvl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:var(--r);padding:9px 12px;cursor:pointer}
+.hf-lvl:hover{border-color:var(--c)}
+.hf-lvl b{font-family:var(--f-display);font-size:14px}
+.hf-lvl span{font-size:13px;color:var(--muted)}
+.hf-lvl i{font:500 12px var(--f-mono);font-style:normal;color:var(--c);white-space:nowrap}
+.hf-tag{font:600 11px var(--f-mono);color:var(--c);border:1px solid var(--c);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.hf-bar{display:grid;grid-template-columns:minmax(0,2fr) repeat(4,minmax(0,1fr));gap:8px;margin:26px 0 10px}
+@media (max-width:860px){.hf-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.hf-bar .hf-q{grid-column:1/-1}}
+.hf-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:14px;margin-bottom:10px}
+.hf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.hf-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.hf-card:hover{border-color:var(--accent)}
+.hf-card h3{font-size:15.5px}
+.hf-card .w{font-size:13px;color:var(--muted)}
+.hf-card p{margin:0;font-size:14px}
+.hf-tags{display:flex;gap:6px;flex-wrap:wrap}
+.hf-tags .s{--c:var(--muted)}
+.hf-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px;margin-top:4px}
+.hf-row a{font-weight:600;text-decoration:none}
+.hf-dist{font:600 13px var(--f-mono);color:var(--accent)}
+.hf-more{justify-self:center;margin:14px auto 0;display:flex}
+.hf-panel{background:var(--accent-soft);border-radius:var(--r);padding:12px 16px;margin-bottom:12px;display:grid;gap:4px}
+.hf-panel h3{font-size:16px}
+.hf-panel p{margin:0;font-size:14px}
+.hf-kv{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:14px;font-variant-numeric:tabular-nums}
+.hf-kv b{font-family:var(--f-mono);font-weight:500}
+.hf-divs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px}
+.hf-div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;align-content:start}
+.hf-div h3{font-size:15px;display:flex;justify-content:space-between;gap:8px}
+.hf-div h3 span{font:500 12px var(--f-mono);color:var(--muted)}
+.hf-dl{display:flex;flex-wrap:wrap;gap:6px}
+.hf-db{font:inherit;font-size:13.5px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:3px 9px;cursor:pointer}
+.hf-db:hover{border-color:var(--accent)}
+.hf-db i{font:500 11px var(--f-mono);font-style:normal;color:var(--muted);margin-left:4px}
+.hf-db.new{border-style:dashed}
+.hf-prov{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.hf-prov .chip[disabled]{opacity:.55;cursor:not-allowed}
+.hf-mode{display:flex;gap:8px;flex-wrap:wrap;margin:-4px 0 16px}
+.hf-mode .chip{font-size:14px;padding:9px 16px;display:inline-flex;gap:8px;align-items:center}
+.hf-mode .chip svg{width:18px;height:18px}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+
+<section class="band"><div class="wrap">
+  <span class="kicker">Punjab · 41 districts · 251 hospitals</span>
+  <h1>Find a hospital <span class="ur">قریبی ہسپتال</span></h1>
+  <p>Government teaching, district (DHQ) and tehsil (THQ) hospitals, specialist institutes, and major private, trust and military hospitals. Pick your town to see the nearest ones with directions.</p>
+</div></section>
+
+<main class="wrap">
+  <div class="mode" role="group" aria-label="Who needs care"><span class="chip" aria-pressed="true">For people</span><a class="chip" href="../vets/">For animals (veterinary) →</a></div>
+
+    <div class="hf-prov" id="hProv" role="group" aria-label="Province"></div>
+    <div class="hf-top">
+      <div class="panel hf-near">
+        <h2>Nearest hospitals to you</h2>
+        <p class="sub">Choose your town from the list, or paste coordinates from Google Maps.</p>
+        <form class="hf-form" id="hForm" autocomplete="off">
+          <input type="text" id="hWhere" list="hPlaces" placeholder="Town, e.g. Burewala, or 31.52, 74.35" aria-label="Your town or coordinates">
+          <datalist id="hPlaces"></datalist>
+          <button class="btn" type="submit">Find nearest</button>
+        </form>
+        <div class="hf-opts" role="group" aria-label="Type of care">
+          <button type="button" class="chip" data-hk="all" aria-pressed="true">Any facility</button>
+          <button type="button" class="chip" data-hk="emergency" aria-pressed="false">24/7 emergency</button>
+          <button type="button" class="chip" data-hk="specialist" aria-pressed="false">Specialist care</button>
+          <button type="button" class="chip" data-hk="public" aria-pressed="false">Government only</button>
+        </div>
+        <p class="hf-msg" id="hMsg">To get exact coordinates in Google Maps, press and hold on your location and copy the numbers that appear.</p>
+        <ol class="hf-res" id="hRes"></ol>
+        <div class="hf-gps"><span>On your phone in an emergency?</span><a class="btn ghost" href="https://www.google.com/maps/search/hospital+near+me" target="_blank" rel="noopener">Open nearby hospitals in Google Maps ↗</a></div>
+      </div>
+      <div class="panel">
+        <h2>Which hospital for what</h2>
+        <p class="sub">Punjab's public health system has five levels. Start at the lowest level that can treat you; you'll be referred up if needed.</p>
+        <div class="hf-lvls" id="hLvls"></div>
+        <div class="sos" style="margin:14px 0 0"><b>Ambulance</b><span class="n">1122</span><b style="margin-left:6px">Health helpline</b><span class="n">1033</span><button type="button" onclick="location.href='../#punjab-health-card'">Health Card guide →</button></div>
+      </div>
+    </div>
+
+    <div class="hf-bar">
+      <input class="hf-q" type="text" id="hQ" placeholder="Search hospital, town or speciality (cardiology, burns…)" aria-label="Search hospitals">
+      <select id="hDiv" aria-label="Division"></select>
+      <select id="hDist" aria-label="District"></select>
+      <select id="hType" aria-label="Facility type"></select>
+      <select id="hSec" aria-label="Sector"></select>
+    </div>
+    <div class="hf-panel" id="hPanel" hidden></div>
+    <div class="hf-meta"><span id="hCount"></span><button type="button" class="linkbtn" id="hReset">Clear filters</button></div>
+    <div class="hf-grid" id="hGrid"></div>
+    <button type="button" class="btn ghost hf-more" id="hMore" hidden>Show more</button>
+
+    <div class="h2row"><h2>Browse by division and district</h2><p>10 divisions · 41 districts · dashed = created 2022–24</p></div>
+    <div class="hf-divs" id="hDivs"></div>
+
+    <div class="warn" style="background:var(--bg)"><b style="color:var(--ink)">About this list:</b> compiled from Punjab Primary & Secondary Healthcare Department pages, district health authority websites and the list of teaching and specialised institutions (October 2026). Punjab also runs about 2,500 Basic Health Units and 300+ Rural Health Centres; these are added district by district. Distances are straight-line and approximate. Phone numbers are shown only where an official page lists them; call 1033 to confirm services.</div>
+    
+  <footer><div>Hospital list compiled from Punjab health department pages, district health authorities and teaching-institution lists (October 2026). Distances are straight-line and approximate.</div><div>Found a mistake or a missing hospital? <a href="../#contact">Tell us</a>.</div></footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const go = () => {};
+/* ===== Find a hospital ===== */
+(function(){
+const HD = window.HD;
+const H = id => document.getElementById(id);
+const TY = {
+  "Teaching":{c:"--accent",l:"Teaching hospital",b:"Medical-university hospitals for complex cases and referrals"},
+  "Specialized":{c:"--stamp",l:"Specialist institute",b:"Cardiac, cancer, children's, burns, kidney"},
+  "DHQ":{c:"--accent",l:"DHQ hospital",b:"One per district: specialists, surgery, ICU, blood bank"},
+  "THQ":{c:"--earth",l:"THQ hospital",b:"One per tehsil: 24/7 emergency, maternity, X-ray, lab"},
+  "RHC":{c:"--amber",l:"Rural Health Centre",b:"Serves a cluster of BHUs: about 20 beds, deliveries"},
+  "BHU":{c:"--amber",l:"Basic Health Unit",b:"One per union council: OPD, vaccines, mother & child care"},
+  "Private":{c:"--muted",l:"Private / trust",b:"Private and trust hospitals"},
+  "Armed Forces":{c:"--muted",l:"Armed forces",b:"CMH and military hospitals; most treat civilians too"},
+  "Social Security":{c:"--muted",l:"Social security",b:"PESSI hospitals for registered workers"}
+};
+const ORDER = {"Teaching":0,"Specialized":1,"DHQ":2,"THQ":3,"RHC":4,"BHU":5,"Social Security":6,"Armed Forces":7,"Private":8};
+const NEWD = new Set(["Murree","Talagang","Kot Addu","Taunsa","Wazirabad"]);
+const SOON = ["Sindh","Khyber Pakhtunkhwa","Balochistan","Islamabad","AJK & GB"];
+const PAGE = 24;
+const prov = HD.provinces[0];
+const F = HD.facilities.filter(f => f.province === prov.name);
+const PL = HD.places;
+const st = {q:"",division:"",district:"",type:"",sector:"",shown:PAGE,origin:null,kind:"all"};
+
+const km = (a,b) => { const R=6371, r=x=>x*Math.PI/180, dLa=r(b.lat-a.lat), dLo=r(b.lng-a.lng);
+  const h=Math.sin(dLa/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.sqrt(h)); };
+const fk = d => d<1 ? "<1 km" : d<10 ? d.toFixed(1)+" km" : Math.round(d)+" km";
+const pLabel = p => p.name===p.district ? p.name : `${p.name} (${p.district})`;
+const mapsQ = f => encodeURIComponent(`${f.name}, ${f.town}, ${f.district}, ${f.province}, Pakistan`);
+const mapsUrl = f => "https://www.google.com/maps/search/?api=1&query=" + mapsQ(f);
+const dirUrl = f => `https://www.google.com/maps/dir/?api=1&origin=${st.origin.lat},${st.origin.lng}&destination=` + mapsQ(f);
+const KIND = {all:()=>true, emergency:f=>["Teaching","DHQ","THQ"].includes(f.type), specialist:f=>["Teaching","Specialized"].includes(f.type), public:f=>f.sector==="Public"};
+const tag = t => `<span class="hf-tag" style="--c:var(${TY[t].c})">${TY[t].l}</span>`;
+
+H("hProv").innerHTML = `<button type="button" class="chip" aria-pressed="true">${esc(prov.name)} <span>${F.length}</span></button>` +
+  SOON.map(n => `<button type="button" class="chip" disabled title="Coming soon">${n} <span>soon</span></button>`).join("");
+H("hPlaces").innerHTML = PL.map(p => `<option value="${esc(pLabel(p))}"></option>`).join("");
+
+const cnt = t => F.filter(f => f.type === t).length;
+H("hLvls").innerHTML = [["BHU","~2,500"],["RHC","300+"],["THQ",null],["DHQ",null],["Teaching",null]].map(([t,est]) =>
+  `<button type="button" class="hf-lvl" style="--c:var(${TY[t].c})" data-hlvl="${t}"><b>${TY[t].l}</b><span>${TY[t].b}</span><i>${est ? est+" in Punjab" : cnt(t)+" listed"}</i></button>`).join("");
+
+function parseWhere(raw){
+  const s = raw.trim();
+  const m = s.match(/(-?\d{1,2}\.\d+)\s*[,\s]\s*(-?\d{2,3}\.\d+)/);
+  if (m){ const lat=+m[1], lng=+m[2];
+    if (lat>23 && lat<37.5 && lng>60 && lng<78) return {lat,lng,label:`${lat.toFixed(4)}, ${lng.toFixed(4)}`};
+    return {error:"Those coordinates are outside Pakistan. Latitude comes first (about 28–34 for Punjab)."}; }
+  const q = s.toLowerCase().replace(/\s*\(.*\)\s*$/,"");
+  if (!q) return {error:"Type your town or paste coordinates first."};
+  const p = PL.find(p => pLabel(p).toLowerCase()===s.toLowerCase()) || PL.find(p => p.name.toLowerCase()===q)
+    || PL.find(p => p.name.toLowerCase().startsWith(q)) || PL.find(p => p.district.toLowerCase()===q);
+  if (p) return {lat:p.lat,lng:p.lng,label:pLabel(p)};
+  return {error:`"${s}" isn't in the town list yet. Pick the nearest town from the suggestions, or paste coordinates from Google Maps.`};
+}
+function renderNear(){
+  if (!st.origin){ H("hRes").innerHTML=""; return; }
+  const rows = F.filter(KIND[st.kind]).map(f => ({f, d:km(st.origin,f)})).sort((a,b)=>a.d-b.d).slice(0,8);
+  const m = H("hMsg"); m.className="hf-msg";
+  m.textContent = `Closest to ${st.origin.label}, by straight-line distance. Road distance is usually 20–40% more.`;
+  H("hRes").innerHTML = rows.map(({f,d}) => `<li><span class="hf-km">${fk(d)}<small>${f.geo==="site"?"":"approx."}</small></span>
+    <span><b>${esc(f.name)}</b><span class="d">${TY[f.type].l} · ${esc(f.town!==f.district?f.town+", ":"")}${esc(f.district)}</span></span>
+    <a href="${dirUrl(f)}" target="_blank" rel="noopener">Directions ↗</a></li>`).join("");
+}
+function setOrigin(o){
+  st.origin = o; st.shown = PAGE;
+  try{ localStorage.setItem("sg-hosp-origin", JSON.stringify(o)); }catch(_){}
+  H("hWhere").value = o.label; renderNear(); render();
+}
+function locate(raw){
+  const r = parseWhere(raw);
+  if (r.error){ const m=H("hMsg"); m.textContent=r.error; m.className="hf-msg err"; return; }
+  setOrigin(r);
+}
+H("hForm").addEventListener("submit", e => { e.preventDefault(); locate(H("hWhere").value); });
+H("hWhere").addEventListener("change", () => { const v=H("hWhere").value; if (PL.some(p=>pLabel(p)===v)) locate(v); });
+
+function fill(){
+  H("hDiv").innerHTML = `<option value="">All divisions</option>` + prov.divisions.map(d=>`<option ${d===st.division?"selected":""}>${esc(d)}</option>`).join("");
+  const ds = prov.districts.filter(d=>!st.division||d.division===st.division).map(d=>d.name).sort();
+  H("hDist").innerHTML = `<option value="">All districts (${ds.length})</option>` + ds.map(d=>`<option ${d===st.district?"selected":""}>${esc(d)}</option>`).join("");
+  H("hType").innerHTML = `<option value="">All types</option>` + Object.keys(TY).filter(cnt).map(t=>`<option value="${t}" ${t===st.type?"selected":""}>${TY[t].l}</option>`).join("");
+  H("hSec").innerHTML = `<option value="">All sectors</option>` + [...new Set(F.map(f=>f.sector))].map(s=>`<option ${s===st.sector?"selected":""}>${esc(s)}</option>`).join("");
+}
+function setF(p){
+  Object.assign(st, p, {shown:PAGE});
+  if (p.district) st.division = prov.districts.find(x=>x.name===p.district).division;
+  else if (p.division !== undefined && st.district){ const d=prov.districts.find(x=>x.name===st.district); if (st.division && d.division!==st.division) st.district=""; }
+  fill(); render();
+}
+H("hQ").addEventListener("input", e => { st.q=e.target.value.trim().toLowerCase(); st.shown=PAGE; render(); });
+H("hDiv").addEventListener("change", e => setF({division:e.target.value}));
+H("hDist").addEventListener("change", e => setF({district:e.target.value}));
+H("hType").addEventListener("change", e => setF({type:e.target.value}));
+H("hSec").addEventListener("change", e => setF({sector:e.target.value}));
+H("hReset").addEventListener("click", () => { H("hQ").value=""; setF({q:"",division:"",district:"",type:"",sector:""}); });
+H("hMore").addEventListener("click", () => { st.shown += PAGE; render(); });
+
+const match = f => (!st.division||f.division===st.division) && (!st.district||f.district===st.district) && (!st.type||f.type===st.type) && (!st.sector||f.sector===st.sector)
+  && (!st.q || st.q.split(/\s+/).every(w => [f.name,f.town,f.district,f.division,f.note||"",TY[f.type].l,f.type].join(" ").toLowerCase().includes(w)));
+function card(f){
+  const where = f.town && f.town!==f.district ? `${esc(f.town)}, ${esc(f.district)} district` : `${esc(f.district)} district`;
+  const link = st.origin ? `<span class="hf-dist">${fk(km(st.origin,f))}${f.geo==="site"?"":" approx."}</span><a href="${dirUrl(f)}" target="_blank" rel="noopener">Directions ↗</a>`
+    : `<a href="${mapsUrl(f)}" target="_blank" rel="noopener">Open in Google Maps ↗</a>`;
+  return `<article class="hf-card"><div class="hf-tags">${tag(f.type)}<span class="hf-tag s">${esc(f.sector)}</span>${f.beds?`<span class="hf-tag s">${f.beds} beds</span>`:""}</div>
+    <h3>${esc(f.name)}</h3><div class="w">${where} · ${esc(f.division)} division</div>${f.note?`<p>${esc(f.note)}</p>`:""}
+    <div class="hf-row">${link}${f.phone?`<span class="mono">${esc(f.phone)}</span>`:""}</div></article>`;
+}
+function panel(){
+  const p = H("hPanel");
+  if (!st.district){ p.hidden=true; return; }
+  const d = prov.districts.find(x=>x.name===st.district), fs = F.filter(f=>f.district===d.name), by = t => fs.filter(f=>f.type===t).length;
+  let h = `<div class="eyebrow">${esc(d.division)} division</div><h3>${esc(d.name)} district</h3><div class="hf-kv">` +
+    ["Teaching","Specialized","DHQ","THQ","RHC","Private","Armed Forces"].filter(by).map(t=>`<span>${TY[t].l}: <b>${by(t)}</b></span>`).join("") + `</div>`;
+  if (d.primary){ const {src,...rest} = d.primary;
+    h += `<p>Primary care network: ${Object.entries(rest).map(([k,v])=>`<b class="mono">${v}</b> ${k}`).join(" · ")} (source: ${esc(src)}).</p>`;
+  } else h += `<p style="color:var(--muted)">Basic Health Units for this district are not listed yet. Call 1033 for your nearest BHU.</p>`;
+  p.innerHTML = h; p.hidden = false;
+}
+function render(){
+  const rows = F.filter(match);
+  if (st.origin) rows.sort((a,b)=>km(st.origin,a)-km(st.origin,b));
+  else rows.sort((a,b)=>(ORDER[a.type]-ORDER[b.type])||a.district.localeCompare(b.district)||a.name.localeCompare(b.name));
+  H("hCount").textContent = `${rows.length} ${rows.length===1?"facility":"facilities"}` + (st.district?` in ${st.district}`:st.division?` in ${st.division} division`:" across Punjab") + (st.origin?`, nearest to ${st.origin.label} first`:"");
+  H("hGrid").innerHTML = rows.length ? rows.slice(0,st.shown).map(card).join("") : `<div class="empty">No hospitals match. Try a shorter search or clear a filter.</div>`;
+  H("hMore").hidden = rows.length <= st.shown;
+  H("hMore").textContent = `Show more (${Math.max(0,rows.length-st.shown)} left)`;
+  panel();
+}
+H("hDivs").innerHTML = prov.divisions.map(div => { const ds = prov.districts.filter(d=>d.division===div);
+  return `<div class="hf-div"><h3>${esc(div)} <span>${ds.length} districts · ${F.filter(f=>f.division===div).length}</span></h3><div class="hf-dl">${
+    ds.map(d=>`<button type="button" class="hf-db${NEWD.has(d.name)?" new":""}" data-hdist="${esc(d.name)}">${esc(d.name)}<i>${F.filter(f=>f.district===d.name).length}</i></button>`).join("")}</div></div>`; }).join("");
+
+const toList = () => { const el = H("hQ"); el.scrollIntoView({behavior:"smooth",block:"start"}); };
+document.addEventListener("click", e => {
+  const k = e.target.closest("[data-hk]");
+  if (k){ st.kind = k.dataset.hk; document.querySelectorAll("[data-hk]").forEach(x=>x.setAttribute("aria-pressed", x===k)); renderNear(); return; }
+  const d = e.target.closest("[data-hdist]"); if (d){ setF({district:d.dataset.hdist}); toList(); return; }
+  const l = e.target.closest("[data-hlvl]");
+  if (l){ const t = l.dataset.hlvl;
+    if (t==="BHU"||t==="RHC"){ setF({type: cnt(t)?t:""}); if (!cnt(t)) { H("hCount").textContent = "Individual Basic Health Units are not listed yet. Call 1033 for your nearest BHU."; } }
+    else setF({type:t});
+    toList(); }
+});
+
+
+try{ const s = JSON.parse(localStorage.getItem("sg-hosp-origin")||"null"); if (s && typeof s.lat==="number"){ st.origin=s; H("hWhere").value=s.label; } }catch(_){}
+const qw = new URLSearchParams(location.search).get("where"); if (qw) locate(qw);
+fill(); renderNear(); render();
+})();
+</script>
+<script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
+</body>
+</html>

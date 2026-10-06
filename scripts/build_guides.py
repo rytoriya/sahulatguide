@@ -1,6 +1,8 @@
 """Build the Markdown guides in content/ into standalone HTML pages.
 
-Usage: pip install markdown && python3 scripts/build_guides.py
+The site header and footer are filled in afterwards by scripts/build_chrome.js.
+
+Usage: pip install markdown && python3 scripts/build_guides.py && node scripts/build_chrome.js
 """
 import html
 import re
@@ -75,11 +77,14 @@ footer{{border-top:1px solid var(--line);color:var(--muted);font-size:13px;paddi
 <link rel="stylesheet" href="../site.css">
 </head>
 <body>
-<header><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+<!-- sg:header -->
+<!-- /sg:header -->
 <main class="wrap">
 {body}
 </main>
 <footer><div class="wrap">Independent guide, not affiliated with any government body or company. Confirm every price and time with the official source before you travel or pay.</div></footer>
+<!-- sg:footer -->
+<!-- /sg:footer -->
 <script src="../search.js" defer></script>
 <script src="../account.js" defer></script>
 </body>

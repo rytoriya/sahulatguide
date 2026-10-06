@@ -99,3 +99,12 @@ To preview locally:
 node scripts/build_routes.js
 python3 -m http.server 8000
 ```
+
+## Header and footer
+
+The site header, tab strip and footer are the same on every page. They live in `partials/header.html` and
+`partials/footer.html` (styles in `site.css`). After changing them, or after adding a page, run:
+
+```sh
+node scripts/build_chrome.js
+```

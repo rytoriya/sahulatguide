@@ -1,5 +1,16 @@
 # Changes
 
+## 7 October 2026: one header and footer on every page
+
+- Every page now has the same header as the home page: the notice bar, logo, full-width search, "Pay school & university fees", "My details" and the full tab strip (the current page's tab is underlined). Every page also has the same full footer (services, useful links, company links, emergency numbers).
+- One source: `partials/header.html` and `partials/footer.html`, styled in `site.css` (classes start with `sgc-` so page styles never clash). `scripts/build_chrome.js` writes them into every page between `<!-- sg:header -->` / `<!-- sg:footer -->` markers, building the tab list and footer service links from `TABS` and `GROUPS` in `index.html`. Netlify runs it on every deploy.
+- To change the header or footer: edit the partial, then run `node scripts/build_chrome.js`. Do not edit the copies between the markers in the pages.
+- New pages: add the two marker pairs (or a `<header class="site">` / `</main>`) and run the script; the page is picked up automatically.
+- Pages keep their own notes at the bottom (sources, disclaimers) above the site footer.
+- The road route planner keeps its full-screen map layout without the site header and footer.
+- The passport page's own bar no longer repeats Search and My details (they are in the site header).
+- Search: new `data-sg-search="wide"` style, a full-width search field used in the header.
+
 ## 6 October 2026 (late night): every tab and guide has its own page address
 
 Before, the main app's tabs and guides only had `#` addresses (`/#identity`, `/#cnic-renewal`). To Google those are all the same page as the home page. Now each one is a real page, like `/police/`:

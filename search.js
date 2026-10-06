@@ -2,7 +2,7 @@
  * Sahulat Guide site-wide search.
  * Include on any page with:  <script src="search.js" defer></script>  (adjust the path)
  * Put <span data-sg-search></span> where the Search button should go
- * (add data-sg-search="on-dark" on dark backgrounds). Without a slot, a floating
+ * (add data-sg-search="on-dark" on dark backgrounds, "wide" for a full-width search field). Without a slot, a floating
  * button is added. Shortcuts: "/" or Ctrl/Cmd+K. Data comes from search-index.js,
  * built by scripts/build_search_index.js.
  */
@@ -31,6 +31,9 @@
     ".sg-btn.sg-dark kbd{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.4)}",
     ".sg-btn.sg-float{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;box-shadow:0 6px 20px rgba(0,0,0,.18)}",
     "@media (max-width:560px){.sg-btn kbd{display:none}.sg-btn.sg-compact .sg-l{display:none}.sg-btn.sg-compact{padding:8px 10px}}",
+    ".sg-btn.sg-wide{width:100%;min-height:46px;padding:11px 16px;color:var(--sg-muted);font-weight:500;font-size:15px;box-shadow:0 1px 2px rgba(13,60,48,.05),0 2px 6px -2px rgba(13,60,48,.06);text-align:left}",
+    ".sg-btn.sg-wide .sg-l{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5;padding-block:1px}",
+    ".sg-btn.sg-wide svg{color:var(--sg-muted)}",
     ".sg-ov{position:fixed;inset:0;z-index:9999;background:var(--sg-shade);display:flex;justify-content:center;align-items:flex-start;padding:max(8vh,16px) 12px 16px}",
     ".sg-ov[hidden]{display:none}",
     ".sg-panel{width:100%;max-width:660px;max-height:min(78vh,720px);display:flex;flex-direction:column;background:var(--sg-bg);color:var(--sg-ink);border:1px solid var(--sg-line);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.3);overflow:hidden;font-family:inherit}",
@@ -72,6 +75,7 @@
     var v = " " + (variant || "") + " ";
     if (v.indexOf(" on-dark ") >= 0) b.classList.add("sg-dark");
     if (v.indexOf(" compact ") >= 0) b.classList.add("sg-compact");
+    if (v.indexOf(" wide ") >= 0) { b.classList.add("sg-wide"); b.querySelector(".sg-l").textContent = "Search: passport, bill, car loan, bus, cargo…"; }
     b.addEventListener("click", function () { open(b); });
     return b;
   }

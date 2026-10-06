@@ -375,7 +375,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 <main class="wrap">
   <!-- HOME -->
   <section class="view" id="v-home">
-    <div class="sos"><b>Emergency</b><a class="n" href="tel:15">Police 15</a><a class="n" href="tel:1122">Rescue 1122</a><a class="n" href="tel:16">Fire 16</a><a class="n" href="tel:130">Motorway 130</a><button data-go="emergency">All helplines →</button></div>
+    <div class="sos"><b>Emergency</b><a class="n" href="tel:15">Police 15</a><a class="n" href="tel:1122">Rescue 1122</a><a class="n" href="tel:16">Fire 16</a><a class="n" href="tel:130">Motorway 130</a><a class="n" href="emergency/" style="text-decoration:underline">Nearest police station →</a><button data-go="emergency">All helplines →</button></div>
     <div class="hero">
       <div>
         <div class="eyebrow">Government services, explained</div>
@@ -400,6 +400,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
       <a href="admin-units/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 24 26 78v20h204V78Zm0 15.5L199 78H57ZM46 110h18v76H46Zm48 0h18v76H94Zm50 0h18v76h-18Zm48 0h18v76h-18ZM26 198h204v18H26Z"/></svg></span><b>Districts &amp; Union Councils</b><span class="d">Every division, district and tehsil in Pakistan, and who to call to find your Union Council.</span><span class="go">Open directory →</span></a>
       <a href="fees/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 92-46v62h18V92Zm0 20.5L197.5 92 128 126.7 58.5 92ZM60 136v44c30 22 106 22 136 0v-44l-18 9v26c-24 14-76 14-100 0v-26Z"/></svg></span><b>Pay school &amp; university fees</b><span class="d">Pay fee vouchers with 1Bill or Kuickpay from any bank app; 500+ institutions listed.</span><span class="go">Open tool →</span></a>
+      <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
     </div>
 
     <div class="h2row"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
@@ -422,6 +423,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
   <!-- EMERGENCY -->
   <section class="view" id="v-emergency" hidden>
     <div class="vhead"><h1>Emergency & government helplines</h1><p>Free government numbers. In a life-threatening emergency call 15 (police) or 1122 (rescue & ambulance) first.</p></div>
+    <p style="margin:0 0 18px"><a class="btn" href="emergency/">Find police stations, Rescue 1122 and fire brigade near you on a map →</a></p>
     <div id="emerg"></div>
   </section>
 
@@ -435,6 +437,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       <a href="parcels/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M222.72,67.91l-88-48.18a13.9,13.9,0,0,0-13.44,0l-88,48.18A14,14,0,0,0,26,80.18v95.64a14,14,0,0,0,7.28,12.27l88,48.18a13.92,13.92,0,0,0,13.44,0l88-48.18A14,14,0,0,0,230,175.82V80.18A14,14,0,0,0,222.72,67.91ZM127,30.25a2,2,0,0,1,1.92,0L212.51,76,178.57,94.57,94.05,48.31ZM122,223,39,177.57a2,2,0,0,1-1-1.75V86.66l84,46ZM43.49,76,81.56,55.15l84.51,46.26L128,122.24ZM218,175.82a2,2,0,0,1-1,1.75h0L134,223V132.64l36-19.71V152a6,6,0,0,0,12,0V106.37l36-19.71Z"/></svg></span><b>Parcel guide</b><span class="d">Compare TCS, Leopards, M&amp;P, Pakistan Post and international couriers.</span><span class="go">Open guide →</span></a>
       <a href="admin-units/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 24 26 78v20h204V78Zm0 15.5L199 78H57ZM46 110h18v76H46Zm48 0h18v76H94Zm50 0h18v76h-18Zm48 0h18v76h-18ZM26 198h204v18H26Z"/></svg></span><b>Districts &amp; Union Councils</b><span class="d">Every division, district and tehsil in Pakistan, and who to call to find your Union Council.</span><span class="go">Open directory →</span></a>
       <a href="fees/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 92-46v62h18V92Zm0 20.5L197.5 92 128 126.7 58.5 92ZM60 136v44c30 22 106 22 136 0v-44l-18 9v26c-24 14-76 14-100 0v-26Z"/></svg></span><b>Pay school &amp; university fees</b><span class="d">Pay fee vouchers with 1Bill or Kuickpay from any bank app; 500+ institutions listed.</span><span class="go">Open tool →</span></a>
+      <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
     </div>
     <div class="grid2">
       <div class="panel">

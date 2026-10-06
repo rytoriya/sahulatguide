@@ -64,6 +64,7 @@ const TOOLS = [
   ["Parcel guide", "پارسل", "Courier prices and rules: TCS, Leopards, M&P, Pakistan Post", "parcels/", "parcel courier delivery tcs leopards post"],
   ["Pay school & university fees", "فیس آن لائن", "Pay fee vouchers with 1Bill or Kuickpay; 500+ institutions", "fees/", "fee fees voucher challan school college university 1bill kuickpay pay online"],
   ["My details (sign in)", "میری معلومات", "Save your name, mobile, CNIC and address once; copy them into any form", "account/", "account sign in login sign up register profile my details cnic save"],
+  ["Police, Rescue 1122 & fire near you", "قریبی تھانہ", "City-wise police stations with official numbers; Rescue 1122 and fire stations on a map", "emergency/", "police station thana nearest map rescue 1122 fire brigade ambulance emergency"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);
@@ -76,6 +77,12 @@ for (const [dir, label] of [["trains", "Train finder"], ["parcels", "Parcel guid
     const title = m[2].replace(/<[^>]+>/g, "").replace(/&amp;/g, "&").replace(/&#39;/g, "'").replace(/&quot;/g, '"').trim();
     items.push(["Section", title, "", label, `${dir}/#${m[1]}`, label]);
   }
+}
+
+/* ---- City emergency pages ---- */
+const emg = read("emergency/index.html");
+for (const m of emg.matchAll(/\{id:"([a-z]+)",name:"([^"]+)",prov:"([^"]+)"/g)) {
+  items.push(["Tool", `Police stations in ${m[2]}`, "", `Police, Rescue 1122 and fire stations on a map · ${m[3]}`, `emergency/?city=${m[1]}`, "police station thana rescue 1122 fire brigade near me"]);
 }
 
 /* ---- Institutions that take fees online (fees page) ---- */

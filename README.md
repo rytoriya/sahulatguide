@@ -11,6 +11,7 @@ Static website explaining Pakistani government services, schemes, loans, travel 
 | `route-planner/` | Road route planner between Pakistani cities |
 | `trains/` | Train finder: timetables and estimated fares (generated from `content/trains.md`) |
 | `parcels/` | Parcel guide: courier prices and rules (generated from `content/parcels.md`) |
+| `emergency/` | City-wise police stations with official phone numbers (Islamabad, KP cities, Nankana; district police and Rescue 1122 offices for Punjab), plus police, Rescue 1122 and fire stations on a Leaflet map loaded live from OpenStreetMap (Overpass API) with distance from the visitor. City list and numbers are inline in the page. |
 | `fees/` | Pay school, college, university, board and test fees online: 1Bill/Kuickpay how-to, exact codes for major institutions, and 500+ institutions from 1Link's 1Bill biller list (data inline in the page) |
 | `account/` | My details: sign up / log in, save name, mobile, CNIC, address once; copy buttons; autofills site forms |
 | `admin-units/` | Directory of every division, district and tehsil in Pakistan, council tiers and official election-office numbers (data is inline in the page script, checked 6 Oct 2026) |

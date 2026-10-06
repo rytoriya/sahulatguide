@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Police Stations, Rescue 1122 &amp; Fire Brigade Near You | Sahulat Guide</title>
+<meta name="description" content="City-wise police stations with official phone numbers, plus Rescue 1122 and fire brigade locations on a map. See how far you are from the nearest station and get directions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* Layout: dispatch board. Emergency numbers strip, city picker, then map and nearest-station list side by side; official directory below */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --sunk:#eaefed; --line:#dde3e1;
+  --ink:#17232e; --muted:#5a6872; --brand:#0d6b52; --brand-ink:#ffffff; --brand-soft:#e2f1ec;
+  --police:#1d4ed8; --police-soft:#e0e8fb; --rescue:#c62828; --rescue-soft:#fbe4e4; --fire:#d9600b; --fire-soft:#fcebdc;
+  --display:"Sora", system-ui, sans-serif; --body:"Noto Sans", "Segoe UI", system-ui, sans-serif; --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
+  --police:#7ea2ff; --police-soft:#1b2747; --rescue:#ff8a80; --rescue-soft:#3d1d1d; --fire:#ffab5e; --fire-soft:#3d2a16; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --sunk:#1c2830; --line:#26343c; --ink:#e6ecea; --muted:#9aa8ad; --brand:#4fc39d; --brand-ink:#0b1a15; --brand-soft:#163a31;
+  --police:#7ea2ff; --police-soft:#1b2747; --rescue:#ff8a80; --rescue-soft:#3d1d1d; --fire:#ffab5e; --fire-soft:#3d2a16; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:var(--brand)}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+main.wrap{padding-block:20px 56px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(26px,4vw,38px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:20px;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+header.site{position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:saturate(1.6) blur(12px);-webkit-backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--brand)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}}
+
+.sos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.sos a{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-radius:12px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);font-weight:600}
+.sos a b{font-family:var(--display);font-size:20px}
+.sos a.p b{color:var(--police)} .sos a.r b{color:var(--rescue)} .sos a.f b{color:var(--fire)}
+.intro{display:grid;gap:8px}
+.intro p{max-width:70ch}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.controls select{padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;min-width:220px;max-width:100%}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:10px 16px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink);font-size:14px}
+.btn:hover{border-color:var(--brand)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn svg{width:18px;height:18px}
+.layers{display:flex;flex-wrap:wrap;gap:6px}
+.lay{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;cursor:pointer;font-size:13.5px;font-weight:600}
+.lay i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.lay[aria-pressed="false"]{opacity:.5}
+.lay .n{color:var(--muted);font-weight:500;font-variant-numeric:tabular-nums}
+
+.board{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.board{grid-template-columns:1fr}}
+.mapbox{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--sunk)}
+#map{height:min(68vh,620px);min-height:380px;width:100%}
+.mapnote{position:absolute;z-index:500;left:10px;right:10px;bottom:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;min-width:0;max-height:min(68vh,620px)}
+@media (max-width:900px){.panel{max-height:none}}
+.phead{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.list{overflow-y:auto;padding:6px}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;padding:10px;border-radius:10px;cursor:pointer}
+.item:hover,.item.on{background:var(--sunk)}
+.dot{width:12px;height:12px;border-radius:50%;margin-top:5px}
+.item .nm{font-weight:600;line-height:1.35}
+.item .sub{font-size:12.5px;color:var(--muted)}
+.item .km{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:14px}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.acts a{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--ink);background:var(--bg)}
+.empty{padding:16px;color:var(--muted);font-size:14px}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.nums{display:grid;gap:2px}
+.nrow{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:center}
+.nrow:last-child{border-bottom:0}
+.nrow .k{font-size:14px}
+.nrow a{font-weight:700;text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 12px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
+thead th{border-top:0;background:var(--sunk);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td a{white-space:nowrap}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px}
+footer ul{margin:0;padding-left:18px}
+.leaflet-container{font:inherit}
+.leaflet-popup-content{margin:10px 12px;line-height:1.45}
+.pop b{display:block;font-size:14px;margin-bottom:2px}
+.pop a{font-weight:600}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+<main class="wrap">
+  <nav class="sos" aria-label="Emergency numbers">
+    <a class="p" href="tel:15"><span>Police</span><b>15</b></a>
+    <a class="r" href="tel:1122"><span>Rescue &amp; ambulance</span><b>1122</b></a>
+    <a class="f" href="tel:16"><span>Fire brigade</span><b>16</b></a>
+    <a href="tel:115"><span>Edhi ambulance</span><b>115</b></a>
+  </nav>
+
+  <div class="intro">
+    <h1>Police stations, Rescue 1122 &amp; fire brigade near you</h1>
+    <p class="muted">Choose your city or use your location. The map shows police stations, Rescue 1122 and ambulance points, and fire stations, with how far each one is from you. Official phone numbers are listed below the map.</p>
+  </div>
+
+  <div class="controls">
+    <label for="city" class="muted" style="font-weight:600">City</label>
+    <select id="city" aria-label="Choose your city"></select>
+    <button class="btn primary" id="locate" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>Use my location</button>
+    <div class="layers" id="layers" role="group" aria-label="Show on map"></div>
+  </div>
+
+  <div class="board">
+    <div class="mapbox">
+      <div id="map" role="application" aria-label="Map of police, rescue and fire stations"></div>
+      <div class="mapnote" id="mapnote" hidden></div>
+    </div>
+    <div class="panel">
+      <div class="phead"><h2 id="listTitle">Nearest stations</h2><p class="muted" style="font-size:13px" id="listHint">Tap “Use my location”, or tap anywhere on the map to measure from that point.</p></div>
+      <div class="list" id="list" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2 id="numsTitle">Important numbers</h2>
+      <div class="nums" id="nums"></div>
+      <div class="links" id="links"></div>
+    </div>
+    <div class="card" id="dirCard">
+      <h2 id="dirTitle">Official police station directory</h2>
+      <p class="muted" style="font-size:13.5px" id="dirNote"></p>
+      <div class="tbl-wrap" id="dirWrap"><table><thead><tr><th>Police station</th><th>Phone</th><th>Map</th></tr></thead><tbody id="dir"></tbody></table></div>
+    </div>
+  </div>
+
+  <footer>
+    <div><b>In an emergency, call 15 (police), 1122 (rescue and ambulance) or 16 (fire) first.</b> Station locations come from OpenStreetMap, a public map anyone can edit; some stations may be missing or placed approximately. Phone numbers in the directory come from the official police and Rescue 1122 websites listed below. Distances are straight-line, not road distance.</div>
+    <div>Sources:
+      <ul>
+        <li><a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="noopener">KP Police phone directory</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="noopener">Islamabad Police contacts</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="noopener">Punjab Police district offices</a> · <a href="https://punjabpolice.gov.pk/nankana_directory" target="_blank" rel="noopener">Nankana Sahib police directory</a> · <a href="https://lahorepolice.punjab.gov.pk/system/files/PKM%20address%20directory.pdf" target="_blank" rel="noopener">Lahore Police Khidmat Markaz</a></li>
+        <li><a href="https://www.rescue.gov.pk/ContactUs2.aspx" target="_blank" rel="noopener">Rescue 1122 Punjab contacts</a> · <a href="https://rescuekp.gov.pk/contact" target="_blank" rel="noopener">Rescue 1122 KP</a> · <a href="https://sers.gos.pk/contact-us/" target="_blank" rel="noopener">Sindh Emergency Rescue Service 1122</a></li>
+        <li>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>, loaded live through the Overpass API.</li>
+      </ul>
+    </div>
+  </footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ---------- Official data (phone numbers from official police / Rescue 1122 websites) ---------- */
+const PUNJAB_LINKS=[["Punjab Police","https://punjabpolice.gov.pk"],["District police offices","https://punjabpolice.gov.pk/dpocontacts"],["Rescue 1122 Punjab","https://www.rescue.gov.pk"]];
+const KP_LINKS=[["KP Police station directory","https://www.kppolice.gov.pk/phone-directory.php?tid=4"],["Rescue 1122 KP","https://rescuekp.gov.pk/contact"]];
+const KP_RESCUE=["Rescue 1122 KP headquarters","091-9212693"];
+const st = s => s.split(";").map(x=>{const [n,p]=x.split("|");return [n.trim(),(p||"").trim()];});
+const CITIES = [
+ {id:"islamabad",name:"Islamabad",prov:"Islamabad",ll:[33.6844,73.0479],r:16,
+  nums:[["Police headquarters","051-9259370"],["IGP helpline","1715"],["Women helpline","1815"],["Traffic police","1915"],["Safe City Islamabad","051-9001521"]],
+  links:[["Islamabad Police","https://islamabadpolice.gov.pk/contact.php"]],
+  note:"Rescue 1122 in Islamabad is being set up under the CDA; until it is fully running, fire and ambulance calls go through 16 and 1122.",
+  stations:st("Kirpa|051-2326066;Phulgaran|0332-4488888;Sangjani|051-2296128;Aabpara|051-9204830;Karachi Company|051-9334091;Kohsar|051-9102499;Margalla|051-9261510;Secretariat|051-9209132;Women Police Station|051-9252517;Golra Sharif|051-9267099;Ramna|051-9330189;Shalimar|051-9266885;Sumbal|;Tarnol|051-2295122;Industrial Area|051-9258877;Noon|;Sabzi Mandi|051-9334840;Shams Colony|051-9334499;Bani Gala|051-9255339;Bhara Kahu|051-2230029;Nilore|;Shahzad Town|051-9247444;Humak|;Khanna|051-4473600;Koral|051-9252517;Lohi Bher|051-5710906;Sihala|051-4491334"),
+  src:"Islamabad Police"},
+ {id:"rawalpindi",name:"Rawalpindi",prov:"Punjab",ll:[33.5651,73.0169],r:14,nums:[["Rescue 1122 Rawalpindi","051-9290121"]],links:[["Rawalpindi police stations","https://punjabpolice.gov.pk/RawalpindiDirectory"],...PUNJAB_LINKS]},
+ {id:"lahore",name:"Lahore",prov:"Punjab",ll:[31.5204,74.3587],r:20,nums:[["Rescue 1122 Lahore","042-9231717"],["Police Khidmat Markaz, Liberty","042-99268285"],["Police Khidmat Markaz, Iqbal Town","042-37808877"],["Police Khidmat Markaz, Bahria Town","042-35454046"]],links:[["Lahore Police","https://lahorepolice.punjab.gov.pk"],...PUNJAB_LINKS]},
+ {id:"karachi",name:"Karachi",prov:"Sindh",ll:[24.8607,67.0011],r:25,nums:[["Sindh Rescue 1122 enquiries","021-99334071"]],links:[["Karachi police stations (official)","https://karachipolice.gov.pk/services/police-stations-in-karachi/"],["Karachi Police emergency directory","https://karachipolice.gov.pk/services/emergency-contact-directory/"],["Sindh Rescue 1122","https://sers.gos.pk"]]},
+ {id:"peshawar",name:"Peshawar",prov:"Khyber Pakhtunkhwa",ll:[34.0151,71.5249],r:15,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("East Cantt|091-9213059;West Cantt|091-9213297;Gulbarg|091-9213017;Hayatabad|091-9217333;Tatara|091-9331261;Pishtakhara|091-9331418;Sarband|0311-7940404;Town|091-9221366;Tehkal|091-9331243;KRS|091-9330477;Shah Qabool|091-9330432;Hashtnaghri|091-9225450;Kotwali|091-9330424;AMJ Shah|091-9330464;Banamari|091-9330416;Faqirabad|091-9331134;Paharipura|091-9330425;Gulbahar|091-9225317;Phandu|091-9330476;Chamkani|091-9330435;Shahpur|091-2920222;Khazana|091-9330421;Daudzai|091-2960115;Michani Gate|091-9331122;Mathra|091-9330429;Nasir Bagh|091-5846799;Regi|091-5833802;RMT|091-9239074;Badaber|091-2370376;Mattani|091-2626155;Hassan Khel|091-9239059;Inqilab|091-9330075;Urmar|091-2350156;Rehman Baba|091-9330287;University Campus|091-9221213"),src:"KP Police"},
+ {id:"quetta",name:"Quetta",prov:"Balochistan",ll:[30.1798,66.975],r:12,nums:[],links:[["Balochistan Police, Quetta region","https://balochistanpolice.gov.pk/rpo_quetta"],["Balochistan district police offices","https://balochistanpolice.gov.pk/dpo_contactdetails"]]},
+ {id:"faisalabad",name:"Faisalabad",prov:"Punjab",ll:[31.4504,73.135],r:14,nums:[["Rescue 1122 Faisalabad","041-9201535"]],links:PUNJAB_LINKS},
+ {id:"multan",name:"Multan",prov:"Punjab",ll:[30.1575,71.5249],r:14,nums:[["Rescue 1122 Multan","061-9220306"]],links:PUNJAB_LINKS},
+ {id:"gujranwala",name:"Gujranwala",prov:"Punjab",ll:[32.1877,74.1945],r:12,nums:[["Rescue 1122 Gujranwala","055-9201390"]],links:PUNJAB_LINKS},
+ {id:"hyderabad",name:"Hyderabad",prov:"Sindh",ll:[25.396,68.3578],r:12,nums:[["Sindh Rescue 1122 enquiries","021-99334071"]],links:[["Sindh Police","https://sindhpolice.gov.pk"],["Sindh Rescue 1122","https://sers.gos.pk"]]},
+ {id:"sialkot",name:"Sialkot",prov:"Punjab",ll:[32.4945,74.5229],r:10,nums:[["District police office","052-9250321"],["Rescue 1122 Sialkot","052-9250576"]],links:PUNJAB_LINKS},
+ {id:"bahawalpur",name:"Bahawalpur",prov:"Punjab",ll:[29.3956,71.6836],r:10,nums:[["District police office","062-9250360"],["Rescue 1122 Bahawalpur","062-9250500"]],links:PUNJAB_LINKS},
+ {id:"sargodha",name:"Sargodha",prov:"Punjab",ll:[32.074,72.6861],r:10,nums:[["District police office","048-9230333"],["Rescue 1122 Sargodha","048-9230427"]],links:PUNJAB_LINKS},
+ {id:"sahiwal",name:"Sahiwal",prov:"Punjab",ll:[30.6682,73.1114],r:9,nums:[["District police office","040-9200051"],["Rescue 1122 Sahiwal","040-9200004"]],links:PUNJAB_LINKS},
+ {id:"dgkhan",name:"Dera Ghazi Khan",prov:"Punjab",ll:[30.0561,70.6348],r:9,nums:[["District police office","064-9260100"],["Rescue 1122 D.G. Khan","064-9239101"]],links:PUNJAB_LINKS},
+ {id:"ryk",name:"Rahim Yar Khan",prov:"Punjab",ll:[28.4202,70.2952],r:9,nums:[["District police office","068-9230301"],["Rescue 1122 Rahim Yar Khan","068-9230006"]],links:PUNJAB_LINKS},
+ {id:"gujrat",name:"Gujrat",prov:"Punjab",ll:[32.5731,74.0789],r:9,nums:[["District police office","053-9260026"],["Rescue 1122 Gujrat","053-3521122"]],links:PUNJAB_LINKS},
+ {id:"jhelum",name:"Jhelum",prov:"Punjab",ll:[32.9425,73.7257],r:8,nums:[["District police office","0544-9270042"],["Rescue 1122 Jhelum","0544-646197"]],links:PUNJAB_LINKS},
+ {id:"sheikhupura",name:"Sheikhupura",prov:"Punjab",ll:[31.7167,73.985],r:9,nums:[["District police office","056-9200104"],["Rescue 1122 Sheikhupura","056-9239095"]],links:PUNJAB_LINKS},
+ {id:"kasur",name:"Kasur",prov:"Punjab",ll:[31.1187,74.4467],r:8,nums:[["District police office","049-9250137"],["Rescue 1122 Kasur","0492-772203"]],links:PUNJAB_LINKS},
+ {id:"okara",name:"Okara",prov:"Punjab",ll:[30.8138,73.4534],r:8,nums:[["District police office","044-9200351"],["Rescue 1122 Okara","044-9200009"]],links:PUNJAB_LINKS},
+ {id:"nankana",name:"Nankana Sahib",prov:"Punjab",ll:[31.45,73.7065],r:14,nums:[["District police office","056-9201100"],["Rescue 1122 Nankana Sahib","056-2876702"]],links:[["Nankana Sahib police directory","https://punjabpolice.gov.pk/nankana_directory"],...PUNJAB_LINKS],
+  stations:st("Saddar Nankana Sahib|056-3549122;City Nankana Sahib|056-2875910;Warburton|056-2794010;Saddar Sangla Hill|056-3700286;City Sangla Hill|056-3701025;Shahkot|056-3710312;Bara Ghar|056-2321011;Faizabad|056-2881077;Mangtanwala|0308-1874336;Syed Wala|056-2722008"),src:"Punjab Police"},
+ {id:"sukkur",name:"Sukkur",prov:"Sindh",ll:[27.7052,68.8574],r:9,nums:[["Sindh Rescue 1122 enquiries","021-99334071"]],links:[["Sindh Police","https://sindhpolice.gov.pk"],["Sindh Rescue 1122","https://sers.gos.pk"]]},
+ {id:"larkana",name:"Larkana",prov:"Sindh",ll:[27.557,68.2264],r:8,nums:[["Sindh Rescue 1122 enquiries","021-99334071"]],links:[["Sindh Police","https://sindhpolice.gov.pk"],["Sindh Rescue 1122","https://sers.gos.pk"]]},
+ {id:"mardan",name:"Mardan",prov:"Khyber Pakhtunkhwa",ll:[34.1986,72.0404],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("City|0937-9230125;Hoti|0937-9230244;Par Hoti|0937-561245;Saddar|0937-9230130;Sheikh Maltoon|0937-868235;Toru|0937-860320;Garhi Kapura|0937-846113;Takht Bhai|0937-551001;Saro Shah|0937-503001;Sher Garh|0937-830540;Lund Khwar|0937-850210;Katlang|0937-575302;Kharki|0937-590019;Jabbar|0937-542112;Choora|0937-929011;Shahbaz Garhi|0937-580172;Rustam|0937-800124;Baizai|"),src:"KP Police"},
+ {id:"swat",name:"Mingora (Swat)",prov:"Khyber Pakhtunkhwa",ll:[34.7717,72.3602],r:14,nums:[["Swat police control","0946-881374"],KP_RESCUE],links:KP_LINKS,
+  stations:st("Mingora|0946-9240384;Saidu Sharif|0946-9240385;Rahimabad|0946-9240389;Women Police Station|0946-711115;Kanju|0946-881029;Kabal|0946-755301;Shamozai|0946-855133;Kokari|0946-860006;Manglor|0946-730438;Ghaligay|0946-751320;Shah Dheri|0946-775155;Matta|0946-792725;Charbagh|0946-730156;Chuprial|0946-845110;Kalakot|0946-841523;Khwazakhela|0946-744306;Fatehpur|0946-840072;Malam Jabba|0345-0598298;Madyan|0946-882149;Bahrain|0946-780149;Kalam|0346-5600034;Utror|0346-3772520"),src:"KP Police"},
+ {id:"abbottabad",name:"Abbottabad",prov:"Khyber Pakhtunkhwa",ll:[34.1688,73.2215],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("Cantt|0992-9310038;City|0992-9310039;Mirpur|0992-380830;Mangal|0992-409211;Nawanshehr|0992-390226;Bagnotar|0992-850022;Donga Gali|0992-355300;Bakot|0992-451361;Sherwan|0992-373009;Havelian|0992-810355;Lora|0992-464014"),src:"KP Police"},
+ {id:"bannu",name:"Bannu",prov:"Khyber Pakhtunkhwa",ll:[32.9889,70.6056],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("City|0928-9270174;Cantt|0928-9270173;Saddar|0928-613181;Basia Khel|0928-630469;Township|0928-633141;Domel|0928-653541;Mandan|0928-613128"),src:"KP Police"},
+ {id:"dikhan",name:"Dera Ismail Khan",prov:"Khyber Pakhtunkhwa",ll:[31.8314,70.9019],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("City|0966-9280302;Cantt|0966-9280313;Paroa|0966-754010;Gomal University|0966-750222;Saddar|0966-741304;Yarik|0966-785060;Band Kurai|0966-778300;Paharpur|0966-775306;Shaheed Nawab Khan|0966-770013;Kirri Khaisor|0966-776107;Chaudhwan|0966-791005;Daraban|0966-790012;Kulachi|0966-760307;Dera Town|0966-710746"),src:"KP Police"},
+ {id:"kohat",name:"Kohat",prov:"Khyber Pakhtunkhwa",ll:[33.5869,71.4429],r:10,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("City|0922-9260126;Cantt|0922-9260135;Saddar (MRS)|0922-9260127;Jangal Khel|0922-9260128;Ustarzai|0922-580218;KDA|0922-9260344;Gumbat|0922-563033;Billitang|0922-560112;Lachi|0922-550013;Shakardara|0922-553046"),src:"KP Police"},
+ {id:"nowshera",name:"Nowshera",prov:"Khyber Pakhtunkhwa",ll:[34.0153,71.9747],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("Cantt|0923-9220113;Kalan|0923-9220114;Risalpur|0923-631015;Aza Khel|0923-580424;Pabbi|0923-529223;Akbarpura|0923-590253;Akora Khattak|0923-561603;Nizampur|0923-923087;Misri Banda|0300-4461973;Jalozai|0343-9186925"),src:"KP Police"},
+ {id:"charsadda",name:"Charsadda",prov:"Khyber Pakhtunkhwa",ll:[34.1453,71.7308],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("Charsadda|091-9220075;Sardheri|091-6644737;Tarnab|091-6580074;Khan Mai|091-6560174;Nisatta|091-6951065;Prang|091-6513314;Tangi|091-6555510;Mandani|091-6640524;Umarzai|091-6610506;Shabqadar|091-6281006;Batagram|091-6954033;Khwaja Wos|091-6282664;Sro Kali|091-6953000"),src:"KP Police"},
+ {id:"mansehra",name:"Mansehra",prov:"Khyber Pakhtunkhwa",ll:[34.3302,73.1968],r:12,nums:[KP_RESCUE],links:KP_LINKS,
+  stations:st("City|0997-920115;Saddar|0997-440100;Khaki|0997-542076;Shinkiari|0997-530608;Baffa|0997-389002;Battal|0997-343012;Oghi|0997-320004;Phulra|0997-355004;Lassan Nawab|0997-341177;Darband|0997-580051;Balakot|0997-500205;Garhi Habibullah|0997-450010;Kaghan|0997-420075"),src:"KP Police"},
+ {id:"muzaffarabad",name:"Muzaffarabad",prov:"Azad Jammu & Kashmir",ll:[34.37,73.4711],r:10,nums:[],links:[]},
+ {id:"mirpur",name:"Mirpur (AJK)",prov:"Azad Jammu & Kashmir",ll:[33.1478,73.7518],r:9,nums:[],links:[]},
+ {id:"gilgit",name:"Gilgit",prov:"Gilgit-Baltistan",ll:[35.9208,74.308],r:10,nums:[],links:[["Gilgit-Baltistan Police","https://gbp.gov.pk"]]},
+ {id:"gwadar",name:"Gwadar",prov:"Balochistan",ll:[25.1264,62.3225],r:10,nums:[],links:[["Balochistan district police offices","https://balochistanpolice.gov.pk/dpo_contactdetails"]]},
+ {id:"turbat",name:"Turbat",prov:"Balochistan",ll:[26.0023,63.044],r:10,nums:[],links:[["Balochistan district police offices","https://balochistanpolice.gov.pk/dpo_contactdetails"]]}
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tel=p=>p.replace(/[^\d+]/g,"").replace(/^(\d{3,4}-?\d{6,8})-\d+$/,"$1");
+const telHref=p=>"tel:"+String(p).split(/[,/]/)[0].replace(/(\d)-(\d{1,3})$/,"$1").replace(/[^\d+]/g,"");
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const norm=s=>String(s||"").toLowerCase().replace(/\b(police station|police|thana|ps|p\.s\.)\b/g," ").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+function km(a,b){const R=6371,t=x=>x*Math.PI/180,dLa=t(b[0]-a[0]),dLo=t(b[1]-a[1]);const h=Math.sin(dLa/2)**2+Math.cos(t(a[0]))*Math.cos(t(b[0]))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+const fmtKm=d=>d<1?Math.round(d*1000)+" m":(d<10?d.toFixed(1):Math.round(d))+" km";
+const KIND={police:{label:"Police",color:"--police"},rescue:{label:"Rescue 1122 & ambulance",color:"--rescue"},fire:{label:"Fire brigade",color:"--fire"}};
+
+/* ---------- state ---------- */
+let city=null, places=[], me=null, show={police:true,rescue:true,fire:true}, active=null;
+let map, layer, meMarker;
+
+function initMap(){
+  map=L.map("map",{zoomControl:true,attributionControl:true}).setView([30.4,69.4],5);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  layer=L.layerGroup().addTo(map);
+  map.on("click",e=>{ setMe([e.latlng.lat,e.latlng.lng],"Point you tapped"); });
+}
+
+/* ---------- live data from OpenStreetMap (Overpass) ---------- */
+const OVERPASS=["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"];
+function query(c){
+  const a=`(around:${c.r*1000},${c.ll[0]},${c.ll[1]})`;
+  return `[out:json][timeout:25];(nwr["amenity"="police"]${a};nwr["amenity"="fire_station"]${a};nwr["emergency"="ambulance_station"]${a};nwr["name"~"1122|rescue",i]${a};);out center tags;`;
+}
+async function fetchPlaces(c){
+  const key="sg-emg:"+c.id;
+  try{const hit=JSON.parse(sessionStorage.getItem(key)||"null"); if(hit) return hit;}catch(e){}
+  let last;
+  for(const url of OVERPASS){
+    try{
+      const res=await fetch(url,{method:"POST",body:"data="+encodeURIComponent(query(c)),headers:{"Content-Type":"application/x-www-form-urlencoded"}});
+      if(!res.ok) throw new Error(res.status);
+      const j=await res.json();
+      const out=[]; const seen=new Set();
+      for(const e of j.elements||[]){
+        const t=e.tags||{}, lat=e.lat??e.center?.lat, lon=e.lon??e.center?.lon; if(lat==null) continue;
+        const name=t.name||t["name:en"]||"", k=e.type+e.id; if(seen.has(k)) continue; seen.add(k);
+        let kind=null;
+        if(/1122|rescue/i.test(name)) kind="rescue";
+        else if(t.amenity==="police") kind="police";
+        else if(t.amenity==="fire_station") kind="fire";
+        else if(t.emergency==="ambulance_station") kind="rescue";
+        if(!kind) continue;
+        out.push({kind,name:name||(KIND[kind].label+" (unnamed)"),ll:[lat,lon],phone:t.phone||t["contact:phone"]||"",addr:[t["addr:street"],t["addr:city"]].filter(Boolean).join(", "),osm:`https://www.openstreetmap.org/${e.type}/${e.id}`});
+      }
+      try{sessionStorage.setItem(key,JSON.stringify(out));}catch(e){}
+      return out;
+    }catch(err){ last=err; }
+  }
+  throw last||new Error("unavailable");
+}
+
+/* ---------- link official station list to map points ---------- */
+function attachOfficial(c){
+  (c.stations||[]).forEach(s=>{ s.matched=null; });
+  if(!c.stations) return;
+  places.filter(p=>p.kind==="police").forEach(p=>{
+    const pn=norm(p.name); if(!pn) return;
+    const hit=c.stations.find(([n])=>{const sn=norm(n); return sn && (pn===sn || (" "+pn+" ").includes(" "+sn+" "));});
+    if(hit){ if(!p.phone && hit[1]) p.phone=hit[1]; p.official=hit[0]; hit.matched=p; }
+  });
+}
+
+/* ---------- render ---------- */
+function renderLayers(){
+  const counts={police:0,rescue:0,fire:0}; places.forEach(p=>counts[p.kind]++);
+  $("#layers").innerHTML=Object.entries(KIND).map(([k,v])=>`<button class="lay" type="button" data-k="${k}" aria-pressed="${show[k]}"><i style="background:var(${v.color})"></i>${v.label}<span class="n">${counts[k]}</span></button>`).join("");
+}
+function popupHtml(p){
+  const d=me?`<div class="muted">${fmtKm(km(me.ll,p.ll))} from ${esc(me.label.toLowerCase())}</div>`:"";
+  return `<div class="pop"><b>${esc(p.name)}</b><div class="muted">${KIND[p.kind].label}${p.addr?" · "+esc(p.addr):""}</div>${d}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>`;
+}
+function renderMap(fit){
+  layer.clearLayers();
+  places.forEach(p=>{
+    if(!show[p.kind]) return;
+    const m=L.circleMarker(p.ll,{radius:8,weight:2,color:"#fff",fillColor:css(KIND[p.kind].color),fillOpacity:.95}).bindPopup(()=>popupHtml(p));
+    m.on("click",()=>{active=p;renderList();});
+    p.marker=m; m.addTo(layer);
+  });
+  if(fit){ map.setView(city.ll, city.r>18?12:city.r>12?13:13); }
+}
+function renderList(){
+  const vis=places.filter(p=>show[p.kind]);
+  if(me) vis.forEach(p=>p.d=km(me.ll,p.ll)); else vis.forEach(p=>p.d=null);
+  vis.sort((a,b)=>me?(a.d-b.d):(a.kind.localeCompare(b.kind)||a.name.localeCompare(b.name)));
+  $("#listTitle").textContent = me ? "Nearest to "+me.label.toLowerCase() : `Stations in ${city.name}`;
+  $("#listHint").textContent = me ? "Straight-line distance. Tap a station to see it on the map." : "Tap “Use my location”, or tap anywhere on the map to measure from that point.";
+  if(!vis.length){ $("#list").innerHTML=`<div class="empty">${places.length?"Turn on a layer above to see stations.":"No stations found on the map for this city yet. Use the official numbers below, or call 15 / 1122 / 16."}</div>`; return; }
+  $("#list").innerHTML=vis.slice(0,60).map((p,i)=>`<div class="item${p===active?" on":""}" data-i="${places.indexOf(p)}" tabindex="0">
+    <span class="dot" style="background:var(${KIND[p.kind].color})"></span>
+    <div style="min-width:0"><div class="nm">${esc(p.name)}</div><div class="sub">${KIND[p.kind].label}${p.official?' · <span class="tag">Official number</span>':""}</div>
+      <div class="acts">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>
+    <span class="km">${p.d!=null?fmtKm(p.d):""}</span></div>`).join("");
+}
+function renderInfo(){
+  const nums=[["Police emergency","15"],["Rescue 1122 (ambulance, fire, rescue)","1122"],["Fire brigade","16"],["Edhi ambulance","115"]].concat(city.nums||[]);
+  $("#numsTitle").textContent="Important numbers · "+city.name;
+  $("#nums").innerHTML=nums.map(([k,v])=>`<div class="nrow"><span class="k">${esc(k)}</span><a href="${telHref(v)}">${esc(v)}</a></div>`).join("")+(city.note?`<p class="muted" style="font-size:13px;margin-top:8px">${esc(city.note)}</p>`:"");
+  $("#links").innerHTML=(city.links||[]).map(([l,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("");
+  const s=city.stations;
+  $("#dirTitle").textContent="Official police station directory · "+city.name;
+  if(s){
+    $("#dirWrap").hidden=false;
+    $("#dirNote").textContent=`${s.length} police stations from the ${city.src} official directory.`;
+    $("#dir").innerHTML=s.map((r,i)=>`<tr><td>${esc(r[0])}</td><td>${r[1]?`<a href="${telHref(r[1])}">${esc(r[1])}</a>`:'<span class="muted">Not listed</span>'}</td><td>${r.matched?`<a href="#map" data-show="${places.indexOf(r.matched)}">Show on map</a>`:`<a href="https://www.google.com/maps/search/${encodeURIComponent(r[0]+" police station "+city.name)}" target="_blank" rel="noopener">Find ↗</a>`}</td></tr>`).join("");
+  } else {
+    $("#dirWrap").hidden=true;
+    $("#dirNote").innerHTML=(city.links&&city.links.length)?"A station-by-station list isn't published in a form we can show here yet. Use the official links on the left for station numbers, or call 15.":"No official station list is published online for this city yet. Call 15 for police, or the district police office.";
+  }
+}
+
+async function loadCity(c, keepMe){
+  city=c; places=[]; active=null;
+  if(!keepMe){ me=null; if(meMarker){map.removeLayer(meMarker);meMarker=null;} }
+  try{ history.replaceState(null,"","?city="+c.id); }catch(e){}
+  $("#city").value=c.id;
+  renderInfo(); renderLayers(); renderMap(!keepMe); renderList();
+  const note=$("#mapnote"); note.hidden=false; note.textContent="Loading stations for "+c.name+"…";
+  try{
+    places=await fetchPlaces(c);
+    if(city!==c) return;
+    attachOfficial(c); note.hidden=true;
+    if(!places.length){ note.hidden=false; note.textContent="No stations are mapped for "+c.name+" yet. Use the official numbers below."; }
+  }catch(e){
+    if(city!==c) return;
+    note.hidden=false; note.textContent="The map data service is busy. Try again in a minute; official numbers are below.";
+  }
+  renderInfo(); renderLayers(); renderMap(false); renderList();
+}
+
+function setMe(ll,label){
+  me={ll,label};
+  if(meMarker) map.removeLayer(meMarker);
+  meMarker=L.circleMarker(ll,{radius:9,weight:3,color:"#fff",fillColor:"#111827",fillOpacity:1}).addTo(map).bindTooltip(label);
+  renderList();
+  const near=places.filter(p=>show[p.kind]).sort((a,b)=>km(ll,a.ll)-km(ll,b.ll))[0];
+  if(near) map.fitBounds(L.latLngBounds([ll,near.ll]).pad(.35),{maxZoom:16});
+}
+
+/* ---------- events ---------- */
+$("#city").innerHTML=Object.entries(CITIES.reduce((g,c)=>((g[c.prov]=g[c.prov]||[]).push(c),g),{})).map(([p,list])=>`<optgroup label="${esc(p)}">${list.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}</optgroup>`).join("");
+$("#city").addEventListener("change",e=>loadCity(CITIES.find(c=>c.id===e.target.value)));
+$("#layers").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;show[b.dataset.k]=!show[b.dataset.k];renderLayers();renderMap(false);renderList();});
+$("#list").addEventListener("click",e=>{
+  if(e.target.closest("a")) return;
+  const it=e.target.closest(".item"); if(!it) return;
+  const p=places[+it.dataset.i]; active=p; renderList();
+  map.setView(p.ll,16); if(p.marker) p.marker.openPopup();
+});
+$("#list").addEventListener("keydown",e=>{ if(e.key==="Enter"){ const it=e.target.closest(".item"); if(it) it.click(); } });
+$("#dir").addEventListener("click",e=>{const a=e.target.closest("[data-show]");if(!a)return;e.preventDefault();const p=places[+a.dataset.show];document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});map.setView(p.ll,16);if(p.marker)p.marker.openPopup();});
+$("#locate").addEventListener("click",()=>{
+  const note=$("#mapnote");
+  if(!navigator.geolocation){ note.hidden=false; note.textContent="Your browser can't share location. Tap your area on the map instead."; return; }
+  note.hidden=false; note.textContent="Finding your location…";
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const ll=[pos.coords.latitude,pos.coords.longitude];
+    const nearest=CITIES.slice().sort((a,b)=>km(ll,a.ll)-km(ll,b.ll))[0];
+    if(nearest!==city) { me={ll,label:"Your location"}; await loadCity(nearest,true); }
+    note.hidden=true; setMe(ll,"Your location");
+    if(km(ll,nearest.ll)>nearest.r+15){ note.hidden=false; note.textContent=`You're about ${fmtKm(km(ll,nearest.ll))} from ${nearest.name}, the nearest city listed. Stations near you may not be shown; call 15 or 1122.`; }
+  },err=>{ note.hidden=false; note.textContent= err.code===1 ? "Location permission was refused. Tap your area on the map instead." : "Couldn't get your location. Tap your area on the map instead."; },{enableHighAccuracy:true,timeout:15000,maximumAge:60000});
+});
+
+/* ---------- start ---------- */
+initMap();
+let start="islamabad";
+try{const q=new URLSearchParams(location.search).get("city"); if(q&&CITIES.some(c=>c.id===q)) start=q;}catch(e){}
+try{const p=JSON.parse(localStorage.getItem("sg-profile:device")||"null"); if(!location.search && p&&p.city){const m=CITIES.find(c=>norm(c.name).startsWith(norm(p.city))); if(m) start=m.id;}}catch(e){}
+loadCity(CITIES.find(c=>c.id===start));
+</script>
+<script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
+</body>
+</html>

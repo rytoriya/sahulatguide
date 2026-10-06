@@ -438,14 +438,14 @@
 <section class="panel" id="p-online" role="tabpanel" aria-labelledby="t-online">
   <div class="banner"><img data-photo="online" alt="" loading="lazy"><div class="in"><h2 data-i="h_online">Do it online</h2><p data-i="online_intro">Renew, track and get help without standing in a queue.</p></div><span class="credit" data-credit="online"></span></div>
   <div class="links">
-    <a href="https://onlinemrp.dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">💻</span><div><b>Renew passport online</b><span>Inland & overseas Pakistanis with an existing passport. Pay by card.</span></div></a>
-    <a href="https://tracking.dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">🔎</span><div><b>Track your passport</b><span>Enter your 11-digit token — or SMS the token to 9988.</span></div></a>
-    <a href="https://dgip.gov.pk/eServices/epassport.php" target="_blank" rel="noopener"><span class="ic">🔐</span><div><b>About the e-Passport</b><span>Chip passport, available at every office since Aug 2023.</span></div></a>
-    <a href="https://visa.nadra.gov.pk/" target="_blank" rel="noopener"><span class="ic">🛂</span><div><b>Pakistan e-Visa</b><span>Official portal for foreign visitors.</span></div></a>
-    <a href="https://citizenportal.gov.pk/" target="_blank" rel="noopener"><span class="ic">📣</span><div><b>File a complaint</b><span>Pakistan Citizen Portal — delays or misconduct.</span></div></a>
-    <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="noopener"><span class="ic">🏢</span><div><b>Embassies & consulates</b><span>Pakistan missions abroad.</span></div></a>
+    <a href="https://onlinemrp.dgip.gov.pk/" target="_blank" rel="nofollow noopener"><span class="ic">💻</span><div><b>Renew passport online</b><span>Inland & overseas Pakistanis with an existing passport. Pay by card.</span></div></a>
+    <a href="https://tracking.dgip.gov.pk/" target="_blank" rel="nofollow noopener"><span class="ic">🔎</span><div><b>Track your passport</b><span>Enter your 11-digit token — or SMS the token to 9988.</span></div></a>
+    <a href="https://dgip.gov.pk/eServices/epassport.php" target="_blank" rel="nofollow noopener"><span class="ic">🔐</span><div><b>About the e-Passport</b><span>Chip passport, available at every office since Aug 2023.</span></div></a>
+    <a href="https://visa.nadra.gov.pk/" target="_blank" rel="nofollow noopener"><span class="ic">🛂</span><div><b>Pakistan e-Visa</b><span>Official portal for foreign visitors.</span></div></a>
+    <a href="https://citizenportal.gov.pk/" target="_blank" rel="nofollow noopener"><span class="ic">📣</span><div><b>File a complaint</b><span>Pakistan Citizen Portal — delays or misconduct.</span></div></a>
+    <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="nofollow noopener"><span class="ic">🏢</span><div><b>Embassies & consulates</b><span>Pakistan missions abroad.</span></div></a>
     <a href="tel:051111344777"><span class="ic">📞</span><div><b>Helpline 051-111-344-777</b><span>Mon–Fri 08:30–16:30 · +92-51-111-344-777</span></div></a>
-    <a href="https://dgip.gov.pk/" target="_blank" rel="noopener"><span class="ic">🏛️</span><div><b>DGI&amp;P official site</b><span>Notices, policy and fee charts.</span></div></a>
+    <a href="https://dgip.gov.pk/" target="_blank" rel="nofollow noopener"><span class="ic">🏛️</span><div><b>DGI&amp;P official site</b><span>Notices, policy and fee charts.</span></div></a>
   </div>
   <div class="card" style="margin-top:14px">
     <h2>🗞️ <span data-i="h_news">What's new in 2026</span></h2>
@@ -486,7 +486,7 @@
 </main>
 
 <footer>
-  <p>Compiled from official DGI&amp;P sources (dgip.gov.pk), October 2026. Fees, timings and rules change — always confirm on <a href="https://dgip.gov.pk" target="_blank" rel="noopener">dgip.gov.pk</a> before paying or travelling. "Approx. pin" offices use town-centre locations. Independent guide — not a government website.</p>
+  <p>Compiled from official DGI&amp;P sources (dgip.gov.pk), October 2026. Fees, timings and rules change — always confirm on <a href="https://dgip.gov.pk" target="_blank" rel="nofollow noopener">dgip.gov.pk</a> before paying or travelling. "Approx. pin" offices use town-centre locations. Independent guide — not a government website.</p>
   <p id="pps-credits"></p>
 </footer>
 <!-- sg:footer -->
@@ -507,6 +507,7 @@
   </div>
   <div class="sgc-wrap sgc-fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
+<script src="/links.js"></script>
 <!-- /sg:footer -->
 <button type="button" class="totop" id="pps-top" aria-label="Back to top">↑</button>
 </div>
@@ -907,7 +908,7 @@ function card(o,i){var op=isOpen(o),d=o._d;
    '<h4>'+esc(o.n)+'</h4><div class="tags"><span class="tag '+(op?'open':'closed')+'">'+(op?'● Open now':'● Closed · '+nextOpen(o))+'</span><span class="tag">'+TYPE_LABEL[o.t]+'</span><span class="tag">🕒 '+HOURS_LABEL[o.h]+'</span></div>'+
    '<p class="addr"><span>📍</span><span>'+esc(o.a)+', '+esc(o.c)+(o.ap?' <em>(approx. pin)</em>':'')+'</span></p>'+
    (d?'<div class="dist"><span><b>'+(d.km<1?d.km.toFixed(1):Math.round(d.km))+' km</b> away</span><span>🚗 ~'+Math.round(d.road)+' km · '+fmtT(d.mins)+'</span></div>':'')+
-   '<div class="acts"><a class="btn" href="'+dirUrl(o)+'" target="_blank" rel="noopener">🧭 Directions</a>'+(o.ph?'<a class="btn ghost" href="tel:'+o.ph.replace(/[^0-9+]/g,'')+'">📞 Call</a>':'<a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query='+o.lat+','+o.lng+'" target="_blank" rel="noopener">🗺️ Map</a>')+'</div></li>'}
+   '<div class="acts"><a class="btn" href="'+dirUrl(o)+'" target="_blank" rel="noopener">🧭 Directions</a>'+(o.ph?'<a class="btn ghost" href="tel:'+o.ph.replace(/[^0-9+]/g,'')+'">📞 Call</a>':'<a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query='+o.lat+','+o.lng+'" target="_blank" rel="nofollow noopener">🗺️ Map</a>')+'</div></li>'}
 function render(){var list=filtered(),open=list.filter(isOpen).length;
   $('pps-stats').innerHTML='<span class="tag">'+list.length+' offices</span><span class="tag open">'+open+' open now</span>'+(userPos?'':'<span class="tag gold">Tip: tap "Use my location" for distances</span>');
   $('pps-list').innerHTML=list.length?list.slice(0,shown).map(card).join(''):'<li class="empty">😕 No offices match these filters.<br><button type="button" class="btn ghost" id="pps-clear" style="margin-top:10px">Clear filters</button></li>';
@@ -986,25 +987,25 @@ function renderFx(){var raw=$('fx-country').value.trim(),w=radio('fw2'),o=$('fx-
   var h='',dual=PPS_DUAL.indexOf(c)>=0,N='<div class="note">',NB='<div class="note bad">',NO='<div class="note ok">',E='</div>';
   if(w==='foreign'){
     if(c==='Israel')h=NB+'⛔ <span><b>Entry not permitted.</b> Pakistan does not admit holders of Israeli passports.</span>'+E;
-    else if(c==='India')h=NB+'⚠️ <span><b>Special rules.</b> Apply through a Pakistan mission; the Ministry of Interior clears applications. No tourist visas — only family visit, business, transit and pilgrimage. Police registration is mandatory, entry/exit only via designated points (Wagah, Islamabad, Lahore, Karachi airports), and no extensions.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/indians.php" target="_blank" rel="noopener">DGI&amp;P – Visa for Indian nationals →</a></p>';
-    else if(c==='Afghanistan')h=N+'ℹ️ <span>Afghan nationals follow a separate visa policy — apply via Pakistan\'s embassy/consulates in Afghanistan or online where eligible.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/afghan-visa.php" target="_blank" rel="noopener">DGI&amp;P – Afghanistan visa policy →</a></p>';
+    else if(c==='India')h=NB+'⚠️ <span><b>Special rules.</b> Apply through a Pakistan mission; the Ministry of Interior clears applications. No tourist visas — only family visit, business, transit and pilgrimage. Police registration is mandatory, entry/exit only via designated points (Wagah, Islamabad, Lahore, Karachi airports), and no extensions.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/indians.php" target="_blank" rel="nofollow noopener">DGI&amp;P – Visa for Indian nationals →</a></p>';
+    else if(c==='Afghanistan')h=N+'ℹ️ <span>Afghan nationals follow a separate visa policy — apply via Pakistan\'s embassy/consulates in Afghanistan or online where eligible.</span>'+E+'<p><a href="https://dgip.gov.pk/visa/afghan-visa.php" target="_blank" rel="nofollow noopener">DGI&amp;P – Afghanistan visa policy →</a></p>';
     else if(PPS_VISA_FREE.indexOf(c)>=0)h=NO+'✅ <span><b>No visa needed</b> for ordinary passports (generally up to 90 days). Carry a passport valid 6+ months and a return ticket.</span>'+E;
     else if(PPS_GCC.indexOf(c)>=0)h=NO+'✅ <span><b>Visa-free entry</b> was introduced for GCC nationals in August 2024. Confirm the permitted stay with your airline.</span>'+E;
-    else h=NO+'🖥️ <span><b>Apply online</b> at <a href="https://visa.nadra.gov.pk" target="_blank" rel="noopener">visa.nadra.gov.pk</a> — tourist, business, family, student, pilgrimage and more. Takes about 7–10 business days; fee depends on nationality.</span>'+E+(c==='Turkey'?NO+'🎫 <span>Turkish nationals with a valid Schengen, UK or US visa can get a visa on arrival.</span>'+E:'');
+    else h=NO+'🖥️ <span><b>Apply online</b> at <a href="https://visa.nadra.gov.pk" target="_blank" rel="nofollow noopener">visa.nadra.gov.pk</a> — tourist, business, family, student, pilgrimage and more. Takes about 7–10 business days; fee depends on nationality.</span>'+E+(c==='Turkey'?NO+'🎫 <span>Turkish nationals with a valid Schengen, UK or US visa can get a visa on arrival.</span>'+E:'');
     if(['Israel','India','Afghanistan'].indexOf(c)<0&&PPS_VISA_FREE.indexOf(c)<0&&PPS_GCC.indexOf(c)<0)
       h+='<h3>How to get your e-visa</h3><ol class="tl"><li>Create an account at visa.nadra.gov.pk and set up 2-step login (Google Authenticator).</li><li>Choose the visa category.</li><li>Upload passport page, photo and supporting documents (invitation, hotel booking).</li><li>Pay online and wait ~7–10 business days.</li><li>Print the grant letter and show it with your passport on arrival.</li></ol>';
     h+=N+'ℹ️ <span>Foreign nationals can\'t get a Pakistani passport. For your own passport, contact your country\'s embassy in Islamabad.</span>'+E;
   } else if(w==='origin'){
-    h=NO+'🪪 <span><b>Pakistan Origin Card (POC)</b> — for people with Pakistani parents/grandparents or the foreign spouse of a Pakistani. Gives visa-free entry, the right to stay and buy property. Apply via NADRA Pak-ID online or at a Pakistan mission.</span>'+E+'<p><a href="https://id.nadra.gov.pk/" target="_blank" rel="noopener">NADRA Pak-ID →</a></p>'+
+    h=NO+'🪪 <span><b>Pakistan Origin Card (POC)</b> — for people with Pakistani parents/grandparents or the foreign spouse of a Pakistani. Gives visa-free entry, the right to stay and buy property. Apply via NADRA Pak-ID online or at a Pakistan mission.</span>'+E+'<p><a href="https://id.nadra.gov.pk/" target="_blank" rel="nofollow noopener">NADRA Pak-ID →</a></p>'+
       (dual?N+'🛂 <span>Pakistan has a dual-nationality arrangement with '+esc(c)+' — you may also be able to hold Pakistani citizenship and passport.</span>'+E:N+'ℹ️ <span>'+esc(c)+' is not on Pakistan\'s dual-nationality list, so a POC is usually the right route.</span>'+E);
   } else if(w==='overseas'){
-    h=NO+'💻 <span><b>Renew online</b> from '+esc(c)+' at <a href="https://onlinemrp.dgip.gov.pk" target="_blank" rel="noopener">onlinemrp.dgip.gov.pk</a> — couriered to you (service charge ~Rs. 2,500 + tax, plus courier).</span>'+E+
-      N+'🏢 <span>Or visit the passport section of the Pakistan embassy/consulate in '+esc(c)+' for renewal, lost, damaged or change cases. <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="noopener">Find your mission →</a></span>'+E+
+    h=NO+'💻 <span><b>Renew online</b> from '+esc(c)+' at <a href="https://onlinemrp.dgip.gov.pk" target="_blank" rel="nofollow noopener">onlinemrp.dgip.gov.pk</a> — couriered to you (service charge ~Rs. 2,500 + tax, plus courier).</span>'+E+
+      N+'🏢 <span>Or visit the passport section of the Pakistan embassy/consulate in '+esc(c)+' for renewal, lost, damaged or change cases. <a href="https://www.mofa.gov.pk/overseas-missions" target="_blank" rel="nofollow noopener">Find your mission →</a></span>'+E+
       N+'🪪 <span>Keep your NICOP valid — it\'s needed for passport services and lets you enter Pakistan without a visa. Lost your passport abroad? The mission can issue an Emergency Travel Document.</span>'+E;
   } else {
     h=dual?NO+'✅ <span><b>Dual nationality is allowed</b> between Pakistan and '+esc(c)+'. Keep both passports; when applying for a Pakistani passport, bring your foreign passport (original + copy) and declare it.</span>'+E:
       NB+'⚠️ <span><b>'+esc(c)+' is not among the 22 countries</b> with a dual-nationality arrangement. Taking that citizenship may require giving up Pakistani citizenship — check with DGI&amp;P first.</span>'+E;
-    h+='<p><a href="https://dgip.gov.pk/immigration/dual_nationality.php" target="_blank" rel="noopener">DGI&amp;P – Dual nationality →</a></p>'}
+    h+='<p><a href="https://dgip.gov.pk/immigration/dual_nationality.php" target="_blank" rel="nofollow noopener">DGI&amp;P – Dual nationality →</a></p>'}
   o.innerHTML=h}
 
 /* ---------- Init ---------- */

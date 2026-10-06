@@ -272,7 +272,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
           <li><a href="../#hec-need-based">HEC Need-Based Scholarship</a>: apply through your university's financial aid office.</li>
           <li>Most universities also waive or reduce fees for hafiz-e-Quran, disabled students and children of employees; check the prospectus.</li>
         </ul></div>
-        <div class="card"><h3>Is the university recognised?</h3><p style="font-size:14px">Only study at a university or campus on HEC's recognised list; degrees from unapproved campuses aren't attested. <a href="https://www.hec.gov.pk/english/universities/Pages/recognised.aspx" target="_blank" rel="noopener">HEC recognised universities ↗</a></p></div>
+        <div class="card"><h3>Is the university recognised?</h3><p style="font-size:14px">Only study at a university or campus on HEC's recognised list; degrees from unapproved campuses aren't attested. <a href="https://www.hec.gov.pk/english/universities/Pages/recognised.aspx" target="_blank" rel="nofollow noopener">HEC recognised universities ↗</a></p></div>
       </div>
     </div>
   </section>
@@ -300,6 +300,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
   </div>
   <div class="sgc-wrap sgc-fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
+<script src="/links.js"></script>
 <!-- /sg:footer -->
 
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
@@ -423,7 +424,7 @@ function openUni(id,push){
     ${d.conf!=="official"?`<div class="note">This figure is ${d.conf==="old"?"from an earlier session":"from a secondary source"}. Confirm it on the university's site before you pay.</div>`:""}`
     :`<div class="note">We haven't verified this university's fee and criteria yet. Its admissions page has the current prospectus and fee schedule.</div>`}
     ${t?`<div class="card" style="padding:14px"><b>Entry test: ${esc(t.name)}</b><div class="muted" style="font-size:13.5px;margin:2px 0 8px">${esc(status(t).txt)}</div><button class="btn" type="button" data-t="${t.id}">See ${esc(t.name)} details</button></div>`:""}
-    <div class="row">${web?`<a class="btn primary" href="${web}" target="_blank" rel="noopener">Official website ↗</a>`:`<a class="btn primary" href="${gs}" target="_blank" rel="noopener">Find official website ↗</a>`}<a class="btn" href="https://www.google.com/search?q=${encodeURIComponent(u.name+" admission 2026 fee structure")}" target="_blank" rel="noopener">Latest admission notice ↗</a><a class="btn" href="../fees/?q=${encodeURIComponent(u.name.replace(/ \(.*\)$/,""))}">Pay fee online</a></div>`;
+    <div class="row">${web?`<a class="btn primary" href="${web}" target="_blank" rel="noopener">Official website ↗</a>`:`<a class="btn primary" href="${gs}" target="_blank" rel="noopener">Find official website ↗</a>`}<a class="btn" href="https://www.google.com/search?q=${encodeURIComponent(u.name+" admission 2026 fee structure")}" target="_blank" rel="nofollow noopener">Latest admission notice ↗</a><a class="btn" href="../fees/?q=${encodeURIComponent(u.name.replace(/ \(.*\)$/,""))}">Pay fee online</a></div>`;
   const dlg=$("#dlg"); if(!dlg.open){ try{dlg.showModal();}catch(e){dlg.setAttribute("open","");} }
   if(push!==false){ try{history.pushState({u:id},"","?u="+id);}catch(e){} }
 }

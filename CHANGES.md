@@ -1,5 +1,13 @@
 # Changes
 
+## 7 October 2026: external links are nofollow
+
+- Every link to another website now has `rel="nofollow"` (with `noopener` where it opens a new tab). Links within Sahulat Guide are unchanged, so search engines still follow them.
+- Links written in the HTML: `scripts/nofollow_links.js` adds it (100 links today). Netlify runs it on every deploy, so links added later are covered.
+- Links built by page scripts (news tickers, maps and directions, directories, university and job links, WhatsApp): `links.js`, loaded on every page through the shared footer, marks them as they appear.
+- The Markdown guide builder (`scripts/build_guides.py`) writes external links with `nofollow` too.
+- Checked in a browser on 20 pages: 862 external links, all nofollow; no internal link marked.
+
 ## 7 October 2026: one header and footer on every page
 
 - Every page now has the same header as the home page: the notice bar, logo, full-width search, "Pay school & university fees", "My details" and the full tab strip (the current page's tab is underlined). Every page also has the same full footer (services, useful links, company links, emergency numbers).

@@ -100,7 +100,7 @@ def build(name, title, desc):
         extension_configs={"toc": {"slugify": slugify}},
     )
     body = body.replace("<table>", '<div class="tbl"><table>').replace("</table>", "</table></div>")
-    body = re.sub(r'<a href="(https?://[^"]+)"', r'<a href="\1" target="_blank" rel="noopener"', body)
+    body = re.sub(r'<a href="(https?://[^"]+)"', r'<a href="\1" target="_blank" rel="nofollow noopener"', body)
     out = ROOT / name / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(TEMPLATE.format(title=html.escape(title), desc=html.escape(desc), body=body), encoding="utf-8")

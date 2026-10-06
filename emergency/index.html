@@ -168,9 +168,9 @@ footer ul{margin:0;padding-left:18px}
     <div><b>In an emergency, call 15 (police), 1122 (rescue and ambulance) or 16 (fire) first.</b> Station locations come from OpenStreetMap, a public map anyone can edit; some stations may be missing or placed approximately. Phone numbers in the directory come from the official police and Rescue 1122 websites listed below. Distances are straight-line, not road distance.</div>
     <div>Sources:
       <ul>
-        <li><a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="noopener">KP Police phone directory</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="noopener">Islamabad Police contacts</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="noopener">Punjab Police district offices</a> · <a href="https://punjabpolice.gov.pk/nankana_directory" target="_blank" rel="noopener">Nankana Sahib police directory</a> · <a href="https://lahorepolice.punjab.gov.pk/system/files/PKM%20address%20directory.pdf" target="_blank" rel="noopener">Lahore Police Khidmat Markaz</a></li>
-        <li><a href="https://www.rescue.gov.pk/ContactUs2.aspx" target="_blank" rel="noopener">Rescue 1122 Punjab contacts</a> · <a href="https://rescuekp.gov.pk/contact" target="_blank" rel="noopener">Rescue 1122 KP</a> · <a href="https://sers.gos.pk/contact-us/" target="_blank" rel="noopener">Sindh Emergency Rescue Service 1122</a></li>
-        <li>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>, loaded live through the Overpass API.</li>
+        <li><a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="nofollow noopener">KP Police phone directory</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="nofollow noopener">Islamabad Police contacts</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="nofollow noopener">Punjab Police district offices</a> · <a href="https://punjabpolice.gov.pk/nankana_directory" target="_blank" rel="nofollow noopener">Nankana Sahib police directory</a> · <a href="https://lahorepolice.punjab.gov.pk/system/files/PKM%20address%20directory.pdf" target="_blank" rel="nofollow noopener">Lahore Police Khidmat Markaz</a></li>
+        <li><a href="https://www.rescue.gov.pk/ContactUs2.aspx" target="_blank" rel="nofollow noopener">Rescue 1122 Punjab contacts</a> · <a href="https://rescuekp.gov.pk/contact" target="_blank" rel="nofollow noopener">Rescue 1122 KP</a> · <a href="https://sers.gos.pk/contact-us/" target="_blank" rel="nofollow noopener">Sindh Emergency Rescue Service 1122</a></li>
+        <li>Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="nofollow noopener">OpenStreetMap contributors</a>, loaded live through the Overpass API.</li>
       </ul>
     </div>
   </footer>
@@ -193,6 +193,7 @@ footer ul{margin:0;padding-left:18px}
   </div>
   <div class="sgc-wrap sgc-fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
+<script src="/links.js"></script>
 <!-- /sg:footer -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -276,7 +277,7 @@ let map, layer, meMarker;
 
 function initMap(){
   map=L.map("map",{zoomControl:true,attributionControl:true}).setView([30.4,69.4],5);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a rel="nofollow" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
   layer=L.layerGroup().addTo(map);
   map.on("click",e=>{ setMe([e.latlng.lat,e.latlng.lng],"Point you tapped"); });
 }
@@ -333,7 +334,7 @@ function renderLayers(){
 }
 function popupHtml(p){
   const d=me?`<div class="muted">${fmtKm(km(me.ll,p.ll))} from ${esc(me.label.toLowerCase())}</div>`:"";
-  return `<div class="pop"><b>${esc(p.name)}</b><div class="muted">${KIND[p.kind].label}${p.addr?" · "+esc(p.addr):""}</div>${d}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>`;
+  return `<div class="pop"><b>${esc(p.name)}</b><div class="muted">${KIND[p.kind].label}${p.addr?" · "+esc(p.addr):""}</div>${d}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="nofollow noopener">Directions</a></div></div>`;
 }
 function renderMap(fit){
   layer.clearLayers();
@@ -355,7 +356,7 @@ function renderList(){
   $("#list").innerHTML=vis.slice(0,60).map((p,i)=>`<div class="item${p===active?" on":""}" data-i="${places.indexOf(p)}" tabindex="0">
     <span class="dot" style="background:var(${KIND[p.kind].color})"></span>
     <div style="min-width:0"><div class="nm">${esc(p.name)}</div><div class="sub">${KIND[p.kind].label}${p.official?' · <span class="tag">Official number</span>':""}</div>
-      <div class="acts">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>
+      <div class="acts">${p.phone?`<a href="${telHref(p.phone)}">Call ${esc(p.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${p.ll[0]},${p.ll[1]}" target="_blank" rel="nofollow noopener">Directions</a></div></div>
     <span class="km">${p.d!=null?fmtKm(p.d):""}</span></div>`).join("");
 }
 function renderInfo(){
@@ -368,7 +369,7 @@ function renderInfo(){
   if(s){
     $("#dirWrap").hidden=false;
     $("#dirNote").textContent=`${s.length} police stations from the ${city.src} official directory.`;
-    $("#dir").innerHTML=s.map((r,i)=>`<tr><td>${esc(r[0])}</td><td>${r[1]?`<a href="${telHref(r[1])}">${esc(r[1])}</a>`:'<span class="muted">Not listed</span>'}</td><td>${r.matched?`<a href="#map" data-show="${places.indexOf(r.matched)}">Show on map</a>`:`<a href="https://www.google.com/maps/search/${encodeURIComponent(r[0]+" police station "+city.name)}" target="_blank" rel="noopener">Find ↗</a>`}</td></tr>`).join("");
+    $("#dir").innerHTML=s.map((r,i)=>`<tr><td>${esc(r[0])}</td><td>${r[1]?`<a href="${telHref(r[1])}">${esc(r[1])}</a>`:'<span class="muted">Not listed</span>'}</td><td>${r.matched?`<a href="#map" data-show="${places.indexOf(r.matched)}">Show on map</a>`:`<a href="https://www.google.com/maps/search/${encodeURIComponent(r[0]+" police station "+city.name)}" target="_blank" rel="nofollow noopener">Find ↗</a>`}</td></tr>`).join("");
   } else {
     $("#dirWrap").hidden=true;
     $("#dirNote").innerHTML=(city.links&&city.links.length)?"A station-by-station list isn't published in a form we can show here yet. Use the official links on the left for station numbers, or call 15.":"No official station list is published online for this city yet. Call 15 for police, or the district police office.";

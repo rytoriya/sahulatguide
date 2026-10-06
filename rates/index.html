@@ -134,7 +134,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
       <div class="out" id="cvOut">—</div></div>
   </div>
   <div class="panel">
-    <div class="ph"><h2>KSE-100 index &amp; most active shares <span class="mk" id="mk">Closed</span></h2><a class="btn" href="https://dps.psx.com.pk/" target="_blank" rel="noopener">Live prices on PSX ↗</a></div>
+    <div class="ph"><h2>KSE-100 index &amp; most active shares <span class="mk" id="mk">Closed</span></h2><a class="btn" href="https://dps.psx.com.pk/" target="_blank" rel="nofollow noopener">Live prices on PSX ↗</a></div>
     <p class="sub" id="pxSub"></p>
     <div class="tbl"><table><thead><tr><th>Symbol</th><th>Company</th><th class="num">Price (Rs)</th><th class="num">Change</th><th class="num">Volume</th></tr></thead><tbody id="px"></tbody></table></div>
   </div>
@@ -161,6 +161,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
   </div>
   <div class="sgc-wrap sgc-fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
+<script src="/links.js"></script>
 <!-- /sg:footer -->
 
 <script>
@@ -196,7 +197,7 @@ function draw(){
   if (P){
     const ix = P.index, open = SGFeeds.marketOpen();
     $("#pxSub").innerHTML = `KSE-100: <b>${nf(ix.value,2)}</b> ${gp(ix.chg)} ${gp(ix.pct,"%")} as of ${esc(fmt(ix.asof||P.updated))} · most active shares as of ${esc(fmt(P.itemsAsof||P.updated))} · ${open?"refreshed every hour in market hours":"market closed"}`;
-    $("#px").innerHTML = P.items.map(x=>`<tr><td><a class="cc" href="https://dps.psx.com.pk/company/${encodeURIComponent(x.sym)}" target="_blank" rel="noopener">${esc(x.sym)}</a></td><td>${esc(x.name)}</td><td class="num"><b>${nf(x.price,2)}</b></td><td class="num">${gp(x.pct,"%")}</td><td class="num">${vol(x.vol)}</td></tr>`).join("");
+    $("#px").innerHTML = P.items.map(x=>`<tr><td><a class="cc" href="https://dps.psx.com.pk/company/${encodeURIComponent(x.sym)}" target="_blank" rel="nofollow noopener">${esc(x.sym)}</a></td><td>${esc(x.name)}</td><td class="num"><b>${nf(x.price,2)}</b></td><td class="num">${gp(x.pct,"%")}</td><td class="num">${vol(x.vol)}</td></tr>`).join("");
     const m = $("#mk"); m.textContent = open?"Market open":"Closed"; m.className = "mk"+(open?" open":"");
   }
   status();

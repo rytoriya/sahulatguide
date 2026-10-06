@@ -4,7 +4,8 @@
   # 1. Puts the shared header and footer (partials/) into every page. See scripts/build_chrome.js.
   # 2. Writes a real page for every tab and guide of the main app (services/…, helplines/, calculators/…)
   #    plus sitemap.xml. See scripts/build_routes.js.
-  command = "node scripts/build_chrome.js && node scripts/build_routes.js"
+  # nofollow_links.js marks every external link rel="nofollow" in between.
+  command = "node scripts/build_chrome.js && node scripts/nofollow_links.js && node scripts/build_routes.js"
 
 # Safety net: if a page was not generated, serve the app; it reads the address and opens the right view.
 [[redirects]]

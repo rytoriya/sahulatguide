@@ -226,7 +226,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
 
   <footer>
     <div><b>In an emergency, call 15.</b> Station names and phone numbers come only from official police websites, linked in each district. Where a force doesn't publish a station list, the district shows police points from OpenStreetMap, a public map anyone can edit, which may be incomplete. Distances are straight-line.</div>
-    <div>Official sources: <a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="noopener">KP Police</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="noopener">Islamabad Police</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="noopener">Punjab Police</a> · <a href="https://karachipolice.gov.pk/services/police-stations-in-karachi/" target="_blank" rel="noopener">Karachi Police</a> · <a href="https://balochistanpolice.gov.pk/dpo_contactdetails" target="_blank" rel="noopener">Balochistan Police</a>. Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>. Directory built <span id="built"></span>.</div>
+    <div>Official sources: <a href="https://www.kppolice.gov.pk/phone-directory.php?tid=4" target="_blank" rel="nofollow noopener">KP Police</a> · <a href="https://islamabadpolice.gov.pk/contact.php" target="_blank" rel="nofollow noopener">Islamabad Police</a> · <a href="https://punjabpolice.gov.pk/dpocontacts" target="_blank" rel="nofollow noopener">Punjab Police</a> · <a href="https://karachipolice.gov.pk/services/police-stations-in-karachi/" target="_blank" rel="nofollow noopener">Karachi Police</a> · <a href="https://balochistanpolice.gov.pk/dpo_contactdetails" target="_blank" rel="nofollow noopener">Balochistan Police</a>. Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="nofollow noopener">OpenStreetMap contributors</a>. Directory built <span id="built"></span>.</div>
   </footer>
 </main>
 <!-- sg:footer -->
@@ -247,6 +247,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
   </div>
   <div class="sgc-wrap sgc-fbottom"><span>© 2026 Sahulat Guide. All rights reserved.</span><span>Information last checked 5 October 2026. Always confirm fees and deadlines on the official portal.</span></div>
 </footer>
+<script src="/links.js"></script>
 <!-- /sg:footer -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -344,7 +345,7 @@ function renderRegister(){
     let pts=osm.filter(o=>!fq||o.key.includes(fq));
     pts=pts.slice().sort((a,b)=>me?km(me.ll,a.ll)-km(me.ll,b.ll):a.name.localeCompare(b.name));
     reg.innerHTML=`<div class="empty" style="margin-bottom:12px;border-style:solid;background:var(--surface)">The ${esc(d.prov.name)} police don't publish a station list for ${esc(d.name)} online yet. Below are police points from the map; use the district numbers and official links further down for phone numbers.</div>`+
-      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Google Maps ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
+      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Directions ↗</a><a class="mini" href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Google Maps ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
   }
   if(hlName){ const h=document.querySelector(".st.hit"); if(h){ setTimeout(()=>h.scrollIntoView({block:"center",behavior:"smooth"}),120); } hlName=null; }
 }
@@ -365,7 +366,7 @@ function renderDistrict(){ renderHead(); renderRegister(); renderLower(); }
 function ensureMap(){
   if(map||!window.L) return;
   map=L.map("map").setView([30.4,69.4],5);
-  const tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+  const tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a rel="nofollow" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
   let errs=0; tiles.on&&tiles.on("tileerror",()=>{ if(++errs===4){ const n=$("#mapnote"); n.hidden=false; n.textContent="Map images can't load here. The station list and numbers work; open the directory on sahulatguide.pk to see the map."; } });
   layer=L.layerGroup().addTo(map);
   map.on("click",e=>setMe([e.latlng.lat,e.latlng.lng],"Point you tapped"));
@@ -452,7 +453,7 @@ function drawMap(){
   osm.forEach(o=>{
     const off=o.official;
     o.m=L.circleMarker(o.ll,{radius:off?8:6,weight:2,color:"#fff",fillColor:off?css("--police"):css("--muted"),fillOpacity:.95})
-      .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Google Maps</a></div></div>`)
+      .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="nofollow noopener">Google Maps</a></div></div>`)
       .addTo(layer);
   });
   if(cur&&countOf(cur)) cur.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{

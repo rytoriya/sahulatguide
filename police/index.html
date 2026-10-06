@@ -148,6 +148,7 @@ main.wrap{padding-block:26px 56px;display:grid;gap:26px}
 .st .row{display:flex;flex-wrap:wrap;gap:6px}
 .st .state{font-size:12px;color:var(--muted)}
 .st .state.on{color:var(--police);font-weight:600}
+.st .state.approx{color:var(--gold);font-weight:600}
 .empty{padding:18px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);font-size:14px}
 
 .lower{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
@@ -196,7 +197,8 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
     <div class="layout">
       <div class="mapcol">
         <div class="mapbox"><div id="map" role="application" aria-label="Map of police stations in this district"></div><div class="mapnote" id="mapnote" hidden></div></div>
-        <div class="legend"><span><i style="background:var(--police)"></i>Station in the official list</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:var(--ink)"></i>You</span></div>
+        <div class="legend" id="geoNote" hidden style="font-weight:600;color:var(--police)"></div>
+        <div class="legend"><span><i style="background:var(--police)"></i>Station in the official list</span><span><i style="background:transparent;border:2px dashed var(--police)"></i>Approximate area</span><span><i style="background:var(--muted)"></i>Other police point</span><span><i style="background:var(--ink)"></i>You</span></div>
       </div>
       <div>
         <div class="regtools"><input id="dq" type="search" placeholder="Filter stations in this district" aria-label="Filter stations in this district"></div>
@@ -240,6 +242,17 @@ $("#figs").innerHTML=[[STATIONS.length,"stations with official numbers"],[listed
 $("#built").textContent=PS.built;
 
 let prov="all", cur=null, me=null, map=null, layer=null, meMarker=null, osm=[], circ="all", hlName=null;
+let GEO={}, geoLeft=0, geoToken=0, geoDone=false;
+const GEO_VER="v1";
+const stKey=nm=>norm(nm)||String(nm).toLowerCase();
+function cacheGet(k){try{return JSON.parse(localStorage.getItem(k)||"null")}catch(e){return null}}
+function cacheSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const exact=l=>l&&(l.kind==="osm"||l.kind==="geo");
+function gQuery(nm){ return `${nm} Police Station, ${cur.name}, ${cur.prov.name}, Pakistan`; }
+function dirUrl(nm,l){ const dest=exact(l)?`${l.ll[0]},${l.ll[1]}`:gQuery(nm); return "https://www.google.com/maps/dir/?api=1"+(me?`&origin=${me.ll[0]},${me.ll[1]}`:"")+"&destination="+encodeURIComponent(dest); }
+function gUrl(nm,l){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(exact(l)?`${l.ll[0]},${l.ll[1]}`:gQuery(nm)); }
+function locText(l){ if(!l) return geoDone?"Exact place not found: use Google Maps":"Finding location on the map…"; if(exact(l)) return "Located on the map"; if(l.kind==="area") return `Approximate: ${l.label} area`; return `General area: ${l.label}`; }
 
 /* ---------- overview ---------- */
 function renderProvs(){
@@ -258,23 +271,25 @@ function renderLedger(){
 
 /* ---------- district ---------- */
 function findOsm(name){ const n=norm(name); if(!n) return null; return osm.find(o=>o.key===n)||osm.find(o=>(" "+o.key+" ").includes(" "+n+" "))||null; }
+function locOf(nm){ const o=findOsm(nm); if(o) return {ll:o.ll,kind:"osm",o}; return GEO[stKey(nm)]||null; }
 function renderHead(){
   const d=cur, n=countOf(d), circles=d.data?d.data.circles.length:0;
   $("#crumb").innerHTML=`<a href="./" data-home>All districts</a><span>›</span><span>${esc(d.prov.name)}</span><span>›</span><span>${esc(divLabel(d.div.name))}</span>`;
   $("#dTitle").innerHTML=`${esc(d.name)} District<span class="ur">${d.ur}</span>`;
-  const mapped=osm.filter(o=>o.official).length;
-  $("#facts").innerHTML=[`<span class="fact">HQ <b>${esc(d.hq)}</b></span>`].concat(n?[`<span class="fact"><b>${n}</b> stations</span>`, circles>1?`<span class="fact"><b>${circles}</b> circles</span>`:"", osm.length?`<span class="fact"><b>${mapped}</b> on the map</span>`:"", `<span class="fact src">Official list · ${esc(d.data.src)}</span>`]:[`<span class="fact">No official station list online</span>`, osm.length?`<span class="fact"><b>${osm.length}</b> police points on the map</span>`:""]).join("");
+  let mapped=0, approx=0; if(n) d.data.circles.forEach(([,l])=>l.forEach(([nm])=>{const x=locOf(nm); if(exact(x)) mapped++; else if(x) approx++;}));
+  $("#facts").innerHTML=[`<span class="fact">HQ <b>${esc(d.hq)}</b></span>`].concat(n?[`<span class="fact"><b>${n}</b> stations</span>`, circles>1?`<span class="fact"><b>${circles}</b> circles</span>`:"", (mapped||approx)?`<span class="fact"><b>${mapped+approx}</b> of ${n} on the map${approx?` · ${approx} approximate`:""}</span>`:"", `<span class="fact src">Official list · ${esc(d.data.src)}</span>`]:[`<span class="fact">No official station list online</span>`, osm.length?`<span class="fact"><b>${osm.length}</b> police points on the map</span>`:""]).join("");
   $("#srcBtn").innerHTML=d.data&&d.data.url?`<a class="btn" href="${d.data.url}" target="_blank" rel="noopener">Official source ↗</a>`:"";
 }
 function cardHtml(nm,ph,c){
-  const o=findOsm(nm);
-  const dist=(me&&o)?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:"";
+  const l=locOf(nm);
+  const dist=(me&&l&&l.kind!=="hq")?`<span class="km">${exact(l)?"":"≈ "}${fmtKm(km(me.ll,l.ll))}</span>`:"";
   const hit=hlName&&norm(hlName)===norm(nm);
+  const show=l?(l.kind==="osm"?`<button class="mini" type="button" data-o="${osm.indexOf(l.o)}">Show on map</button>`:`<button class="mini" type="button" data-g="${esc(stKey(nm))}">Show on map</button>`):"";
   return `<article class="st${hit?" hit":""}" data-name="${esc(nm)}">
     <div class="top"><div class="nm">${esc(nm)}</div>${dist}</div>
     <div class="phone">${ph?`<a href="${telHref(ph)}">${esc(ph)}</a><button class="mini" type="button" data-copy="${esc(ph)}">Copy</button>`:`<span class="none">Number not published</span>`}</div>
-    <div class="row">${o?`<button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a>`:`<a class="mini" href="https://www.google.com/maps/search/${encodeURIComponent(nm+" police station, "+cur.name+", Pakistan")}" target="_blank" rel="noopener">Find on Google Maps ↗</a>`}</div>
-    <div class="state${o?" on":""}">${o?"Located on the map":"Not on the map yet"}</div>
+    <div class="row">${show}<a class="mini" href="${dirUrl(nm,l)}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="${gUrl(nm,l)}" target="_blank" rel="noopener">Google Maps ↗</a></div>
+    <div class="state${exact(l)?" on":l?" approx":""}">${esc(locText(l))}</div>
   </article>`;
 }
 function renderRegister(){
@@ -288,7 +303,7 @@ function renderRegister(){
     circles.forEach(([c,list])=>{
       if(circ!=="all"&&circ!==c) return;
       let items=list.filter(([nm])=>!fq||norm(nm).includes(fq));
-      if(me) items=items.slice().sort((a,b)=>{const oa=findOsm(a[0]),ob=findOsm(b[0]);return (oa?km(me.ll,oa.ll):1e9)-(ob?km(me.ll,ob.ll):1e9);});
+      if(me) items=items.slice().sort((a,b)=>{const oa=locOf(a[0]),ob=locOf(b[0]);return (oa&&oa.kind!=="hq"?km(me.ll,oa.ll):1e9)-(ob&&ob.kind!=="hq"?km(me.ll,ob.ll):1e9);});
       if(!items.length) return;
       html+=`<section class="circle">${c?`<h3>${esc(c)} <span>${items.length} station${items.length>1?"s":""}</span></h3>`:""}<div class="cards">${items.map(([nm,ph])=>cardHtml(nm,ph,c)).join("")}</div></section>`;
     });
@@ -298,7 +313,7 @@ function renderRegister(){
     let pts=osm.filter(o=>!fq||o.key.includes(fq));
     pts=pts.slice().sort((a,b)=>me?km(me.ll,a.ll)-km(me.ll,b.ll):a.name.localeCompare(b.name));
     reg.innerHTML=`<div class="empty" style="margin-bottom:12px;border-style:solid;background:var(--surface)">The ${esc(d.prov.name)} police don't publish a station list for ${esc(d.name)} online yet. Below are police points from the map; use the district numbers and official links further down for phone numbers.</div>`+
-      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
+      (pts.length?`<div class="cards">${pts.map(o=>`<article class="st"><div class="top"><div class="nm">${esc(o.name)}</div>${me?`<span class="km">${fmtKm(km(me.ll,o.ll))}</span>`:""}</div>${o.phone?`<div class="phone"><a href="${telHref(o.phone)}">${esc(o.phone)}</a><button class="mini" type="button" data-copy="${esc(o.phone)}">Copy</button></div>`:""}<div class="row"><button class="mini" type="button" data-o="${osm.indexOf(o)}">Show on map</button><a class="mini" href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions ↗</a><a class="mini" href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Google Maps ↗</a></div></article>`).join("")}</div>`:`<div class="empty">${osm.loaded?"No police points are mapped here yet. Call 15, or the district police office below.":"Loading police points from the map…"}</div>`);
   }
   if(hlName){ const h=document.querySelector(".st.hit"); if(h){ setTimeout(()=>h.scrollIntoView({block:"center",behavior:"smooth"}),120); } hlName=null; }
 }
@@ -352,19 +367,73 @@ async function loadOsm(d){
   }
   throw last;
 }
+async function nomi(q,b){
+  const vb=b?`&viewbox=${b[2]},${b[1]},${b[3]},${b[0]}&bounded=1`:"";
+  const r=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=pk${vb}&q=${encodeURIComponent(q)}`);
+  if(!r.ok) throw new Error(r.status);
+  const j=await r.json(); return j[0]||null;
+}
+async function hqOf(d,b){
+  const k=`sg-ps-hq:${GEO_VER}:${d.id}`; let h=cacheGet(k); if(h) return h;
+  try{ const r=await nomi(`${d.hq}, ${d.prov.name}`,null); if(r){ h=[+r.lat,+r.lon]; cacheSet(k,h); } }catch(e){}
+  if(!h&&b) h=[(b[0]+b[1])/2,(b[2]+b[3])/2];
+  return h;
+}
+function updateGeoNote(){
+  const el=$("#geoNote"); if(!el) return;
+  el.textContent = geoLeft>0 ? `Pinning stations on the map… ${geoLeft} left` : "";
+  el.hidden = !(geoLeft>0);
+}
+async function geocodeDistrict(d,b){
+  const token=++geoToken; geoDone=false;
+  const todo=[];
+  d.data.circles.forEach(([c,list])=>list.forEach(([nm])=>{ if(!findOsm(nm)) todo.push(nm); }));
+  todo.forEach(nm=>{ const h=cacheGet(`sg-ps-geo:${GEO_VER}:${d.id}:${stKey(nm)}`); if(h) GEO[stKey(nm)]=h; });
+  drawMap(); renderHead(); renderRegister();
+  let pending=todo.filter(nm=>!GEO[stKey(nm)]);
+  if(hlName) pending.sort((a,b2)=>(norm(a)===norm(hlName)?-1:0)-(norm(b2)===norm(hlName)?-1:0));
+  geoLeft=pending.length; updateGeoNote();
+  const hq = pending.length ? await hqOf(d,b) : null;
+  let n=0;
+  for(const nm of pending){
+    if(token!==geoToken||cur!==d) return;
+    let loc=null;
+    const clean=nm.replace(/\b(city|saddar|sadar|cantt|cantonment|police post|police lines|women police station|women desk|control room|dpo office|town|division|[a-c]-division)\b/ig," ").replace(/\s+/g," ").trim();
+    try{
+      const r=await nomi(`${nm} police station`,b); await sleep(1100);
+      if(r&&r.category==="amenity"&&r.type==="police") loc={ll:[+r.lat,+r.lon],kind:"geo",label:r.name||nm};
+      else if(clean){ const pl=await nomi(clean,b); await sleep(1100); if(pl) loc={ll:[+pl.lat,+pl.lon],kind:"area",label:pl.name||clean}; }
+    }catch(e){ await sleep(1500); }
+    if(token!==geoToken||cur!==d) return;
+    if(!loc&&hq) loc={ll:hq,kind:clean?"hq":"area",label:d.hq};
+    if(loc){ GEO[stKey(nm)]=loc; if(loc.kind!=="hq") cacheSet(`sg-ps-geo:${GEO_VER}:${d.id}:${stKey(nm)}`,loc); }
+    geoLeft=pending.length-(++n); updateGeoNote();
+    if(n%3===0||geoLeft===0){ drawMap(); renderHead(); renderRegister(); }
+  }
+  geoDone=true; geoLeft=0; updateGeoNote(); drawMap(); renderHead(); renderRegister();
+}
+function stationPopup(nm,ph,c,l){
+  return `<div class="pop"><b>${esc(nm)}</b><div class="muted">Official list${c?" · "+esc(c):""}</div><div class="muted">${esc(locText(l))}</div>${me&&l.kind!=="hq"?`<div class="muted">${exact(l)?"":"≈ "}${fmtKm(km(me.ll,l.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${ph?`<a href="${telHref(ph)}">Call ${esc(ph)}</a>`:""}<a href="${dirUrl(nm,l)}" target="_blank" rel="noopener">Directions</a><a href="${gUrl(nm,l)}" target="_blank" rel="noopener">Google Maps</a></div></div>`;
+}
 function drawMap(){
   if(!map) return;
   layer.clearLayers();
   osm.forEach(o=>{
     const off=o.official;
     o.m=L.circleMarker(o.ll,{radius:off?8:6,weight:2,color:"#fff",fillColor:off?css("--police"):css("--muted"),fillOpacity:.95})
-      .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions</a></div></div>`)
+      .bindPopup(()=>`<div class="pop"><b>${esc(off?off.name:o.name)}</b><div class="muted">${off?"Official list"+(off.circle?" · "+esc(off.circle):""):"Police point on OpenStreetMap"}</div>${me?`<div class="muted">${fmtKm(km(me.ll,o.ll))} from ${esc(me.label.toLowerCase())}</div>`:""}<div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">${(off&&off.phone)||o.phone?`<a href="${telHref((off&&off.phone)||o.phone)}">Call ${esc((off&&off.phone)||o.phone)}</a>`:""}<a href="https://www.google.com/maps/dir/?api=1${me?`&origin=${me.ll[0]},${me.ll[1]}`:""}&destination=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Directions</a><a href="https://www.google.com/maps/search/?api=1&query=${o.ll[0]},${o.ll[1]}" target="_blank" rel="noopener">Google Maps</a></div></div>`)
       .addTo(layer);
   });
+  if(cur&&countOf(cur)) cur.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{
+    if(findOsm(nm)) return; const g=GEO[stKey(nm)]; if(!g) return;
+    const ex=exact(g);
+    g.m=L.circleMarker(g.ll,ex?{radius:8,weight:2,color:"#fff",fillColor:css("--police"),fillOpacity:.95}:{radius:g.kind==="hq"?6:8,weight:2,color:css("--police"),dashArray:"3 3",fillColor:css("--police"),fillOpacity:.22})
+      .bindPopup(()=>stationPopup(nm,ph,c,g)).addTo(layer);
+  }));
 }
 async function openDistrict(id,hl,push){
   cur=DIST[id]; if(!cur) return;
-  osm=[]; me=null; circ="all"; hlName=hl||null; $("#dq").value="";
+  osm=[]; me=null; circ="all"; hlName=hl||null; $("#dq").value=""; GEO={}; geoLeft=0; geoDone=false; geoToken++; updateGeoNote();
   if(meMarker&&map){map.removeLayer(meMarker);meMarker=null;}
   $("#overview").hidden=true; $("#district").hidden=false;
   if(push!==false){ try{history.pushState({d:id},"","?d="+id+(hl?"&s="+encodeURIComponent(hl):""));}catch(e){} }
@@ -379,11 +448,15 @@ async function openDistrict(id,hl,push){
     osm=r.pts; osm.loaded=true;
     if(countOf(d)) d.data.circles.forEach(([c,list])=>list.forEach(([nm,ph])=>{ const o=findOsm(nm); if(o&&!o.official) o.official={name:nm,phone:ph,circle:c}; }));
     if(map) map.fitBounds([[r.bbox[0],r.bbox[2]],[r.bbox[1],r.bbox[3]]]);
-    note.hidden=!!osm.length; if(!osm.length) note.textContent="No police stations are mapped in this district yet.";
+    note.hidden=true;
+    hlName=hl||null; drawMap(); renderDistrict();
+    if(countOf(d)) geocodeDistrict(d,r.bbox);
+    return;
   }catch(e){
     if(cur!==d) return;
     osm.loaded=true;
-    note.hidden=false; note.textContent="The map service didn't respond. The station list and phone numbers still work; try the map again later.";
+    note.hidden=false; note.textContent="The map service didn't respond. Pinning stations by name instead; phone numbers work as usual.";
+    if(countOf(d)){ bboxOf(d).then(b=>{ if(cur===d){ if(b&&map) map.fitBounds([[b[0],b[2]],[b[1],b[3]]]); geocodeDistrict(d,b); } }); }
   }
   hlName=hl||null;
   drawMap(); renderDistrict();
@@ -423,6 +496,8 @@ document.addEventListener("click",e=>{
   const c=e.target.closest("[data-copy]");
   if(c){ const v=c.dataset.copy, done=t=>{c.textContent=t;setTimeout(()=>c.textContent="Copy",1400);};
     try{navigator.clipboard.writeText(v).then(()=>done("Copied"),()=>done("Copy failed"));}catch(_){done("Copy failed");} return; }
+  const g=e.target.closest("[data-g]");
+  if(g){ const l=GEO[g.dataset.g]; if(!l||!map) return; document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); map.setView(l.ll,exact(l)?16:14); if(l.m) l.m.openPopup(); return; }
   const b=e.target.closest("[data-o]"); if(!b) return;
   const o=osm[+b.dataset.o]; if(!o||!map) return;
   document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});

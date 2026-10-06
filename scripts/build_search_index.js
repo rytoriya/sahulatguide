@@ -65,6 +65,7 @@ const TOOLS = [
   ["Pay school & university fees", "فیس آن لائن", "Pay fee vouchers with 1Bill or Kuickpay; 500+ institutions", "fees/", "fee fees voucher challan school college university 1bill kuickpay pay online"],
   ["My details (sign in)", "میری معلومات", "Save your name, mobile, CNIC and address once; copy them into any form", "account/", "account sign in login sign up register profile my details cnic save"],
   ["Police, Rescue 1122 & fire near you", "قریبی تھانہ", "City-wise police stations with official numbers; Rescue 1122 and fire stations on a map", "emergency/", "police station thana nearest map rescue 1122 fire brigade ambulance emergency"],
+  ["Police Station Directory", "پولیس اسٹیشن ڈائریکٹری", "Police stations in every district with official phone numbers and map locations", "police/", "police station thana directory sho phone district map"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);
@@ -83,6 +84,19 @@ for (const [dir, label] of [["trains", "Train finder"], ["parcels", "Parcel guid
 const emg = read("emergency/index.html");
 for (const m of emg.matchAll(/\{id:"([a-z]+)",name:"([^"]+)",prov:"([^"]+)"/g)) {
   items.push(["Tool", `Police stations in ${m[2]}`, "", `Police, Rescue 1122 and fire stations on a map · ${m[3]}`, `emergency/?city=${m[1]}`, "police station thana rescue 1122 fire brigade near me"]);
+}
+
+/* ---- Official police stations (police directory) ---- */
+global.window = {};
+Function(read("police/data.js").replace("window.PS=", "window.PS="))();
+const PSD = global.window.PS;
+const distName = {};
+PSD.provs.forEach((p) => p.divs.forEach((d) => d.districts.forEach((x) => (distName[x.id] = [x.name, p.name]))));
+for (const [id, d] of Object.entries(PSD.data)) {
+  items.push(["Police", `${distName[id][0]} District police stations`, "", `${distName[id][1]} · police station directory`, `police/?d=${id}`, "police station thana directory"]);
+  for (const [circle, list] of d.circles) for (const [name, phone] of list) {
+    items.push(["Police", `${name} police station`, "", `${distName[id][0]} District${circle ? " · " + circle : ""}${phone ? " · " + phone : ""}`, `police/?d=${id}&s=${encodeURIComponent(name)}`, "police station thana " + distName[id][0]]);
+  }
 }
 
 /* ---- Institutions that take fees online (fees page) ---- */

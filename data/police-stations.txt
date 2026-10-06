@@ -1,0 +1,240 @@
+# Sahulat Guide: official police station directory
+#
+# One block per district. The district id must match the Districts & Union
+# Councils page (admin-units), e.g. kp-peshawar, pb-lahore, sd-karachi-central.
+#
+#   ## <district-id> | <source name> | <source URL>
+#   office: <label>|<phone>
+#   link: <label>|<URL>
+#   - <circle or blank>: <station>|<phone>; <station>|<phone>
+#
+# Only numbers published by official police websites go here.
+# After editing, run:  node scripts/build_police.js && node scripts/build_search_index.js
+#
+
+## kp-peshawar | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : East Cantt|091-9213059; West Cantt|091-9213297; Gulbarg|091-9213017; Hayatabad|091-9217333; Tatara|091-9331261; Pishtakhara|091-9331418; Sarband|0311-7940404; Town|091-9221366; Tehkal|091-9331243; KRS|091-9330477; Shah Qabool|091-9330432; Hashtnaghri|091-9225450; Kotwali|091-9330424; AMJ Shah|091-9330464; Banamari|091-9330416; Faqirabad|091-9331134; Paharipura|091-9330425; Gulbahar|091-9225317; Phandu|091-9330476; Chamkani|091-9330435; Shahpur|091-2920222; Khazana|091-9330421; Daudzai|091-2960115; Michani Gate|091-9331122; Mathra|091-9330429; Nasir Bagh|091-5846799; Regi|091-5833802; RMT|091-9239074; Badaber|091-2370376; Mattani|091-2626155; Hassan Khel|091-9239059; Inqilab|091-9330075; Urmar|091-2350156; Rehman Baba|091-9330287; University Campus|091-9221213
+
+## kp-bannu | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0928-9270174; Cantt|0928-9270173; Saddar|0928-613181; Basia Khel|0928-630469; Township|0928-633141; Domel|0928-653541; Mandan|0928-613128
+
+## kp-mardan | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0937-9230125; Hoti|0937-9230244; Par Hoti|0937-561245; Saddar|0937-9230130; Sheikh Maltoon|0937-868235; Toru|0937-860320; Garhi Kapura|0937-846113; Takht Bhai|0937-551001; Saro Shah|0937-503001; Sher Garh|0937-830540; Lund Khwar|0937-850210; Katlang|0937-575302; Kharki|0937-590019; Jabbar|0937-542112; Choora|0937-929011; Shahbaz Garhi|0937-580172; Rustam|0937-800124; Baizai|
+
+## kp-dera-ismail-khan | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0966-9280302; Cantt|0966-9280313; Paroa|0966-754010; Gomal University|0966-750222; Saddar|0966-741304; Yarik|0966-785060; Band Kurai|0966-778300; Paharpur|0966-775306; Shaheed Nawab Khan|0966-770013; Kirri Khaisor|0966-776107; Chaudhwan|0966-791005; Daraban|0966-790012; Kulachi|0966-760307; Hathala|; Dera Town|0966-710746; Khui Bahara|; Darazinda|; Mughal Kot|
+
+## kp-swat | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Swat Police Control|0946-881374; Mingora|0946-9240384; Buner|0946-811902; Rahimabad|0946-9240389; Saidu Sharif|0946-9240385; Kokarai|0946-860006; Manglor|0946-730438; Ghaligay|0946-751320; Shamozai|0946-855133; Kabal|0946-755301; Shah Dheri|0946-775155; Kanju|0946-881029; Matta|0946-792725; Chuprial|0946-845110; Kalakot|0946-841523; Khwazakhela|0946-744306; Fatehpur|0946-840072; Charbagh|0946-730156; Malam Jabba|0345-0598298; Madyan|0946-882149; Bahrain|0946-780149; Kalam|0346-5600034; Utror|0346-3772520; Women Police Station|0946-711115
+
+## kp-abbottabad | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Cantt|0992-9310038; City|0992-9310039; Mirpur|0992-380830; Mangal|0992-409211; Nawanshehr|0992-390226; Bagnotar|0992-850022; Donga Gali|0992-355300; Bakot|0992-451361; Sherwan|0992-373009; Havelian|0992-810355; Lora|0992-464014
+
+## kp-kohat | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Jangal Khel|0922-9260128; Ustarzai|0922-580218; KDA|0922-9260344; City|0922-9260126; Cantt|0922-9260135; Saddar (MRS)|0922-9260127; Gumbat|0922-563033; Billitang|0922-560112; Lachi|0922-550013; Shakardara|0922-553046; Darra Adam Khel|0922-9260344
+
+## kp-nowshera | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Cantt|0923-9220113; Kalan|0923-9220114; Risalpur|0923-631015; Aza Khel|0923-580424; Pabbi|0923-529223; Akbarpura|0923-590253; Akora Khattak|0923-561603; Nizampur|0923-923087; Misri Banda|0300-4461973; Jalozai|0343-9186925
+
+## kp-charsadda | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Charsadda|091-9220075; Sardheri|091-6644737; Tarnab|091-6580074; Khan Mai|091-6560174; Nisatta|091-6951065; Prang|091-6513314; Tangi|091-6555510; Mandani|091-6640524; Umarzai|091-6610506; Shabqadar|091-6281006; Batagram|091-6954033; Khwaja Wos|091-6282664; Sro Kali|091-6953000
+
+## kp-mansehra | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0997-920115; Saddar|0997-440100; Khaki|0997-542076; Shinkiari|0997-530608; Baffa|0997-389002; Battal|0997-343012; Oghi|0997-320004; Phulra|0997-355004; Lassan Nawab|0997-341177; Darband|0997-580051; DSP Balakot|0997-500471; Balakot|0997-500205; Garhi Habibullah|0997-450010; Kaghan|0997-420075
+
+## kp-swabi | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Lahor|0938-300010; Razar|0938-312777; Gadoon (IDS)|0938-270555; Swabi|0938-920063; Zaida|0938-280400; Yar Hussain|0938-460230; Tor Dher|0938-528123; Kalu Khan|0938-310090; Par Mooli|0938-420206; Topi|0938-271216; Utla|
+
+## kp-haripur | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0995-920113; Khalabat|0995-619218; Beer|0995-318288; Hattar|0995-617388; Ghazi|0995-350222; Sarai Saleh|0995-319268; Saddar|0995-352250; Kot Najeebullah|0995-618208; Khanpur|0995-640011; Nara Amazai|0344-9045141; Makhniyal|0334-9643143
+
+## kp-upper-kohistan | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Police Lines Komila|0998-407223; Dassu|0998-407207; Komila|0998-407227
+
+## kp-lower-kohistan | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Pattan|0998-405144
+
+## kp-battagram | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Battagram|0997-310002; Banna Allai|0997-319119; Kuza Banda|0997-314050; Pazang|0997-400116
+
+## kp-tank | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0963-512523; SMA|0963-512622; Mullazai|0963-701700; Gul Imam|0963-701778; Gomal|0963-518074; Jandola|; Ping|; Surghar|; Women Desk|0963-510257
+
+## kp-shangla | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Alpuri|0996-850020; Karora|0996-897626; Bisham|0996-400473; Chakesar|0996-855161; Aloch|0996-853230; Dandai|0346-6870060; Olandar|0348-3350229; Chowga|0340-9474324; Martung|0347-2615012; Kabalgram|0346-0973903; Kamach|0341-9636606
+
+## kp-buner | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Daggar|0939-510226; Pir Baba|0939-520253; Jowar|0939-550600; City|0345-9002534; Gagra|0939-541222; Gulbandai|0342-3354988; Nawagai|0939-530300; Totalai|0939-500500; Ngarai|0334-9447229; Chinglai|0939-526150; Elum|0300-572281
+
+## kp-lower-dir | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Chakdara|0945-764533; Ouch|0945-761033; Asbanr|0945-610316; Talash|0945-871852; Timergara|0945-9250051; Balambat|0945-9250052; Khal|0945-800428; Munda|0945-830010; Mayar|0945-835020; Samarbagh|0945-850020; Haya Serai|0945-881003; Lal Qilla|0945-885518; Ziarat Talash|0945-844144
+
+## kp-upper-dir | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Tourist Facilitation Centre|0344-0900074; Foreigners Branch|0344-1197465; Dir|0944-880035; Barawal|0944-830300; Shahi Kot|0944-868108; Sheringal|0944-885016; Kalkot|0944-889008; Thall|0944-859115; Patrak|0944-820048; Gandigar|0944-870030; Sahib Abad|0944-884344; Wari|0944-840027; Jagam|0944-888388
+
+## kp-lower-chitral | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Control Room|0943-412959; Ayun|0943-490007; Drosh|0943-480207; City|0943-412913; Lotkoh|0943-488015; Arandu|0943-400007; Kughuzi|0943-477009
+
+## kp-upper-chitral | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : DPO Office|0943-470452; Booni|0943-470024; Mastuj|0943-486026; Laspur / Harchin|0346-9696221; Yarkhun Lasht|0347-7489617; Mulkhow|0943-474060; Torkhow|0943-476099; Oveer|0343-6018633
+
+## kp-bajaur | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Khar|0308-8475713; Loisam|0303-8992158; Arang|0307-8041304; Salarzai|0308-8473621; Utman Khel|0300-5914063; Wara Mamund|0300-3956072; Loi Mamund|0300-0595010; Charmang|0300-5022563; Nawagai|0305-9025066; Barang|0308-8260432
+
+## kp-kurram | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Upper Kurram|0300-9165111; Roza|0326-5510008; Peiwar|0304-9660196; Agra|0301-8151717; Sadda|0301-5112229; Alizai|0300-9075332; Dogar|0300-0911717; Chinarak|0301-5955088; Sarpakh|0305-9998888
+
+## kp-karak | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Latamber|0927-220202; Sabirabad|0927-230302; Takht-e-Nasrati|0927-250814; Banda Daud Shah|0927-333144; Khurram|0927-310302; Teri|0927-290302; Gurguri|0927-320008; Habibullah|0342-9305301
+
+## kp-orakzai | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : Kurez|0335-9790925; Mishti Mela|0333-9252083; Kalaya|0334-9100931; Ghiljo|0332-9615376; Dabori|0333-3352555
+
+## kp-hangu | KP Police | https://www.kppolice.gov.pk/phone-directory.php?tid=4
+- : City|0925-621516; Saddar|0925-677261; Doaba|0925-660014; Thall|0925-510849
+
+## ict-islamabad | Islamabad Police | https://islamabadpolice.gov.pk/contact.php
+- : Kirpa|051-2326066; Phulgaran|0332-4488888; Sangjani|051-2296128; Aabpara|051-9204830; Karachi Company|051-9334091; Kohsar|051-9102499; Margalla|051-9261510; Secretariat|051-9209132; Women Police Station|051-9252517; Golra Sharif|051-9267099; Ramna|051-9330189; Shalimar|051-9266885; Sumbal|; Tarnol|051-2295122; Industrial Area|051-9258877; Noon|; Sabzi Mandi|051-9334840; Shams Colony|051-9334499; Bani Gala|051-9255339; Bhara Kahu|051-2230029; Nilore|; Shahzad Town|051-9247444; Humak|; Khanna|051-4473600; Koral|051-9252517; Lohi Bher|051-5710906; Sihala|051-4491334
+
+## pb-nankana-sahib | Punjab Police | https://punjabpolice.gov.pk/nankana_directory
+office: District police office|056-9201100
+- Nankana Sahib Circle: Saddar Nankana Sahib|056-3549122; City Nankana Sahib|056-2875910; Warburton|056-2794010
+- Sangla Hill Circle: Saddar Sangla Hill|056-3700286; City Sangla Hill|056-3701025; Shahkot|056-3710312
+- Bara Ghar Circle: Bara Ghar|056-2321011; Faizabad|056-2881077; Mangtanwala|0308-1874336; Syed Wala|056-2722008; Police Post Buchake|056-2721894
+
+## pb-rahim-yar-khan | Punjab Police | https://punjabpolice.gov.pk/rahim_yar_khan_directory
+office: District police office|068-9230301
+- City Circle: City A Division|068-9230284; City B Division|068-9230285; City C Division|068-9230286; Airport|068-9239027; Ab-e-Hayat|068-9239028; Iqbalabad|068-5678123
+- Saddar Circle: Saddar|068-9230275; Kot Samaba|068-5566007; Rukanpur|068-5044106; Abadpur|068-5042033; Manthar|068-5774123; Police Post Taranda Sawai Khan|068-5044087; Police Post Bahadurpur|068-5044117; Police Post Jamaldin Wali|068-5045971
+- Sadiqabad Circle: City Sadiqabad|068-5020026; Saddar Sadiqabad|068-5020027; Ahmedpur Lamma|068-5020028; Kot Sabzal|068-5020030; Bhong|068-5020029; Machka|068-5020031
+- Khanpur Circle: City Khanpur|068-5572187; Saddar Khanpur|068-5573379; Zahir Pir|068-5562026; Sehja|068-5675514; Islamgarh|068-5044103; Police Post Chachran|068-5589024; Police Post Feroza|068-5581160
+- Liaquatpur Circle: Liaquatpur|068-5795610; Taranda Muhammad Panah|068-5671010; Shedani|068-5512240; Pacca Laran|068-5585115; Police Post Allahabad|068-5584019; Police Post Khan Bela|068-5570010; Police Post Janpur|068-5791310
+
+## pb-bahawalnagar | Punjab Police | https://punjabpolice.gov.pk/bahawalnagar_directory
+office: District police office|063-9240053
+- Saddar Circle: City Bahawalnagar|063-9240068; Saddar Bahawalnagar|063-9240069; Takht Mahal|0304-0229567; Madrasa|0304-0929662; Donga Bonga|063-2360010
+- Chishtian Circle: City Chishtian|063-2508910; Saddar Chishtian|063-2508991; Bakhshan Khan|063-2550015; Shehr Farid|0304-0928262; Dahranwala|063-2440010
+- Haroonabad Circle: City Haroonabad|063-2250988; Saddar Haroonabad|063-2250388; Faqirwali|063-2240080
+- Fort Abbas Circle: Fort Abbas|063-2510945; Khichiwala|063-2255094; Marot|063-2570010
+- Minchinabad Circle: Minchinabad|063-2750507; McLeod Ganj|063-2760307; Mandi Sadiqganj|063-2780002; Ghamandpur|0305-6741214
+
+## pb-dera-ghazi-khan | Punjab Police | https://punjabpolice.gov.pk/dgkhan_directory
+office: District police office|064-9260100
+- City Circle: City|064-9260139; Saddar|064-9260140; B-Division|064-9260138; Civil Lines|064-9260141
+- Saddar Circle: Kot Mubarak|064-2846015; Kala|0333-6467094; Shah Sadar Din|064-2848325; Darahma|064-2689270; Sakhi Sarwar|064-2642262
+- Kot Chutta Circle: Kot Chutta|064-2843507; Choti|064-2566020; DJ Khan|0333-6490636; Jhok Utra|0333-6177569
+- Taunsa Circle: Taunsa|064-2602914; Vehova|064-2524216; Retra|064-2523216
+
+## pb-attock | Punjab Police | https://punjabpolice.gov.pk/attock_directory
+office: District police office|057-9316026
+- Saddar Circle: City Attock|057-9316039; Saddar Attock|057-9316038
+- Hazro Circle: Hazro|057-2311128; Rangoo|057-2651071; Attock Khurd|057-2770005
+- Hasan Abdal Circle: City Hasan Abdal|057-2520900; Saddar Hasan Abdal|057-2520500
+- Fateh Jang Circle: Bahtar|057-2741024; Fateh Jang|057-2210502; New Airport|057-2211100
+- Pindi Gheb Circle: Basal|057-2630100; Pindi Gheb|057-2352948
+- Jand Circle: Jand|057-2621097; Injra|057-2342038
+## pb-bahawalpur | Punjab Police | https://punjabpolice.gov.pk/bahawalpur_directory
+office: District police office|062-9250360
+- City Bahawalpur Circle: Kotwali|062-2882115; Civil Lines|062-9250375; Cantt|062-9255258; Baghdad-ul-Jadeed|062-2200400; Satellite Town|062-9239047
+- Saddar Bahawalpur Circle: Sama Satta|062-2870610; Saddar Bahawalpur|062-9255256; Abbasnagar|0340-0394129; Musafir Khana|0340-0365010
+- Ahmadpur East Circle: Saddar Ahmadpur|062-2272954; City Ahmadpur|062-2271950; Uch Sharif|062-2551010; Chani Goth|062-2783110; Dera Nawab|0340-0394027; Nowshera Jadeed|0340-0394019; Dhoor Kot|0340-0394001
+- Yazman Circle: City Yazman|062-2702330; Head Rajkan|062-2781210; Derawar|0340-0365008; Saddar Yazman|062-2702331
+- Hasilpur Circle: City Hasilpur|062-2442212; Saddar Hasilpur|062-2442510; Qaimpur|062-2440010
+- Khairpur Tamewali Circle: Khairpur Tamewali|062-2261025; Inayati|0340-0364968
+## pb-bhakkar | Punjab Police | https://punjabpolice.gov.pk/bhakkar_directory
+office: District police office|0453-9200350
+- Saddar Circle: Saddar Bhakkar|0453-9200434; City Bhakkar|0453-9200435; Sarai Muhajir|0453-434062
+- Kaloorkot Circle: Kaloorkot|0453-200922; Jandanwala|0453-440153
+- Darya Khan Circle: City Darya Khan|0453-253226; Saddar Darya Khan|0453-252926; Dullewala|0453-445088
+- Mankera Circle: Mankera|0453-410003; Haiderabad Thal|0453-520054
+## pb-chakwal | Punjab Police | https://punjabpolice.gov.pk/chakwal_directory
+office: District police office|0543-660066
+- Saddar Circle: Kallar Kahar|0543-588003; Saddar Chakwal|0543-553535; Dhudial|0543-590310; City Chakwal|0543-553434; Neela|0543-553532
+- Talagang Circle (now Talagang District): Saddar Talagang|0543-410935; City Talagang|0543-410933; Tamman|0543-460010; Lawa|0543-483103
+- Choa Saidan Shah Circle: Choa Saidan Shah|0543-5800600; Dhuman|0543-663002
+## pb-chiniot | Punjab Police | https://punjabpolice.gov.pk/chiniot_directory
+office: District police office|0476-9210022
+- City Circle: City Chiniot|0476-331520; Saddar Chiniot|0476-331540; Rajoa|0346-2480861
+- Chenab Nagar Circle: Chenab Nagar|0476-213175; Police Post Chenab Nagar|0476-213176; Lalian|0476-610210; Barrana|0300-8644435; Kandiwal|0345-7765416
+- Bhowana Circle: Bhowana|0476-201040; Langrana|0332-7078862; Police Post Jamiaabad|0344-7739241
+## pb-gujrat | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|053-9260026
+
+## pb-hafizabad | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0547-920131
+
+## pb-jhang | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|047-9200444
+
+## pb-jhelum | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0544-9270042
+
+## pb-kasur | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|049-9250137
+link: Official police station list|https://punjabpolice.gov.pk/kasur_directory
+
+## pb-khanewal | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|065-9200175
+
+## pb-khushab | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0454-720726
+
+## pb-lahore | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+link: Official police station list|https://punjabpolice.gov.pk/LahoreDirectory
+
+## pb-layyah | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0606-920151
+
+## pb-lodhran | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0608-922062
+
+## pb-mandi-bahauddin | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0546-502324
+
+## pb-mianwali | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0459-920092
+
+## pb-muzaffargarh | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|066-9200311
+link: Official police station list|https://punjabpolice.gov.pk/muzaffargarh_directory
+
+## pb-narowal | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0542-920009
+link: Official police station list|https://punjabpolice.gov.pk/narowal_directory
+
+## pb-okara | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|044-9200351
+link: Official police station list|https://punjabpolice.gov.pk/okara_directory
+
+## pb-pakpattan | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0457-374106
+
+## pb-rajanpur | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|0604-920155
+
+## pb-rawalpindi | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+link: Official police station list|https://punjabpolice.gov.pk/RawalpindiDirectory
+
+## pb-sahiwal | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|040-9200051
+
+## pb-sargodha | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|048-9230333
+link: Official police station list|https://punjabpolice.gov.pk/sargodha_directory
+
+## pb-sheikhupura | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|056-9200104
+link: Official police station list|https://punjabpolice.gov.pk/sheikhupura_directory
+
+## pb-sialkot | Punjab Police | https://punjabpolice.gov.pk/sialkot_directory
+office: District police office|052-9250321
+- City Circle: Kotwali|052-9250341; Civil Lines|052-9250331; Cantt|052-9250343; Rangpura|052-4583001; Nekapura|052-4361166; Hajipura|052-3553613; Police Post Suchetgarh|052-3206111
+- Saddar Circle: Saddar Sialkot|052-3542969; Ugoki|052-3570285; Muradpur|052-4362260; Kotli Loharan|052-3533133; Kotli Syed Amir|052-3518433; Head Marala|052-3502743; Phuklian|052-4641441
+- Daska Circle: City Daska|052-9200114; Saddar Daska|0300-6161088; Bambanwala|052-6613083; Satrah|052-6491097; Motra|052-6227010
+- Sambrial Circle: Sambrial|052-6520331; Begowala|052-6301716; Airport|052-3505686; Badiana|052-6528096; Phillaura|052-6211615; Sabz Pir|052-6536302
+- Pasrur Circle: City Pasrur|052-6442475; Saddar Pasrur|052-6442323; Qila Kalarwala|052-6632279
+## pb-toba-tek-singh | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|046-9201051
+
+## pb-vehari | Punjab Police | https://punjabpolice.gov.pk/dpocontacts
+office: District police office|067-9201076

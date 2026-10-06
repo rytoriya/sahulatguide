@@ -20,6 +20,7 @@ import tarfile
 
 sys.path.insert(0, os.path.dirname(__file__))
 from police_geo import Locator  # noqa: E402
+import police_parse_karachi  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 RAW = os.path.join(ROOT, "data", "police", "raw")
@@ -132,13 +133,25 @@ def match(L, off, pts):
     for p in pts:
         if p["district"]:
             by_d.setdefault(p["district"], []).append(p)
+    kar = police_parse_karachi.stations_by_district()
     result = {}
     for did, d in dist.items():
         drop = [d["name"], d["hq"]] + d["name"].split()
         stations = [dict(s) for s in (off.get(did, {}).get("stations") or [])]
+        # official pins first (Karachi Police publishes each station's location and jurisdiction)
+        for s in stations:
+            for k in kar.get(did, []):
+                if key(k["name"]) == key(s["name"]) and k["ll"]:
+                    s.update({"lat": k["ll"][0], "lon": k["ll"][1], "loc": "official", "ref": "kp:" + k["url"], "addr": "", "ur": "",
+                              "contacts": k["contacts"], "page": k["url"]})
+                    if k.get("jur"):
+                        s["jur"] = [[round(x, 4), round(y, 4)] for x, y in _simplify(k["jur"], 0.0008)]
+                    break
         cand = by_d.get(did, [])
         pairs = []
         for i, s in enumerate(stations):
+            if "lat" in s:
+                continue
             ks = key(s["name"], drop)
             for j, p in enumerate(cand):
                 sc = similar(ks, key(p["name"], drop))
@@ -185,7 +198,7 @@ def main():
     step = sys.argv[1] if len(sys.argv) > 1 else "requests"
     L = Locator()
     off = official()
-    pts = osm_points(L) + karachi_pins(L)
+    pts = osm_points(L)  # Karachi's official pins are applied in match()
     res = match(L, off, pts)
     n_off = sum(len(r["stations"]) for r in res.values())
     n_loc = sum(1 for r in res.values() for s in r["stations"] if "lat" in s)
@@ -238,6 +251,9 @@ def build(L, res):
         stations, extra = [], []
         for s in r["stations"]:
             st = {"n": s["name"], "ph": s.get("phone", ""), "c": s.get("circle", "")}
+            for f in ("contacts", "page", "jur"):
+                if s.get(f):
+                    st[f] = s[f]
             if "lat" in s:
                 st.update(ll=[s["lat"], s["lon"]], q="exact", a=s.get("addr") or address_of(rev.get(s["ref"])), ur=s.get("ur", ""))
             else:

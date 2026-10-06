@@ -383,3 +383,70 @@ office: District police office|067-9201076
 - New Multan Circle: New Multan|061-9220100; Seetal Mari|061-9220130
 - Saddar Circle: Saddar|061-4546090; Alpa|061-6014032
 - Shuja Abad Circle: City Shuja Abad|061-4396847; Saddar Shuja Abad|061-4396848
+
+## sd-karachi-central | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- - Sub-Division: Women (Central)|0313-9611396
+- Azizabad Sub-Division: Yousuf Plaza|0315-2189874; Azizabad|0311-3995588; Joharabad|0333-3978407
+- Federal B Industrial Area Sub-Division: Federal B Industrial Area|0311-2638986; Gabol Town|0333-2211383
+- Gulbahar Sub-Division: Gulbahar|0300-9280661; Super Market|0300-2700100
+- Gulberg Sub-Division: Gulberg|0332-3523260; Samanabad|0300-9377715
+- Khawaja Ajmair Nagri Sub-Division: Khawaja Ajmer Nagri|0312-9229175; Sir Syed|0312-2583233
+- Liaquatabad Sub-Division: Sharifabad|0314-2083553; Liaquatabad|0316-3701578
+- Nazimabad Sub-Division: Paposh Nagar|0300-9253621; Nazimabad|0315-2520846; Rizvia|0300-8373550
+- New Karachi Sub-Division: Bilal Colony|0313-1042140; New Karachi|0300-2000302; New Karachi Industrial Area|0300-9252458 / 0333-7753039
+- North Nazimabad Sub-Division: North Nazimabad|0333-2193329; Hyderi Market|0313-2035510
+- Shadman Sub-Division: Taimuria|0313-2608444; Shahrah-e-Noor Jahan|0332-9628737
+
+## sd-karachi-east | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- - Sub-Division: Women (East)|0300-9222158
+- Bahadurabad Sub-Division: Tipu Sultan|0300-9249261; Bahadurabad|0300-2879812
+- Ferozabad Sub-Division: Brigade|0300-2773694; Ferozabad|03219248567
+- Gulshan Sub-Division: Aziz Bhatti|0300-3552165; Gulshan-e-Iqbal|0334-0022905
+- Jamshed Quarters Sub-Division: Jamshed Quarters|0313-2623005; Soldier Bazar|0300-2345454
+- Mehmoodabad Sub-Division: Mehmoodabad|0313-2755565; Baloch Colony|0313-3090051
+- New Town Sub-Division: PIB Colony|0300-3413553; New Town|0300-2473885
+- Sachal Sub-Division: Mubina Town|0300-2502090; Sachal|0300-3411807
+- Shahrah-E-Faisal Sub-Division: Shahrah-e-Faisal|0345-9205427; Gulistan-e-Johar|0333-2603086
+- Sohrab Goth Sub-Division: Site Super Highway|0333-2135490; Sohrab Goth|0300-3032053
+
+## sd-karachi-south | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- Baghdadi Sub-Division: Kalri|0300-9284444; Baghdadi|0333-5689790
+- Clifton Sub-Division: Boat Basin|0300-2214196; Clifton|03332409292
+- Darakhshan Sub-Division: Sahil|0302-2020594; Darakhshan|0333-2929992
+- Defence Sub-Division: Defence|0321-7298335; Gizri|0319-3131366
+- Eidgah Sub-Division: Napier|0312-2030670; Eidgah|0301-2601584
+- Frere Sub-Division: Frere|0300-2916185; Civil Lines|0313-3777210
+- Garden Sub-Division: Garden|0300-2403002; Nabi Bux|0300-7007766
+- Kalakot Sub-Division: Chakiwara|0300-8374555; Kalakot|0300-2165008
+- Kharadar Sub-Division: Kharadar|0300-2228011/0333-3200919; Mithadar|0333-2446612
+- Preedy Sub-Division: Aram Bagh|0333-2194669; Preedy|0300-8213535
+- Risala Sub-Division: City Court|0311-8222229; Risala|0300-3765432
+- Saddar Sub-Division: Saddar|0300-2416942; Artillery Maidan|0333-2259295; Women (South)|0345-2680905
+
+## sd-karachi-west | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- Manghopir Sub-Division: Manghopir|0333-2151376; Peerabad|0300-9298918
+- Orangi Sub-Division: Mominabad|0321-9249839; Orangi Town|0346-2588844
+- Pakistan Bazar Sub-Division: Iqbal Market|0300-9264885; Pakistan Bazar|0300-2370394
+- Surjani Sub-Division: Surjani|0300-8290666; Gulshan-e-Maymar|0333-2374240
+
+## sd-keamari | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- Baldia Sub-Division: Madina Colony|0333-3464764; Baldia|0336-1812557
+- Keamari Sub-Division: Jackson|0300-2858124; Karachi Port Trust (KPT)|0333-8414486; Docks|0333-7666492
+- Mauripur Sub-Division: Mochko|0333-2191013; Mauripur|0333-2243513
+- Pak Colony Sub-Division: Shershah|0333-2272360; Pak Colony|0300-2245947
+- Saeedabad Sub-Division: Ittehad Town|0300-9255954; Saeedabad|0300-8310528
+- Site Sub-Division: Site-A|0300/0312-2205506; Site-B|0300-2213038
+
+## sd-korangi | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- Al-Falah Sub-Division: Shah Faisal Colony|0321-9217862; Al-Falah|0312-2323343
+- Korangi Sub-Division: Zaman Town|0333-2821488; Korangi|0300-9229272; Korangi Industrial Area|0345-3300606
+- Landhi Sub-Division: Landhi|0333-3882361; Awami Colony|0300-2691041
+- Saudabad Sub-Division: Model Colony|03002443106; Saudabad|0333-2168106; Khokhrapar|0303-9112112
+
+## sd-malir | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
+- Airport Sub-Division: Airport|0321-3828571; Malir Cantt|0333-7276420
+- Bin Qasim Sub-Division: Steel Town|0301-2471788; Bin Qasim|0300-2124568
+- Malir City Sub-Division: Malir City|0308-8888899; Shah Latif Town|0300-9224676
+- Memon Goth Sub-Division: Memon Goth|0311-2728643; Gadap City|0302-8919920
+- Quaidabad Sub-Division: Quaidabad|0333-7547673; Sharafi Goth|0323-3352249
+- Sukhan Sub-Division: Sukhan|0300-3809250; Ibrahim Hyderi|0333-2265434

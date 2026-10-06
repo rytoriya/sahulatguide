@@ -12,6 +12,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
+import police_parse_karachi  # noqa: E402
 import police_parse_punjab  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -33,6 +34,13 @@ def parsed_sources():
     for did, circles in police_parse_punjab.parse_all(os.path.join(RAW, "pages.tar.gz")).items():
         if sum(len(s) for _, s in circles):
             out[did] = ("Punjab Police", punjab_url(did), circles)
+    for did, sts in police_parse_karachi.stations_by_district().items():
+        circles = {}
+        for st in sts:
+            sho = next((c for c in st["contacts"] if c[0] == "SHO"), None)
+            name = " ".join(st["name"].replace("Police Station", "").replace("police station", "").split()) or st["name"]
+            circles.setdefault((st["sub"] or "").title() + " Sub-Division" if st["sub"] else "", []).append((name, sho[2] if sho else ""))
+        out[did] = ("Karachi Police", "https://karachipolice.gov.pk/services/police-stations-in-karachi/", sorted(circles.items()))
     return out
 
 

@@ -66,6 +66,7 @@ const TOOLS = [
   ["My details (sign in)", "میری معلومات", "Save your name, mobile, CNIC and address once; copy them into any form", "account/", "account sign in login sign up register profile my details cnic save"],
   ["Police, Rescue 1122 & fire near you", "قریبی تھانہ", "City-wise police stations with official numbers; Rescue 1122 and fire stations on a map", "emergency/", "police station thana nearest map rescue 1122 fire brigade ambulance emergency"],
   ["Police Station Directory", "پولیس اسٹیشن ڈائریکٹری", "Police stations in every district with official phone numbers and map locations", "police/", "police station thana directory sho phone district map"],
+  ["Government Universities", "سرکاری جامعات", "Entry test calendar, admission criteria and fees for every public university", "universities/", "university universities admission entry test mdcat net ecat etea usat nat lat merit fee structure"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);
@@ -97,6 +98,18 @@ for (const [id, d] of Object.entries(PSD.data)) {
   for (const [circle, list] of d.circles) for (const [name, phone] of list) {
     items.push(["Police", `${name} police station`, "", `${distName[id][0]} District${circle ? " · " + circle : ""}${phone ? " · " + phone : ""}`, `police/?d=${id}&s=${encodeURIComponent(name)}`, "police station thana " + distName[id][0]]);
   }
+}
+
+/* ---- Universities and entry tests (universities page) ---- */
+Function(read("universities/data.js"))();
+const UNI = global.window.UNI;
+const UPROV = { pb: "Punjab", sd: "Sindh", kp: "KP", bl: "Balochistan", ict: "Islamabad", gb: "Gilgit-Baltistan", ajk: "AJK" };
+for (const t of UNI.tests) {
+  items.push(["University", `${t.name} entry test`, "", `${t.full} · dates, fee, merit`, `universities/?t=${t.id}`, `entry test admission ${t.body} ${t.for}`]);
+}
+for (const [id, name, city, prov, , , test] of UNI.unis) {
+  const tn = test ? UNI.tests.find((t) => t.id === test).name : "";
+  items.push(["University", name, "", `${city} · ${UPROV[prov]}${UNI.detail[id] ? " · fees & criteria" : ""}`, `universities/?u=${id}`, `university admission fee ${tn}`]);
 }
 
 /* ---- Institutions that take fees online (fees page) ---- */

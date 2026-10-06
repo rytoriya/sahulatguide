@@ -64,6 +64,18 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2
 .ticker .belt{display:flex;width:max-content;animation:run 70s linear infinite}
 .ticker:hover .belt,.ticker:focus-within .belt{animation-play-state:paused}
 .ticker .item{padding:0 28px;white-space:nowrap;border-right:1px solid color-mix(in srgb,var(--bg) 25%,transparent)}
+.ticker.news{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
+.ticker.news .lbl{background:var(--accent);color:var(--accent-ink)}
+.ticker.news .item{border-right-color:var(--line)}
+.ticker.news .item b{color:var(--stamp)}
+.ticker.news .belt{animation-duration:90s}
+.ticker.news a{text-decoration-color:var(--line)}
+.ticker a.lbl{text-decoration:none}
+.home-top{display:grid;grid-template-columns:minmax(0,1fr) 236px;gap:14px;align-items:stretch}
+.home-top > .hero{margin:0}
+@media (max-width:1020px){.home-top{grid-template-columns:minmax(0,1fr)}#rateSide{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){#rateSide{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){#rateSide{grid-template-columns:minmax(0,1fr)}}
 .ticker .item b{color:var(--sun);font-family:var(--f-mono);font-weight:500;font-size:12px;margin-right:8px}
 .ticker a{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--bg) 40%,transparent)}
 @keyframes run{to{transform:translateX(-50%)}}
@@ -370,14 +382,19 @@ a.tab.tablink svg{width:16px;height:16px}
 <div class="tabs"><div class="scroll"><nav id="tabs" role="tablist" aria-label="Sections"></nav></div></div>
 
 <div class="ticker" aria-label="Latest updates">
-  <div class="lbl">Updates</div>
+  <a class="lbl" href="#updatesHead" title="All latest updates">Updates</a>
   <div class="track" tabindex="0"><div class="belt" id="belt"></div></div>
+</div>
+<div class="ticker news" aria-label="Pakistan headlines">
+  <a class="lbl" href="https://www.dawn.com/latest-news" target="_blank" rel="noopener" title="Latest Pakistan news">Headlines</a>
+  <div class="track" tabindex="0"><div class="belt" id="belt2"></div></div>
 </div>
 
 <main class="wrap">
   <!-- HOME -->
   <section class="view" id="v-home">
     <div class="sos"><b>Emergency</b><a class="n" href="tel:15">Police 15</a><a class="n" href="tel:1122">Rescue 1122</a><a class="n" href="tel:16">Fire 16</a><a class="n" href="tel:130">Motorway 130</a><a class="n" href="emergency/" style="text-decoration:underline">Nearest police station →</a><button data-go="emergency">All helplines →</button></div>
+    <div class="home-top">
     <div class="hero">
       <div>
         <div class="eyebrow">Government services, explained</div>
@@ -389,6 +406,8 @@ a.tab.tablink svg{width:16px;height:16px}
         </div>
       </div>
       <div id="heroArt"></div>
+    </div>
+    <aside id="rateSide" aria-label="Today's rates"></aside>
     </div>
 
     <div class="h2row"><h2>Browse by need</h2><p id="guideCount"></p></div>
@@ -405,9 +424,11 @@ a.tab.tablink svg{width:16px;height:16px}
       <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
       <a href="police/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 18 40 52v58c0 58 38 108 88 128 50-20 88-70 88-128V52Zm0 19 70 27v46c0 48-30 90-70 108-40-18-70-60-70-108V64Zm-30 63h60v16H98Zm0 30h60v16H98Zm0 30h40v16H98Z"/></svg></span><b>Police Station Directory</b><span class="d">Every district: stations, official phone numbers, circles and locations on the map.</span><span class="go">Open directory →</span></a>
       <a href="universities/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 116-58Zm0 20.5L197 92l-69 34.5L59 92ZM56 128v44c0 22 32 42 72 42s72-20 72-42v-44l-18 9v35c0 10-22 24-54 24s-54-14-54-24v-35Zm166-20v68h18v-77Z"/></svg></span><b>Government Universities</b><span class="d">Entry test calendar (MDCAT, NET, ECAT, USAT…), admission criteria and fees for every public university.</span><span class="go">Open guide →</span></a>
+      <a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
+      <a href="vets/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M212 80a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-168 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm48-48a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm72 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-36 88c-33 0-64 34-64 64 0 17 13 28 30 28 13 0 20-6 34-6s21 6 34 6c17 0 30-11 30-28 0-30-31-64-64-64Z"/></svg></span><b>Find a vet</b><span class="d">Nearest government vet hospital, pet clinics by city, and animal first aid.</span><span class="go">Find a vet →</span></a>
     </div>
 
-    <div class="h2row"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
+    <div class="h2row" id="updatesHead"><h2>Latest updates</h2><p>Last checked 5 Oct 2026</p></div>
     <div class="updates" id="updates"></div>
     <button class="more" id="updMore" type="button" hidden></button>
 
@@ -444,7 +465,9 @@ a.tab.tablink svg{width:16px;height:16px}
       <a href="emergency/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 20c-46 0-82 35-82 80 0 58 70 125 76 131a8 8 0 0 0 12 0c6-6 76-73 76-131 0-45-36-80-82-80Zm0 18c35 0 64 27 64 62 0 41-46 92-64 110-18-18-64-69-64-110 0-35 29-62 64-62Zm0 22-36 14v24c0 22 15 40 36 46 21-6 36-24 36-46V74Zm0 17 20 8v13c0 13-8 24-20 29-12-5-20-16-20-29V99Z"/></svg></span><b>Police, 1122 &amp; fire near you</b><span class="d">City-wise police stations with official numbers, and Rescue 1122 and fire stations on a map.</span><span class="go">Open map →</span></a>
       <a href="police/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 18 40 52v58c0 58 38 108 88 128 50-20 88-70 88-128V52Zm0 19 70 27v46c0 48-30 90-70 108-40-18-70-60-70-108V64Zm-30 63h60v16H98Zm0 30h60v16H98Zm0 30h40v16H98Z"/></svg></span><b>Police Station Directory</b><span class="d">Every district: stations, official phone numbers, circles and locations on the map.</span><span class="go">Open directory →</span></a>
       <a href="universities/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path fill-rule="evenodd" d="M128 34 12 92l116 58 116-58Zm0 20.5L197 92l-69 34.5L59 92ZM56 128v44c0 22 32 42 72 42s72-20 72-42v-44l-18 9v35c0 10-22 24-54 24s-54-14-54-24v-35Zm166-20v68h18v-77Z"/></svg></span><b>Government Universities</b><span class="d">Entry test calendar (MDCAT, NET, ECAT, USAT…), admission criteria and fees for every public university.</span><span class="go">Open guide →</span></a>
-    </div>
+          <a href="rates/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M38 38a8 8 0 0 1 8 8v156h164a8 8 0 0 1 0 16H38a8 8 0 0 1-8-8V46a8 8 0 0 1 8-8Zm184 34a8 8 0 0 1 0 11.3l-64 64a8 8 0 0 1-11.3 0L120 120.7l-42.3 42.6a8 8 0 0 1-11.4-11.3l48-48a8 8 0 0 1 11.4 0L152 130.7l58.7-58.7a8 8 0 0 1 11.3 0Z"/></svg></span><b>Daily rates</b><span class="d">Petrol, diesel, gold, silver, dollar and other currencies, and the KSE-100 index.</span><span class="go">See today's rates →</span></a>
+      <a href="vets/"><span class="ic" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 256 256" fill="currentColor"><path d="M212 80a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-168 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm48-48a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm72 0a24 24 0 1 1-24 24 24 24 0 0 1 24-24Zm-36 88c-33 0-64 34-64 64 0 17 13 28 30 28 13 0 20-6 34-6s21 6 34 6c17 0 30-11 30-28 0-30-31-64-64-64Z"/></svg></span><b>Find a vet</b><span class="d">Nearest government vet hospital, pet clinics by city, and animal first aid.</span><span class="go">Find a vet →</span></a>
+</div>
     <div class="grid2">
       <div class="panel">
         <h2>Which scheme fits me?</h2>
@@ -455,6 +478,7 @@ a.tab.tablink svg{width:16px;height:16px}
           <label class="wide">I need help with<select id="fNeed">
             <option value="business">Start or grow a business</option>
             <option value="farm">Farming / livestock</option>
+            <option value="vet">Sick animal / veterinary care</option>
             <option value="house">Building a house</option>
             <option value="id">ID card, passport or SIMs</option>
             <option value="health">Hospital treatment</option>
@@ -731,6 +755,7 @@ const ART = {
    <g transform="translate(40 228)"><ellipse cx="20" cy="22" rx="20" ry="6" class="f-sun"/><rect x="0" y="8" width="40" height="14" class="f-sun"/><ellipse cx="20" cy="8" rx="20" ry="6" class="f-e"/><text x="20" y="12" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`
 };
 const ICON = {
+ chart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>`,
  shield:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="M9 12h6M9 15h4"/></svg>`,
  grad:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>`,
  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>`,
@@ -745,7 +770,7 @@ const GROUPS = {
   bills:{name:"Bills & taxes",desc:"Utility bills, NTN, income tax and property tax.",art:"bill",subs:[["utility","Utility bills"],["incometax","Income tax & NTN"],["property","Property & land"]]},
   health:{name:"Health & water",desc:"Government health cards and free clean drinking water.",art:"health",subs:[["cards","Health cards"],["water","Clean water"]]},
   education:{name:"Education",desc:"University scholarships, school stipends and free schooling.",art:"grad",subs:[["university","University"],["school","School"]]},
-  farmers:{name:"Farmers",desc:"Interest-free credit for crops and livestock.",art:"wheat",subs:[["crops","Crops"],["livestock","Livestock"]]},
+  farmers:{name:"Farmers",desc:"Interest-free credit for crops and livestock, and free veterinary care for your animals.",art:"wheat",subs:[["crops","Crops"],["livestock","Livestock"],["vet","Veterinary care"]]},
   transport:{name:"Transport & travel",desc:"City buses, trains, flights and going abroad.",art:"bus",subs:[["bus","City buses"],["train","Trains"],["air","Flights"],["abroad","Going abroad"]]},
   cargo:{name:"Cargo & shipping",desc:"Parcels, rail freight, sea ports and dry ports.",art:"ship",subs:[["post","Parcels & post"],["rail","Rail freight"],["ports","Ports & customs"]]},
   vehicles:{name:"Vehicles & driving",desc:"Driving licence, token tax, M-Tag and traffic challans.",art:"bus",subs:[["licence","Driving licence"],["vehtax","Token tax & transfer"],["road","Motorways & challans"]]},
@@ -755,7 +780,7 @@ const GROUPS = {
 };
 const REGIONS = [["all","All of Pakistan"],["punjab","Punjab"],["sindh","Sindh"],["kp","Khyber Pakhtunkhwa"],["balochistan","Balochistan"],["ict","Islamabad"],["ajkgb","AJK & Gilgit-Baltistan"]];
 const REGION_LABEL = {national:"Nationwide",punjab:"Punjab",sindh:"Sindh",kp:"KP",balochistan:"Balochistan",ict:"Islamabad",ajkgb:"AJK & GB"};
-const TABS = [["home","Home"],["emergency","Emergency"],["police","Police stations","police/","shield"],["universities","Universities","universities/","grad"],...Object.entries(GROUPS).map(([k,g])=>[k,g.name]),["all","All services"],["tools","Calculators"],["portals","More services"],["contact","Contact"]];
+const TABS = [["home","Home"],["emergency","Emergency"],["police","Police stations","police/","shield"],["universities","Universities","universities/","grad"],["rates","Daily rates","rates/","chart"],...Object.entries(GROUPS).map(([k,g])=>[k,g.name]),["all","All services"],["tools","Calculators"],["portals","More services"],["contact","Contact"]];
 const S = [
 { id:"cnic-renewal", grp:"identity", sub:"id", region:["national"], art:"id", name:"CNIC renewal (online)", ur:"شناختی کارڈ کی تجدید", by:"NADRA", status:"open",
   summary:"Renew an expired or expiring Computerised National Identity Card from your phone with the Pak-ID app or the Pak-Identity website. You can also renew at any NADRA Registration Centre.",
@@ -811,6 +836,66 @@ const S = [
   table:null,
   note:"Herd-size limits and credit amounts differ by phase. Confirm current terms on the portal before applying.",
   links:[["Livestock Card portal","https://plc.punjab.gov.pk"]], help:"CM Facilitation Desks at veterinary hospitals" },
+
+
+{ id:"vet-free-treatment", grp:"farmers", sub:"vet", region:["punjab"], art:"cow", name:"Free animal treatment at government vet hospitals", ur:"سرکاری ویٹرنری ہسپتالوں میں مفت علاج", by:"Livestock & Dairy Development Dept., Punjab", status:"open",
+  hd:["Who can use it","What to bring","How to get treatment"],
+  summary:"Punjab's Civil Veterinary Hospitals, dispensaries and mobile units examine, treat and operate on cattle, buffalo, goats, sheep, poultry and pets free of charge. You can also call the free 24/7 livestock helpline for advice or to ask for a mobile vet visit.",
+  facts:[["Treatment","Free"],["OPD slip","Rs 2"],["Helpline","08000-9211"],["Facilities","3,500+"]],
+  elig:["Any farmer or pet owner: no registration or card needed","Cattle, buffalo, goats, sheep, camels, horses, donkeys, poultry, dogs and cats","Vaccination, deworming and anti-tick campaigns are free for all livestock owners"],
+  docs:["Your animal, or a clear description and photos if it cannot be moved","CNIC (asked when you call the helpline or for mobile-unit visits)","Previous prescriptions or vaccination record, if any"],
+  steps:["For an emergency or if the animal cannot walk, call the free helpline <b>08000-9211</b> with your name, CNIC, village, animal type and symptoms. You get a ticket number.","For routine problems, take the animal to the nearest Civil Veterinary Hospital (tehsil level) or Civil Veterinary Dispensary (union council level). Use <a href='vets/'>Find a vet</a> on this site to find the nearest one.","Pay the Rs 2 outdoor slip (parchi). Examination, treatment and surgery are free.","Ask about the monthly visit schedule of the mobile veterinary dispensary for your village. Mobile units carry ultrasound and lab tests.","Follow the vet's dose and withdrawal time before selling milk or meat."],
+  tableTitle:"Government vet facilities",
+  table:{head:["Facility","Level","What it does"],rows:[["Civil Veterinary Hospital (CVH)","Tehsil / large towns","Veterinary officer, treatment, surgery, ultrasound in many tehsils"],["Civil Veterinary Dispensary (CVD)","Union council","Veterinary assistant, first treatment, vaccination, artificial insemination"],["Mobile veterinary dispensary","Village visits","Treatment, vaccination and lab tests at farmers' doorsteps (2,206 units after Sept 2026)"],["Mobile veterinary laboratory","District","Up to 40 tests on site"],["District diagnostic lab","District HQ","Blood, dung and milk tests; disease outbreak checks"]]},
+  note:"In September 2026 Punjab added 30 mobile veterinary dispensaries and 17 mobile labs, and announced operation theatres and labs in every district and ultrasound machines at tehsil level. Fees for artificial insemination and some lab tests are charged separately at nominal government rates.",
+  links:[["Livestock Punjab","https://livestock.punjab.gov.pk"],["Livestock Card","https://plc.punjab.gov.pk"]], help:"08000-9211 (toll-free, 24/7)" },
+
+{ id:"vet-vaccination", grp:"farmers", sub:"vet", region:["national"], art:"cow", name:"Free livestock vaccination & deworming package", ur:"مویشیوں کی مفت ویکسینیشن", by:"Provincial livestock departments", status:"open",
+  hd:["Who can get it","What to prepare","How to get your animals vaccinated"],
+  summary:"Provincial livestock departments run free vaccination, deworming and anti-tick campaigns for the main contagious diseases of cattle, buffalo, goats, sheep and poultry. Use the calendar below to plan; your local vet confirms the exact dates for your area.",
+  facts:[["Cost","Free in campaigns"],["Diseases","HS, FMD, BQ, LSD, PPR, ET"],["Where","Vet hospital or at village"],["Punjab helpline","08000-9211"]],
+  elig:["All livestock owners, small or large","Animals should be healthy on the day; sick, very weak or heavily pregnant animals are vaccinated on the vet's advice","Young animals get their first doses at the age the vet advises (often 3–4 months)"],
+  docs:["Count of animals by type and age","Previous vaccination card, if you have one","CNIC and mobile number (for campaign records)"],
+  steps:["Ask your Civil Veterinary Hospital or Dispensary for the campaign dates in your union council, or call the helpline.","Bring animals to the camp, or ask if the team will visit your village.","Deworm 1–2 weeks before vaccination when possible: vaccines work better in worm-free animals.","Keep a vaccination card for every animal and note the next due date.","Watch animals for a day after vaccination; mild swelling or fever for a day is common. Call the vet if it lasts longer."],
+  tableTitle:"Vaccination calendar",
+  table:{head:["Disease","Animals","When (typical)"],rows:[["Haemorrhagic septicaemia (HS / Gal Ghotu)","Cattle, buffalo","Before monsoon (May–June) and before winter"],["Foot and mouth disease (FMD / Mun Khur)","Cattle, buffalo, goats, sheep","Every 6 months"],["Black quarter (BQ / Chhar)","Young cattle and buffalo","Before monsoon, once a year"],["Lumpy skin disease (LSD)","Cattle","Once a year; free in Punjab"],["PPR (goat plague)","Goats, sheep","Once a year"],["Enterotoxaemia (ET)","Goats, sheep","Before monsoon and before winter"],["Goat pleuropneumonia (CCPP)","Goats","Once a year"],["Newcastle disease (Rani Khet)","Poultry","As per vet schedule; repeat doses"],["Deworming","All livestock","Every 3–4 months, and before vaccination"]]},
+  note:"Timings are the usual pattern in Pakistan. Outbreaks can change the schedule, so follow your local veterinary officer's dates.",
+  links:[["Livestock Punjab","https://livestock.punjab.gov.pk"],["ICT Livestock","https://ictadministration.gov.pk/livestock-dairy-development/"]], help:"08000-9211 (Punjab) · local vet hospital elsewhere" },
+
+{ id:"vet-doctors", grp:"farmers", sub:"vet", region:["national"], art:"cow", name:"How to reach a vet doctor: helplines, mobile units & home visits", ur:"ویٹرنری ڈاکٹر تک کیسے پہنچیں", by:"Provincial livestock departments, universities", status:"open",
+  hd:["Who is available","Before you call","Fastest way to get a vet"],
+  summary:"Every tehsil has a government veterinary officer, every union council a veterinary assistant, and Punjab and KP now run mobile vet units that come to villages. University teaching hospitals and private clinics in big cities treat pets and referrals.",
+  facts:[["Punjab","08000-9211"],["Islamabad","051-9108384"],["KP mobile vans","145"],["Karachi free hospital","M.A. Jinnah Rd"]],
+  elig:["Veterinary Officer (DVM doctor): at every Civil Veterinary Hospital, usually 8 am–2 pm","Veterinary Assistant: at union council dispensaries for first treatment and vaccination","Helpline doctors (Punjab 24/7): advice by phone and dispatch of mobile units","University teaching hospitals: specialists, surgery and X-ray (UVAS Lahore, UAF Faisalabad, CVAS Jhang, Cholistan University Bahawalpur)","Private clinics: evenings and emergencies in cities (see Find a vet on this site)"],
+  docs:["Animal type, age, and whether pregnant or in milk","Symptoms and since when; temperature if you have a thermometer","Medicines already given, with names and amounts","Photos or a short video of the problem"],
+  steps:["<b>Emergency</b> (bloat, difficult birth, poisoning, heavy bleeding, animal down): call the helpline or the nearest vet hospital immediately.","<b>Punjab:</b> call 08000-9211, ask for a mobile veterinary dispensary visit if the animal cannot be moved.","<b>Islamabad:</b> call 051-9108384 or go to CVH Rawat, Tarlai, Bhara Kahu or Bhimber Trar.","<b>Khyber Pakhtunkhwa:</b> from October 2026, the Ehsaas-e-Bezaban Sehat Gaari vans visit tehsils with free treatment; ask your tehsil vet hospital for the van's schedule.","<b>Sindh / Karachi:</b> Richmond Crawford Veterinary Hospital, M.A. Jinnah Road, treats animals free; elsewhere go to the district veterinary hospital.","For pets, university pet centres and private clinics offer vaccination packages, surgery and night emergencies."],
+  tableTitle:"Vet services by province",
+  table:{head:["Province","Government vet network","How to reach"],rows:[["Punjab","Civil vet hospitals, dispensaries, 2,206 mobile units","08000-9211 · livestock.punjab.gov.pk"],["Islamabad (ICT)","4 vet hospitals, 9 vet centres","051-9108384 · G-11/4 Agriculture Complex"],["Khyber Pakhtunkhwa","Vet hospitals + 145 mobile clinics, 27 mobile labs","Tehsil vet hospital"],["Sindh","District vet hospitals; 27 public animal care centres in Karachi","Richmond Crawford Vet Hospital, Karachi"],["Balochistan, AJK, GB","District and tehsil vet hospitals","District livestock office"]]},
+  note:"Government vets also issue health certificates for animal transport and sale. Never let an untrained person inject medicines: wrong drugs and doses cause resistance, abortions and drug residues in milk and meat.",
+  links:[["Livestock Punjab","https://livestock.punjab.gov.pk"],["ICT Livestock","https://ictadministration.gov.pk/livestock-dairy-development/"],["KP Livestock","https://livestockext.kp.gov.pk"]], help:"08000-9211 (Punjab) · 051-9108384 (ICT)" },
+
+{ id:"vet-kp-mobile", grp:"farmers", sub:"vet", region:["kp"], art:"cow", name:"KP mobile vet clinics: Ehsaas-e-Bezaban Sehat Gaari", ur:"احساسِ بے زبان صحت گاڑی", by:"Livestock Dept., Khyber Pakhtunkhwa", status:"open",
+  hd:["Who can use it","What to prepare","How to get a visit"],
+  summary:"Khyber Pakhtunkhwa launched 145 mobile veterinary clinics and 27 mobile laboratories on 1 October 2026. The vans visit tehsils, including the merged districts, with free check-ups, vaccination, deworming and milk testing.",
+  facts:[["Launched","1 Oct 2026"],["Mobile clinics","145"],["Mobile labs","27"],["Cost","Free"]],
+  elig:["Livestock farmers in all KP districts, settled and merged","Treatment, medicines, vaccines and tests are meant to be free"],
+  docs:["CNIC and mobile number","Number and type of animals","Symptoms or problems you want checked"],
+  steps:["Ask your nearest government veterinary hospital or tehsil livestock office for the van's visit schedule in your area.","Bring animals to the van's stop on the given day.","Get vaccination and deworming done in the same visit.","Ask for milk testing if you sell milk."],
+  table:null,
+  note:"A dedicated helpline and full district list had not been published by early October 2026. Check with your district livestock office.",
+  links:[["KP Livestock","https://livestockext.kp.gov.pk"]], help:"Tehsil veterinary hospital" },
+
+{ id:"vet-pets", grp:"farmers", sub:"vet", region:["national"], art:"cow", name:"Pet care: government, university & private pet clinics", ur:"پالتو جانوروں کا علاج", by:"Universities, provincial vet hospitals, private clinics", status:"open",
+  hd:["Where to go","What to bring","How to get your pet treated"],
+  summary:"Dogs, cats and birds are treated at government vet hospitals, university pet centres and private clinics. Government and university centres are cheapest; private clinics offer vaccination packages, grooming, surgery and late-night emergencies.",
+  facts:[["Govt treatment","Free / nominal"],["Rabies vaccine","Yearly"],["Karachi free","Richmond Crawford"],["Lahore","UVAS Pet Centre"]],
+  elig:["Any pet owner","Stray and injured animals are also treated at government hospitals and by animal welfare groups"],
+  docs:["Vaccination card or previous prescriptions","Pet's age, weight and diet","Photos or video of the symptoms"],
+  steps:["For a basic check-up or vaccination, visit a government vet hospital or university pet centre (UVAS Pet Centre Lahore, UAF Faisalabad, Richmond Crawford Karachi).","For night emergencies, use a private clinic open 24 hours. See <a href='vets/#private'>Find a vet</a> for clinics by city.","Ask private clinics for a written price of any package before treatment.","Keep the vaccination card: rabies yearly, plus the core vaccines your vet schedules.","If a dog or cat bites a person, wash the wound with soap and running water for 15 minutes and go to a hospital for the human rabies vaccine the same day."],
+  tableTitle:"Pet vaccination package checklist",
+  table:{head:["A good pet vaccination package includes","Dogs","Cats"],rows:[["Core vaccines","Distemper, parvovirus, hepatitis (DHPP)","Panleukopenia, herpes, calici (FVRCP)"],["Rabies","Yes, yearly","Yes, yearly"],["Deworming","Every 3 months","Every 3 months"],["Check-up","Weight, teeth, skin, ticks","Weight, teeth, skin, fleas"],["Record","Signed vaccination card","Signed vaccination card"]]},
+  note:"Prices at private clinics vary by city and clinic. Ask for the vaccine brand and batch on the card.",
+  links:[["UVAS Pet Centre","https://www.uvas.edu.pk/centers/pet-center/index.htm"]], help:"Nearest vet hospital" },
 
 { id:"punjab-health-card", grp:"health", sub:"cards", region:["punjab"], art:"health", name:"Punjab Health Card (Sehat Card)", ur:"پنجاب صحت کارڈ", by:"Govt. of Punjab (PHIMC)", status:"check",
   summary:"Free admitted (indoor) treatment at empanelled public and private hospitals for families permanently resident in Punjab. Your CNIC is your card. The programme was restructured in 2025-26, so check what is covered before you go.",
@@ -1641,15 +1726,15 @@ function renderList(){
 }
 function renderSheet(id){
   const s = S.find(x=>x.id===id) || S[0]; current = s.id;
-  const t = s.table ? `<div class="sec"><h3>Fees and terms</h3><div class="tbl"><table><thead><tr>${s.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>` : "";
+  const t = s.table ? `<div class="sec"><h3>${esc(s.tableTitle||"Fees and terms")}</h3><div class="tbl"><table><thead><tr>${s.table.head.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div></div>` : "";
   $("#sheet").innerHTML = `<div class="art">${ART[s.art]}</div><div class="body">
     <div class="sheet-head"><div><div class="eyebrow">${esc(GROUPS[s.grp].name)} · ${esc(regionTag(s))}</div><div class="by">${esc(s.by)}</div><h2>${esc(s.name)}</h2><div class="ur" lang="ur">${s.ur}</div></div>
     <span class="pill ${s.status}">${statusLabel[s.status]}</span></div>
     <p class="summary">${esc(s.summary)}</p>
     <div class="facts">${s.facts.map(([k,v])=>`<div class="fact"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("")}</div>
-    <div class="sec"><h3>Who can apply</h3><ul>${s.elig.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
-    <div class="sec"><h3>Documents to prepare</h3><ul>${s.docs.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
-    <div class="sec"><h3>How to apply</h3><ol class="steps">${s.steps.map(e=>`<li><span>${e}</span></li>`).join("")}</ol></div>
+    <div class="sec"><h3>${esc((s.hd||[])[0]||"Who can apply")}</h3><ul>${s.elig.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
+    <div class="sec"><h3>${esc((s.hd||[])[1]||"Documents to prepare")}</h3><ul>${s.docs.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>
+    <div class="sec"><h3>${esc((s.hd||[])[2]||"How to apply")}</h3><ol class="steps">${s.steps.map(e=>`<li><span>${e}</span></li>`).join("")}</ol></div>
     ${t}
     ${s.note?`<p class="note">${esc(s.note)}</p>`:""}
     <div class="official">${s.links.map(([l,u],i)=>/^https?:/.test(u)?`<a class="btn ${i?"ghost":""}" href="${u}" target="_blank" rel="noopener">${esc(l)} ↗</a>`:`<a class="btn ${i?"ghost":""}" href="${u}">${esc(l)} →</a>`).join("")}
@@ -1701,7 +1786,12 @@ function finder(){
     "asaan-karobar-finance": ()=> need==="business" && pj && age>=25 && age<=55,
     "apni-chhat-apna-ghar": ()=> need==="house" && pj && age>=18,
     "kissan-card": ()=> need==="farm" && pj,
-    "livestock-card": ()=> need==="farm" && pj,
+    "livestock-card": ()=> (need==="farm"||need==="vet") && pj,
+    "vet-free-treatment": ()=> need==="vet" && pj,
+    "vet-doctors": ()=> need==="vet",
+    "vet-vaccination": ()=> need==="vet" || need==="farm",
+    "vet-kp-mobile": ()=> need==="vet" && !pj,
+    "vet-pets": ()=> need==="vet",
     "punjab-health-card": ()=> need==="health" && pj,
     "federal-sehat-card": ()=> need==="health" && !pj,
     "benazir-undergrad": ()=> need==="study" && age>=16,
@@ -1849,6 +1939,7 @@ addEventListener("hashchange",()=>{ const k=location.hash.slice(1); const g=S.fi
 })();
 </script>
 
+<script src="live-feeds.js" defer></script>
 <script src="search.js" data-no-button defer></script>
 <script src="account.js" defer></script>
 </body>

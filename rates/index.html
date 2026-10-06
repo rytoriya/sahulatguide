@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Today's Petrol, Gold, Dollar & KSE-100 Rates in Pakistan | Sahulat Guide</title>
+<meta name="description" content="Daily petrol and diesel prices, gold and silver rates per tola, open-market USD, AED, SAR, AUD, GBP, EUR and CAD rates in Pakistani rupees, and the KSE-100 index with the most active shares.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: rates desk. Dark band with title and status bar; panels for fuel, metals, currency, stocks; converter; source links. */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#17232e; --muted:#5a6872; --line:#dde3e1;
+  --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
+  --amber:#8a5a00; --amber-soft:#fbf0d9; --sun:#e9a83a; --sky:#dcebf3;
+  --band:#0b3a2f; --band-ink:#eaf5f0; --band-muted:#a9c9bd;
+  --f-display:"Sora",system-ui,sans-serif; --f-body:"Noto Sans",system-ui,sans-serif;
+  --f-urdu:"Noto Nastaliq Urdu",serif; --f-mono:"JetBrains Mono",ui-monospace,monospace; --r:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sun:#d99a35; --sky:#1b2d38; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sun:#d99a35; --sky:#1b2d38; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+header.site{position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--f-display);color:var(--ink);text-decoration:none}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--accent)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}header.site .brand > span{display:none}}
+.band{background:var(--band);color:var(--band-ink)}
+.band .wrap{padding-block:30px 26px;display:grid;gap:10px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted);font-weight:600}
+.band h1{font-size:clamp(28px,4.4vw,44px);letter-spacing:-.025em}
+.band h1 .ur{font-family:var(--f-urdu);font-weight:500;font-size:.5em;color:var(--band-muted);margin-left:10px}
+.band p{color:var(--band-muted);max-width:66ch}
+main{padding-block:22px 64px;display:grid;gap:20px}
+.rbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.rbar .st{font-size:13.5px;color:var(--muted)}
+.rbar .st b{color:var(--ink)}
+.rbar .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.switch{display:flex;gap:8px;align-items:center;font-weight:600;font-size:13.5px;cursor:pointer}
+.switch input{appearance:none;width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:background .2s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .2s}
+.switch input:checked{background:var(--accent)}
+.switch input:checked::after{transform:translateX(16px)}
+.btn{font:600 13px var(--f-body);padding:7px 12px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;text-decoration:none}
+.btn:disabled{opacity:.5;cursor:wait}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:19px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.ph{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+.num{text-align:right}
+td .ur{font-family:var(--f-urdu);color:var(--muted);font-size:13px;margin-left:6px}
+.cc{font:600 13px var(--f-mono)}
+a.cc{text-decoration:none}
+.chg{font:600 11.5px var(--f-mono);padding:1px 6px;border-radius:5px;white-space:nowrap}
+.chg.up,.chg.gdn{background:var(--stamp-soft);color:var(--stamp)}
+.chg.dn,.chg.gup{background:var(--accent-soft);color:var(--accent)}
+.chg.eq{background:var(--bg);color:var(--muted)}
+.mk{font:600 10px var(--f-mono);text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border-radius:4px;background:var(--bg);color:var(--muted)}
+.mk.open{background:var(--accent);color:var(--accent-ink)}
+.stale{color:var(--amber);font-weight:600}
+label{font-size:12px;color:var(--muted);display:grid;gap:4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=number]{font:15px var(--f-body);padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;text-transform:none}
+.conv{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;align-items:end}
+.out{font:700 22px var(--f-display);font-variant-numeric:tabular-nums;margin-top:12px}
+.src{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.src a{display:grid;gap:2px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.src a:hover{border-color:var(--accent)}
+.src .k{font:600 11px var(--f-body);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.src .u{font:12px var(--f-mono);color:var(--accent)}
+.warn{padding:12px 14px;border-radius:10px;background:var(--stamp-soft);font-size:14px}
+.warn b{color:var(--stamp)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+
+<section class="band"><div class="wrap">
+  <span class="kicker">Updated through the day</span>
+  <h1>Daily important rates <span class="ur">روزانہ کے اہم نرخ</span></h1>
+  <p>Petrol and diesel, gold and silver, open-market currency, and the KSE-100 index with the most active shares, in Pakistani rupees. Check the source links before a big purchase or exchange.</p>
+</div></section>
+
+<main class="wrap">
+  <div class="rbar">
+    <div class="st" id="rStatus">Loading rates…</div>
+    <div class="ctl"><label class="switch" style="text-transform:none;letter-spacing:0;color:var(--ink)"><input type="checkbox" id="rAuto" checked>Auto-update</label><button class="btn" id="rCheck" type="button">Check now</button></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel"><h2>Petrol &amp; diesel</h2><p class="sub" id="fuelSub"></p><div class="tbl"><table><thead><tr><th>Product</th><th class="num">Rs / litre</th><th class="num">Change</th></tr></thead><tbody id="fuel"></tbody></table></div></div>
+    <div class="panel"><h2>Gold &amp; silver</h2><p class="sub" id="metSub"></p><div class="tbl"><table><thead><tr><th>Metal</th><th class="num">Per tola</th><th class="num">Per 10 g</th><th class="num">Change</th></tr></thead><tbody id="met"></tbody></table></div></div>
+  </div>
+  <div class="grid">
+    <div class="panel"><h2>Currency (open market)</h2><p class="sub" id="fxSub"></p><div class="tbl"><table><thead><tr><th>Currency</th><th class="num">Buying</th><th class="num">Selling</th><th class="num">Change</th></tr></thead><tbody id="fx"></tbody></table></div></div>
+    <div class="panel"><h2>Quick converter</h2><p class="sub">Uses the open-market rates. Buying rate when you sell foreign cash, selling rate when you buy it.</p>
+      <div class="conv"><label>Amount<input type="number" id="cvAmt" value="100" min="0" step="any" inputmode="decimal"></label><label>Currency<select id="cvCur"></select></label><label>Direction<select id="cvDir"><option value="sell">Sell foreign cash</option><option value="buy">Buy foreign cash</option></select></label></div>
+      <div class="out" id="cvOut">—</div></div>
+  </div>
+  <div class="panel">
+    <div class="ph"><h2>KSE-100 index &amp; most active shares <span class="mk" id="mk">Closed</span></h2><a class="btn" href="https://dps.psx.com.pk/" target="_blank" rel="noopener">Live prices on PSX ↗</a></div>
+    <p class="sub" id="pxSub"></p>
+    <div class="tbl"><table><thead><tr><th>Symbol</th><th>Company</th><th class="num">Price (Rs)</th><th class="num">Change</th><th class="num">Volume</th></tr></thead><tbody id="px"></tbody></table></div>
+  </div>
+
+  <div><h2 style="font-size:20px;margin-bottom:10px">Where these rates come from</h2><div class="src" id="src"></div></div>
+  <div class="warn"><b>Indicative rates only.</b> Fuel prices are the government-notified maximum retail prices. Gold and silver are Sarafa association rates; jewellers add making charges. Banks and exchange companies set their own currency rates. Share prices are refreshed hourly in market hours; use the PSX data portal for live prices.</div>
+  <footer><div>Rates are read from <code>data/rates.json</code> and <code>data/stocks.json</code> on this site and checked again every 5 minutes while this page is open.</div><div>Spotted a wrong figure? <a href="../#contact">Tell us</a>.</div></footer>
+</main>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (v,d=0) => (v==null||isNaN(v)) ? "—" : Number(v).toLocaleString("en-PK",{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt = iso => { try{ return new Date(iso).toLocaleString("en-PK",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}); }catch(_){ return ""; } };
+const pill = (c,d) => c==null ? `<span class="chg eq">—</span>` : +c>0 ? `<span class="chg up">▲ ${nf(c,d)}</span>` : +c<0 ? `<span class="chg dn">▼ ${nf(-c,d)}</span>` : `<span class="chg eq">No change</span>`;
+const gp = (c,suf="") => c==null ? "" : +c>0 ? `<span class="chg gup">▲ ${nf(c,2)}${suf}</span>` : +c<0 ? `<span class="chg gdn">▼ ${nf(-c,2)}${suf}</span>` : `<span class="chg eq">0${suf}</span>`;
+const vol = v => v==null ? "—" : v>=1e6 ? nf(v/1e6,2)+"M" : v>=1e3 ? nf(v/1e3,1)+"K" : nf(v);
+const stale = (iso,h) => { const t=Date.parse(iso); return !t || Date.now()-t > h*3600e3; };
+const SRC = [["Fuel","OGRA: notified petroleum prices","https://www.ogra.org.pk"],["Fuel","Dawn Business: price announcements","https://www.dawn.com/business"],
+ ["Gold & silver","Business Recorder: gold prices today","https://www.brecorder.com/gold-prices-in-pakistan-today"],["Gold & silver","UrduPoint: gold rates by city","https://www.urdupoint.com/business/gold-rates.html"],
+ ["Currency","State Bank of Pakistan: interbank rates","https://www.sbp.org.pk/ecodata/rates/m2m/M2M-Current.asp"],["Currency","Forex.pk: open market rates","https://www.forex.pk/open_market_rates.asp"],
+ ["Stocks","PSX Data Portal: live index & prices","https://dps.psx.com.pk/"],["Stocks","Business Recorder: market reports","https://www.brecorder.com/markets"]];
+$("#src").innerHTML = SRC.map(([k,n,u])=>`<a href="${u}" target="_blank" rel="noopener"><span class="k">${k}</span><b>${esc(n)}</b><span class="u">${u.replace(/^https?:\/\/(www\.)?/,"").replace(/\/.*/,"")} ↗</span></a>`).join("");
+let R=null, P=null, auto=true;
+try{ auto = localStorage.getItem("sg-rates-auto")!=="0"; }catch(_){}
+$("#rAuto").checked = auto;
+function draw(){
+  if (R){
+    $("#fuelSub").textContent = `${R.fuel.note} · effective ${R.fuel.date}`;
+    $("#metSub").textContent = `${R.metals.note} · ${R.metals.date} · 1 tola = 11.66 g`;
+    $("#fxSub").textContent = `${R.fx.note} · ${R.fx.date}`;
+    $("#fuel").innerHTML = R.fuel.items.map(x=>`<tr><td>${esc(x.name)}<span class="ur" lang="ur">${esc(x.ur||"")}</span></td><td class="num"><b>${nf(x.price,2)}</b></td><td class="num">${pill(x.chg,2)}</td></tr>`).join("");
+    $("#met").innerHTML = R.metals.items.map(x=>`<tr><td>${esc(x.name)}<span class="ur" lang="ur">${esc(x.ur||"")}</span></td><td class="num"><b>${nf(x.tola)}</b></td><td class="num">${nf(x.g10)}</td><td class="num">${pill(x.chg,0)}</td></tr>`).join("");
+    $("#fx").innerHTML = R.fx.items.map(x=>`<tr><td><span class="cc">${esc(x.code)}</span> ${esc(x.name)}</td><td class="num"><b>${nf(x.buy,2)}</b></td><td class="num"><b>${nf(x.sell,2)}</b></td><td class="num">${pill(x.chg,2)}</td></tr>`).join("");
+    const cur = $("#cvCur").value || "USD";
+    $("#cvCur").innerHTML = R.fx.items.map(x=>`<option value="${esc(x.code)}"${x.code===cur?" selected":""}>${esc(x.code)} · ${esc(x.name)}</option>`).join("");
+    conv();
+  }
+  if (P){
+    const ix = P.index, open = SGFeeds.marketOpen();
+    $("#pxSub").innerHTML = `KSE-100: <b>${nf(ix.value,2)}</b> ${gp(ix.chg)} ${gp(ix.pct,"%")} as of ${esc(fmt(ix.asof||P.updated))} · most active shares as of ${esc(fmt(P.itemsAsof||P.updated))} · ${open?"refreshed every hour in market hours":"market closed"}`;
+    $("#px").innerHTML = P.items.map(x=>`<tr><td><a class="cc" href="https://dps.psx.com.pk/company/${encodeURIComponent(x.sym)}" target="_blank" rel="noopener">${esc(x.sym)}</a></td><td>${esc(x.name)}</td><td class="num"><b>${nf(x.price,2)}</b></td><td class="num">${gp(x.pct,"%")}</td><td class="num">${vol(x.vol)}</td></tr>`).join("");
+    const m = $("#mk"); m.textContent = open?"Market open":"Closed"; m.className = "mk"+(open?" open":"");
+  }
+  status();
+}
+function status(){
+  const ck = SGFeeds.state.checked;
+  $("#rStatus").innerHTML = R ? `Rates updated <b>${esc(fmt(R.updated))}</b>${stale(R.updated,36)?` · <span class="stale">may be outdated</span>`:""} · ${auto?"auto-update on":"auto-update off"}${ck?`, last checked ${ck.toLocaleTimeString("en-PK",{hour:"numeric",minute:"2-digit"})}`:""}`
+    : `Couldn't load the rates file. Open this page from the website (not as a saved file), or try again.`;
+}
+function conv(){
+  const x = R && R.fx.items.find(i=>i.code===$("#cvCur").value), a = parseFloat($("#cvAmt").value);
+  if (!x || !(a>=0)){ $("#cvOut").textContent="—"; return; }
+  $("#cvOut").textContent = $("#cvDir").value==="sell" ? `${nf(a,Number.isInteger(a)?0:2)} ${x.code} ≈ Rs ${nf(a*x.buy)}` : `${nf(a,Number.isInteger(a)?0:2)} ${x.code} costs ≈ Rs ${nf(a*x.sell)}`;
+}
+["#cvAmt","#cvCur","#cvDir"].forEach(s=>$(s).addEventListener("input",conv));
+document.addEventListener("sg-feeds", e => { if (!auto && R) { status(); return; } R = e.detail.rates || R; P = e.detail.stocks || P; draw(); });
+$("#rAuto").addEventListener("change", e => { auto = e.target.checked; try{ localStorage.setItem("sg-rates-auto", auto?"1":"0"); }catch(_){} status(); });
+$("#rCheck").addEventListener("click", async () => { const b=$("#rCheck"); b.disabled=true; b.textContent="Checking…"; const was=auto; auto=true; await SGFeeds.check(); auto=was; b.disabled=false; b.textContent="Check now"; });
+setInterval(()=>{ if (P) draw(); }, 60e3);
+})();
+</script>
+<script src="../live-feeds.js"></script>
+<script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Find a Vet: Government Veterinary Hospitals, Pet Clinics & Animal First Aid | Sahulat Guide</title>
+<meta name="description" content="Nearest government veterinary hospital in every Punjab tehsil, Islamabad, Karachi and Peshawar; university vet hospitals; private pet clinics by city; free livestock helpline 08000-9211; and an animal first-aid helper for remote areas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: animal-care desk. Dark band; nearest-centre finder beside an emergency panel; private clinics by city; government list; first-aid helper. */
+:root{
+  --bg:#f5f7f6; --surface:#ffffff; --ink:#17232e; --muted:#5a6872; --line:#dde3e1;
+  --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
+  --amber:#8a5a00; --amber-soft:#fbf0d9; --sky:#dcebf3; --earth:#c98d5a;
+  --band:#0b3a2f; --band-ink:#eaf5f0; --band-muted:#a9c9bd;
+  --f-display:"Sora",system-ui,sans-serif; --f-body:"Noto Sans",system-ui,sans-serif;
+  --f-urdu:"Noto Nastaliq Urdu",serif; --f-mono:"JetBrains Mono",ui-monospace,monospace; --r:12px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sky:#1b2d38; --earth:#a8754a; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10171c; --surface:#172129; --ink:#e6ecea; --muted:#9aa8ad; --line:#26343c;
+  --accent:#4fc39d; --accent-ink:#0b1a15; --accent-soft:#163a31; --stamp:#f08b72; --stamp-soft:#3d2119;
+  --amber:#f0c060; --amber-soft:#3a2d12; --sky:#1b2d38; --earth:#a8754a; --band:#0b2a22; --band-ink:#e6f2ec; --band-muted:#8fb3a6; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:20px}
+@media (max-width:480px){.wrap{padding-inline:16px}}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+header.site{position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--surface) 90%,transparent);backdrop-filter:saturate(1.6) blur(12px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+header.site .brand{display:flex;align-items:center;gap:10px;font:700 18px var(--f-display);color:var(--ink);text-decoration:none}
+header.site .brand svg{width:34px;height:34px}
+header.site .brand > span > span{color:var(--accent)}
+header.site .back{white-space:nowrap;font-weight:600;font-size:14px;text-decoration:none;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+header.site .hdr-r{display:flex;align-items:center;gap:8px}
+@media (max-width:480px){header.site .back{padding:8px 10px;font-size:13px}header.site .brand > span{display:none}}
+.band{background:var(--band);color:var(--band-ink)}
+.band .wrap{padding-block:30px 22px;display:grid;gap:10px}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--band-muted);font-weight:600}
+.band h1{font-size:clamp(28px,4.4vw,44px);letter-spacing:-.025em}
+.band h1 .ur{font-family:var(--f-urdu);font-weight:500;font-size:.5em;color:var(--band-muted);margin-left:10px}
+.band p{color:var(--band-muted);max-width:68ch}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.jump a{font:600 13px var(--f-body);color:var(--band-ink);text-decoration:none;padding:6px 12px;border:1px solid color-mix(in srgb,var(--band-ink) 30%,transparent);border-radius:999px}
+.jump a:hover{background:color-mix(in srgb,var(--band-ink) 12%,transparent)}
+main{padding-block:22px 64px}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:34px 0 12px;flex-wrap:wrap}
+.h2row h2{font-size:21px}
+.h2row p{color:var(--muted);font-size:14px}
+.top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.top{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:19px;margin-bottom:4px}
+.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.near{border-left:5px solid var(--accent)}
+.btn{font:600 14px var(--f-body);padding:10px 16px;border-radius:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+form.find{display:flex;gap:8px;flex-wrap:wrap}
+form.find input{flex:1 1 240px;min-width:0;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{font:600 13px var(--f-body);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip span{font:500 11px var(--f-mono);color:var(--muted);margin-left:2px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip[aria-pressed="true"] span{color:inherit;opacity:.8}
+.msg{margin:12px 0 0;color:var(--muted);font-size:14px}
+.msg.err{color:var(--stamp)}
+.res{list-style:none;margin:12px 0 0;padding:0;border-top:1px solid var(--line)}
+.res:empty{display:none}
+.res li{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.km{font:600 16px var(--f-mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.km small{display:block;font:400 11px var(--f-body);color:var(--muted)}
+.res b{display:block;font-family:var(--f-display);font-size:14.5px}
+.res .d{font-size:13px;color:var(--muted)}
+.res a{font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap}
+@media (max-width:520px){.res li{grid-template-columns:60px minmax(0,1fr)}.res li a{grid-column:2}}
+.gps{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.help{display:grid;gap:8px}
+.help .n{font:600 15px var(--f-mono);color:var(--stamp);text-decoration:none}
+.note{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:12px;padding:10px 14px;border-radius:12px;font-size:14px}
+.note.amber{background:var(--amber-soft)} .note.amber b{color:var(--amber)}
+.note.green{background:var(--accent-soft)} .note.green b{color:var(--accent)}
+.note a{font-weight:600;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card:hover{border-color:var(--accent)}
+.card h3{font-size:15.5px}
+.card .w{font-size:13px;color:var(--muted)}
+.card p{font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font:600 11px var(--f-mono);color:var(--c,var(--muted));border:1px solid var(--c,var(--muted));border-radius:5px;padding:1px 6px;white-space:nowrap}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:14px;margin-top:4px}
+.row a{font-weight:600;text-decoration:none}
+.dist{font:600 13px var(--f-mono);color:var(--accent)}
+input.q{width:100%;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);margin-bottom:12px}
+.more{display:flex;margin:14px auto 0}
+label{font-size:12px;color:var(--muted);display:grid;gap:4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=number]{font:15px var(--f-body);padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;text-transform:none}
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px}
+@media (max-width:560px){.form{grid-template-columns:minmax(0,1fr)}}
+.aid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin-top:14px}
+.aidcol{border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.aidcol h3{font-size:15px;margin-bottom:8px}
+.aidcol ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:14px}
+.aidcol.no{background:var(--stamp-soft);border-color:transparent} .aidcol.no h3{color:var(--stamp)}
+.aidcol.call{background:var(--amber-soft);border-color:transparent} .aidcol.call h3{color:var(--amber)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:10px}
+.steps li::before{content:counter(s);font:600 12px var(--f-mono);width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.wt{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;align-items:end;margin-top:8px}
+.wt .out{font:600 20px var(--f-display);padding:6px 0}
+.sec{border-top:1px solid var(--line);padding-top:16px;margin-top:20px}
+.sec h3{font-size:16px;margin-bottom:4px}
+.warn{margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--stamp-soft);font-size:14px}
+.warn b{color:var(--stamp)}
+.warn.plain{background:var(--surface);border:1px solid var(--line)} .warn.plain b{color:var(--ink)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px;margin-top:30px;display:grid;gap:8px}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="brand" href="../"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0d6b52"/><path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M24 36l6 6 11-12" fill="none" stroke="#e9a83a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="47" cy="15" r="4" fill="#e9a83a"/></svg><span>Sahulat <span>Guide</span></span></a><span class="hdr-r"><span data-sg-search="compact"></span><span data-sg-account="compact"></span><a class="back" href="../">&larr; All services</a></span></div></header>
+
+<section class="band"><div class="wrap">
+  <span class="kicker">Farmers · veterinary care</span>
+  <h1>Find a vet <span class="ur">ویٹرنری ہسپتال تلاش کریں</span></h1>
+  <p>Government veterinary hospitals in every Punjab tehsil, Islamabad, Karachi and Peshawar, university vet hospitals, and private pet clinics by city. Treatment at government vet hospitals is free.</p>
+  <nav class="jump" aria-label="On this page"><a href="#nearest">Nearest vet</a><a href="#private">Private clinics</a><a href="#government">Government &amp; university</a><a href="#first-aid">Animal first aid</a><a href="../#farmers">Vet care guides</a></nav>
+</div></section>
+
+<main class="wrap">
+  <div class="top" id="nearest">
+    <div class="panel near">
+      <h2>Nearest vet centres to you</h2>
+      <p class="sub">Choose your town, or paste coordinates from Google Maps.</p>
+      <form class="find" id="vForm" autocomplete="off">
+        <input type="text" id="vWhere" list="vPlaces" placeholder="Town, e.g. Okara, or 31.52, 74.35" aria-label="Your town or coordinates">
+        <datalist id="vPlaces"></datalist>
+        <button class="btn" type="submit">Find nearest</button>
+      </form>
+      <div class="chips" role="group" aria-label="Type of vet centre">
+        <button type="button" class="chip" data-vk="all" aria-pressed="true">Any</button>
+        <button type="button" class="chip" data-vk="govt" aria-pressed="false">Government (free)</button>
+        <button type="button" class="chip" data-vk="private" aria-pressed="false">Private clinics</button>
+        <button type="button" class="chip" data-vk="pets" aria-pressed="false">For pets</button>
+      </div>
+      <p class="msg" id="vMsg">Government vet hospitals treat animals free; you pay only a Rs 2 slip in Punjab.</p>
+      <ol class="res" id="vRes"></ol>
+      <div class="gps"><span>On your phone?</span><a class="btn ghost" href="https://www.google.com/maps/search/veterinary+hospital+near+me" target="_blank" rel="noopener">Open vets near me in Google Maps ↗</a></div>
+    </div>
+    <div class="panel">
+      <h2>Animal emergency?</h2>
+      <p class="sub">Bloat, difficult birth, poisoning, heavy bleeding or an animal that cannot stand: call now.</p>
+      <div class="help">
+        <div><a class="n" href="tel:080009211">08000-9211</a> Punjab livestock helpline, free, 24/7</div>
+        <div><a class="n" href="tel:0519108384">051-9108384</a> Islamabad (ICT) Livestock</div>
+        <div><b>Khyber Pakhtunkhwa:</b> 145 free mobile vet vans (Ehsaas-e-Bezaban Sehat Gaari); ask your tehsil vet hospital</div>
+        <div><b>Karachi:</b> Richmond Crawford Vet Hospital, M.A. Jinnah Road (free)</div>
+      </div>
+      <div class="note amber"><b>Remote area?</b><span>Use the first-aid helper while you wait for the vet.</span><a href="#first-aid">First-aid helper →</a></div>
+      <div class="note green"><b>Guides</b><a href="../#vet-free-treatment">Free treatment</a><a href="../#vet-vaccination">Vaccination calendar</a><a href="../#vet-doctors">Reach a vet</a><a href="../#vet-pets">Pet care</a></div>
+    </div>
+  </div>
+
+  <div class="h2row" id="private"><h2>Private vet clinics by city</h2><p>Mostly for pets · paid · confirm timings by phone</p></div>
+  <div class="chips" id="vCity" role="group" aria-label="City" style="margin:0 0 12px"></div>
+  <div class="grid" id="vPvt"></div>
+
+  <div class="h2row" id="government"><h2>Government &amp; university vet hospitals</h2><p id="vCount"></p></div>
+  <input class="q" type="search" id="vQ" placeholder="Search a town, district or university" aria-label="Search vet hospitals">
+  <div class="grid" id="vGrid"></div>
+  <button type="button" class="btn ghost more" id="vMore" hidden>Show more</button>
+  <div class="warn plain"><b>About this list:</b> Punjab has a Civil Veterinary Hospital at tehsil level and dispensaries in most union councils (3,500+ facilities including mobile units). Tehsil hospitals are shown at the town centre, so the pin is approximate. Private clinics come from public directories (October 2026; Peshawar from a 2018 list) and are placed at their city; this is not an endorsement. Call before visiting.</div>
+
+  <div class="h2row" id="first-aid"><h2>Animal first aid at home or in a remote area</h2><p>First aid only; it does not replace a vet</p></div>
+  <div class="panel">
+    <div class="form"><label>Animal<select id="aidAnimal"></select></label><label>Problem<select id="aidProb"></select></label></div>
+    <div class="aid" id="aidOut"></div>
+    <div class="sec">
+      <h3>Weight estimate for cattle, buffalo, goats and sheep</h3>
+      <p class="sub" style="margin:0">Medicine and dewormer labels give the dose per kg. Measure round the chest just behind the front legs (girth), and from the point of the shoulder to the pin bone (length).</p>
+      <div class="wt">
+        <label>Chest girth<input type="number" id="wtG" min="0" step="0.5" value="70"></label>
+        <label>Body length<input type="number" id="wtL" min="0" step="0.5" value="60"></label>
+        <label>Units<select id="wtU"><option value="in">inches</option><option value="cm">cm</option></select></label>
+        <div><div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em">Estimated weight</div><div class="out" id="wtOut">—</div></div>
+      </div>
+    </div>
+    <div class="warn"><b>Use medicines safely:</b> give only medicines a vet has advised, at the dose on the label for the animal's weight. Respect the withdrawal time before selling milk or meat. Punjab helpline 08000-9211 gives free advice 24/7.</div>
+  </div>
+
+  <footer><div>Checked <span id="checked"></span>. Helplines and schemes change; confirm with your district livestock office.</div><div>Know a vet hospital or clinic that's missing? <a href="../#contact">Tell us</a>.</div></footer>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const $ = s => document.querySelector(s), H = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (v,d=0) => (v==null||isNaN(v)) ? "—" : Number(v).toLocaleString("en-PK",{minimumFractionDigits:d,maximumFractionDigits:d});
+const D = window.VET; H("checked").textContent = D.checked;
+const PL = D.places.concat(D.extra);
+const CITY = Object.fromEntries(PL.map(p=>[p.name,p]));
+const pLabel = p => p.name===p.district ? p.name : `${p.name} (${p.district})`;
+const km = (a,b) => { const R=6371, r=x=>x*Math.PI/180, dLa=r(b.lat-a.lat), dLo=r(b.lng-a.lng);
+  const h=Math.sin(dLa/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.sqrt(h)); };
+const fk = d => d<1 ? "<1 km" : d<10 ? d.toFixed(1)+" km" : Math.round(d)+" km";
+const VT = {CVH:{c:"--accent",l:"Civil Veterinary Hospital"},UNI:{c:"--stamp",l:"University vet hospital"},GOV:{c:"--accent",l:"Govt vet hospital"},PVT:{c:"--muted",l:"Private clinic"}};
+const V = [];
+D.places.forEach(p => V.push({name:`Civil Veterinary Hospital, ${p.name}`, type:"CVH", town:p.name, district:p.district, prov:"Punjab", lat:p.lat, lng:p.lng, geo:"town", note:"Tehsil-level government vet hospital. Free treatment, Rs 2 slip."}));
+D.gov.forEach(([name,type,town,district,prov,lat,lng,note]) => V.push({name,type,town,district,prov,lat,lng,geo:"approx",note}));
+const PROVOF = {Karachi:"Sindh",Peshawar:"Khyber Pakhtunkhwa",Islamabad:"Islamabad"};
+Object.entries(D.pvt).forEach(([city,list]) => list.forEach(([name,area]) => { const c=CITY[city]; V.push({name,type:"PVT",town:city,district:city,prov:PROVOF[city]||"Punjab",lat:c.lat,lng:c.lng,geo:"city",area}); }));
+const st = {origin:null, kind:"all", city:"Lahore", q:"", shown:24};
+const KIND = {all:()=>true, govt:f=>f.type!=="PVT", private:f=>f.type==="PVT", pets:f=>f.type==="PVT"||f.type==="UNI"||f.name.startsWith("Richmond")};
+const q = f => encodeURIComponent(`${f.name}, ${f.area?f.area+", ":""}${f.town}, Pakistan`);
+const maps = f => "https://www.google.com/maps/search/?api=1&query=" + q(f);
+const dir = f => `https://www.google.com/maps/dir/?api=1&origin=${st.origin.lat},${st.origin.lng}&destination=` + q(f);
+const tag = t => `<span class="tag" style="--c:var(${VT[t].c})">${VT[t].l}</span>`;
+const approx = f => f.geo==="city" ? "city" : "approx.";
+H("vPlaces").innerHTML = PL.map(p => `<option value="${esc(pLabel(p))}"></option>`).join("");
+
+function parseWhere(raw){
+  const s = raw.trim(), m = s.match(/(-?\d{1,2}\.\d+)\s*[,\s]\s*(-?\d{2,3}\.\d+)/);
+  if (m){ const lat=+m[1], lng=+m[2]; if (lat>23 && lat<37.5 && lng>60 && lng<78) return {lat,lng,label:`${lat.toFixed(4)}, ${lng.toFixed(4)}`}; return {error:"Those coordinates are outside Pakistan."}; }
+  const ql = s.toLowerCase().replace(/\s*\(.*\)\s*$/,"");
+  if (!ql) return {error:"Type your town or paste coordinates first."};
+  const p = PL.find(p=>pLabel(p).toLowerCase()===s.toLowerCase()) || PL.find(p=>p.name.toLowerCase()===ql) || PL.find(p=>p.name.toLowerCase().startsWith(ql)) || PL.find(p=>p.district.toLowerCase()===ql);
+  return p ? {lat:p.lat,lng:p.lng,label:pLabel(p)} : {error:`"${s}" isn't in the town list yet. Pick the nearest town from the suggestions, or paste coordinates from Google Maps.`};
+}
+function near(){
+  if (!st.origin){ H("vRes").innerHTML=""; return; }
+  const rows = V.filter(KIND[st.kind]).map(f=>({f,d:km(st.origin,f)})).sort((a,b)=>a.d-b.d).slice(0,8);
+  const m = H("vMsg"); m.className="msg"; m.textContent = `Closest to ${st.origin.label}, straight-line. Private clinics are placed at their city centre, so their distance is rough.`;
+  H("vRes").innerHTML = rows.map(({f,d}) => `<li><span class="km">${fk(d)}<small>${approx(f)}</small></span><span><b>${esc(f.name)}</b><span class="d">${VT[f.type].l} · ${esc(f.area||f.town)}${f.district!==f.town?", "+esc(f.district):""}</span></span><a href="${dir(f)}" target="_blank" rel="noopener">Directions ↗</a></li>`).join("");
+}
+function locate(raw){
+  const r = parseWhere(raw); if (r.error){ const m=H("vMsg"); m.textContent=r.error; m.className="msg err"; return; }
+  st.origin = r; H("vWhere").value = r.label; try{ localStorage.setItem("sg-vet-origin", JSON.stringify(r)); }catch(_){}
+  const c = Object.keys(D.pvt).map(c=>({c,d:km(r,CITY[c])})).sort((a,b)=>a.d-b.d)[0]; if (c && c.d<60) st.city=c.c;
+  near(); cities(); list();
+}
+H("vForm").addEventListener("submit", e => { e.preventDefault(); locate(H("vWhere").value); });
+H("vWhere").addEventListener("change", () => { const v=H("vWhere").value; if (PL.some(p=>pLabel(p)===v)) locate(v); });
+function cities(){
+  H("vCity").innerHTML = Object.keys(D.pvt).map(c => `<button type="button" class="chip" data-vcity="${esc(c)}" aria-pressed="${c===st.city}">${esc(c)} <span>${D.pvt[c].length}</span></button>`).join("");
+  H("vPvt").innerHTML = V.filter(f=>f.type==="PVT" && f.town===st.city).map(f => `<article class="card"><div class="tags">${tag("PVT")}</div><h3>${esc(f.name)}</h3><div class="w">${f.area?esc(f.area)+" · ":""}${esc(f.town)}</div><div class="row"><a href="${maps(f)}" target="_blank" rel="noopener">Find on Google Maps ↗</a></div></article>`).join("");
+}
+const ORD = {UNI:0,GOV:1,CVH:2};
+function list(){
+  const rows = V.filter(f => f.type!=="PVT" && (!st.q || st.q.split(/\s+/).every(w=>[f.name,f.town,f.district,f.prov,f.note||""].join(" ").toLowerCase().includes(w))));
+  if (st.origin) rows.sort((a,b)=>km(st.origin,a)-km(st.origin,b)); else rows.sort((a,b)=>(ORD[a.type]-ORD[b.type])||a.district.localeCompare(b.district));
+  H("vCount").textContent = `${rows.length} hospitals` + (st.origin?`, nearest to ${st.origin.label} first`:"");
+  H("vGrid").innerHTML = rows.length ? rows.slice(0,st.shown).map(f => `<article class="card"><div class="tags">${tag(f.type)}<span class="tag">${esc(f.prov)}</span></div><h3>${esc(f.name)}</h3><div class="w">${esc(f.town!==f.district?f.town+", ":"")}${esc(f.district)} district</div>${f.note?`<p>${esc(f.note)}</p>`:""}
+    <div class="row">${st.origin?`<span class="dist">${fk(km(st.origin,f))} ${approx(f)}</span><a href="${dir(f)}" target="_blank" rel="noopener">Directions ↗</a>`:`<a href="${maps(f)}" target="_blank" rel="noopener">Open in Google Maps ↗</a>`}</div></article>`).join("") : `<div class="card">No vet hospital matches. Try a district name.</div>`;
+  H("vMore").hidden = rows.length <= st.shown; H("vMore").textContent = `Show more (${Math.max(0,rows.length-st.shown)} left)`;
+}
+H("vQ").addEventListener("input", e => { st.q=e.target.value.trim().toLowerCase(); st.shown=24; list(); });
+H("vMore").addEventListener("click", () => { st.shown+=24; list(); });
+document.addEventListener("click", e => {
+  const k = e.target.closest("[data-vk]"); if (k){ st.kind=k.dataset.vk; document.querySelectorAll("[data-vk]").forEach(x=>x.setAttribute("aria-pressed",x===k)); near(); return; }
+  const c = e.target.closest("[data-vcity]"); if (c){ st.city=c.dataset.vcity; cities(); }
+});
+try{ const s = JSON.parse(localStorage.getItem("sg-vet-origin")||"null"); if (s && typeof s.lat==="number"){ st.origin=s; H("vWhere").value=s.label; } }catch(_){}
+near(); cities(); list();
+
+/* ---- Animal first aid ---- */
+const AID_ANIMALS = [["large","Cow / buffalo"],["small","Goat / sheep"],["poultry","Chickens / poultry"],["pet","Dog / cat"],["equine","Donkey / horse / mule"]];
+const AID = {
+ diarrhoea:{l:"Loose motions / diarrhoea", for:["large","small","pet","equine","poultry"],
+  do:["Keep the animal in shade with clean drinking water always available.","Give home-made oral rehydration: 1 litre clean boiled and cooled water + 1 level teaspoon salt + 1 level teaspoon baking soda + 2 tablespoons sugar or glucose. Offer it to drink, small amounts often; for calves and kids, feed it by bottle between milk feeds.","Keep calves and kids on milk, but in smaller, more frequent feeds.","Separate the animal and clean the shed: diarrhoea spreads.","Note colour, blood or mucus and how many times a day."],
+  dont:["Don't stop water.","Don't give antibiotics or any injection without a vet.","Don't drench a weak animal that cannot swallow: liquid can go into the lungs."],
+  vet:["Blood in dung, or diarrhoea in young animals for more than a day","Sunken eyes, cold ears, or the animal cannot stand","Several animals sick at the same time"]},
+ bloat:{l:"Bloat (swollen left belly, afara)", for:["large","small"],
+  do:["Stop feeding at once, especially green lucerne/berseem or wet fodder.","Keep the animal standing and walk it slowly; raise the front legs on a slope.","Drench vegetable cooking oil slowly: about 250–500 ml for a cow or buffalo, 50–100 ml for a goat or sheep. Hold the head only slightly up.","Put a smooth stick (like a neem twig) across the mouth like a bit to make it chew and burp.","Call a vet while you do this."],
+  dont:["Don't puncture the belly yourself unless a vet tells you to: it can kill the animal.","Don't drench while the head is raised high or the animal is lying flat.","Don't feed for 12 hours after recovery; then start with dry fodder."],
+  vet:["Belly is very tight and the animal is struggling to breathe","The animal is lying down and cannot get up","No improvement within 30 minutes"]},
+ wound:{l:"Wound / cut / injury", for:["large","small","pet","equine","poultry"],
+  do:["Stop bleeding: press a clean cloth firmly on the wound for 5–10 minutes.","Wash the wound with plenty of clean water, or boiled and cooled salt water (1 teaspoon salt in 1 litre).","Apply a diluted antiseptic such as povidone-iodine around and on the wound.","Keep flies away: keep the animal in a clean, covered place; apply fly repellent around (not inside) the wound.","Check daily for pus, smell or maggots."],
+  dont:["Don't put mud, dung, kerosene, petrol or chillies on a wound.","Don't tie a tight cloth around a limb for long.","Don't stitch a dirty or old wound yourself."],
+  vet:["Deep or gaping wound, spurting blood, or exposed bone","Maggots, bad smell or swelling","Wound near the eye, udder, joint or belly"]},
+ fever:{l:"Fever / not eating / dull", for:["large","small","pet","equine"],
+  do:["Check temperature with a thermometer in the rectum: normal is about 38–39.5 °C for cattle, buffalo, goats and sheep; above 40 °C is fever.","Move to shade with fresh water and good air flow; sponge the body with cool water in hot weather.","Offer fresh green fodder or soft feed.","Look for other signs: cough, runny nose, swollen glands, red urine, mouth or feet blisters.","Separate the animal from the herd until a vet sees it."],
+  dont:["Don't give human fever tablets (especially paracetamol to cats, which is poisonous).","Don't mix several medicines.","Don't sell milk from a sick animal on medicine."],
+  vet:["Fever above 40.5 °C or lasting more than a day","Mouth or foot blisters (could be FMD), swollen throat (could be HS)","Red/brown urine, difficult breathing, or the animal is down"]},
+ ticks:{l:"Ticks, lice or mites", for:["large","small","pet","equine","poultry"],
+  do:["Pick off large ticks with tweezers, pulling straight out close to the skin; burn or drown them.","Clean the shed walls and cracks; ticks hide there.","Use only a tick spray or pour-on meant for that animal, at the dose on the label for its body weight.","Treat all animals in the shed at the same time and repeat as the label says."],
+  dont:["Don't use crop pesticides or kerosene on animals.","Don't spray on dogs and cats a product made for livestock.","Don't milk or slaughter before the withdrawal time on the label."],
+  vet:["Pale gums, weakness, red urine or high fever (tick fever)","Hair loss and thick skin spreading over the body"]},
+ heat:{l:"Heat stroke (panting, drooling)", for:["large","small","pet","equine","poultry"],
+  do:["Move to shade immediately.","Pour cool (not ice-cold) water over the head, neck and legs; use wet sacks and a fan if possible.","Offer cool drinking water with a pinch of salt, small amounts often.","Feed in the cool morning and evening only."],
+  dont:["Don't leave animals tied in the sun or in a closed vehicle.","Don't use ice water on the whole body.","Don't work donkeys and horses in the afternoon heat."],
+  vet:["The animal collapses, shakes or has fits","Breathing does not settle within 30 minutes in shade"]},
+ calving:{l:"Difficult birth (calving / kidding)", for:["large","small"],
+  do:["Keep the animal in a clean, quiet place with dry bedding.","Wash your hands and arms with soap; cut nails.","If the water bag burst and nothing comes for 30 minutes (cow/buffalo) or 20 minutes (goat), call a vet.","If two front feet and the nose are coming normally, you may pull gently and only when the animal pushes.","After birth, clear the newborn's nose and mouth and let the mother lick it; give colostrum within 1 hour."],
+  dont:["Don't pull hard or with ropes on a vehicle or tractor.","Don't pull if only a head, one leg, or the tail is showing: the calf is in the wrong position.","Don't give injections to start labour without a vet."],
+  vet:["No progress after 30 minutes of straining","Wrong position, bleeding, or the uterus comes out","Afterbirth not out within 12 hours"]},
+ milkfever:{l:"Weak / down after calving (milk fever)", for:["large"],
+  do:["This is an emergency: call a vet now. It usually needs calcium given into the vein by a vet.","Keep the animal sitting on its chest, propped with straw bales; turn it every few hours.","Keep in shade and away from water bodies.","Milk only a little until the vet comes."],
+  dont:["Don't drench a cow that is lying down or cannot swallow.","Don't inject calcium under the skin or into the vein yourself."],
+  vet:["Always: every case needs a vet"]},
+ poison:{l:"Poisoning (ate pesticide, fertiliser, toxic plant)", for:["large","small","pet","equine","poultry"],
+  do:["Move the animals away from the source and remove the leftover feed or plant.","Keep the packet or a sample of the plant to show the vet.","Call a vet immediately and tell them what was eaten and how much.","Keep the animal quiet in shade."],
+  dont:["Don't try to make cows, buffaloes, goats or sheep vomit.","Don't give milk, oil or ghee as an antidote unless a vet says so.","Don't give anything by mouth to an animal having fits."],
+  vet:["Always: every poisoning needs a vet as fast as possible"]},
+ bite:{l:"Dog bite / suspected rabies", for:["large","small","pet","equine"],
+  do:["If a person was bitten: wash the wound with soap and running water for 15 minutes and go to the nearest hospital the same day for the rabies vaccine.","Tie or pen the biting animal safely, without touching its saliva, and watch it for 10 days.","Wash the bitten animal's wound with soap and water and call a vet about vaccinating it."],
+  dont:["Don't put chillies, mud or oil on any bite wound.","Don't kill a biting dog before a vet sees it, if it can be safely kept.","Don't delay the human vaccine."],
+  vet:["The animal becomes aggressive, cannot swallow, drools or is paralysed: keep everyone away"]},
+ newcastle:{l:"Birds sick or dying suddenly", for:["poultry"],
+  do:["Separate sick birds right away.","Give clean water with oral rehydration (as above) to the flock.","Burn or deeply bury dead birds away from water; wash hands well.","Call the vet: Newcastle disease (Rani Khet) and bird flu spread fast.","Vaccinate the healthy flock on the vet's schedule."],
+  dont:["Don't sell or eat sick or dead birds.","Don't throw dead birds in canals or fields.","Don't let visitors or other birds into the shed."],
+  vet:["Several birds die within a day","Twisted necks, green diarrhoea, breathing with an open beak"]}
+};
+function aid(){
+  const a = H("aidAnimal").value, cur = H("aidProb").value;
+  const keys = Object.keys(AID).filter(k=>AID[k].for.includes(a));
+  H("aidProb").innerHTML = keys.map(k=>`<option value="${k}"${k===cur?" selected":""}>${esc(AID[k].l)}</option>`).join("");
+  const p = AID[H("aidProb").value];
+  H("aidOut").innerHTML = `<div class="aidcol"><h3>Do now</h3><ol class="steps">${p.do.map(x=>`<li><span>${esc(x)}</span></li>`).join("")}</ol></div>
+    <div class="aidcol no"><h3>Don't</h3><ul>${p.dont.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    <div class="aidcol call"><h3>Call a vet straight away if</h3><ul>${p.vet.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="btn" href="tel:080009211">Call Punjab 08000-9211</a><a class="btn ghost" href="#nearest">Find nearest vet</a></div></div>`;
+}
+function wt(){
+  const g=parseFloat(H("wtG").value), l=parseFloat(H("wtL").value), u=H("wtU").value;
+  if (!(g>0&&l>0)){ H("wtOut").textContent="—"; return; }
+  const gi=u==="cm"?g/2.54:g, li=u==="cm"?l/2.54:l;
+  H("wtOut").innerHTML = `≈ <b>${nf(gi*gi*li/300*0.4536)} kg</b> <span style="color:var(--muted);font-size:13px">(±10%)</span>`;
+}
+H("aidAnimal").innerHTML = AID_ANIMALS.map(([k,l])=>`<option value="${k}">${l}</option>`).join("");
+["aidAnimal","aidProb"].forEach(id=>H(id).addEventListener("change",aid));
+["wtG","wtL","wtU"].forEach(id=>H(id).addEventListener("input",wt));
+aid(); wt();
+})();
+</script>
+<script src="../search.js" defer></script>
+<script src="../account.js" defer></script>
+</body>
+</html>

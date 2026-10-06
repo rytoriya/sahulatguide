@@ -16,6 +16,8 @@ Static website explaining Pakistani government services, schemes, loans, travel 
 | `emergency/` | City-wise police stations with official phone numbers (Islamabad, KP cities, Nankana; district police and Rescue 1122 offices for Punjab), plus police, Rescue 1122 and fire stations on a Leaflet map loaded live from OpenStreetMap (Overpass API) with distance from the visitor. City list and numbers are inline in the page. |
 | `fees/` | Pay school, college, university, board and test fees online: 1Bill/Kuickpay how-to, exact codes for major institutions, and 500+ institutions from 1Link's 1Bill biller list (data inline in the page) |
 | `account/` | My details: sign up / log in, save name, mobile, CNIC, address once; copy buttons; autofills site forms |
+| `rates/` | Daily rates: petrol and diesel, gold and silver, open-market currency, KSE-100 and most active shares, converter and source links. Reads `data/rates.json` and `data/stocks.json`; re-checks every 5 minutes. |
+| `vets/` | Find a vet: nearest government vet hospital (every Punjab tehsil, ICT, Karachi, Peshawar, university hospitals), private clinics by city, emergency helplines, animal first-aid helper and weight estimate. Data in `vets/data.js`. Vet guides live in the Farmers category of `index.html`. |
 | `admin-units/` | Directory of every division, district and tehsil in Pakistan, council tiers and official election-office numbers (data is inline in the page script, checked 6 Oct 2026) |
 
 ## Editing the train and parcel guides
@@ -37,6 +39,17 @@ Every page has a Search button (shortcuts: `/` or `Ctrl/Cmd+K`) that searches al
 ```sh
 node scripts/build_search_index.js
 ```
+
+## Live rates and news
+
+`live-feeds.js` (loaded on the homepage and `rates/`) reads four JSON files in `data/` and re-checks them every 5 minutes:
+
+- `data/rates.json` — fuel, gold/silver, open-market currency (home rate boxes, Daily rates page)
+- `data/stocks.json` — KSE-100 and most active shares (home KSE-100 box, Daily rates page)
+- `data/headlines.json` — Headlines ticker
+- `data/updates.json` — Updates ticker
+
+Update these files to change the figures; no rebuild is needed. Formats are in `CHANGES.md`.
 
 ## Accounts and saved details
 

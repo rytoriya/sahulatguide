@@ -1,0 +1,50 @@
+{
+ "index": {
+  "asof": "2026-10-06T15:30:00+05:00",
+  "chg": 2606,
+  "high": null,
+  "low": null,
+  "name": "KSE-100",
+  "pct": 1.57,
+  "value": 168473
+ },
+ "items": [
+  {
+   "name": "Cnergyico PK",
+   "pct": 5.9,
+   "price": 12.93,
+   "sym": "CNERGY",
+   "vol": 48574693
+  },
+  {
+   "name": "Pakistan Refinery",
+   "pct": 9.14,
+   "price": 95.41,
+   "sym": "PRL",
+   "vol": 25658833
+  },
+  {
+   "name": "K-Electric",
+   "pct": -0.36,
+   "price": 5.6,
+   "sym": "KEL",
+   "vol": 23322556
+  },
+  {
+   "name": "Pakistan International Bulk Terminal",
+   "pct": 2.73,
+   "price": 13.55,
+   "sym": "PIBTL",
+   "vol": 20504310
+  },
+  {
+   "name": "WorldCall Telecom",
+   "pct": 1.01,
+   "price": 1,
+   "sym": "WTL",
+   "vol": 18518679
+  }
+ ],
+ "itemsAsof": "2026-10-06T15:30:00+05:00",
+ "updated": "2026-10-06T15:55:00+05:00"
+}

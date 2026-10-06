@@ -68,6 +68,8 @@ const TOOLS = [
   ["Police Station Directory", "پولیس اسٹیشن ڈائریکٹری", "Police stations in every district with official phone numbers and map locations", "police/", "police station thana directory sho phone district map"],
   ["Government Universities", "سرکاری جامعات", "Entry test calendar, admission criteria and fees for every public university", "universities/", "university universities admission entry test mdcat net ecat etea usat nat lat merit fee structure"],
   ["Districts & Union Councils", "اضلاع اور یونین کونسلز", "Every division, district and tehsil in Pakistan, and who to call", "admin-units/", "district tehsil union council division province directory"],
+  ["Daily rates", "روزانہ کے نرخ", "Petrol, diesel, gold, silver, open-market currency and the KSE-100 index", "rates/", "petrol diesel price gold rate silver tola dollar rate usd aed sar riyal dirham pound euro currency exchange kse 100 psx stock share market"],
+  ["Find a vet", "ویٹرنری ہسپتال", "Nearest government vet hospital, pet clinics by city, and animal first aid", "vets/", "vet veterinary animal hospital livestock cow buffalo goat pet dog cat clinic first aid helpline 9211"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);
 

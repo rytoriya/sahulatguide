@@ -6,7 +6,7 @@
 <title>Pakistan Passport Services Guide</title>
 <meta name="description" content="Find the nearest Pakistan passport office, calculate passport fees, check timings, follow step-by-step guidance, renew online, and visa help for foreigners.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 /* Everything is scoped to #pps so it will not clash with your website's CSS */
@@ -15,7 +15,7 @@
   --g900:#01411c; --g700:#0b6b35; --g500:#1f9a55; --g100:#e3f1e7; --gold:#c9972b; --gold100:#fbf1dc;
   --ok:#0f7a3b; --bad:#b3261e; --focus:#2563eb; --shadow:0 1px 2px rgba(20,37,27,.06),0 8px 24px rgba(20,37,27,.08);
   --r:18px; --fs:16px;
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI","Plus Jakarta Sans",system-ui,sans-serif;
   font-size:var(--fs);line-height:1.55;color:var(--ink);background:var(--bg);
   max-width:1180px;margin:0 auto;padding:0 0 90px;position:relative;
 }
@@ -150,7 +150,7 @@
 #pps .leaflet-popup-content{font-family:inherit;font-size:13px;line-height:1.45}
 #pps .more{text-align:center;margin:16px 0}
 #pps details.hours{margin-top:16px}
-#pps details.hours summary{cursor:pointer;font-weight:700;list-style:none;display:flex;gap:8px;align-items:center;padding:4px 0}
+#pps details.hours summary{cursor:pointer;font-weight:700;list-style:none;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:4px 0}
 #pps details.hours summary::-webkit-details-marker{display:none}
 #pps .empty{text-align:center;padding:30px;color:var(--muted)}
 
@@ -224,6 +224,7 @@
 @media (max-width:700px){#pps .totop{bottom:86px}#pps .hero{min-height:0;border-radius:0 0 22px 22px}#pps .hero .in{padding:78px 16px 46px}#pps .topbar{top:12px;inset-inline:12px}#pps .brand span:last-child{font-size:.9em}#pps .iconbtn{padding:7px 11px}#pps .topbar .row{flex-wrap:nowrap}#pps .tiles{grid-template-columns:repeat(3,1fr);gap:8px}#pps .tile{min-height:0;padding:12px 10px;align-items:center;text-align:center}#pps .tile span:not(.ic){display:none}#pps .tile b{font-size:.82em}#pps .wrap{padding:0 12px}#pps .heroSearch{flex-direction:column}#pps .card{padding:16px}#pps .feeCard .amt{font-size:2.1em}}
 @media print{#pps nav.tabs,#pps .hero,#pps .tiles,#pps .no-print,#pps .totop{display:none}#pps section.panel{display:block}}
 </style>
+<link rel="stylesheet" href="../site.css">
 </head>
 <body style="margin:0">
 <div id="pps" lang="en">

@@ -6,7 +6,7 @@
 <meta name="description" content="Sahulat Guide Pakistan: government services, schemes, loans, passports, trains and parcels explained step by step.">
 <title>Sahulat Guide Pakistan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Noto+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@500&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap">
 <style>
 /* Layout: citizen help-desk: logo bar, sticky tab strip, news ticker; tabs switch between Home, service sheets (list + procedure sheet), Tools, Portals and Contact */
 :root{
@@ -14,8 +14,8 @@
   --accent:#0d6b52; --accent-ink:#ffffff; --accent-soft:#e2f1ec; --stamp:#b4452f; --stamp-soft:#f8e7e2;
   --amber:#8a5a00; --amber-soft:#fbf0d9; --sun:#e9a83a; --sky:#dcebf3; --earth:#c98d5a;
   --wa:#1f9e57;
-  --f-display:"Sora",system-ui,sans-serif; --f-body:"Noto Sans",system-ui,sans-serif;
-  --f-urdu:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --f-display:"Plus Jakarta Sans",system-ui,sans-serif; --f-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --f-urdu:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif; --f-mono:"Plus Jakarta Sans",system-ui,sans-serif;
   --r:10px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -229,6 +229,9 @@ input:user-invalid,textarea:user-invalid{border-color:var(--stamp)}
 .score .st.live{background:var(--stamp);color:#fff}
 .score b{font-family:var(--f-display);font-size:14.5px}
 .score span{font-size:13px;color:var(--muted)}
+.score b{font-weight:700;letter-spacing:-.01em;line-height:1.35}
+.score .st{font-weight:700;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+@media (max-width:520px){.score{grid-template-columns:minmax(0,1fr);gap:6px}.score .st{grid-row:auto;justify-self:start;min-width:0}}
 .linkbtn{font:600 13px var(--f-body);background:none;border:0;color:var(--accent);cursor:pointer;padding:0}
 .jobgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
 .job{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:6px;align-content:start}
@@ -291,7 +294,7 @@ footer .brand svg{width:32px;height:32px}
 .toolgrid .d{font-size:13px;color:var(--muted)}
 .toolgrid .go{font:600 13px var(--f-body);color:var(--accent);margin-top:auto;padding-top:6px}
 /* ===== Visual refinement layer =====
-   Design read: trust-first citizen help-desk, brand preserved (green accent, Sora, illustrations).
+   Design read: trust-first citizen help-desk, brand preserved (green accent, Plus Jakarta Sans, illustrations).
    Dials: variance 4, motion 4, density 5.
    Shape rule: buttons, chips and search are full pills; cards and panels 20px; inner items and inputs 12px.
    Icons: Phosphor Light (MIT). */
@@ -414,6 +417,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 a.tab.tablink{text-decoration:none;display:inline-flex;align-items:center;gap:6px;color:var(--police-tab,var(--accent))}
 a.tab.tablink svg{width:16px;height:16px}
 </style>
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
 
@@ -707,7 +711,7 @@ const ART = {
    <path d="M30 66 L64 52 L90 40 L130 20" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round"/><path d="M118 18 L132 19 L128 32" fill="none" class="s-ink" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
    <g><ellipse cx="160" cy="94" rx="20" ry="6" class="f-sun"/><rect x="140" y="80" width="40" height="14" class="f-sun"/><ellipse cx="160" cy="80" rx="20" ry="6" class="f-e"/>
    <ellipse cx="160" cy="74" rx="20" ry="6" class="f-sun"/><rect x="140" y="62" width="40" height="12" class="f-sun"/><ellipse cx="160" cy="62" rx="20" ry="6" class="f-e"/>
-   <text x="160" y="66" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`,
+   <text x="160" y="66" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`,
  card:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
    <rect x="22" y="40" width="86" height="58" class="f-sur"/><path d="M16 40h98l-6-16H22z" class="f-st"/><path d="M30 40l4-16M50 40l2-16M70 40v-16M90 40l-2-16" class="s-ink" stroke-width="0" />
    <path d="M16 40q8 8 16 0q8 8 16 0q8 8 16 0q8 8 16 0q8 8 16 0q9 8 18 0" class="f-st"/>
@@ -752,7 +756,7 @@ const ART = {
    <circle cx="20" cy="88" r="5" class="f-e"/><rect x="16" y="94" width="8" height="10" rx="2" class="f-a"/><circle cx="180" cy="86" r="5" class="f-e"/><rect x="176" y="92" width="8" height="12" rx="2" class="f-st"/></svg>`,
  water:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
    <rect x="30" y="34" width="80" height="64" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="30" y="34" width="80" height="14" rx="4" class="f-a"/>
-   <text x="70" y="44.5" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="8" fill="#fff">FILTER PLANT</text>
+   <text x="70" y="44.5" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="8" fill="#fff">FILTER PLANT</text>
    <rect x="42" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/><rect x="60" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/><rect x="78" y="56" width="12" height="30" rx="6" class="f-sky s-m" stroke-width="1"/>
    <path d="M110 64h26v8" fill="none" class="s-ink" stroke-width="5" stroke-linecap="round"/><rect x="118" y="58" width="8" height="5" rx="1" class="f-st"/>
    <path d="M136 78q-5 8 0 10q5-2 0-10z" class="f-a"/>
@@ -761,9 +765,9 @@ const ART = {
  tax:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
    <rect x="40" y="18" width="72" height="88" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="50" y="30" width="40" height="6" rx="3" class="f-a"/>
    ${[44,54,64,74].map(y=>`<rect x="50" y="${y}" width="52" height="4" rx="2" class="f-l"/>`).join("")}
-   <text x="76" y="98" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="11" class="f-st">FORM 114</text>
+   <text x="76" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="11" class="f-st">FORM 114</text>
    <rect x="120" y="42" width="48" height="62" rx="6" class="f-ink"/><rect x="126" y="48" width="36" height="14" rx="2" class="f-s"/>
-   <text x="158" y="58.5" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="8" class="f-a">Rs 0</text>
+   <text x="158" y="58.5" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif" font-size="8" class="f-a">Rs 0</text>
    ${[0,1,2].map(r=>[0,1,2].map(c=>`<rect x="${127+c*12}" y="${68+r*11}" width="9" height="8" rx="1.5" class="${r==2&&c==2?'f-sun':'f-m'}"/>`).join("")).join("")}</svg>`,
  train:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="168" cy="24" r="10" class="f-sun"/>
    <rect y="100" width="200" height="20" class="f-e" opacity=".45"/><path d="M0 104h200M0 110h200" class="s-ink" stroke-width="2"/>
@@ -783,13 +787,13 @@ const ART = {
    <path d="M30 44 L84 20 L138 44z" class="f-a"/><rect x="34" y="44" width="100" height="6" class="f-a"/>
    ${[42,62,82,102,122].map(x=>`<rect x="${x-4}" y="52" width="8" height="38" class="f-sur s-m" stroke-width="1"/>`).join("")}
    <rect x="30" y="90" width="108" height="8" class="f-ink" opacity=".8"/>
-   <text x="84" y="40" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" fill="#fff">BANK</text>
+   <text x="84" y="40" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="9" fill="#fff">BANK</text>
    <rect x="150" y="70" width="40" height="28" class="f-sur"/><path d="M146 72 L170 52 L194 72z" class="f-st"/><rect x="164" y="82" width="10" height="16" class="f-a"/>
    <path d="M138 80 h10" class="s-ink" stroke-width="2" stroke-dasharray="3 2"/></svg>`,
  passport:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}<circle cx="170" cy="24" r="10" class="f-sun"/>
    <g transform="rotate(-8 80 62)"><rect x="50" y="18" width="62" height="84" rx="6" class="f-a"/><circle cx="81" cy="52" r="15" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>
    <path d="M66 52h30M81 37v30M71 42q10 10 0 20M91 42q-10 10 0 20" fill="none" stroke="#fff" stroke-width="1.5" opacity=".85"/>
-   <rect x="62" y="78" width="38" height="5" rx="2.5" fill="#fff" opacity=".8"/><text x="81" y="94" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="7" fill="#fff">PASSPORT</text></g>
+   <rect x="62" y="78" width="38" height="5" rx="2.5" fill="#fff" opacity=".8"/><text x="81" y="94" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="7" fill="#fff">PASSPORT</text></g>
    <rect x="118" y="44" width="56" height="40" rx="4" class="f-sur s-m" stroke-width="1.5"/><rect x="124" y="50" width="16" height="20" rx="2" class="f-l"/><circle cx="132" cy="58" r="4" class="f-m"/>
    <rect x="146" y="52" width="22" height="4" rx="2" class="f-l"/><rect x="146" y="60" width="18" height="4" rx="2" class="f-l"/><circle cx="160" cy="76" r="7" class="f-st" opacity=".8"/></svg>`,
  sim:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
@@ -800,7 +804,7 @@ const ART = {
  land:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<circle cx="34" cy="24" r="10" class="f-sun"/>
    <path d="M0 70 L200 58 V120 H0z" class="f-s"/><path d="M0 70 L70 66 L90 120 H0z" class="f-a" opacity=".35"/><path d="M70 66 L140 62 L170 120 H90z" class="f-sun" opacity=".45"/><path d="M140 62 L200 58 V120 H170z" class="f-a" opacity=".55"/>
    <path d="M70 66 L90 120 M140 62 L170 120" class="s-ink" stroke-width="1.5" stroke-dasharray="4 3"/>
-   <rect x="96" y="14" width="56" height="40" rx="3" class="f-sur s-m" stroke-width="1.5"/><text x="124" y="27" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="8" class="f-st">FARD</text>
+   <rect x="96" y="14" width="56" height="40" rx="3" class="f-sur s-m" stroke-width="1.5"/><text x="124" y="27" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="8" class="f-st">FARD</text>
    <rect x="104" y="32" width="40" height="3" rx="1.5" class="f-l"/><rect x="104" y="39" width="32" height="3" rx="1.5" class="f-l"/><circle cx="140" cy="46" r="5" class="f-st" opacity=".8"/>
    <path d="M44 84v-14l6-6 6 6v14z" class="f-st"/></svg>`,
  bus:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}<rect y="96" width="200" height="24" class="f-l"/><path d="M0 106h200" class="s-m" stroke-width="2" stroke-dasharray="10 8"/>
@@ -817,7 +821,7 @@ const ART = {
  bill:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
    <rect x="34" y="16" width="64" height="88" rx="4" class="f-sur s-m" stroke-width="1.5"/><path d="M34 96l8 6 8-6 8 6 8-6 8 6 8-6 8 6 8-6v8H34z" class="f-sky"/>
    <rect x="42" y="26" width="30" height="6" rx="3" class="f-a"/>${[40,48,56,64].map(y=>`<rect x="42" y="${y}" width="${y==64?24:48}" height="4" rx="2" class="f-l"/>`).join("")}
-   <text x="88" y="86" text-anchor="end" font-family="Sora,sans-serif" font-weight="700" font-size="10" class="f-st">Rs 4,250</text>
+   <text x="88" y="86" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="10" class="f-st">Rs 4,250</text>
    <path d="M128 22l-14 30h12l-8 26 26-36h-13l9-20z" class="f-sun"/>
    <path d="M152 70q-12 16 0 20q12-4 0-20z" class="f-a"/><path d="M170 50c-6 6-6 12 0 16c6-4 6-10 0-16z" class="f-e"/><path d="M168 66v10" class="s-ink" stroke-width="2"/></svg>`,
  parcel:`<svg viewBox="0 0 200 120" aria-hidden="true">${sky}${ground}
@@ -838,12 +842,12 @@ const ART = {
    <g transform="rotate(-8 140 160)"><rect x="80" y="80" width="130" height="160" rx="10" class="f-sur s-m" stroke-width="1.5"/><rect x="80" y="80" width="130" height="28" rx="10" class="f-st"/><rect x="80" y="98" width="130" height="10" class="f-st"/>
    ${[0,1,2,3].map(i=>`<rect x="96" y="${124+i*26}" width="14" height="14" rx="3" class="f-s"/><path d="M99 ${131+i*26}l3 4 6-7" fill="none" class="s-a" stroke-width="2.5" stroke-linecap="round"/><rect x="118" y="${127+i*26}" width="${70-i*8}" height="7" rx="3.5" class="f-l"/>`).join("")}</g>
    <rect x="220" y="60" width="120" height="210" rx="18" class="f-ink"/><rect x="228" y="74" width="104" height="182" rx="10" class="f-sur"/>
-   <rect x="238" y="86" width="84" height="40" rx="6" class="f-a"/><text x="250" y="111" font-family="Sora,sans-serif" font-weight="700" font-size="12" class="f-sur">Apply</text>
+   <rect x="238" y="86" width="84" height="40" rx="6" class="f-a"/><text x="250" y="111" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="12" class="f-sur">Apply</text>
    <rect x="238" y="136" width="84" height="8" rx="4" class="f-l"/><rect x="238" y="152" width="64" height="8" rx="4" class="f-l"/>
    <rect x="238" y="172" width="84" height="26" rx="6" class="f-s"/><rect x="246" y="182" width="40" height="6" rx="3" class="f-a"/>
    <rect x="238" y="208" width="84" height="26" rx="6" class="f-s"/><rect x="246" y="218" width="52" height="6" rx="3" class="f-a"/>
    <circle cx="350" cy="214" r="30" class="f-a"/><path d="M336 214l10 10 18-20" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-   <g transform="translate(40 228)"><ellipse cx="20" cy="22" rx="20" ry="6" class="f-sun"/><rect x="0" y="8" width="40" height="14" class="f-sun"/><ellipse cx="20" cy="8" rx="20" ry="6" class="f-e"/><text x="20" y="12" text-anchor="middle" font-family="Sora,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`
+   <g transform="translate(40 228)"><ellipse cx="20" cy="22" rx="20" ry="6" class="f-sun"/><rect x="0" y="8" width="40" height="14" class="f-sun"/><ellipse cx="20" cy="8" rx="20" ry="6" class="f-e"/><text x="20" y="12" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-weight="700" font-size="9" class="f-sur">Rs</text></g></svg>`
 };
 const ICON = {
  plus:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>`,

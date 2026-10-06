@@ -1,5 +1,18 @@
 # Changes
 
+## 6 October 2026 (night): one font and no sideways scrolling on phones
+
+### One typeface across the whole site
+- Every page now uses **Plus Jakarta Sans** (already used on the passport page). Sora, Noto Sans, JetBrains Mono and Roboto are gone. Urdu text keeps **Noto Nastaliq Urdu**.
+- Codes, reference numbers, dates and the search key hint use the same font with even-width figures instead of a coding font.
+- `scripts/unify_fonts.py` rewrites the font links and font names in every page; run it again if a new page brings in another font.
+
+### Mobile: the page no longer slides left and right
+- New shared stylesheet `site.css`, linked last from every page: stops the page itself from scrolling sideways, stops phones from enlarging some text blocks on their own, and wraps long words and URLs.
+- Real overflow fixed at its source: sub-page headers on 360-440px phones (the words "Sahulat Guide" hide, the logo stays), the universities test cards, page grids on emergency, account, police and universities, and the passport "Office hours" line on very small phones.
+- Pakistan sports panel: on phones the date sits above the match title, so titles read in 1-2 lines.
+- Checked on all 15 pages at 320, 360, 390 and 414px wide: nothing wider than the screen.
+
 ## 6 October 2026 (evening) — features from the chat version brought into the code
 
 The claude.ai version of the site had several features built in earlier chats that were not in this code yet. They are now added, in this code's style (tool pages in their own folder):

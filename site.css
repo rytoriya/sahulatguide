@@ -1,0 +1,36 @@
+/* Shared rules loaded last on every page.
+   One typeface (Plus Jakarta Sans, Urdu in Noto Nastaliq Urdu) and a hard stop on sideways panning. */
+
+/* Phones (iOS Safari, Android Chrome) enlarge some blocks of text on their own; keep sizes as designed. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+/* The page itself never scrolls sideways. clip (not hidden) keeps position:sticky working. */
+html,body{max-width:100%}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+@supports not (overflow:clip){body{overflow-x:hidden}}
+
+/* Long words, URLs and numbers wrap instead of pushing the layout wider. */
+body{overflow-wrap:break-word;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+img,video,iframe{max-width:100%}
+
+/* Same font everywhere, including form controls (browsers default these to system fonts). */
+body,button,input,select,textarea{font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+[lang="ur"],.ur,.urdu{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",serif}
+
+/* Figures line up in tables, dates, prices and scores. */
+table,time,.num,.mono,code,.v,.price,.rate{font-variant-numeric:tabular-nums}
+h1,h2,h3{letter-spacing:-.02em}
+
+/* Page grids size to the screen, not to their widest card. */
+main.wrap{grid-template-columns:minmax(0,1fr)}
+
+/* Sub-page header: fits a 360px phone (logo stays, words hide below 400px). */
+header .wrap{min-width:0}
+header .hdr-r{min-width:0;flex-shrink:1}
+@media (max-width:440px){
+  header .brand > span{display:none}
+  header .hdr-r{gap:6px}
+}
+
+/* Codes, reference numbers and key hints use the same face (tabular figures), not a coding font. */
+code,kbd,samp,pre{font-family:inherit;font-variant-numeric:tabular-nums}

@@ -26,7 +26,7 @@
     ".sg-btn:hover{border-color:var(--sg-accent)}",
     ".sg-btn:focus-visible,.sg-x:focus-visible,.sg-opt:focus-visible{outline:3px solid var(--sg-accent);outline-offset:2px}",
     ".sg-btn svg{width:18px;height:18px;flex:none}",
-    ".sg-btn kbd{font:600 11px/1 ui-monospace,monospace;color:var(--sg-muted);border:1px solid var(--sg-line);border-radius:5px;padding:3px 5px}",
+    ".sg-btn kbd{font-weight:700;font-size:11px;line-height:1;font-family:inherit;color:var(--sg-muted);border:1px solid var(--sg-line);border-radius:5px;padding:3px 5px}",
     ".sg-btn.sg-dark{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.35);color:#fff;backdrop-filter:blur(8px)}",
     ".sg-btn.sg-dark kbd{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.4)}",
     ".sg-btn.sg-float{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;box-shadow:0 6px 20px rgba(0,0,0,.18)}",

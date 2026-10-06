@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<base href="/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Sahulat Guide Pakistan: government services, schemes, loans, passports, trains and parcels explained step by step.">
 <title>Sahulat Guide Pakistan</title>
+<link rel="canonical" href="https://sahulatguide.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sahulat Guide">
+<meta property="og:title" content="Sahulat Guide Pakistan">
+<meta property="og:description" content="Sahulat Guide Pakistan: government services, schemes, loans, passports, trains and parcels explained step by step.">
+<meta property="og:url" content="https://sahulatguide.netlify.app/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap">
 <style>
@@ -424,7 +431,7 @@ a.tab.tablink svg{width:16px;height:16px}
 <div class="notice"><b>Independent guide.</b> Not an official government website. Always apply on the official portal, and never pay an agent.</div>
 
 <div class="wrap brandbar">
-  <a class="brand" href="./" data-go="home" aria-label="Sahulat Guide home">
+  <a class="brand" href="/" data-go="home" aria-label="Sahulat Guide home">
     <svg viewBox="0 0 64 64" aria-hidden="true">
       <rect width="64" height="64" rx="16" class="f-a"/>
       <path d="M18 52V30a14 14 0 0 1 28 0v22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
@@ -668,15 +675,15 @@ a.tab.tablink svg{width:16px;height:16px}
 <footer class="site">
   <div class="wrap fgrid">
     <div class="fcol fbrand">
-      <a class="brand" href="#home" data-go="home"><span id="footLogo"></span><span class="t"><span class="n" style="font-size:17px">Sahulat <span>Guide</span></span><span class="ur" lang="ur" style="font-size:13px">سہولت گائیڈ · پاکستان</span></span></a>
+      <a class="brand" href="/" data-go="home"><span id="footLogo"></span><span class="t"><span class="n" style="font-size:17px">Sahulat <span>Guide</span></span><span class="ur" lang="ur" style="font-size:13px">سہولت گائیڈ · پاکستان</span></span></a>
       <p>Free, step-by-step guides to Pakistani government services: ID and passports, loans, bills and taxes, health, education, transport, cargo and government jobs.</p>
       <p class="fnote">Independent information website. Not affiliated with NADRA, FBR, the Government of Pakistan or any provincial government.</p>
     </div>
     <div class="fcol"><h4>Services</h4><nav id="fServices"></nav></div>
     <div class="fcol"><h4>Useful</h4><nav>
-      <a href="jobs/">Government jobs</a><a href="rates/">Daily rates</a><a href="hospitals/">Find a hospital</a><a href="vets/">Find a vet</a><a href="police/">Police stations</a><a href="universities/">Universities</a><a href="#tools" data-go="tools">Loan calculators</a><a href="#portals" data-go="portals">Official websites</a><a href="#all" data-go="all">All services</a><a href="#emergency" data-go="emergency">Emergency numbers</a><a href="emergency/">Nearest police station</a></nav></div>
+      <a href="jobs/">Government jobs</a><a href="rates/">Daily rates</a><a href="hospitals/">Find a hospital</a><a href="vets/">Find a vet</a><a href="police/">Police stations</a><a href="universities/">Universities</a><a href="/calculators/" data-go="tools">Loan calculators</a><a href="/portals/" data-go="portals">Official websites</a><a href="/services/" data-go="all">All services</a><a href="/helplines/" data-go="emergency">Emergency numbers</a><a href="emergency/">Nearest police station</a></nav></div>
     <div class="fcol"><h4>Company</h4><nav>
-      <a href="#about" data-go="about">About us</a><a href="#contact" data-go="contact">Contact us</a><a href="#privacy" data-go="privacy">Privacy Policy</a><a href="#terms" data-go="terms">Terms & Disclaimer</a></nav></div>
+      <a href="/about/" data-go="about">About us</a><a href="/contact/" data-go="contact">Contact us</a><a href="/privacy/" data-go="privacy">Privacy Policy</a><a href="/terms/" data-go="terms">Terms & Disclaimer</a></nav></div>
     <div class="fcol"><h4>Emergency</h4><div class="fsos">
       <span><b>15</b> Police</span><span><b>1122</b> Rescue & ambulance</span><span><b>16</b> Fire</span><span><b>130</b> Motorway police</span><span><b>1799</b> Cyber crime</span></div></div>
   </div>
@@ -1814,10 +1821,10 @@ function renderLegal(){
 <p>Sahulat Guide is an independent website that explains Pakistani government services in plain language: how to renew a CNIC or passport, apply for government loan schemes, pay utility bills and taxes, use health cards, find scholarships and school stipends, travel by bus, train or air, send parcels and cargo, and find government jobs.</p>
 <h2>Who we are</h2><p>Sahulat Guide is run by <b>${ph(SITE_OWNER,"owner's full name")}</b> from ${ph(SITE_CITY,"city")}, Pakistan. We are not a government department and are not paid by any government body. We do not process applications, collect fees or sell services on behalf of any department.</p>
 <h2>Why we built it</h2><p>Government information in Pakistan is spread across dozens of websites, notifications and helplines, and people often pay agents for help they don't need. We bring the essential steps, documents, fees and official links together in one place so anyone can apply themselves, safely and for free.</p>
-<h2>How we research</h2><ul><li>Every guide is written from official sources such as department websites, notifications and helplines, and checked against reputable news reports.</li><li>Each guide shows when it was last checked and links to the official portal where you actually apply.</li><li>When fees, deadlines or rules change, we update the guide. If you spot a mistake, please <a href="#contact" data-go="contact">tell us</a>.</li></ul>
+<h2>How we research</h2><ul><li>Every guide is written from official sources such as department websites, notifications and helplines, and checked against reputable news reports.</li><li>Each guide shows when it was last checked and links to the official portal where you actually apply.</li><li>When fees, deadlines or rules change, we update the guide. If you spot a mistake, please <a href="/contact/" data-go="contact">tell us</a>.</li></ul>
 <h2>Our promise to you</h2><ul><li>We will never ask for your CNIC copy, passwords, OTP codes or payments.</li><li>We never claim to guarantee a loan, job or scheme approval.</li><li>Apply only on official government websites, and never pay an agent.</li></ul>
-<h2>Advertising</h2><p>The website is free to use and is supported by advertising, including Google AdSense. Advertisements are kept separate from our guides and do not influence what we write. See our <a href="#privacy" data-go="privacy">Privacy Policy</a> to learn how ads use cookies.</p>
-<h2>Contact</h2><p>Email: <span class="mono">${mail}</span> · WhatsApp: <span class="mono">${wa}</span> · or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
+<h2>Advertising</h2><p>The website is free to use and is supported by advertising, including Google AdSense. Advertisements are kept separate from our guides and do not influence what we write. See our <a href="/privacy/" data-go="privacy">Privacy Policy</a> to learn how ads use cookies.</p>
+<h2>Contact</h2><p>Email: <span class="mono">${mail}</span> · WhatsApp: <span class="mono">${wa}</span> · or use our <a href="/contact/" data-go="contact">contact form</a>.</p>`;
   $("#privacyBody").innerHTML = `<h1 style="font-size:clamp(24px,3.4vw,32px)">Privacy Policy</h1><p class="upd">Last updated: 5 October 2026</p>
 <p>This Privacy Policy explains how Sahulat Guide ("we", "us", "our") at ${site} collects, uses and protects information when you use our website. By using the website you agree to this policy.</p>
 <h2>Information we collect</h2><ul>
@@ -1839,7 +1846,7 @@ function renderLegal(){
 <h2>Children's privacy</h2><p>Our website is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has sent us personal information, contact us and we will delete it.</p>
 <h2>Your choices and rights</h2><p>You can ask us what personal information we hold about you, or ask us to correct or delete it, by emailing us. You can control cookies through your browser and Google Ads Settings.</p>
 <h2>Changes to this policy</h2><p>We may update this policy from time to time. The "Last updated" date shows the latest version.</p>
-<h2>Contact us</h2><p>Questions about this Privacy Policy? Email <span class="mono">${mail}</span> or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
+<h2>Contact us</h2><p>Questions about this Privacy Policy? Email <span class="mono">${mail}</span> or use our <a href="/contact/" data-go="contact">contact form</a>.</p>`;
   $("#termsBody").innerHTML = `<h1 style="font-size:clamp(24px,3.4vw,32px)">Terms of Use & Disclaimer</h1><p class="upd">Last updated: 5 October 2026</p>
 <p>By using Sahulat Guide (${site}) you agree to these terms. If you do not agree, please do not use the website.</p>
 <h2>1. Not a government website</h2><p>Sahulat Guide is an independent information website. It is <b>not affiliated with, endorsed by or operated by</b> NADRA, FBR, the Directorate General of Immigration & Passports, the State Bank of Pakistan, PTA, the Government of Pakistan, any provincial government, or any bank, airline or company mentioned. Department and scheme names are used only to describe them, and all trademarks belong to their owners.</p>
@@ -1853,8 +1860,79 @@ function renderLegal(){
 <h2>9. Acceptable use</h2><p>Do not misuse the website: no attempts to hack, overload or copy it automatically, and no posting of false, abusive or unlawful content through our contact channels.</p>
 <h2>10. Copyright</h2><p>The guides, illustrations and design on this website belong to Sahulat Guide. You may share links to our pages; copying guides in full to other websites or apps without permission is not allowed.</p>
 <h2>11. Changes and governing law</h2><p>We may update these terms at any time; the "Last updated" date shows the current version. These terms are governed by the laws of Pakistan.</p>
-<h2>12. Contact</h2><p>Email <span class="mono">${mail}</span> or use our <a href="#contact" data-go="contact">contact form</a>.</p>`;
-  $("#fServices").innerHTML = Object.entries(GROUPS).map(([k,g])=>`<a href="#${k}" data-go="${k}">${esc(g.name)}</a>`).join("");
+<h2>12. Contact</h2><p>Email <span class="mono">${mail}</span> or use our <a href="/contact/" data-go="contact">contact form</a>.</p>`;
+  $("#fServices").innerHTML = Object.entries(GROUPS).map(([k,g])=>`<a href="/services/${k}/" data-go="${k}">${esc(g.name)}</a>`).join("");
+}
+
+/* ===== Page addresses =====
+   Every tab and guide has its own address (scripts/build_routes.js writes a real page for each one):
+     /                                home
+     /services/                       all guides
+     /services/<category>/            a category, e.g. /services/identity/
+     /services/<category>/<guide>/    a guide, e.g. /services/identity/cnic-renewal/
+     /helplines/ /calculators/ /portals/ /contact/ /about/ /privacy/ /terms/
+   Old #links (/#identity, /#cnic-renewal) still work and are switched to the new address. */
+const SITE_URL = "https://sahulatguide.netlify.app";
+const PAGE_SLUG = {emergency:"helplines", tools:"calculators", portals:"portals", contact:"contact", about:"about", privacy:"privacy", terms:"terms"};
+const PAGE_META = {
+  home:{t:"Sahulat Guide Pakistan", d:"Sahulat Guide Pakistan: government services, schemes, loans, passports, trains and parcels explained step by step."},
+  all:{t:"All government service guides in Pakistan | Sahulat Guide", d:"Every guide on Sahulat Guide: ID cards, passports, loans, bills and taxes, health cards, education, farming, transport, welfare and complaints, with steps, documents and fees."},
+  emergency:{t:"Emergency and government helplines in Pakistan | Sahulat Guide", d:"Free emergency and government helpline numbers in Pakistan: Police 15, Rescue 1122, Fire 16, Motorway Police 130 and department helplines, with one-tap calling."},
+  tools:{t:"Loan instalment calculator and scheme finder | Sahulat Guide", d:"Find which government scheme fits you, estimate the monthly instalment on a government or bank loan, and compare KIBOR-based bank loans side by side."},
+  portals:{t:"Official government portals and websites in Pakistan | Sahulat Guide", d:"Links to official Pakistani government websites for free and paid services, grouped by department. Each opens the official site."},
+  contact:{t:"Contact Sahulat Guide", d:"Ask a question about a government scheme or this guide by WhatsApp or the contact form. We never ask for fees, passwords or OTP codes."},
+  about:{t:"About Sahulat Guide", d:"Sahulat Guide explains Pakistani government services step by step. An independent guide, not a government website."},
+  privacy:{t:"Privacy policy | Sahulat Guide", d:"How Sahulat Guide handles your data, cookies and advertising, and how to opt out."},
+  terms:{t:"Terms of use and disclaimer | Sahulat Guide", d:"Terms of use and disclaimer for Sahulat Guide, an independent guide that is not affiliated with any government department."}
+};
+const clipText = (t,n) => t.length>n ? t.slice(0,n).replace(/\s+\S*$/,"")+"…" : t;
+function pathFor(k, svcId){
+  const s = svcId && S.find(x=>x.id===svcId);
+  if(s) return `/services/${s.grp}/${s.id}/`;
+  if(k==="home") return "/";
+  if(k==="all") return "/services/";
+  if(GROUPS[k]) return `/services/${k}/`;
+  return PAGE_SLUG[k] ? `/${PAGE_SLUG[k]}/` : "/";
+}
+function routeFromPath(p){
+  const seg = p.replace(/index\.html$/,"").split("/").filter(Boolean);
+  if(!seg.length) return {k:"home"};
+  if(seg[0]==="services"){
+    const s = seg[2] && S.find(x=>x.id===seg[2]);
+    if(s) return {k:s.grp, svc:s.id};
+    return {k: GROUPS[seg[1]] ? seg[1] : "all"};
+  }
+  const k = Object.keys(PAGE_SLUG).find(x=>PAGE_SLUG[x]===seg[0]);
+  return {k: k || "home"};
+}
+function routeFromHash(h){
+  if(!h) return null;
+  const s = S.find(x=>x.id===h);
+  if(s) return {k:s.grp, svc:s.id};
+  if(h==="home"||h==="all"||GROUPS[h]||PAGE_SLUG[h]) return {k:h};
+  return null;
+}
+function metaFor(k, svcId){
+  const s = svcId && S.find(x=>x.id===svcId);
+  if(s){ const m = SEO[s.id]; return {t:(m?m.t:s.name+": steps, documents and fees")+" | Sahulat Guide", d:m?m.d:clipText(s.summary,158)}; }
+  const g = GROUPS[k];
+  if(g) return {t:g.name+": guides and how to apply | Sahulat Guide", d:g.desc+" Step-by-step guides with documents, fees and where to apply."};
+  return PAGE_META[k] || PAGE_META.home;
+}
+function setMeta(k, svcId){
+  const m = metaFor(k, svcId), url = SITE_URL + pathFor(k, svcId);
+  document.title = m.t;
+  const set = (sel, attr, v) => { const el = document.querySelector(sel); if(el) el.setAttribute(attr, v); };
+  set('meta[name="description"]',"content",m.d); set('meta[property="og:title"]',"content",m.t);
+  set('meta[property="og:description"]',"content",m.d); set('meta[property="og:url"]',"content",url);
+  set('link[rel="canonical"]',"href",url);
+}
+function setAddress(k, svcId, mode){
+  const url = pathFor(k, svcId);
+  if(mode!=="none" && url!==location.pathname+location.hash){
+    try{ history[mode==="replace"?"replaceState":"pushState"](null,"",url); }catch(_){}
+  }
+  setMeta(k, svcId);
 }
 
 /* ===== Navigation ===== */
@@ -1862,7 +1940,7 @@ function renderTabs(){
   $("#tabs").innerHTML = TABS.map(([k,l,url,ic])=>url?`<a class="tab tablink" href="${url}">${ICON[ic]||""}${l}</a>`:`<button class="tab" role="tab" data-go="${k}" aria-selected="${k===view}">${k==="home"?ICON.home:""}${l}</button>`).join("");
 }
 const isGroup = k => k==="all" || !!GROUPS[k];
-function go(k, svcId){
+function go(k, svcId, mode){
   if(view!==k) sub="all";
   view = k;
   document.querySelectorAll(".view").forEach(v=>v.hidden=true);
@@ -1880,7 +1958,7 @@ function go(k, svcId){
   }
   renderTabs();
   const a = document.querySelector(`.tab[data-go="${k}"]`); a && a.scrollIntoView({block:"nearest",inline:"nearest"});
-  try{const id=svcId||k; history.replaceState(null,"",id==="home"?location.pathname+location.search:"#"+id)}catch(_){}
+  setAddress(k, svcId, mode||"push");
 }
 function renderFilters(){
   const g = GROUPS[view];
@@ -1940,16 +2018,17 @@ function renderHome(){
   $("#updates").classList.toggle("clip", extra>0);
   if(extra>0){ more.hidden=false; more.textContent=`Show all ${NEWS.length} updates`;
     more.onclick=()=>{ const c=$("#updates").classList.toggle("clip"); more.textContent = c?`Show all ${NEWS.length} updates`:"Show fewer"; }; }
-  const items = NEWS.map(([d,t,id])=>`<span class="item"><b>${d}</b>${id?`<a href="#${id}" data-svc="${id}">${esc(t)}</a>`:esc(t)}</span>`).join("");
+  const items = NEWS.map(([d,t,id])=>`<span class="item"><b>${d}</b>${id?`<a href="${pathFor(null,id)}" data-svc="${id}">${esc(t)}</a>`:esc(t)}</span>`).join("");
   $("#belt").innerHTML = items + `<span aria-hidden="true" style="display:contents">${items.replace(/href="[^"]*"/g,'tabindex="-1"')}</span>`;
 }
 
 /* ===== Events ===== */
 document.addEventListener("click", e=>{
+  if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1){ const a=e.target.closest("a[href]"); if(a && !a.getAttribute("href").startsWith("#")) return; }
   const g = e.target.closest("[data-go]"); if(g){e.preventDefault(); go(g.dataset.go); scrollTo({top:0,behavior:"smooth"}); return;}
   const sv = e.target.closest("[data-svc]"); if(sv){e.preventDefault(); const s=S.find(x=>x.id===sv.dataset.svc); go(s.grp, s.id); $("#v-services").scrollIntoView({behavior:"smooth"}); return;}
   const b = e.target.closest("[data-id]"); if(b){renderSheet(b.dataset.id);
-    try{history.replaceState(null,"","#"+b.dataset.id)}catch(_){}
+    setAddress(view, b.dataset.id, "push");
     if(innerWidth<=860) $("#sheet").scrollIntoView({behavior:"smooth",block:"start"}); return;}
   const sb = e.target.closest("[data-sub]"); if(sb){ sub=sb.dataset.sub; renderFilters(); const v=visible(); if(v.length && !v.some(x=>x.id===current)) renderSheet(v[0].id); else renderList(); return; }
   const ask = e.target.closest("[data-ask]"); if(ask){ $("#cTopic").value = ask.dataset.ask; go("contact"); $("#cName").focus(); }
@@ -2106,10 +2185,11 @@ $("#footLogo").innerHTML = document.querySelector(".brandbar .brand svg").outerH
 $("#dir").innerHTML = DIR.map(([g,list])=>`<h2 class="egroup">${g}</h2><div class="dirgrid">${list.map(([n,d,u,f])=>`<a href="${u}" target="_blank" rel="noopener"><span style="display:flex;justify-content:space-between;gap:8px"><b>${n}</b><span class="pill ${f==="Free"?"open":"check"}">${f}</span></span><span class="d">${d}</span><span class="u">${u.replace("https://","")}</span></a>`).join("")}</div>`).join("");
 renderHome(); finder(); emi(); renderLegal();
 $("#guideCount").textContent = S.length + " detailed guides";
-const h = location.hash.slice(1);
-const hs = S.find(s=>s.id===h);
-if(hs) go(hs.grp, hs.id); else go((TABS.some(t=>t[0]===h&&!t[2])||["about","privacy","terms"].includes(h))?h:"home");
-addEventListener("hashchange",()=>{ const k=location.hash.slice(1); const g=S.find(s=>s.id===k); if(g){ go(g.grp,g.id); scrollTo({top:0}); } else if(TABS.some(t=>t[0]===k&&!t[2])||["about","privacy","terms"].includes(k)){ go(k); scrollTo({top:0}); } });
+const oldLink = routeFromHash(location.hash.slice(1));
+const start = oldLink || routeFromPath(location.pathname);
+go(start.k, start.svc, "replace");
+addEventListener("popstate", ()=>{ const r = routeFromHash(location.hash.slice(1)) || routeFromPath(location.pathname); go(r.k, r.svc, "none"); });
+addEventListener("hashchange", ()=>{ const r = routeFromHash(location.hash.slice(1)); if(r){ go(r.k, r.svc, "replace"); scrollTo({top:0}); } });
 
 /* ===== Scroll reveal (IntersectionObserver; skipped under reduced motion) ===== */
 (function(){

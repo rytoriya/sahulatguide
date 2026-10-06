@@ -1,5 +1,24 @@
 # Changes
 
+## 6 October 2026 (late night): every tab and guide has its own page address
+
+Before, the main app's tabs and guides only had `#` addresses (`/#identity`, `/#cnic-renewal`). To Google those are all the same page as the home page. Now each one is a real page, like `/police/`:
+
+| Before | Now |
+|---|---|
+| `/#identity` | `/services/identity/` |
+| `/#cnic-renewal` | `/services/identity/cnic-renewal/` |
+| `/#all` | `/services/` |
+| `/#emergency` (helplines tab) | `/helplines/` |
+| `/#tools` | `/calculators/` |
+| `/#portals`, `/#contact`, `/#about`, `/#privacy`, `/#terms` | `/portals/`, `/contact/`, `/about/`, `/privacy/`, `/terms/` |
+
+- Each page has its own title, description, canonical link and WhatsApp/Facebook preview text (from the `SEO` object where a guide has one, otherwise its name and summary).
+- Clicking a tab or guide changes the address; Back and Forward work. Old `#` links people already shared still open the right page and switch to the new address.
+- `scripts/build_routes.js` writes these pages (95 of them) and `sitemap.xml`. Netlify runs it on every deploy (`netlify.toml`), so the pages always match `index.html`; the generated folders are not committed. If a page is ever missing, Netlify serves the app and it still opens the right view.
+- `index.html` has `<base href="/">` so its links, scripts and data load from any depth. Open the site through a local server (`python3 -m http.server`), not as a file.
+- Search results, tool-page links and `robots.txt` point to the new addresses.
+
 ## 6 October 2026 (night): one font and no sideways scrolling on phones
 
 ### One typeface across the whole site

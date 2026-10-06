@@ -86,3 +86,16 @@ python3 -m http.server 8000
 ```
 
 Then open http://localhost:8000.
+
+## Page addresses
+
+Every tab and guide of the main app has its own address, for example `/services/identity/cnic-renewal/`.
+`scripts/build_routes.js` copies `index.html` to one folder per address with its own title and description,
+and writes `sitemap.xml`. Netlify runs it on every deploy (see `netlify.toml`); the generated folders are in `.gitignore`.
+
+To preview locally:
+
+```sh
+node scripts/build_routes.js
+python3 -m http.server 8000
+```

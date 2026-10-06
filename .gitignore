@@ -1,0 +1,10 @@
+# Made by scripts/build_routes.js on every Netlify deploy
+/services/
+/helplines/
+/calculators/
+/portals/
+/contact/
+/about/
+/privacy/
+/terms/
+/sitemap.xml

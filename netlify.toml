@@ -1,0 +1,40 @@
+# Netlify settings for Sahulat Guide (plain static site, no packages to install).
+[build]
+  publish = "."
+  # Writes a real page for every tab and guide of the main app (services/…, helplines/, calculators/…)
+  # plus sitemap.xml. See scripts/build_routes.js.
+  command = "node scripts/build_routes.js"
+
+# Safety net: if a page was not generated, serve the app; it reads the address and opens the right view.
+[[redirects]]
+  from = "/services/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/helplines/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/calculators/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/portals/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/contact/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/about/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/privacy/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/terms/*"
+  to = "/index.html"
+  status = 200

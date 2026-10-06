@@ -46,15 +46,15 @@ for (const s of S) {
   const g = GROUPS[s.grp];
   const sub = (g.subs.find((x) => x[0] === s.sub) || [, ""])[1];
   const region = s.region.map((r) => REGION[r] || r).join(" · ");
-  items.push(["Service", s.name, s.ur || "", `${g.name} · ${region}`, "#" + s.id,
+  items.push(["Service", s.name, s.ur || "", `${g.name} · ${region}`, `services/${s.grp}/${s.id}/`,
     [s.by, sub, g.name, clip(s.summary, 160)].join(" ")]);
 }
 for (const [k, g] of Object.entries(GROUPS)) {
-  items.push(["Category", g.name, "", g.desc, "#" + k, g.subs.map((x) => x[1]).join(" ")]);
+  items.push(["Category", g.name, "", g.desc, `services/${k}/`, g.subs.map((x) => x[1]).join(" ")]);
 }
-items.push(["Category", "Emergency helplines", "ایمرجنسی", "Police, Rescue 1122, ambulance and other helplines", "#emergency", "emergency helpline 15 1122 ambulance fire"]);
-items.push(["Category", "Calculators", "", "Scheme finder and loan instalment calculator", "#tools", "calculator emi loan instalment scheme finder"]);
-items.push(["Category", "More services (official portals)", "", "Links to official government websites", "#portals", "portal website directory links"]);
+items.push(["Category", "Emergency helplines", "ایمرجنسی", "Police, Rescue 1122, ambulance and other helplines", "helplines/", "emergency helpline 15 1122 ambulance fire"]);
+items.push(["Category", "Calculators", "", "Scheme finder and loan instalment calculator", "calculators/", "calculator emi loan instalment scheme finder"]);
+items.push(["Category", "More services (official portals)", "", "Links to official government websites", "portals/", "portal website directory links"]);
 
 /* ---- Tool pages ---- */
 const TOOLS = [
@@ -71,7 +71,7 @@ const TOOLS = [
   ["Daily rates", "روزانہ کے نرخ", "Petrol, diesel, gold, silver, open-market currency and the KSE-100 index", "rates/", "petrol diesel price gold rate silver tola dollar rate usd aed sar riyal dirham pound euro currency exchange kse 100 psx stock share market"],
   ["Find a hospital", "قریبی ہسپتال", "251 government and private hospitals in Punjab, nearest to your town", "hospitals/", "hospital dhq thq teaching specialist emergency near me punjab doctor"],
   ["Government jobs", "سرکاری نوکریاں", "FPSC, PPSC, SPSC, KPPSC, BPSC and armed forces recruitment with last dates", "jobs/", "government jobs naukri fpsc ppsc spsc kppsc bpsc css army navy air force recruitment vacancy"],
-  ["About, Privacy & Terms", "", "About Sahulat Guide, privacy policy and terms of use", "#about", "about us privacy policy terms disclaimer"],
+  ["About, Privacy & Terms", "", "About Sahulat Guide, privacy policy and terms of use", "about/", "about us privacy policy terms disclaimer"],
   ["Find a vet", "ویٹرنری ہسپتال", "Nearest government vet hospital, pet clinics by city, and animal first aid", "vets/", "vet veterinary animal hospital livestock cow buffalo goat pet dog cat clinic first aid helpline 9211"],
 ];
 for (const [t, ur, d, u, k] of TOOLS) items.push(["Tool", t, ur, d, u, k]);

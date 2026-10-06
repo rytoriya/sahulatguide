@@ -1,15 +1,20 @@
-# Collects raw police station data (OpenStreetMap + official police websites) for the
-# Police Station Directory, and commits it to data/police/raw/. GitHub's servers can reach
-# these sites; the development environment cannot. Run it from the Actions tab
-# ("Police station data" -> Run workflow) or by changing scripts/police_fetch.py.
+# Collects raw police station data for the Police Station Directory and commits it to
+# data/police/raw/. GitHub's servers can reach the police websites, OpenStreetMap and
+# Nominatim; the development environment cannot.
+# Run it from the Actions tab ("Police station data" -> Run workflow) and pick a step:
+#   crawl    OpenStreetMap police points + official police website pages
+#   targets  Karachi Police station records and map pins, Islamabad locator, Sindh/Balochistan/AJK/GB retries
+#   geocode  addresses and coordinates from Nominatim for data/police/requests.json
 name: Police station data
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - scripts/police_fetch.py
-      - .github/workflows/police-data.yml
+    inputs:
+      step:
+        description: "Which step to run"
+        type: choice
+        options: [crawl, targets, geocode]
+        default: crawl
 
 permissions:
   contents: write
@@ -21,16 +26,17 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch OpenStreetMap and official pages
-        run: python3 scripts/police_fetch.py
-      - name: Pack the raw pages
+      - name: Fetch (${{ inputs.step }})
+        run: python3 scripts/police_fetch.py "${{ inputs.step }}"
+      - name: Pack
         run: |
           cd data/police/raw
-          tar -czf pages.tar.gz pages && rm -rf pages
-          [ -f osm-police.json ] && gzip -f osm-police.json || true
+          if [ -d pages ]; then tar -czf pages.tar.gz pages && rm -rf pages; fi
+          if [ -d targets ]; then tar -czf targets.tar.gz targets && rm -rf targets; fi
+          if [ -f osm-police.json ]; then gzip -f osm-police.json; fi
           ls -la
       - name: Commit the results
         run: |
@@ -38,5 +44,5 @@ jobs:
           git config user.email "sahulat-data-bot@users.noreply.github.com"
           git add data/police/raw
           git diff --cached --quiet && { echo "No changes"; exit 0; }
-          git commit -m "Police data: raw OpenStreetMap and official station pages ($(date -u +%Y-%m-%d))"
+          git commit -m "Police data: ${{ inputs.step }} ($(date -u +%Y-%m-%d))"
           for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 10; done

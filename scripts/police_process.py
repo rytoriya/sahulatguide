@@ -146,7 +146,7 @@ def match(L, off, pts):
         for s in stations:
             for k in kar.get(did, []):
                 if key(k["name"]) == key(s["name"]) and k["ll"]:
-                    s.update({"lat": k["ll"][0], "lon": k["ll"][1], "loc": "official", "ref": "off:" + (k["url"] or k["name"]),
+                    s.update({"lat": k["ll"][0], "lon": k["ll"][1], "loc": "official", "ref": ("kp:" + k["url"]) if k["url"] else ("off:" + k["name"]),
                               "addr": k.get("addr", ""), "ur": "", "contacts": k["contacts"], "page": k["url"]})
                     if k.get("jur"):
                         s["jur"] = [[round(x, 4), round(y, 4)] for x, y in _simplify(k["jur"], 0.0008)]
@@ -171,6 +171,33 @@ def match(L, off, pts):
         extra = [p for j, p in enumerate(cand) if j not in used_p]
         result[did] = {"stations": stations, "extra": extra}
     return result
+
+
+def requests2(L, res):
+    """Second round: search inside each district's box for stations still without a location."""
+    geo = json.load(open(os.path.join(RAW, "geocode.json"), encoding="utf-8"))
+    built = json.load(open(os.path.join(ROOT, "data", "police", "stations.json"), encoding="utf-8"))
+    fwd, rev = [], []
+    for did, v in built.items():
+        f = os.path.join(ROOT, "police", "districts", did + ".json")
+        bbox = json.load(open(f, encoding="utf-8")).get("bbox")
+        if not bbox:
+            continue
+        box = [round(x, 4) for x in bbox]
+        for s in v["stations"]:
+            if s.get("ll"):
+                continue
+            n = s["n"]
+            plain = " ".join(re.sub(r"(?i)\b(city|saddar|sadar|cantt|cantonment|police|station|ps|women|model|new|old|east|west|north|south|\(.*?\))\b", " ", n).split())
+            fwd.append([f"{did}|{n}|ps2", f"{n} police station", box])
+            fwd.append([f"{did}|{n}|place2", n, box])
+            if plain and plain.lower() != n.lower() and len(plain) > 2:
+                fwd.append([f"{did}|{n}|place3", plain, box])
+    for did, r in res.items():
+        for s in r["stations"]:
+            if "lat" in s and not s.get("addr") and s["ref"] not in geo.get("reverse", {}):
+                rev.append([s["ref"], s["lat"], s["lon"]])
+    return {"reverse": rev, "forward": fwd}
 
 
 def requests(L, res):
@@ -208,6 +235,10 @@ def main():
     n_loc = sum(1 for r in res.values() for s in r["stations"] if "lat" in s)
     print(f"official stations: {n_off}, located from map data: {n_loc}; map points: {len(pts)}, "
           f"unmatched map points: {sum(len(r['extra']) for r in res.values())}")
+    if step == "requests2":
+        req = requests2(L, res)
+        json.dump(req, open(os.path.join(ROOT, "data", "police", "requests.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+        print(f"requests.json (round 2): {len(req['reverse'])} reverse, {len(req['forward'])} forward")
     if step == "requests":
         req = requests(L, res)
         json.dump(req, open(os.path.join(ROOT, "data", "police", "requests.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=0)
@@ -262,12 +293,12 @@ def build(L, res):
                 st.update(ll=[s["lat"], s["lon"]], q="exact", a=s.get("addr") or address_of(rev.get(s["ref"])), ur=s.get("ur", ""))
             else:
                 hit = None
-                for cand in fwd.get(f"{did}|{s['name']}|ps") or []:
+                for cand in (fwd.get(f"{did}|{s['name']}|ps") or []) + (fwd.get(f"{did}|{s['name']}|ps2") or []):
                     if cand.get("category") == "amenity" and cand.get("type") == "police" and in_district(float(cand["lat"]), float(cand["lon"]), did):
                         hit = ("found", cand)
                         break
                 if not hit:
-                    for cand in fwd.get(f"{did}|{s['name']}|place") or []:
+                    for cand in (fwd.get(f"{did}|{s['name']}|place2") or []) + (fwd.get(f"{did}|{s['name']}|place3") or []) + (fwd.get(f"{did}|{s['name']}|place") or []):
                         if cand.get("category") in ("place", "boundary", "landuse", "highway") and in_district(float(cand["lat"]), float(cand["lon"]), did):
                             hit = ("area", cand)
                             break

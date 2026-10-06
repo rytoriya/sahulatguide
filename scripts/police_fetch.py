@@ -296,7 +296,7 @@ def targets():
 
 # ================================================================ step 3: addresses and coordinates (Nominatim)
 def geocode():
-    """Reads data/police/requests.json: {"reverse": [[id, lat, lon], …], "forward": [[id, query], …]}
+    """Reads data/police/requests.json: {"reverse": [[id, lat, lon], …], "forward": [[id, query, optional bbox], …]}
     and writes data/police/raw/geocode.json with Nominatim's answers (1 request per second, as its policy asks)."""
     req = json.load(open(os.path.join(ROOT, "data", "police", "requests.json"), encoding="utf-8"))
     out_path = os.path.join(OUT, "geocode.json")
@@ -313,10 +313,15 @@ def geocode():
         if i % 200 == 0:
             print("reverse", i)
             json.dump(out, open(out_path, "w", encoding="utf-8"), ensure_ascii=False)
-    for i, (key, q) in enumerate(req.get("forward", [])):
+    for i, item in enumerate(req.get("forward", [])):
+        key, q = item[0], item[1]
         if key in out["forward"] or time.time() - t0 > 5.3 * 3600:
             continue
-        st, raw = get(f"{base}/search?format=jsonv2&limit=3&countrycodes=pk&addressdetails=1&accept-language=en&q={urllib.parse.quote(q)}", timeout=60)
+        vb = ""
+        if len(item) > 2 and item[2]:  # [south, west, north, east] -> search only inside this box
+            s_, w_, n_, e_ = item[2]
+            vb = f"&viewbox={w_},{n_},{e_},{s_}&bounded=1"
+        st, raw = get(f"{base}/search?format=jsonv2&limit=3&countrycodes=pk&addressdetails=1&accept-language=en{vb}&q={urllib.parse.quote(q)}", timeout=60)
         if st == 200 and raw:
             out["forward"][key] = json.loads(raw)
         time.sleep(1.1)

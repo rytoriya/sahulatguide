@@ -1,5 +1,29 @@
 # Changes
 
+## 7 October 2026: Police Station Directory with addresses, maps and a guide
+
+### Data (all in data/police/)
+- **1,214 police stations** in 107 of 175 districts (was 506 in 38): 1,126 from official police sources, the rest named police stations mapped on OpenStreetMap in districts without an official list.
+- **Punjab:** every "SDPOs and Police Stations" directory page of Punjab Police, 36 districts, about 700 stations with circle and phone.
+- **Karachi:** all 111 Karachi Police stations with the official map pin, the SDPO, SHO, SIO and Head Moharrar with numbers, and 103 jurisdiction areas.
+- **Islamabad:** all 27 stations from the Islamabad Police locator with official address, phone and location, plus 11 Police Khidmat Markaz centres (services, hours).
+- **KP:** the KP Police phone directory (existing list).
+- **On the map:** 796 stations (348 exact, 8 found by name, 440 approximate at their town or area). 418 have no pin yet; their cards link to a Google Maps search.
+- **Addresses:** 791 stations, from the police (Islamabad), OpenStreetMap or reverse geocoding (Nominatim).
+- Sindh outside Karachi, Balochistan and AJK police websites refused or did not answer, so those districts rely on OpenStreetMap.
+
+### How the data is collected
+- `.github/workflows/police-data.yml` runs on GitHub (Actions tab, "Police station data") because the police websites, OpenStreetMap and Nominatim cannot be reached from the development environment. Steps: `crawl` (OpenStreetMap + official pages), `targets` (Karachi, Islamabad, retries), `geocode` (Nominatim, 1 request a second, reads `data/police/requests.json`). Results are committed to `data/police/raw/`.
+- Parsers: `scripts/police_parse_punjab.py`, `police_parse_karachi.py`, `police_parse_islamabad.py`; `scripts/police_update_official.py` merges them into `data/police-stations.txt`.
+- `scripts/police_process.py requests|requests2|build` places points in districts (geoBoundaries tehsil boundaries in `data/police/boundaries/`, CC BY 4.0), matches official stations to map points, writes geocoding requests and builds `police/districts/<id>.json`.
+- Refresh: run the workflow steps, then `python3 scripts/police_update_official.py && python3 scripts/police_process.py build && node scripts/build_police.js`.
+
+### The page (/police/?d=<district>)
+- Loads its district file (no live map lookups): district boundary drawn and map zoomed to it, solid pins for exact locations, dashed for approximate, grey for other police points, amber for Islamabad service centres; Karachi jurisdiction areas, and "which station covers you" when you share your location or tap the map.
+- Every station card shows the address, phone, officers where published, how exact the location is, directions and Google Maps.
+- "How police stations work in <district>" (police/guide.js) at the bottom: who runs a station, registering an FIR (section 154 CrPC, free copy, Justice of Peace under 22-A), services, your rights, and the province's complaint routes.
+- The map stays in view beside the list on wide screens.
+
 ## 7 October 2026: external links are nofollow
 
 - Every link to another website now has `rel="nofollow"` (with `noopener` where it opens a new tab). Links within Sahulat Guide are unchanged, so search engines still follow them.

@@ -299,8 +299,18 @@ def build(L, res):
                         break
                 if not hit:
                     for cand in (fwd.get(f"{did}|{s['name']}|place2") or []) + (fwd.get(f"{did}|{s['name']}|place3") or []) + (fwd.get(f"{did}|{s['name']}|place") or []):
-                        if cand.get("category") in ("place", "boundary", "landuse", "highway") and in_district(float(cand["lat"]), float(cand["lon"]), did):
+                        if not in_district(float(cand["lat"]), float(cand["lon"]), did):
+                            continue
+                        if cand.get("category") in ("place", "boundary", "landuse", "highway"):
                             hit = ("area", cand)
+                            break
+                        # a building or station whose address names the same neighbourhood or village
+                        ad = cand.get("address") or {}
+                        want = key(re.sub(r"(?i)\b(city|saddar|sadar|cantt|cantonment|area|town)\b", " ", s["name"]))
+                        parts = [ad.get(f) for f in ("suburb", "neighbourhood", "quarter", "village", "hamlet", "town", "city_district")]
+                        if want and any(p and key(p) == want for p in parts):
+                            area = next(p for p in parts if p and key(p) == want)
+                            hit = ("area", dict(cand, name=area))
                             break
                 if hit:
                     kind, cand = hit

@@ -40,7 +40,8 @@ def parsed_sources():
         for st in sts:
             sho = next((c for c in st["contacts"] if c[0] == "SHO"), None)
             name = " ".join(st["name"].replace("Police Station", "").replace("police station", "").split()) or st["name"]
-            circles.setdefault((st["sub"] or "").title() + " Sub-Division" if st["sub"] else "", []).append((name, sho[2] if sho else ""))
+            sub = "" if (st["sub"] or "").strip().upper() in ("", "-", "N/A", "NA") else st["sub"].strip().title() + " Sub-Division"
+            circles.setdefault(sub, []).append((name, sho[2] if sho else ""))
         out[did] = ("Karachi Police", "https://karachipolice.gov.pk/services/police-stations-in-karachi/", sorted(circles.items()))
     isb = police_parse_islamabad.parse()["stations"]
     if isb:

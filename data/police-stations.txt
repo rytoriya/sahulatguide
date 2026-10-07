@@ -385,7 +385,7 @@ office: District police office|067-9201076
 - Shuja Abad Circle: City Shuja Abad|061-4396847; Saddar Shuja Abad|061-4396848
 
 ## sd-karachi-central | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
-- - Sub-Division: Women (Central)|0313-9611396
+- : Women (Central)|0313-9611396
 - Azizabad Sub-Division: Yousuf Plaza|0315-2189874; Azizabad|0311-3995588; Joharabad|0333-3978407
 - Federal B Industrial Area Sub-Division: Federal B Industrial Area|0311-2638986; Gabol Town|0333-2211383
 - Gulbahar Sub-Division: Gulbahar|0300-9280661; Super Market|0300-2700100
@@ -398,7 +398,7 @@ office: District police office|067-9201076
 - Shadman Sub-Division: Taimuria|0313-2608444; Shahrah-e-Noor Jahan|0332-9628737
 
 ## sd-karachi-east | Karachi Police | https://karachipolice.gov.pk/services/police-stations-in-karachi/
-- - Sub-Division: Women (East)|0300-9222158
+- : Women (East)|0300-9222158
 - Bahadurabad Sub-Division: Tipu Sultan|0300-9249261; Bahadurabad|0300-2879812
 - Ferozabad Sub-Division: Brigade|0300-2773694; Ferozabad|03219248567
 - Gulshan Sub-Division: Aziz Bhatti|0300-3552165; Gulshan-e-Iqbal|0334-0022905

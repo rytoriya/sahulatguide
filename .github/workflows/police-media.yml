@@ -1,0 +1,35 @@
+# Collects licensed photos and badges of Pakistan's police from Wikimedia Commons.
+# Runs only on the claude/police-media branch and commits the results there.
+name: Police media
+
+on:
+  push:
+    branches: [claude/police-media]
+    paths:
+      - scripts/police_media.py
+      - .github/workflows/police-media.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: police-media
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect from Wikimedia Commons
+        run: python3 scripts/police_media.py
+      - name: Commit the results
+        run: |
+          git config user.name "sahulat-data-bot"
+          git config user.email "sahulat-data-bot@users.noreply.github.com"
+          git add data/police/media
+          git diff --cached --quiet && { echo "No changes"; exit 0; }
+          git commit -m "Police media: Commons candidates and free-licence files ($(date -u +%Y-%m-%d))"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
